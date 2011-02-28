@@ -37,7 +37,8 @@ class PHPUnit
 				   );
 				
 		foreach($objects as $name){
-			if(strstr($name, 'TestCase.php') !== false) {
+		  $pattern = '/TestCase.php$';
+		  if(preg_match($pattern, $name)) {
 				$parts = explode('/', $name);
 				$filename = end($parts);
 				$filename = strtolower(str_replace('TestCase.php', '', $filename));
