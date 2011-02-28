@@ -37,7 +37,7 @@ class PHPUnit
 				   );
 				
 		foreach($objects as $name){
-		  $pattern = '/TestCase.php$';
+		  $pattern = '/TestCase.php$/i';
 		  if(preg_match($pattern, $name)) {
 				$parts = explode('/', $name);
 				$filename = end($parts);
