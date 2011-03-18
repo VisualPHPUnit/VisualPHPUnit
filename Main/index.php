@@ -1,4 +1,4 @@
-<?php // Standard Controller
+<?php
 
 $action = isset($_GET['action']) ? $_GET['action'] : 'main';	
 function_exists($action) ? $action() : error();
@@ -6,15 +6,12 @@ function_exists($action) ? $action() : error();
 exit(0);
 
 function main() {
-    // include_once($_SERVER['DOCUMENT_ROOT'].'/ScarletFinal/classes/Template.php');
-    
-    // $template = new Template('main.tpl/');
     
     include('header.php');
     
     include '../PHPUnit.php';
-    // $template->compile('main.tpl');
-    //require_once '../Sandbox.php';
+    require_once '../Sandbox.php';
+
     // Protect against unauthorized file access. 
     $path = str_replace('../', '', $_GET['path']); 
     $_GET['path'] = realpath(dirname(__FILE__) . '/../../' . $path); 	
