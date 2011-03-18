@@ -43,8 +43,95 @@ class PHPUnit
         }
     }
 
+    private function _get_message($message)
+    {
+        if ( !$message ) 
+        {
+            return '';
+        }
 
-    public function run($tests=null) 
+        $first = substr($message, 0, strpos($message, 'Failed'));
+        $message_rest = str_replace($first, '', $message);
+        $first = '<strong>' . $first . '</strong><br />';
+        if ( $message_rest ) 
+        {
+            $message = $first . $message_rest;
+        } 
+        else
+        {
+            $message = $first;
+        }
+        
+        return $message;
+    }
+
+    private function _get_status($status)
+    {
+        switch ( $status )
+        {
+            case 'pass':
+                $status = 'success';
+                break;
+            case 'error': 
+                if ( stripos($event['message'], 'skipped') !== false )
+                {
+                    $status = 'skipped';
+                }
+                elseif ( stripos($event['message'], 'incomplete') !== false )
+                {
+                    $status = 'incomplete';
+                }
+                else
+                {
+                    $status = 'failure';
+                }
+                break;
+            case 'fail':
+                $status = 'failure';
+                break;
+            default:
+                $status = '';
+                break;
+        }
+
+        return $status;
+    }
+
+    private function _get_trace($trace)
+    {
+        if ( !$trace ) 
+        {
+            return '';
+        }
+
+        $new_trace = array();
+        foreach ( $trace as $arr ) 
+        {
+            if ( (stripos($arr['file'], 'phpunit.php') === false) &&
+                // TODO: THIS LINE - Main/index.php will have to change
+                    (stripos($arr['file'], 'Main/index.php') === false) &&
+                    ((!isset($arr['class'])) || (stripos($arr['class'], 'phpunit') === false) )) 
+            {
+                $new_trace[] = $arr;
+            }
+        }
+        
+        if ( !empty($new_trace) ) 
+        {
+            ob_start();
+            print_r($new_trace);
+            $trace = ob_get_contents();
+            ob_end_clean();
+        } 
+        else 
+        {
+            $trace = '';
+        }
+
+        return $trace;
+    }
+
+    private function _load_tests($tests=null)
     {
         if ( is_null($tests) ) 
         {
@@ -56,18 +143,26 @@ class PHPUnit
         }
 
         $loaded_classes = get_declared_classes();
+
         foreach ( $tests as $test ) 
         {
             require $test;
         }
-        $new_classes = array_diff(get_declared_classes(), $loaded_classes); 
 
+        // Only return the classes that were just loaded
+        return array_diff(get_declared_classes(), $loaded_classes); 
+    }
+
+    public function run($tests=null) 
+    {
         $suite = new PHPUnit_Framework_TestSuite();
-        foreach ( $new_classes as $class ) 
+
+        $loaded_tests = $this->_load_tests($tests);
+        foreach ( $loaded_tests as $test ) 
         {
-            if ( (stripos($class, TEST_FILENAME)) && (stripos($class, 'PHPUnit_') === false) ) 
+            if ( (stripos($test, TEST_FILENAME) !== false) && (stripos($test, 'PHPUnit_') === false) ) 
             {
-                $suite->addTestSuite($class);
+                $suite->addTestSuite($test);
             }
         }
 
@@ -83,16 +178,16 @@ class PHPUnit
         return $results;
     }
 	
-    public function toHTML($pu_result) 
+    public function toHTML($pu_output) 
     {
         $results = array();
         
-        $json_elements = $this->_pull($pu_result);
+        $json_elements = $this->_pull($pu_output);
         
         foreach ( $json_elements as $elem ) 
         {
             $elem = '{' . $elem . '}';
-            $pu_result = $this->_push($elem, '|||', $pu_result);
+            $pu_output = $this->_push($elem, '|||', $pu_output);
             $results[] = $elem;
         }
 
@@ -102,12 +197,12 @@ class PHPUnit
         $results = str_replace('\n', "", $results);
         $results = str_replace('&quot;', '"', $results);
         
-        $pu_result = explode('|||', $pu_result);
+        $pu_output = explode('|||', $pu_output);
         
         $results = json_decode($results, true);
         
         // map collected data to results
-        foreach ( $pu_result as $key=>$data ) 
+        foreach ( $pu_output as $key=>$data ) 
         {
             if ( isset($results[$key]) ) 
             {
@@ -115,8 +210,7 @@ class PHPUnit
             }
         }
             
-        $out = array();
-        
+        $final = '';
         $started = null;
         $test = array();
 
@@ -125,9 +219,11 @@ class PHPUnit
                         
         foreach ( $results as $event ) 
         {
+        echo '<pre>';
+        print_r($event);
+        echo '</pre><br />';
             if ( $event['event'] === 'suiteStart' ) 
             {
-                // Close out last case
                 $suite_expand = ( $suite_success == 'failure' ) ? '-' : '+';
                 $suite_display = ( $suite_success == 'failure' ) ? 'show' : 'hide';
 
@@ -143,9 +239,9 @@ class PHPUnit
                         ';
         
                 $right = '</div></div>
-                ';
+                         ';
         
-                $out[] = $left . implode('', $test) . $right;
+                $final .= $left . implode('', $test) . $right;
 
                 $started = $event;
                 $test = array();
@@ -153,31 +249,10 @@ class PHPUnit
             } 
             elseif ( $event['event'] == 'test' ) 
             {
-                $status = '';
-                switch ( $event['status'] )
-                {
-                    case 'pass':
-                        $status = 'success';
-                        break;
-                    case 'error': 
-                        if ( stripos($event['message'], 'skipped') !== false )
-                        {
-                            $status = 'skipped';
-                        }
-                        elseif ( stripos($event['message'], 'incomplete') !== false )
-                        {
-                            $status = 'incomplete';
-                        }
-                        else
-                        {
-                            $status = 'failure';
-                        }
-                        break;
-                    case 'fail':
-                        $status = 'failure';
-                        break;
-                }
-                
+                $status = $this->_get_status($event['status']);
+                $expand = ( $status == 'fail' ) ? '-' : '+';
+                $display = ( $status == 'fail' ) ? 'show' : 'hide';
+
                 if ( $status === 'incomplete' && $suite_success !== 'failure' && $suite_success !== 'skipped' ) 
                 {
                     $suite_success = 'incomplete';
@@ -191,59 +266,10 @@ class PHPUnit
                     $suite_success = 'failure';
                 }
                 
-                $temp = explode('::', $event['test']);
-                $name = end($temp);
-                $message = ( isset($event['message']) ) ? $event['message'] : '';
-                $expand = ( $status == 'fail' ) ? '-' : '+';
-                $display = ( $status == 'fail' ) ? 'show' : 'hide';
-                $trace = ( isset($event['trace']) ) ? $event['trace'] : '';
-                $show_trace = ($trace) ? 'show' : 'hide';
-                
-                if ( $message ) 
-                {
-                    $message_pieces = explode('Failed', $message);
-                    $first = array_shift($message_pieces);
-                    $message_rest = implode('Failed', $message_pieces);
-                    $message_rest = str_replace($first, '', $message_rest);
-                    $first = '<strong>'.$first.'</strong><br />';
-                    if ( $message_rest ) 
-                    {
-                        $message = $first . 'Failed' . $message_rest;
-                    } 
-                    else
-                    {
-                        $message = $first;
-                    }
-                }
-                
-                if ( $trace ) 
-                {
-                    $new_trace = array();
-                    foreach ( $trace as $arr ) 
-                    {
-                        if ( (stristr($arr['file'], 'phpunit.php') === false) &&
-                             (stristr($arr['file'], 'Main/index.php') === false) &&
-                             ((!isset($arr['class'])) || (stristr($arr['class'], 'phpunit') === false) )
-                        ) 
-                        {
-                            $new_trace[] = $arr;
-                        }
-                    }
-                    
-                    if ( !empty($new_trace) ) 
-                    {
-                        ob_start();
-                        print_r($new_trace);
-                        $trace = ob_get_contents();
-                        ob_end_clean();
-                    } 
-                    else 
-                    {
-                        $trace = '';
-                        $show_trace = 'hide';
-                    }
-                    
-                }
+                $name = substr($event['test'], strpos($event['test'], '::') + 2);
+                $message = $this->_get_message($event['message']); 
+                $trace = $this->_get_trace($event['trace']);
+                $show_trace = ( $trace ) ? 'show' : 'hide';
                 
                 $variables = ( isset($event['collected']) ) ? $event['collected'] : '';
                 $show_variables = ( $variables ) ? 'show' : 'hide';
@@ -268,7 +294,7 @@ class PHPUnit
                                     <pre>' . trim($variables) . '</pre>
                                 </div>
                                 <div class="stacktrace rounded ' . $show_trace . '">
-                                    <pre>' . trim((string)$trace) . '</pre>
+                                    <pre>' . trim($trace) . '</pre>
                                 </div>
                         </div>
                 </div>
@@ -301,14 +327,10 @@ class PHPUnit
             
             $right = '</div></div>';
             
-            $out[] = $left . implode('', $test) . $right;
+            $final .= $left . implode('', $test) . $right;
         }
         
-        // Deal with last test case
-        
-        $out = implode('', $out);
-        
-        return $out;
+        return $final;
     }
 	
     private function _push($old, $new, $subject) 
