@@ -2,8 +2,6 @@
 
 register_shutdown_function('check_for_errors');
 
-// Hide error messages
-// error_reporting(0);
 function toHTML($type, $e) {
     $left = '<div class="box rounded error">';
     

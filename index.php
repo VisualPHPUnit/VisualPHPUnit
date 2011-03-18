@@ -7,6 +7,8 @@
 
     $path = ( isset($_GET['path']) ) ? $_GET['path'] : getcwd();
 
+    define('TEST_FILENAME', 'Test.php');
+
     header('Location: Main/index.php?path='.$path);
 
 ?>
