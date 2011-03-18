@@ -1,12 +1,15 @@
 <?php
 
-    include 'header.php';
+    ini_set('display_errors', 1);
+    // TODO: Move this
+    define('TEST_FILENAME', 'Test');
+    include 'header.html';
     
-    include '../PHPUnit.php';
+    require '../PHPUnit.php';
     require '../Sandbox.php';
 
     $path = str_replace('../', '', $_GET['path']); 
-    $path = realpath(dirname(__FILE__) . '/../../' . $path); 	
+    $path = realpath(dirname(__FILE__) . '/../' . $path); 	
     if ( is_dir($path) ) 
     {
         $phpunit = new PHPUnit($path);
@@ -20,6 +23,6 @@
     $results = $phpunit->run();
     echo $phpunit->toHTML($results);
     
-    include 'footer.php';
+    include 'footer.html';
 
 ?>

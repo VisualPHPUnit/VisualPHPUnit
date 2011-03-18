@@ -1,7 +1,7 @@
 <?php
 
-require 'PHPUnit/Framework.php';
-require 'PHPUnit/Util/Log/JSON.php';
+require '/usr/lib/php/PHPUnit/Autoload.php';
+require '/usr/lib/php/PHPUnit/Util/Log/JSON.php';
 
 class PHPUnit 
 {
@@ -9,7 +9,15 @@ class PHPUnit
     private $_test_cases = array();
     private $_results;
 	
-    public function __construct($test_dir)
+    public function __construct($test_dir=null)
+    {
+        if ( !is_null($test_dir) )
+        {
+            $this->_set_dir($test_dir);
+        }
+    }
+    
+    private function _set_dir($test_dir)
     {
         if ( is_dir(realpath($test_dir)) ) 
         {
@@ -20,42 +28,44 @@ class PHPUnit
             throw new Exception("$test_dir is not a dir", 1);
         }
 
-        $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($this->_testDir), RecursiveIteratorIterator::SELF_FIRST);
+        $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($this->_test_dir), RecursiveIteratorIterator::SELF_FIRST);
                         
-        $pattern = '/' . TEST_FILENAME . '$/i';
+        $pattern = '/' . TEST_FILENAME . '/i';
         while ( $it->valid() ) 
         {
             $filename = $it->getSubPathName();
             if ( !$it->isDot() && preg_match($pattern, $filename) ) 
             {
-                $this->_test_cases[basename($filename)] = $filename;
+                $this->_test_cases[] = $filename;
             }
 
             $it->next();
         }
-
     }
-	
+
+
     public function run($tests=null) 
     {
         if ( is_null($tests) ) 
         {
-            $tests = $this->test_cases;
+            $tests = $this->_test_cases;
         } 
         elseif ( is_string($name) ) 
         {
             $tests = array($tests);
         }
 
+        $loaded_classes = get_declared_classes();
         foreach ( $tests as $test ) 
         {
-            require($test);
+            require $test;
         }
+        $new_classes = array_diff(get_declared_classes(), $loaded_classes); 
 
         $suite = new PHPUnit_Framework_TestSuite();
-        foreach ( get_declared_classes() as $class ) 
+        foreach ( $new_classes as $class ) 
         {
-            if ( (stripos($class, TEST_FILENAME) !== false) && (strpos($class, 'PHPUnit_') === false) ) 
+            if ( (stripos($class, TEST_FILENAME)) && (stripos($class, 'PHPUnit_') === false) ) 
             {
                 $suite->addTestSuite($class);
             }
@@ -109,32 +119,34 @@ class PHPUnit
         
         $started = null;
         $test = array();
-                        
-        foreach ( $results as $key=>$event ) 
-        {
-            if ( $event['event'] == 'suiteStart' ) 
-            {
-                if ( !is_null($started) ) 
-                {
-                    // Close out last case
-                    $suite_expand = ( $suite_success == 'failure' ) ? '-' : '+';
-                    $suite_display = ( $suite_success == 'failure' ) ? 'show' : 'hide';
 
-                    $left = '<div class="box rounded">
-                            <div class="testsuite ' . $suite_success . '">
-                                <div class="light rounded"></div>
-                                <div class="name">' . $started['suite'] . '</div>
-                                <div class="stats"></div>
-                                <div class="expand button">' . $suite_expand . '</div>
-                            </div>
-                            <div class="more ' . $suite_display . '">
-                                <hr class = "big" />
-                            ';
-            
-                    $right = '</div></div>';
-            
-                    $out[] = $left . implode('', $test) . $right;
-                }	
+        // Remove the first element
+        array_shift($results);
+                        
+        foreach ( $results as $event ) 
+        {
+            if ( $event['event'] === 'suiteStart' ) 
+            {
+                // Close out last case
+                $suite_expand = ( $suite_success == 'failure' ) ? '-' : '+';
+                $suite_display = ( $suite_success == 'failure' ) ? 'show' : 'hide';
+
+                $left = '<div class="box rounded">
+                        <div class="testsuite ' . $suite_success . '">
+                            <div class="light rounded"></div>
+                            <div class="name">' . $started['suite'] . '</div>
+                            <div class="stats"></div>
+                            <div class="expand button">' . $suite_expand . '</div>
+                        </div>
+                        <div class="more ' . $suite_display . '">
+                            <hr class = "big" />
+                        ';
+        
+                $right = '</div></div>
+                ';
+        
+                $out[] = $left . implode('', $test) . $right;
+
                 $started = $event;
                 $test = array();
                 $suite_success = 'success';
@@ -299,50 +311,55 @@ class PHPUnit
         return $out;
     }
 	
-    // TODO: Fix
     private function _push($old, $new, $subject) 
     {
-        $pos = strpos($subject,$old);
+        $pos = strpos($subject, $old);
         
-        if ($pos !== false)
-            return substr_replace($subject,$new,$pos,strlen($old));
+        if ( $pos !== false )
+        {
+            return substr_replace($subject, $new, $pos, strlen($old));
+        }
         else
-            throw new Exception("Cannot find tag to replace (old: $old, new: ".htmlspecialchars($new).")", 1);
+        {
+            // TODO: Throw exception
+            die("Cannot find tag to replace (old: " . $old . ", new: " . htmlspecialchars($new) . ").");
+        }
     }
 	
-    // TODO: Fix
     private function _pull($str) 
     {
-        $start = '{'; 
-        $end = '}';
-
         $tags = array();
-        $nest = -1;
+        $nest = 0;
         $start_mark = 0;
         
-        for ( $i=0; $i < strlen($str); $i++ ) 
+        $length = strlen($str);
+        for ( $i=0; $i < $length; $i++ ) 
         { 
-            $start_substr = substr($str, $i, strlen($start));
-            $end_substr = substr($str, $i, strlen($end));
+            $char = $str{$i};
             
-            if($start_substr == $start) {
-                    $nest++;
-                    if($nest == 0) {
-                            $start_mark = $i;
-                    }
+            if ( $char == '{' ) 
+            {
+                $nest++;
+                if ( $nest == 1 ) 
+                {
+                    $start_mark = $i;
+                }
             }
-            elseif($end_substr == $end) {
-                    if($nest == 0) {
-                            // $tags[] = substr($str, $start_mark, $i+strlen($end));
-                            $tags[] = substr($str, $start_mark + strlen($start), $i - $start_mark - strlen($start));
-                            $start_mark = $i;
-                    }
-                    $nest--;
+            elseif ( $char == '}' ) 
+            {
+                if ( $nest == 1 ) 
+                {
+                    $tags[] = substr($str, $start_mark + 1, $i - $start_mark - 1);
+                    $start_mark = $i;
+                }
+                $nest--;
             }
         }
         
-        if($nest != -1) {
-            throw new Exception("Unable to parse - probably forgot a curly!", 1);
+        if ( $nest !== 0 ) 
+        {
+            // TODO: Throw exception
+            die("Unable to parse JSON response from PHPUnit.");
         }
         
         return $tags;

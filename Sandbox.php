@@ -1,6 +1,6 @@
 <?php
 
-register_shutdown_function('check_for_errors');
+//register_shutdown_function('check_for_errors');
 
 function toHTML($type, $e) {
     $left = '<div class="box rounded error">';
@@ -20,8 +20,8 @@ function check_for_errors() {
     if(@ob_get_contents()) {
             $results_so_far = @ob_get_contents();
             @ob_clean();
-            
-            echo PHPUnit::toHTML($results_so_far);
+            $pu = new PHPUnit(); 
+            echo $pu->toHTML($results_so_far);
     }
 		
 
@@ -50,7 +50,7 @@ function check_for_errors() {
 
     if ( $results_so_far ) 
     {
-        include('Main/footer.php');
+        include('Main/footer.html');
     }
 
     exit(1);
