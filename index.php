@@ -27,7 +27,7 @@
     }
             
     $results = $phpunit->run();
-    echo $phpunit->toHTML($results);
+    echo $phpunit->to_HTML($results);
     
     include 'footer.html';
 
