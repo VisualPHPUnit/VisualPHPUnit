@@ -12,10 +12,9 @@ function main() {
     
     include('header.php');
     
-    // $template->compile('main.tpl');
-    require_once '../Sandbox.php';
     include '../PHPUnit.php';
-
+    // $template->compile('main.tpl');
+    //require_once '../Sandbox.php';
     // Protect against unauthorized file access. 
     $path = str_replace('../', '', $_GET['path']); 
     $_GET['path'] = realpath(dirname(__FILE__) . '/../../' . $path); 	
@@ -37,7 +36,6 @@ function main() {
     echo $phpunit->toHTML($results);
     
     include('footer.php');
-    
     
     // include('main.php');
 }
