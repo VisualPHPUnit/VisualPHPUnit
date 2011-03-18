@@ -1,7 +1,7 @@
 <?php
 
-require '/usr/lib/php/PHPUnit/Autoload.php';
-require '/usr/lib/php/PHPUnit/Util/Log/JSON.php';
+require 'PHPUnit/Autoload.php';
+require 'PHPUnit/Util/Log/JSON.php';
 
 class PHPUnit 
 {
