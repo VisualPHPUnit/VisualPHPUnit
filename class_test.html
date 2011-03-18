@@ -1,0 +1,17 @@
+                            <div class="test <?=$test['status']?>"> 
+                                <div class="light rounded"></div> 
+                                <div class="name"><?=$test['name']?></div> 
+                                <div class="stats"><?=$test['message']?></div>
+                                <div class="expand button"><?=$test['expand']?></div>
+                                <div class="more test <?=$test['display']?>"> 
+                                    <div class="variables rounded <?=$variables['display']?>"> 
+                                        <pre><?=$variables['message']?></pre> 
+                                    </div> 
+                                    <div class="stacktrace rounded <?=$trace['display']?>"> 
+                                        <pre><?=$trace['message']?></pre> 
+                                    </div> 
+                                </div> 
+                            </div> 
+                            <? if ( $separator['display'] ) { ?>
+                                <hr class="small" />
+                            <? } ?>

@@ -120,7 +120,7 @@ class PHPUnit
         {
             ob_start();
             print_r($new_trace);
-            $trace = ob_get_contents();
+            $trace = trim(ob_get_contents());
             ob_end_clean();
         } 
         else 
@@ -177,6 +177,33 @@ class PHPUnit
         
         return $results;
     }
+
+    private function _build_suite($suite)
+    {
+        $suite['expand'] = ( $suite['status'] == 'failure' ) ? '-' : '+';
+        $suite['display'] = ( $suite['status'] == 'failure' ) ? 'show' : 'hide';
+
+        ob_start(); 
+        include 'class_suite.html';
+        $suite_content = ob_get_contents(); 
+        ob_end_clean();
+        return $suite_content;
+    }
+
+    private function _build_test($test, $variables, $trace, $separator)
+    {
+        if ( $variables['message'] && $test['status'] === 'failure' ) 
+        {
+            $test['expand'] = '-';
+            $test['display'] = 'show';
+        }
+                
+        ob_start(); 
+        include 'class_test.html';
+        $test_content = ob_get_contents(); 
+        ob_end_clean();
+        return $test_content;
+    }
 	
     public function toHTML($pu_output) 
     {
@@ -211,123 +238,62 @@ class PHPUnit
         }
             
         $final = '';
-        $started = null;
-        $test = array();
-
+        $suite = $test = $variables = $trace = $separator = array();
+        
         // Remove the first element
         array_shift($results);
                         
-        foreach ( $results as $event ) 
+        foreach ( $results as $key=>$event ) 
         {
-        echo '<pre>';
-        print_r($event);
-        echo '</pre><br />';
             if ( $event['event'] === 'suiteStart' ) 
             {
-                $suite_expand = ( $suite_success == 'failure' ) ? '-' : '+';
-                $suite_display = ( $suite_success == 'failure' ) ? 'show' : 'hide';
+                if ( !is_null($suite['tests']) )
+                {
+                    $final .= $this->_build_suite($suite);
+                    $suite = $test = $variables = $trace = $separator = array();
+                }
 
-                $left = '<div class="box rounded">
-                        <div class="testsuite ' . $suite_success . '">
-                            <div class="light rounded"></div>
-                            <div class="name">' . $started['suite'] . '</div>
-                            <div class="stats"></div>
-                            <div class="expand button">' . $suite_expand . '</div>
-                        </div>
-                        <div class="more ' . $suite_display . '">
-                            <hr class = "big" />
-                        ';
-        
-                $right = '</div></div>
-                         ';
-        
-                $final .= $left . implode('', $test) . $right;
-
-                $started = $event;
-                $test = array();
-                $suite_success = 'success';
+                $suite['status'] = 'success';
+                $suite['name'] = $event['suite'];
             } 
             elseif ( $event['event'] == 'test' ) 
             {
-                $status = $this->_get_status($event['status']);
-                $expand = ( $status == 'fail' ) ? '-' : '+';
-                $display = ( $status == 'fail' ) ? 'show' : 'hide';
+                $test['status'] = $this->_get_status($event['status']);
+                $test['expand'] = ( $test['status'] == 'fail' ) ? '-' : '+';
+                $test['display'] = ( $test['status'] == 'fail' ) ? 'show' : 'hide';
 
-                if ( $status === 'incomplete' && $suite_success !== 'failure' && $suite_success !== 'skipped' ) 
+                if ( $test['status'] === 'incomplete' && $suite['status'] !== 'failure' && $suite['status'] !== 'skipped' ) 
                 {
-                    $suite_success = 'incomplete';
+                    $suite['status'] = 'incomplete';
                 } 
-                elseif ( $status === 'skipped' && $suite_success !== 'failure' ) 
+                elseif ( $test['status'] === 'skipped' && $suite['status'] !== 'failure' ) 
                 {
-                    $suite_success = 'skipped';
+                    $suite['status'] = 'skipped';
                 } 
-                elseif ( $status === 'failure' ) 
+                elseif ( $test['status'] === 'failure' ) 
                 {
-                    $suite_success = 'failure';
+                    $suite['status'] = 'failure';
                 }
                 
-                $name = substr($event['test'], strpos($event['test'], '::') + 2);
-                $message = $this->_get_message($event['message']); 
-                $trace = $this->_get_trace($event['trace']);
-                $show_trace = ( $trace ) ? 'show' : 'hide';
+                $test['name'] = substr($event['test'], strpos($event['test'], '::') + 2);
+                $test['message'] = $this->_get_message($event['message']); 
+
+                $variables['message'] = ( isset($event['collected']) ) ? trim($event['collected']) : '';
+                $variables['display'] = ( $variables['message'] ) ? 'show' : 'hide';
+
+                $trace['message'] = $this->_get_trace($event['trace']);
+                $trace['display'] = ( $trace['message'] ) ? 'show' : 'hide';
                 
-                $variables = ( isset($event['collected']) ) ? $event['collected'] : '';
-                $show_variables = ( $variables ) ? 'show' : 'hide';
-                
-                $test[] = '<div class="test '. $status . '">
-                        <div class="light rounded"></div>
-                        <div class="name">' . $name . '</div>
-                        <div class="stats">' . $message . '</div>';
-                                                        
-                if ( $variables && $status == 'failure' ) 
-                {
-                    $test[] = '<div class="expand button">-</div>';
-                    $display = 'show';
-                }
-                elseif ( $variables || $trace ) 
-                {
-                    $test[] = '<div class="expand button">' . $expand . '</div>';
-                }	
-                
-                $test[] = '<div class="more test ' . $display . '">
-                                <div class="variables rounded ' . $show_variables . '">
-                                    <pre>' . trim($variables) . '</pre>
-                                </div>
-                                <div class="stacktrace rounded ' . $show_trace . '">
-                                    <pre>' . trim($trace) . '</pre>
-                                </div>
-                        </div>
-                </div>
-                ';
-                
-                if ( isset($results[$i+1]) && $results[$i+1]['event'] !== 'suiteStart' ) 
-                {
-                    $test[] = '<hr class = "small" />';
-                }
+                $separator['display'] = ( isset($results[$key + 1]) && $results[$key +1 ]['event'] !== 'suiteStart' ); 
+
+                $suite['tests'] .= $this->_build_test($test, $variables, $trace, $separator); 
             }	
                         
         }
-        
-        if ( isset($started) ) 
+
+        if ( !is_null($suite['tests']) )
         {
-            // Close out last case
-            $suite_expand = ( $suite_success == 'failure' ) ? '-' : '+';
-            $suite_display = ( $suite_success == 'failure' ) ? 'show' : 'hide';
-            
-            $left = '<div class="box rounded">
-                    <div class="testsuite ' . $suite_success . '">
-                        <div class="light rounded"></div>
-                        <div class="name">' . $started['suite'] . '</div>
-                        <div class="stats"></div>
-                        <div class="expand button">' . $suite_expand . '</div>
-                    </div>
-                    <div class="more ' . $suite_display . '">
-                        <hr class = "big" />
-                    ';
-            
-            $right = '</div></div>';
-            
-            $final .= $left . implode('', $test) . $right;
+            $final .= $this->_build_suite($suite);
         }
         
         return $final;
