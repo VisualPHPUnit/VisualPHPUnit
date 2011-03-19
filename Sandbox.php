@@ -21,7 +21,7 @@
         {
             $results_so_far = @ob_get_contents();
             @ob_clean();
-            $pu = new PHPUnit(); 
+            $pu = new VPU(); 
             echo $pu->to_HTML($results_so_far);
         }
 

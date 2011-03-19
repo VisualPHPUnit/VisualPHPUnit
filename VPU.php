@@ -3,7 +3,7 @@
 require 'PHPUnit/Autoload.php';
 require 'PHPUnit/Util/Log/JSON.php';
 
-class PHPUnit 
+class VPU 
 {
     private $_test_cases = array();
 	
@@ -41,6 +41,63 @@ class PHPUnit
         $test_content = ob_get_contents(); 
         ob_end_clean();
         return $test_content;
+    }
+
+    public function create_snapshot($data, $ext)
+    {
+        $filename = BASE_INSTALL . '/' . HISTORY_DIRECTORY . '/' .  $ext . '/' . date('d-m-Y G:i') . '.' . $ext;
+        if ( !is_writable($filename) ) 
+        {
+            // TODO: Throw exception!
+        }
+        $handle = fopen($filename, 'c');
+        if ( $handle )
+        {
+            fwrite($handle, $data);
+            fclose($handle);
+            chmod($filename, 0777);
+        }
+    }
+
+    private function _format_json($json) {
+
+        $result= '';
+        $level = 0;
+        $prev_char = '';
+        $out_of_quotes = true;
+        $length = strlen($json);
+
+        for ( $i=0; $i<=$length; $i++ ) 
+        {
+            $char = substr($json, $i, 1);
+
+            if ( $char == '"' && $prev_char != '\\' ) 
+            {
+                $out_of_quotes = !$out_of_quotes;
+            } 
+            elseif ( $out_of_quotes && ($char == '}' || $char == ']') ) 
+            {
+                $result .= "\n";
+                $level--;
+                $result .= str_repeat("\t", $level);
+            }
+            
+            $result .= $char;
+
+            if ( $out_of_quotes && ($char == ',' || $char == '{' || $char == '[') ) 
+            {
+                $result .= "\n";
+                if ( $char == '{' || $char == '[' ) {
+                    $level++;
+                }
+                
+                $result .= str_repeat("\t", $level);
+            }
+            
+            $prev_char = $char;
+        }
+
+        return $result;
     }
 
     private function _get_message($message)
@@ -107,9 +164,9 @@ class PHPUnit
         $new_trace = array();
         foreach ( $trace as $arr ) 
         {
-            if ( (stripos($arr['file'], 'phpunit.php') === false) &&
-                // TODO: THIS LINE - Main/index.php will have to change
-                    (stripos($arr['file'], 'Main/index.php') === false) &&
+            // TODO: Fix this logic
+            if ( (stripos($arr['file'], 'vpu.php') === false) &&
+                    (stripos($arr['file'], 'index.php') === false) &&
                     ((!isset($arr['class'])) || (stripos($arr['class'], 'phpunit') === false) )) 
             {
                 $new_trace[] = $arr;
@@ -167,7 +224,14 @@ class PHPUnit
         $results = '[' . rtrim($results, ',') . ']';
         $results = str_replace('\n', "", $results);
         $results = str_replace('&quot;', '"', $results);
+
+        if ( CREATE_SNAPSHOTS )
+        {
+            $this->create_snapshot($this->_format_json($results), 'json');
+        }
+
         $results = json_decode($results, true);
+
         
         $pu_output = explode('|||', $pu_output);
         foreach ( $pu_output as $key=>$data ) 
