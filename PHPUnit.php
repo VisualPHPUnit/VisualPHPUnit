@@ -21,9 +21,10 @@ class PHPUnit
     {
         $suite['expand'] = ( $suite['status'] == 'failure' ) ? '-' : '+';
         $suite['display'] = ( $suite['status'] == 'failure' ) ? 'show' : 'hide';
+        $suite['time'] = 'Executed in ' . $suite['time'] . ' seconds.'; 
 
         ob_start(); 
-        include 'class_suite.html';
+        include 'ui/class_suite.html';
         $suite_content = ob_get_contents(); 
         ob_end_clean();
         return $suite_content;
@@ -38,7 +39,7 @@ class PHPUnit
         }
                 
         ob_start(); 
-        include 'class_test.html';
+        include 'ui/class_test.html';
         $test_content = ob_get_contents(); 
         ob_end_clean();
         return $test_content;
@@ -317,6 +318,7 @@ class PHPUnit
                 $suite['status'] = 'success';
                 $suite['name'] = $event['suite'];
                 $suite['tests'] = '';
+                $suite['time'] = 0;
             } 
             elseif ( $event['event'] == 'test' ) 
             {
@@ -339,6 +341,8 @@ class PHPUnit
                 
                 $test['name'] = substr($event['test'], strpos($event['test'], '::') + 2);
                 $test['message'] = $this->_get_message($event['message']); 
+                $test['message'] .= '<br /><br />Executed in ' . $event['time'] . ' seconds.';
+                $suite['time'] += $event['time'];
 
                 $variables['message'] = ( isset($event['collected']) ) ? trim($event['collected']) : '';
                 $variables['display'] = ( $variables['message'] ) ? 'show' : 'hide';

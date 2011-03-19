@@ -50,7 +50,7 @@
 
         if ( $results_so_far ) 
         {
-            include('footer.html');
+            include('ui/footer.html');
         }
 
         exit(1);
