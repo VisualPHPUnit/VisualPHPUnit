@@ -24,7 +24,7 @@ class PHPUnit
         $suite['time'] = 'Executed in ' . $suite['time'] . ' seconds.'; 
 
         ob_start(); 
-        include 'ui/class_suite.html';
+        include 'ui/suite.html';
         $suite_content = ob_get_contents(); 
         ob_end_clean();
         return $suite_content;
@@ -39,7 +39,7 @@ class PHPUnit
         }
                 
         ob_start(); 
-        include 'ui/class_test.html';
+        include 'ui/test.html';
         $test_content = ob_get_contents(); 
         ob_end_clean();
         return $test_content;
