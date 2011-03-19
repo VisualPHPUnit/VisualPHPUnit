@@ -5,9 +5,7 @@ require 'PHPUnit/Util/Log/JSON.php';
 
 class PHPUnit 
 {
-    private $_test_dir;
     private $_test_cases = array();
-    private $_results;
 	
     public function __construct($test_dir=null)
     {
@@ -270,16 +268,13 @@ class PHPUnit
 
     private function _set_dir($test_dir)
     {
-        if ( is_dir(realpath($test_dir)) ) 
-        {
-            $this->_test_dir = realpath($test_dir);
-        } 
-        else 
+        $test_dir = realpath($test_dir);
+        if ( !is_dir($test_dir) ) 
         {
             throw new Exception("$test_dir is not a dir", 1);
         }
 
-        $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($this->_test_dir), RecursiveIteratorIterator::SELF_FIRST);
+        $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($test_dir), RecursiveIteratorIterator::SELF_FIRST);
                         
         $pattern = '/' . TEST_FILENAME . '/i';
         while ( $it->valid() ) 
