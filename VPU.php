@@ -45,7 +45,7 @@ class VPU
 
     public function create_snapshot($data, $ext)
     {
-        $filename = BASE_INSTALL . '/' . HISTORY_DIRECTORY . '/' .  $ext . '/' . date('d-m-Y G:i') . '.' . $ext;
+        $filename = BASE_INSTALL . '/' . SNAPSHOT_DIRECTORY . '/' .  $ext . '/' . date('d-m-Y G:i') . '.' . $ext;
         if ( !is_writable($filename) ) 
         {
             // TODO: Throw exception!

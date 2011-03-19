@@ -15,6 +15,8 @@ define('TEST_FILENAME', 'Test');
 
 define('CREATE_SNAPSHOTS', true);
 
-define('HISTORY_DIRECTORY', 'history');
+define('SNAPSHOT_DIRECTORY', 'history');
+
+define('SANDBOX_ERRORS', true);
 
 ?>

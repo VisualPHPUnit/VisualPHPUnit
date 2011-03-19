@@ -1,0 +1,135 @@
+<html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <title>Visual PHPUnit</title>
+        <link rel="stylesheet" href="ui/css/main.css" type="text/css" media="screen" title="no title" charset="utf-8">
+    </head>
+    <body>
+        <div id="container">
+            <script type="text/javascript" charset="utf-8">
+                var marginLeft = (window.innerWidth - 960) / 2;
+                document.getElementById('container').style.marginLeft = marginLeft + 'px';
+            </script>
+
+Notice: Undefined variable: event in /srv/http/pu/VPU.php on line 133
+
+Notice: Undefined variable: event in /srv/http/pu/VPU.php on line 137
+                    <div class="box rounded"> 
+                        <div class="testsuite failure"> 
+                            <div class="light rounded"></div> 
+                            <div class="name">PUTest</div> 
+                            <div class="stats">Executed in 0.0027608871459961 seconds.</div> 
+                            <div class="expand button">-</div> 
+                        </div> 
+                        <div class="more show"> 
+                            <hr class = "big" /> 
+                                                        <div class="test failure"> 
+                                <div class="light rounded"></div> 
+                                <div class="name">test_this</div> 
+                                <div class="stats"><strong>test_this() failed!</strong><br />Failed asserting that &lt;string:value&gt; is equal to &lt;string:test&gt;.<br /><br />Executed in 0.0022189617156982 seconds.</div>
+                                <div class="expand button">-</div>
+                                <div class="more test show"> 
+                                    <div class="variables rounded show"> 
+                                        <pre>some stuff</pre> 
+                                    </div> 
+                                    <div class="stacktrace rounded hide"> 
+                                        <pre></pre> 
+                                    </div> 
+                                </div> 
+                            </div> 
+                                                            <hr class="small" />
+                                                        <div class="test failure"> 
+                                <div class="light rounded"></div> 
+                                <div class="name">test_this_too</div> 
+                                <div class="stats"><strong></strong><br />Use of undefined constant somestr - assumed 'somestr'<br /><br />Executed in 0.00054192543029785 seconds.</div>
+                                <div class="expand button">+</div>
+                                <div class="more test hide"> 
+                                    <div class="variables rounded hide"> 
+                                        <pre></pre> 
+                                    </div> 
+                                    <div class="stacktrace rounded hide"> 
+                                        <pre></pre> 
+                                    </div> 
+                                </div> 
+                            </div> 
+                                                    </div>
+                    </div> 
+                    <div class="box rounded"> 
+                        <div class="testsuite success"> 
+                            <div class="light rounded"></div> 
+                            <div class="name">PUTest2</div> 
+                            <div class="stats">Executed in 0.00051522254943848 seconds.</div> 
+                            <div class="expand button">+</div> 
+                        </div> 
+                        <div class="more hide"> 
+                            <hr class = "big" /> 
+                                                        <div class="test success"> 
+                                <div class="light rounded"></div> 
+                                <div class="name">test_this</div> 
+                                <div class="stats"><br /><br />Executed in 0.00026822090148926 seconds.</div>
+                                <div class="expand button">+</div>
+                                <div class="more test hide"> 
+                                    <div class="variables rounded show"> 
+                                        <pre>some stuff</pre> 
+                                    </div> 
+                                    <div class="stacktrace rounded hide"> 
+                                        <pre></pre> 
+                                    </div> 
+                                </div> 
+                            </div> 
+                                                            <hr class="small" />
+                                                        <div class="test success"> 
+                                <div class="light rounded"></div> 
+                                <div class="name">test_this_too</div> 
+                                <div class="stats"><br /><br />Executed in 0.00024700164794922 seconds.</div>
+                                <div class="expand button">+</div>
+                                <div class="more test hide"> 
+                                    <div class="variables rounded show"> 
+                                        <pre>some stuff</pre> 
+                                    </div> 
+                                    <div class="stacktrace rounded hide"> 
+                                        <pre></pre> 
+                                    </div> 
+                                </div> 
+                            </div> 
+                                                    </div>
+                    </div> 
+		</div>
+
+	</body>
+	<script src="ui/js/jquery-1.5.1.min.js"></script>
+        <script>
+            $(document).ready(function() {
+
+                $('.expand.button').each(function(index) {
+                    $(this).click(function(e) {
+                        if ( $(this).text() == '-' ) 
+                        {
+                            if ( $(this).parent().hasClass('test') ) 
+                            {
+                                $(this).next('.more').slideUp();
+                            } 
+                            else 
+                            {
+                                $(this).parent().next('.more').slideUp();
+                            }
+                            $(this).text('+');
+                        } 
+                        else 
+                        {
+                            if ( $(this).parent().hasClass('test') ) 
+                            {
+                                $(this).next('.more').slideDown();
+                            } 
+                            else 
+                            {
+                                $(this).parent().next('.more').slideDown();
+                            }
+                            $(this).text('-');
+                        }
+                    });
+                });
+
+            });
+        </script>
+</html>

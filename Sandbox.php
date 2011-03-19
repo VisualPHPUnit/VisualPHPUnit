@@ -16,14 +16,16 @@
 
     function check_for_errors() {
 
+        /*
         $results_so_far = '';
         if ( @ob_get_contents() ) 
         {
             $results_so_far = @ob_get_contents();
             @ob_clean();
-            $pu = new VPU(); 
-            echo $pu->to_HTML($results_so_far);
+            //$vpu = new VPU(); 
+            //echo $vpu->to_HTML($results_so_far);
         }
+        */
 
         if ( !is_null($aError = error_get_last()) ) 
         {
@@ -48,12 +50,14 @@
             }
         }
 
+        /*
         if ( $results_so_far ) 
         {
             include('ui/footer.html');
         }
 
         exit(1);
+        */
     }
 
 ?>

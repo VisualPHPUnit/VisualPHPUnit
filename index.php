@@ -2,7 +2,7 @@
 
     require 'config.php';
     require 'VPU.php';
-    require 'Sandbox.php';
+    //require 'Sandbox.php';
 
     $path = realpath(TEST_DIRECTORY); 	
     if ( !is_dir($path) ) 
@@ -12,22 +12,21 @@
     } 
             
     chdir($path);
-
-    $phpunit = new VPU($path);
-    $results = $phpunit->run();
-
     ob_start(); 
+
+    $vpu = new VPU($path);
+    $results = $vpu->run();
+
     include 'ui/header.html';
-    echo $phpunit->to_HTML($results);
+    echo $vpu->to_HTML($results);
     include 'ui/footer.html';
-    $snapshot = ob_get_contents(); 
-    ob_end_clean();
-    
-    echo $snapshot;
+
+    // USE SET_ERROR_HANDLER
 
     if ( CREATE_SNAPSHOTS )
     {
-        $phpunit->create_snapshot($snapshot, 'html');
+        $snapshot = ob_get_contents(); 
+        $vpu->create_snapshot($snapshot, 'html');
     }
 
 ?>
