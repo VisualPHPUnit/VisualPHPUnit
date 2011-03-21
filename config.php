@@ -54,7 +54,7 @@ define('TEST_DIRECTORY', 'tests');
 define('TEST_FILENAME', 'Test');
 
 // Whether or not to create snapshots of the test results
-define('CREATE_SNAPSHOTS', false);
+define('CREATE_SNAPSHOTS', true);
 
 // The directory where the test results will be stored
 define('SNAPSHOT_DIRECTORY', 'history');
@@ -63,6 +63,6 @@ define('SNAPSHOT_DIRECTORY', 'history');
 define('SANDBOX_ERRORS', true);
 
 // The file to use as a temporary storage for PHP errors during PHPUnit runs
-define('SANDBOX_FILENAME', BASE_INSTALL . '/errors.tmp');
+define('SANDBOX_FILENAME', BASE_INSTALL . '/errors/errors.tmp');
 
 ?>
