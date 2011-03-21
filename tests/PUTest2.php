@@ -7,6 +7,7 @@ class PUTest2 extends PHPUnit_Framework_TestCase
         $key = 'test';
         $value = 'test';
         print_r('some stuff');
+        somestr;
         $this->assertEquals($key, $value, 'test_this() failed!');
     }
 

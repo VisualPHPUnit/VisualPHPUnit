@@ -13,10 +13,12 @@ define('TEST_DIRECTORY', 'tests');
 
 define('TEST_FILENAME', 'Test');
 
-define('CREATE_SNAPSHOTS', true);
+define('CREATE_SNAPSHOTS', false);
 
 define('SNAPSHOT_DIRECTORY', 'history');
 
 define('SANDBOX_ERRORS', true);
+
+define('SANDBOX_FILENAME', BASE_INSTALL . '/errors.tmp');
 
 ?>

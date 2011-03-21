@@ -46,17 +46,8 @@ class VPU
     public function create_snapshot($data, $ext)
     {
         $filename = BASE_INSTALL . '/' . SNAPSHOT_DIRECTORY . '/' .  $ext . '/' . date('d-m-Y G:i') . '.' . $ext;
-        if ( !is_writable($filename) ) 
-        {
-            // TODO: Throw exception!
-        }
-        $handle = fopen($filename, 'c');
-        if ( $handle )
-        {
-            fwrite($handle, $data);
-            fclose($handle);
-            chmod($filename, 0777);
-        }
+        $this->_write_file($filename, $data);
+        chmod($filename, 0777);
     }
 
     private function _format_json($json) {
@@ -98,6 +89,13 @@ class VPU
         }
 
         return $result;
+    }
+
+    private function _get_errors()
+    {
+        $errors = file_get_contents(SANDBOX_FILENAME);
+        $this->_write_file(SANDBOX_FILENAME, '', 'w');
+        return $errors;
     }
 
     private function _get_message($message)
@@ -186,6 +184,37 @@ class VPU
         }
 
         return $trace;
+    }
+
+    public function handle_errors($err_no, $err_str, $err_file, $err_line)
+    {
+        $error = array();
+        switch ( $err_no ) 
+        {
+            case E_NOTICE:
+                $error['type'] = 'Notice'; 
+                break;
+            case E_WARNING:
+                $error['type'] = 'Warning'; 
+                break;
+            case E_ERROR:
+                $error['type'] = 'Error'; 
+                break;
+            case E_PARSE:
+                $error['type'] = 'Parse'; 
+                break;
+            default:
+                $error['type'] = 'Unknown'; 
+                break;
+        }
+        $error['message'] = $err_str;
+        $error['line'] = $err_line;
+        $error['file'] = $err_file;
+        ob_start(); 
+        include 'ui/error.html';
+        $this->_write_file(SANDBOX_FILENAME, ob_get_contents()); 
+        ob_end_clean();
+        return true;
     }
 
     private function _load_tests($tests=null)
@@ -420,10 +449,30 @@ class VPU
         {
             $final .= $this->_build_suite($suite);
         }
+
+        if ( SANDBOX_ERRORS )
+        {
+            $final .= $this->_get_errors();
+        }
         
         return $final;
     }
-	
+
+    private function _write_file($filename, $data, $mode='a')
+    {
+        if ( !is_writable($filename) ) 
+        {
+            // TODO: Throw exception!
+        }
+        $handle = fopen($filename, $mode);
+        if ( $handle )
+        {
+            fwrite($handle, $data);
+            fclose($handle);
+            return true;
+        }
+    }
+
 }
 
 ?>
