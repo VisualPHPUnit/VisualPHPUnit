@@ -13,7 +13,7 @@ define('TEST_DIRECTORY', 'tests');
 
 define('TEST_FILENAME', 'Test');
 
-define('CREATE_SNAPSHOTS', false);
+define('CREATE_SNAPSHOTS', true);
 
 define('SNAPSHOT_DIRECTORY', 'history');
 

@@ -126,7 +126,7 @@ class VPU
         return $message;
     }
 
-    private function _get_status($status)
+    private function _get_status($status, $message)
     {
         switch ( $status )
         {
@@ -134,11 +134,11 @@ class VPU
                 $status = 'success';
                 break;
             case 'error': 
-                if ( stripos($event['message'], 'skipped') !== false )
+                if ( stripos($message, 'skipped') !== false )
                 {
                     $status = 'skipped';
                 }
-                elseif ( stripos($event['message'], 'incomplete') !== false )
+                elseif ( stripos($message, 'incomplete') !== false )
                 {
                     $status = 'incomplete';
                 }
@@ -416,7 +416,7 @@ class VPU
             } 
             elseif ( $event['event'] == 'test' ) 
             {
-                $test['status'] = $this->_get_status($event['status']);
+                $test['status'] = $this->_get_status($event['status'], $event['message']);
                 $test['expand'] = ( $test['status'] == 'fail' ) ? '-' : '+';
                 $test['display'] = ( $test['status'] == 'fail' ) ? 'show' : 'hide';
 
