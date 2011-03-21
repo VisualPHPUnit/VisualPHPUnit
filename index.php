@@ -41,8 +41,7 @@
     $path = realpath(TEST_DIRECTORY); 	
     if ( !is_dir($path) ) 
     {
-        // TODO: Throw exception
-        die("Could not find the specified tests directory: <strong>" . $path . '</strong>');
+        die('The supplied TEST_DIRECTORY (' . TEST_DIRECTORY . ') is not a valid directory.  Check your configuration settings and try again.');
     } 
 
     chdir($path);

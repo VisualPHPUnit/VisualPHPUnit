@@ -255,6 +255,7 @@ hr.small {
 	font-size: 16px;
 	margin: 11px;
 	float:left;
+        width: 65%;
 }
 
 .error .file {

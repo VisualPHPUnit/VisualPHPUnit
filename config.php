@@ -54,7 +54,7 @@ define('TEST_DIRECTORY', 'tests');
 define('TEST_FILENAME', 'Test');
 
 // Whether or not to create snapshots of the test results
-define('CREATE_SNAPSHOTS', true);
+define('CREATE_SNAPSHOTS', false);
 
 // The directory where the test results will be stored
 define('SNAPSHOT_DIRECTORY', 'history');

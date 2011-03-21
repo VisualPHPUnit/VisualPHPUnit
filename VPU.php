@@ -48,6 +48,14 @@ class VPU
     *  @access private
     */
     private $_test_cases = array();
+
+   /**
+    *  The sandboxed exceptions.
+    *
+    *  @var string
+    *  @access private
+    */
+    private $_exceptions = '';
     
    /**
     *  Loads tests from the supplied directory.
@@ -347,6 +355,25 @@ class VPU
     }
 
    /**
+    *  Formats exceptions for sandbox use.
+    *
+    *  @param Exception $exception            The thrown exception.
+    *  @access private
+    *  @return void
+    */
+    public function _handle_exception($exception)
+    {
+        $error = array('type'    => 'Exception',
+                       'message' => $exception->getMessage(),
+                       'line'    => $exception->getLine(),
+                       'file'    => $exception->getFile());
+        ob_start(); 
+        include 'ui/error.html';
+        $this->_exceptions .= ob_get_contents(); 
+        ob_end_clean();
+    }
+
+   /**
     *  Loads each of the supplied tests. 
     *
     *  @param array|string $tests        The tests to be run through PHPUnit.
@@ -394,7 +421,7 @@ class VPU
         }
 
         $results = '[' . rtrim($results, ',') . ']';
-        $results = str_replace('\n', "", $results);
+        $results = str_replace('\n', '', $results);
         $results = str_replace('&quot;', '"', $results);
 
         if ( CREATE_SNAPSHOTS )
@@ -431,41 +458,49 @@ class VPU
     */
     private function _pull($str) 
     {
-        $tags = array();
-        $nest = 0;
-        $start_mark = 0;
-        
-        $length = strlen($str);
-        for ( $i=0; $i < $length; $i++ ) 
-        { 
-            $char = $str{$i};
-            
-            if ( $char == '{' ) 
-            {
-                $nest++;
-                if ( $nest == 1 ) 
-                {
-                    $start_mark = $i;
-                }
-            }
-            elseif ( $char == '}' ) 
-            {
-                if ( $nest == 1 ) 
-                {
-                    $tags[] = substr($str, $start_mark + 1, $i - $start_mark - 1);
-                    $start_mark = $i;
-                }
-                $nest--;
-            }
-        }
-        
-        if ( $nest !== 0 ) 
+        try 
         {
-            // TODO: Throw exception
-            die("Unable to parse JSON response from PHPUnit.");
+            $tags = array();
+            $nest = 0;
+            $start_mark = 0;
+            
+            $length = strlen($str);
+            for ( $i=0; $i < $length; $i++ ) 
+            { 
+                $char = $str{$i};
+                
+                if ( $char == '{' ) 
+                {
+                    $nest++;
+                    if ( $nest == 1 ) 
+                    {
+                        $start_mark = $i;
+                    }
+                }
+                elseif ( $char == '}' ) 
+                {
+                    if ( $nest == 1 ) 
+                    {
+                        $tags[] = substr($str, $start_mark + 1, $i - $start_mark - 1);
+                        $start_mark = $i;
+                    }
+                    $nest--;
+                }
+            }
+            
+            if ( $nest !== 0 ) 
+            {
+                throw new Exception('Unable to parse JSON response from PHPUnit.');
+            }
+
+            return $tags;
+        }
+        catch (Exception $e)
+        {
+            $this->_handle_exception($e);
+            return false;
         }
         
-        return $tags;
     }
 
    /**
@@ -479,16 +514,21 @@ class VPU
     */
     private function _replace($old, $new, $subject) 
     {
-        $pos = strpos($subject, $old);
-        
-        if ( $pos !== false )
+        try
         {
+            $pos = strpos($subject, $old);
+            
+            if ( $pos === false )
+            {
+                throw new Exception('Cannot find tag to replace (old: ' . $old . ', new: ' . htmlspecialchars($new) . ').');
+            }
+
             return substr_replace($subject, $new, $pos, strlen($old));
         }
-        else
+        catch (Exception $e)
         {
-            // TODO: Throw exception
-            die("Cannot find tag to replace (old: " . $old . ", new: " . htmlspecialchars($new) . ").");
+            $this->_handle_exception($e);
+            return false;
         }
     }
 	
@@ -533,24 +573,32 @@ class VPU
     */
     private function _set_dir($test_dir)
     {
-        $test_dir = realpath($test_dir);
-        if ( !is_dir($test_dir) ) 
+        try
         {
-            throw new Exception("$test_dir is not a dir", 1);
-        }
-
-        $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($test_dir), RecursiveIteratorIterator::SELF_FIRST);
-                        
-        $pattern = '/' . TEST_FILENAME . '/i';
-        while ( $it->valid() ) 
-        {
-            $filename = $it->getSubPathName();
-            if ( !$it->isDot() && preg_match($pattern, $filename) ) 
+            $test_dir = realpath($test_dir);
+            if ( !is_dir($test_dir) ) 
             {
-                $this->_test_cases[] = $filename;
+                throw new Exception($test_dir . 'is not a valid directory.');
             }
 
-            $it->next();
+            $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($test_dir), RecursiveIteratorIterator::SELF_FIRST);
+                            
+            $pattern = '/' . TEST_FILENAME . '/i';
+            while ( $it->valid() ) 
+            {
+                $filename = $it->getSubPathName();
+                if ( !$it->isDot() && preg_match($pattern, $filename) ) 
+                {
+                    $this->_test_cases[] = $filename;
+                }
+
+                $it->next();
+            }
+        }
+        catch (Exception $e)
+        {
+            $this->_handle_exception($e);
+            return false;
         }
     }
 
@@ -631,7 +679,7 @@ class VPU
 
         if ( SANDBOX_ERRORS )
         {
-            $final .= $this->_get_errors();
+            $final .= $this->_exceptions . $this->_get_errors();
         }
         
         return $final;
@@ -648,16 +696,22 @@ class VPU
     */
     private function _write_file($filename, $data, $mode='a')
     {
-        if ( !is_writable($filename) ) 
+        try 
         {
-            // TODO: Throw exception!
-        }
-        $handle = fopen($filename, $mode);
-        if ( $handle )
-        {
+            $handle = @fopen($filename, $mode);
+            if ( !$handle )
+            {
+                throw new Exception('Could not open ' . $filename . ' for writing.  Check the location and permissions of the file and try again.');
+            }
+
             fwrite($handle, $data);
             fclose($handle);
             return true;
+        }
+        catch (Exception $e)
+        {
+            $this->_handle_exception($e);
+            return false;
         }
     }
 
