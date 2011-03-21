@@ -12,6 +12,7 @@ class VPU
         if ( !is_null($test_dir) )
         {
             $this->_set_dir($test_dir);
+            $this->_empty_file(SANDBOX_FILENAME);
         }
     }
 
@@ -48,6 +49,11 @@ class VPU
         $filename = BASE_INSTALL . '/' . SNAPSHOT_DIRECTORY . '/' .  $ext . '/' . date('d-m-Y G:i') . '.' . $ext;
         $this->_write_file($filename, $data);
         chmod($filename, 0777);
+    }
+
+    private function _empty_file($filename)
+    {
+        $this->_write_file(SANDBOX_FILENAME, '', 'w');
     }
 
     private function _format_json($json) {
@@ -94,7 +100,7 @@ class VPU
     private function _get_errors()
     {
         $errors = file_get_contents(SANDBOX_FILENAME);
-        $this->_write_file(SANDBOX_FILENAME, '', 'w');
+        $this->_empty_file(SANDBOX_FILENAME);
         return $errors;
     }
 
