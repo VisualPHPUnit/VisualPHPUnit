@@ -8,11 +8,13 @@ VisualPHPUnit is a visual front-end for PHPUnit.
 Features
 --------
 
-* The ability to save both visual and JSON snapshots of your test results - this is useful if you run tests regularly and would like to maintain a log of your unit test history. 
-* Enumeration of various PHPUnit statistics - this includes a nice parsing of debugging information that gets lost in the terminal!
-* Sandboxing of PHP errors/exceptions
+VisualPHPUnit provides the following features:
 
-?
+* A stunning front-end which organizes test and suite results
+* An option to maintain a history of unit test results through the use of visual and JSON logs 
+* Enumeration of PHPUnit statistics and messages
+* Convenient display of any debug messages written within unit tests
+* Sandboxing of PHP errors/exceptions
 
 Screenshot
 ----------
