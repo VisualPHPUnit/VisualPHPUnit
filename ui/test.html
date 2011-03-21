@@ -4,14 +4,14 @@
                                 <div class="stats"><?=$test['message']?></div>
                                 <div class="expand button"><?=$test['expand']?></div>
                                 <div class="more test <?=$test['display']?>"> 
-                                    <div class="variables rounded <?=$variables['display']?>"> 
-                                        <pre><?=$variables['message']?></pre> 
+                                    <div class="variables rounded <?=$test['variables_display']?>"> 
+                                        <pre><?=$test['variables_message']?></pre> 
                                     </div> 
-                                    <div class="stacktrace rounded <?=$trace['display']?>"> 
-                                        <pre><?=$trace['message']?></pre> 
+                                    <div class="stacktrace rounded <?=$test['trace_display']?>"> 
+                                        <pre><?=$test['trace_message']?></pre> 
                                     </div> 
                                 </div> 
                             </div> 
-                            <? if ( $separator['display'] ) { ?>
+                            <? if ( $test['separator_display'] ) { ?>
                                 <hr class="small" />
                             <? } ?>

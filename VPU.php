@@ -40,8 +40,22 @@ require 'PHPUnit/Util/Log/JSON.php';
 
 class VPU 
 {
+
+   /**
+    *  The collection of tests to run through PHPUnit. 
+    *
+    *  @var array
+    *  @access private
+    */
     private $_test_cases = array();
-	
+    
+   /**
+    *  Loads tests from the supplied directory.
+    *
+    *  @param string $test_dir        The directory containing the tests.
+    *  @access public
+    *  @return void
+    */
     public function __construct($test_dir=null)
     {
         if ( !is_null($test_dir) )
@@ -51,6 +65,13 @@ class VPU
         }
     }
 
+   /**
+    *  Builds a suite of tests.
+    *
+    *  @param array $suite        The suite-related variables to be displayed.
+    *  @access private
+    *  @return string
+    */
     private function _build_suite($suite)
     {
         $suite['expand'] = ( $suite['status'] == 'failure' ) ? '-' : '+';
@@ -64,9 +85,16 @@ class VPU
         return $suite_content;
     }
 
-    private function _build_test($test, $variables, $trace, $separator)
+   /**
+    *  Builds a test.
+    *
+    *  @param array $test             The test-related variables to be displayed.
+    *  @access private
+    *  @return string
+    */
+    private function _build_test($test)
     {
-        if ( $variables['message'] && $test['status'] === 'failure' ) 
+        if ( $test['variables_message'] && $test['status'] === 'failure' ) 
         {
             $test['expand'] = '-';
             $test['display'] = 'show';
@@ -79,6 +107,14 @@ class VPU
         return $test_content;
     }
 
+   /**
+    *  Creates a snapshot of the test results.
+    *
+    *  @param string $data            The data to be written.
+    *  @param string $ext             The filename extension to be used.
+    *  @access public
+    *  @return void
+    */
     public function create_snapshot($data, $ext)
     {
         $filename = BASE_INSTALL . '/' . SNAPSHOT_DIRECTORY . '/' .  $ext . '/' . date('d-m-Y G:i') . '.' . $ext;
@@ -86,11 +122,25 @@ class VPU
         chmod($filename, 0777);
     }
 
+   /**
+    *  Erases the contents of a file. 
+    *
+    *  @param string $filename        The file to be emptied.
+    *  @access private
+    *  @return void
+    */
     private function _empty_file($filename)
     {
-        $this->_write_file(SANDBOX_FILENAME, '', 'w');
+        $this->_write_file($filename, '', 'w');
     }
 
+   /**
+    *  Transforms JSON into a more readable format.
+    *
+    *  @param string $json        The JSON to be formatted.
+    *  @access private
+    *  @return string
+    */
     private function _format_json($json) {
 
         $result= '';
@@ -132,6 +182,12 @@ class VPU
         return $result;
     }
 
+   /**
+    *  Retrieves all of the formatted errors.
+    *
+    *  @access private
+    *  @return string
+    */
     private function _get_errors()
     {
         $errors = file_get_contents(SANDBOX_FILENAME);
@@ -139,6 +195,13 @@ class VPU
         return $errors;
     }
 
+   /**
+    *  Retrieves any user-generated debugging messages from a PHPUnit test result. 
+    *
+    *  @param string $message        The message supplied by VPU's transformed JSON.
+    *  @access private
+    *  @return string
+    */
     private function _get_message($message)
     {
         if ( !$message ) 
@@ -161,6 +224,14 @@ class VPU
         return $message;
     }
 
+   /**
+    *  Retrieves the status from a PHPUnit test result. 
+    *
+    *  @param string $status        The status supplied by VPU's transformed JSON.
+    *  @param string $message       The message supplied by VPU's transformed JSON.
+    *  @access private
+    *  @return string
+    */
     private function _get_status($status, $message)
     {
         switch ( $status )
@@ -193,6 +264,13 @@ class VPU
         return $status;
     }
 
+   /**
+    *  Retrieves the stack trace from a PHPUnit test result. 
+    *
+    *  @param string $trace        The message supplied by VPU's transformed JSON.
+    *  @access private
+    *  @return string
+    */
     private function _get_trace($trace)
     {
         if ( !$trace ) 
@@ -227,6 +305,16 @@ class VPU
         return $trace;
     }
 
+   /**
+    *  Serves as the error handler.  Formats the errors, and then writes them to the sandbox file. 
+    *
+    *  @param int $err_no            The level of the error raised.
+    *  @param string $err_str        The error message.
+    *  @param string $err_file       The file in which the error was raised.
+    *  @param int $err_line          The line number at which the error was raised.
+    *  @access public
+    *  @return bool
+    */
     public function handle_errors($err_no, $err_str, $err_file, $err_line)
     {
         $error = array();
@@ -258,6 +346,13 @@ class VPU
         return true;
     }
 
+   /**
+    *  Loads each of the supplied tests. 
+    *
+    *  @param array|string $tests        The tests to be run through PHPUnit.
+    *  @access private
+    *  @return array
+    */
     private function _load_tests($tests=null)
     {
         if ( is_null($tests) ) 
@@ -280,6 +375,13 @@ class VPU
         return array_diff(get_declared_classes(), $loaded_classes); 
     }
 
+   /**
+    *  Parses and formats the JSON output from PHPUnit into an associative array. 
+    *
+    *  @param string $pu_output        The JSON output from PHPUnit. 
+    *  @access private
+    *  @return array
+    */
     private function _parse_output($pu_output)
     {
         $results = '';
@@ -287,7 +389,7 @@ class VPU
         foreach ( $json_elements as $elem ) 
         {
             $elem = '{' . $elem . '}';
-            $pu_output = $this->_push($elem, '|||', $pu_output);
+            $pu_output = $this->_replace($elem, '|||', $pu_output);
             $results .= $elem . ',';
         }
 
@@ -301,7 +403,6 @@ class VPU
         }
 
         $results = json_decode($results, true);
-
         
         $pu_output = explode('|||', $pu_output);
         foreach ( $pu_output as $key=>$data ) 
@@ -321,6 +422,13 @@ class VPU
         return $results;
     }
 
+   /**
+    *  Converts the first nested layer of PHPUnit-generated JSON to an associative array.
+    *
+    *  @param string $str        The JSON output from PHPUnit. 
+    *  @access private
+    *  @return array
+    */
     private function _pull($str) 
     {
         $tags = array();
@@ -360,7 +468,16 @@ class VPU
         return $tags;
     }
 
-    private function _push($old, $new, $subject) 
+   /**
+    *  Replaces text within a string. 
+    *
+    *  @param string $old            The substring to be replaced. 
+    *  @param string $new            The replacment string. 
+    *  @param string $subject        The string whose contents will be replaced.
+    *  @access private
+    *  @return string
+    */
+    private function _replace($old, $new, $subject) 
     {
         $pos = strpos($subject, $old);
         
@@ -375,6 +492,13 @@ class VPU
         }
     }
 	
+   /**
+    *  Runs supplied tests through PHPUnit.
+    *
+    *  @param array|string $tests        The tests to be run through PHPUnit.
+    *  @access public
+    *  @return string
+    */
     public function run($tests=null) 
     {
         $suite = new PHPUnit_Framework_TestSuite();
@@ -400,6 +524,13 @@ class VPU
         return $results;
     }
 
+   /**
+    *  Iterates through the supplied directory and loads the test files.
+    *
+    *  @param string $test_dir       The directory containing the tests. 
+    *  @access private
+    *  @return void
+    */
     private function _set_dir($test_dir)
     {
         $test_dir = realpath($test_dir);
@@ -423,6 +554,13 @@ class VPU
         }
     }
 
+   /**
+    *  Renders the JSON from PHPUnit into HTML. 
+    *
+    *  @param string $pu_output        The JSON output from PHPUnit. 
+    *  @access public
+    *  @return string
+    */
     public function to_HTML($pu_output) 
     {
         $results = $this->_parse_output($pu_output);    
@@ -432,7 +570,7 @@ class VPU
         }
 
         $final = '';
-        $suite = $test = $variables = $trace = $separator = array();
+        $suite = $test = array();
         
         foreach ( $results as $key=>$event ) 
         {
@@ -441,7 +579,7 @@ class VPU
                 if ( isset($suite['tests']) )
                 {
                     $final .= $this->_build_suite($suite);
-                    $suite = $test = $variables = $trace = $separator = array();
+                    $suite = $test = array();
                 }
 
                 $suite['status'] = 'success';
@@ -473,15 +611,15 @@ class VPU
                 $test['message'] .= '<br /><br />Executed in ' . $event['time'] . ' seconds.';
                 $suite['time'] += $event['time'];
 
-                $variables['message'] = ( isset($event['collected']) ) ? trim($event['collected']) : '';
-                $variables['display'] = ( $variables['message'] ) ? 'show' : 'hide';
+                $test['variables_message'] = ( isset($event['collected']) ) ? trim($event['collected']) : '';
+                $test['variables_display'] = ( $test['variables_message'] ) ? 'show' : 'hide';
 
-                $trace['message'] = $this->_get_trace($event['trace']);
-                $trace['display'] = ( $trace['message'] ) ? 'show' : 'hide';
+                $test['trace_message'] = $this->_get_trace($event['trace']);
+                $test['trace_display'] = ( $test['trace_message'] ) ? 'show' : 'hide';
                 
-                $separator['display'] = ( isset($results[$key + 1]) && $results[$key +1 ]['event'] !== 'suiteStart' ); 
+                $test['separator_display'] = ( isset($results[$key + 1]) && $results[$key +1 ]['event'] !== 'suiteStart' ); 
 
-                $suite['tests'] .= $this->_build_test($test, $variables, $trace, $separator); 
+                $suite['tests'] .= $this->_build_test($test); 
             }	
                         
         }
@@ -499,6 +637,15 @@ class VPU
         return $final;
     }
 
+   /**
+    *  Writes data to a file.
+    *
+    *  @param string $filename        The name of the file.
+    *  @param string $data            The data to be written.
+    *  @param string $mode            The type of access to be granted to the file handle.
+    *  @access private
+    *  @return string
+    */
     private function _write_file($filename, $data, $mode='a')
     {
         if ( !is_writable($filename) ) 
