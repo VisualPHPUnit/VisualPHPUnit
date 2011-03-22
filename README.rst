@@ -32,9 +32,15 @@ Installation
     a. Change CREATE_SNAPSHOTS to *true* if you'd like to enable logging.  Logs are stored in the "history" directory, though you can modify SNAPSHOT_DIRECTORY to point somewhere else if you please.  Please make note of the following:
         i. The directory specified in SNAPSHOT_DIRECTORY must contain two directories for logging to work properly.  One must be named 'html', and the other 'json'.
         ii. Note that you will have to give the directory specified in SNAPSHOT_DIRECTORY (as well as the subdirectories described above) the appropriate permissions in order to allow PHP to write to it.
-        iii. Also note that you will have to copy the "ui" directory over to the directory specified in SNAPSHOT_DIRECTORY in order for the html files to display properly. 
+        iii. Also note that you will have to copy the "ui" directory over to the 'html' directory specified in SNAPSHOT_DIRECTORY in order for the html files to display properly. 
     b. Change SANDBOX_ERRORS to *true* if you'd like VPU to display any PHP errors after the test results.  If so, please make note of the following:
         i. The file specified in SANDBOX_FILENAME will always be empty (VPU wipes it at the end of each test run).  However, PHP still needs to be able to write to it, so ensure that the filename specified with SANDBOX_FILENAME has the appropriate permissions. 
+
+
+Version Information
+-------------------
+
+Current release is v. 1.0, last updated on 21 March 2010.
 
 Feedback
 --------
