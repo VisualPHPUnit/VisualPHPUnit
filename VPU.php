@@ -35,8 +35,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-require 'PHPUnit/Autoload.php';
-require 'PHPUnit/Util/Log/JSON.php';
+require 'Autoload.php';
+require 'Util/Log/JSON.php';
 
 class VPU 
 {
@@ -125,7 +125,12 @@ class VPU
     */
     public function create_snapshot($data, $ext)
     {
-        $filename = BASE_INSTALL . '/' . SNAPSHOT_DIRECTORY . '/' .  $ext . '/' . date('d-m-Y G:i') . '.' . $ext;
+        $top = BASE_INSTALL . '/' . SNAPSHOT_DIRECTORY;
+        if ( $top{strlen($top) - 1} !== '/' )
+        {
+            $top .= '/';
+        }
+        $filename = $top .  $ext . '/' . date('d-m-Y G:i') . '.' . $ext;
         $this->_write_file($filename, $data);
         chmod($filename, 0777);
     }

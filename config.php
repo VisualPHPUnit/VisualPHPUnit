@@ -37,14 +37,14 @@
 
 ini_set('display_errors', 1);
 
+// The directory where this application is installed
+define("BASE_INSTALL", realpath(__DIR__)); 
+
 // The directory where PHPUnit is installed
-define('PHPUNIT_INSTALL', '/usr/lib/php/');
+define('PHPUNIT_INSTALL', '/usr/share/pear/PHPUnit');
 
 set_include_path(get_include_path().PATH_SEPARATOR.
                  PHPUNIT_INSTALL.PATH_SEPARATOR);
-
-// The directory where this application is installed
-define("BASE_INSTALL", realpath(__DIR__)); 
 
 // The directory where the tests reside
 define('TEST_DIRECTORY', 'tests');
@@ -53,6 +53,10 @@ define('TEST_DIRECTORY', 'tests');
 // containing TEST_FILENAME (case-insensitive) within their filenames
 define('TEST_FILENAME', 'Test');
 
+/*
+ * Optional settings
+ */
+
 // Whether or not to create snapshots of the test results
 define('CREATE_SNAPSHOTS', false);
 
@@ -60,7 +64,7 @@ define('CREATE_SNAPSHOTS', false);
 define('SNAPSHOT_DIRECTORY', 'history');
 
 // Whether or not to sandbox PHP errors
-define('SANDBOX_ERRORS', true);
+define('SANDBOX_ERRORS', false);
 
 // The file to use as a temporary storage for PHP errors during PHPUnit runs
 define('SANDBOX_FILENAME', BASE_INSTALL . '/errors/errors.tmp');
