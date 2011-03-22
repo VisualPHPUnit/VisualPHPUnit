@@ -23,7 +23,7 @@ Installation
 ------------
 
 1. Download and extract the project to a web-accessible directory.
-2. Open config.php in your favorite editor.
+2. Open config.php with your favorite editor.
     a. Change PHPUNIT_INSTALL so that it points to the directory where PHPUnit is installed.
     b. Update TEST_DIRECTORY so that it points to the directory which contains your unit tests.
     c. Update TEST_FILENAME if your test filenames do not contain the word "Test" (note that this is case-insensitive).
@@ -40,7 +40,7 @@ Installation
 Version Information
 -------------------
 
-Current release is v. 1.0, last updated on 21 March 2010.
+Current release is v1.0, last updated on 21 March 2010.
 
 Feedback
 --------
