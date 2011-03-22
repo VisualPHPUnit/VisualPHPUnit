@@ -1,9 +1,7 @@
 VisualPHPUnit
 =============
 
-VisualPHPUnit is a visual front-end for PHPUnit.  
-
-?
+VisualPHPUnit is a visual front-end for PHPUnit.  Written in PHP, it aims to make unit testing more appealing. 
 
 Features
 --------
@@ -19,7 +17,7 @@ VisualPHPUnit provides the following features:
 Screenshot
 ----------
 
-?
+image:: http://echodrop.net/code/vpu/ss.png
 
 Installation
 ------------
