@@ -58,6 +58,15 @@ class VPU
     private $_exceptions = '';
     
    /**
+    *  The list of files to be ignored when creating a stack trace. 
+    *
+    *  @var array
+    *  @access private
+    */
+    private $_ignore_trace = array('vpu.php',
+                                   'index.php');
+
+   /**
     *  Loads tests from the supplied directory.
     *
     *  @param string $test_dir        The directory containing the tests.
@@ -294,10 +303,17 @@ class VPU
         $new_trace = array();
         foreach ( $trace as $arr ) 
         {
-            // TODO: Fix this logic
-            if ( (stripos($arr['file'], 'vpu.php') === false) &&
-                    (stripos($arr['file'], 'index.php') === false) &&
-                    ((!isset($arr['class'])) || (stripos($arr['class'], 'phpunit') === false) )) 
+            $found = false;
+            foreach ( $this->_ignore_trace as $ignore )
+            {
+                if ( stripos($arr['file'], $ignore) !== false )
+                {
+                    $found = true;
+                    break;
+                }
+            }
+
+            if ( !$found )
             {
                 $new_trace[] = $arr;
             }
