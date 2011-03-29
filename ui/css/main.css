@@ -78,7 +78,7 @@ a img { border: none; }
 
 #container {
 	width: 960px;
-	margin-left:15%;
+        margin: 0 auto;
 	position:relative;
 }
 
