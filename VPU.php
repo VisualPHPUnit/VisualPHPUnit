@@ -83,6 +83,38 @@ class VPU
     }
 
    /**
+    *  Builds the suite statistics.
+    *
+    *  @param array $stats        The stat-related variables to be transformed.
+    *  @access private
+    *  @return string
+    */
+    private function _build_stats($stats)
+    {
+        $suite = array_count_values($stats['suite']);
+        $suite['success'] = ( $suite['success'] ) ?: 0;
+        $suite['incomplete'] = ( $suite['incomplete'] ) ?: 0;
+        $suite['skipped'] = ( $suite['skipped'] ) ?: 0;
+        $suite['failure'] = ( $suite['failure'] ) ?: 0;
+        // Avoid divide by zero error
+        $suite['total'] = ( count($stats['suite']) ) ?: 1;
+
+        $test = array_count_values($stats['test']);
+        $test['success'] = ( $test['success'] ) ?: 0;
+        $test['incomplete'] = ( $test['incomplete'] ) ?: 0;
+        $test['skipped'] = ( $test['skipped'] ) ?: 0;
+        $test['failure'] = ( $test['failure'] ) ?: 0;
+        // Avoid divide by zero error
+        $test['total'] = ( count($stats['test']) ) ?: 1;
+
+        ob_start(); 
+        include 'ui/stats.html';
+        $stats_content = ob_get_contents(); 
+        ob_end_clean();
+        return $stats_content;
+    }
+
+   /**
     *  Builds a suite of tests.
     *
     *  @param array $suite        The suite-related variables to be displayed.
@@ -384,10 +416,13 @@ class VPU
     */
     public function _handle_exception($exception)
     {
-        $error = array('type'    => 'Exception',
-                       'message' => $exception->getMessage(),
-                       'line'    => $exception->getLine(),
-                       'file'    => $exception->getFile());
+        $error = array(
+            'type'    => 'Exception',
+            'message' => $exception->getMessage(),
+            'line'    => $exception->getLine(),
+            'file'    => $exception->getFile()
+        );
+
         ob_start(); 
         include 'ui/error.html';
         $this->_exceptions .= ob_get_contents(); 
@@ -639,6 +674,10 @@ class VPU
         }
 
         $final = '';
+        $stats = array(
+            'suite' => array(), 
+            'test' => array()
+        );
         $suite = $test = array();
         
         foreach ( $results as $key=>$event ) 
@@ -647,6 +686,7 @@ class VPU
             {
                 if ( isset($suite['tests']) )
                 {
+                    $stats['suite'][] = $suite['status'];
                     $final .= $this->_build_suite($suite);
                     $suite = $test = array();
                 }
@@ -661,6 +701,7 @@ class VPU
                 $test['status'] = $this->_get_status($event['status'], $event['message']);
                 $test['expand'] = ( $test['status'] == 'fail' ) ? '-' : '+';
                 $test['display'] = ( $test['status'] == 'fail' ) ? 'show' : 'hide';
+                $stats['test'][] = $test['status'];
 
                 if ( $test['status'] === 'incomplete' && $suite['status'] !== 'failure' && $suite['status'] !== 'skipped' ) 
                 {
@@ -696,13 +737,14 @@ class VPU
         if ( isset($suite['tests']) )
         {
             $final .= $this->_build_suite($suite);
+            $final .= $this->_build_stats($stats);
         }
 
         if ( SANDBOX_ERRORS )
         {
             $final .= $this->_exceptions . $this->_get_errors();
         }
-        
+
         return $final;
     }
 

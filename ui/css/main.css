@@ -178,6 +178,11 @@ a img { border: none; }
 	border: 1px solid #C09D12;
 }
 
+.stats .light {
+        background-color: #0099FF;  
+	border: 1px solid #4D4D4D;
+}
+
 hr.big {
 	background-color: #A0A0A0;
 	height: 1px;
@@ -212,6 +217,18 @@ hr.small {
 	-moz-border-radius-topright: 10px;
 	-webkit-border-top-right-radius: 10px;
 	background-color: #CCCCCC;
+}
+
+.collected {
+        width: 45%;
+}
+
+#left {
+        float: left;
+}
+
+#right {
+        float: right;
 }
 
 .test .button.expand {
