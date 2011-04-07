@@ -1,28 +1,50 @@
-<!--
                     <div class="box rounded collected" id="left"> 
-                        <div class="testsuite stats"> 
+                        <div class="testsuite results"> 
                             <div class="light rounded"></div> 
                             <div class="name">Suite Statistics</div>
-                            <div class="stats">
-                                Succeeded: <?=$suite['success'];?> (<?=round($suite['success'] / $suite['total'] * 100, 1);?>%) 
-                                Failed: <?=$suite['failure'];?> (<?=round($suite['failure'] / $suite['total'] * 100, 1);?>%) 
-                                Incomplete: <?=$suite['incomplete'];?> (<?=round($suite['incomplete'] / $suite['total'] * 100, 1);?>%) 
-                                Skipped: <?=$suite['skipped'];?> (<?=round($suite['skipped'] / $suite['total'] * 100, 1);?>%) 
-                                Total: <?=$suite['total'];?> 
+                            <div class="info">
+                                <ul>
+                                    <li>
+                                        <span>Succeeded: </span><?=$suite['success'];?> (<?=round($suite['success'] / $suite['total'] * 100, 1);?>%) 
+                                    </li>
+                                    <li>
+                                        <span>Failed: </span><?=$suite['failure'];?> (<?=round($suite['failure'] / $suite['total'] * 100, 1);?>%) 
+                                    </li>
+                                    <li>
+                                        <span>Incomplete: </span><?=$suite['incomplete'];?> (<?=round($suite['incomplete'] / $suite['total'] * 100, 1);?>%) 
+                                    </li>
+                                    <li>
+                                        <span>Skipped: </span><?=$suite['skipped'];?> (<?=round($suite['skipped'] / $suite['total'] * 100, 1);?>%) 
+                                    </li>
+                                    <li>
+                                        <span>Total: </span><?=$suite['total'];?> 
+                                    </li>
+                                </ul>
                             </div> 
                         </div> 
                     </div> 
                     <div class="box rounded collected" id="right"> 
-                        <div class="testsuite stats"> 
+                        <div class="testsuite results"> 
                             <div class="light rounded"></div> 
                             <div class="name">Test Statistics</div> 
-                            <div class="stats">
-                                Succeeded: <?=$test['success'];?> (<?=round($test['success'] / $test['total'] * 100, 1);?>%) 
-                                Failed: <?=$test['failure'];?> (<?=round($test['failure'] / $test['total'] * 100, 1);?>%) 
-                                Incomplete: <?=$test['incomplete'];?> (<?=round($test['incomplete'] / $test['total'] * 100, 1);?>%) 
-                                Skipped: <?=$test['skipped'];?> (<?=round($test['skipped'] / $test['total'] * 100, 1);?>%) 
-                                Total: <?=$test['total'];?> 
+                            <div class="info">
+                                <ul>
+                                    <li>
+                                        <span>Succeeded: </span><?=$test['success'];?> (<?=round($test['success'] / $test['total'] * 100, 1);?>%) 
+                                    </li>
+                                    <li>
+                                        <span>Failed: </span><?=$test['failure'];?> (<?=round($test['failure'] / $test['total'] * 100, 1);?>%) 
+                                    </li>
+                                    <li>
+                                        <span>Incomplete: </span><?=$test['incomplete'];?> (<?=round($test['incomplete'] / $test['total'] * 100, 1);?>%) 
+                                    </li>
+                                    <li>
+                                        <span>Skipped: </span><?=$test['skipped'];?> (<?=round($test['skipped'] / $test['total'] * 100, 1);?>%) 
+                                    </li>
+                                    <li>
+                                        <span>Total: </span><?=$test['total'];?> 
+                                    </li>
+                                </ul>
                             </div> 
                         </div> 
                     </div> 
-                    -->

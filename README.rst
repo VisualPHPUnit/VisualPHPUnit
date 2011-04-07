@@ -40,7 +40,7 @@ Installation
 Version Information
 -------------------
 
-Current release is v1.0, last updated on 21 March 2010.
+Current release is v1.1, last updated on 6 April 2011.
 
 Feedback
 --------

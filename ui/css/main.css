@@ -156,6 +156,23 @@ a img { border: none; }
 	margin-top:2px;
 }
 
+.testsuite .info {
+        clear:both; 
+	margin-top:19px;
+        margin-left:32px;
+}
+
+.info ul {
+        list-style:none;
+}
+
+
+.info ul li span {
+        display:inline-block;
+        width:100px;
+        font-weight:bold;
+}
+
 .light {
 	width:5px;
 	height: 5px;
@@ -178,18 +195,15 @@ a img { border: none; }
 	border: 1px solid #C09D12;
 }
 
-.stats .light {
+.results .light {
         background-color: #0099FF;  
-	border: 1px solid #4D4D4D;
+	border: 1px solid #000066;
 }
 
 hr.big {
 	background-color: #A0A0A0;
 	height: 1px;
 	border: none;
-/*	border-bottom:1px solid #E8E8E8;
-*/	/*margin-left:-7px;
-	margin-right:-7px;*/
 }
 
 hr.small {
@@ -197,8 +211,6 @@ hr.small {
 	clear:both;
 	height: 1px;
 	border: none;
-/*	margin-left:-7px;
-	margin-right:-7px;*/
 }
 
 .button.expand {
@@ -225,10 +237,12 @@ hr.small {
 
 #left {
         float: left;
+        margin-bottom: 20px;
 }
 
 #right {
         float: right;
+        margin-bottom: 20px;
 }
 
 .test .button.expand {
@@ -236,8 +250,7 @@ hr.small {
 	width: 11px;
 	height: 11px;
 	font-size:10px;
-/*	font-weight:bold;
-*/}
+}
 
 .more_test {
 	clear:both;
@@ -266,6 +279,10 @@ hr.small {
 
 .show {
 	display:block;
+}
+
+.error {
+        clear: both;
 }
 
 .error .message {
