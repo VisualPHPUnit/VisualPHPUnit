@@ -39,8 +39,7 @@
     require 'VPU.php';
 
     $path = realpath(TEST_DIRECTORY); 	
-    if ( !is_dir($path) ) 
-    {
+    if ( !is_dir($path) ) {
         die('The supplied TEST_DIRECTORY (' . TEST_DIRECTORY . ') is not a valid directory.  Check your configuration settings and try again.');
     } 
 
@@ -49,8 +48,7 @@
 
     $vpu = new VPU($path);
 
-    if ( SANDBOX_ERRORS )
-    {
+    if ( SANDBOX_ERRORS ) {
         set_error_handler(array($vpu, 'handle_errors'));
     }
 
@@ -60,8 +58,7 @@
     echo $vpu->to_HTML($results);
     include 'ui/footer.html';
 
-    if ( CREATE_SNAPSHOTS )
-    {
+    if ( CREATE_SNAPSHOTS ) {
         $snapshot = ob_get_contents(); 
         $vpu->create_snapshot($snapshot, 'html');
     }

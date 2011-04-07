@@ -38,8 +38,7 @@
 require 'Autoload.php';
 require 'Util/Log/JSON.php';
 
-class VPU 
-{
+class VPU {
 
    /**
     *  The collection of tests to run through PHPUnit. 
@@ -63,8 +62,10 @@ class VPU
     *  @var array
     *  @access private
     */
-    private $_ignore_trace = array('vpu.php',
-                                   'index.php');
+    private $_ignore_trace = array(
+        'vpu.php',
+        'index.php'
+    );
 
    /**
     *  Loads tests from the supplied directory.
@@ -73,10 +74,8 @@ class VPU
     *  @access public
     *  @return void
     */
-    public function __construct($test_dir=null)
-    {
-        if ( !is_null($test_dir) )
-        {
+    public function __construct($test_dir=null) {
+        if ( !is_null($test_dir) ) {
             $this->_set_dir($test_dir);
             $this->_empty_file(SANDBOX_FILENAME);
         }
@@ -89,8 +88,7 @@ class VPU
     *  @access private
     *  @return string
     */
-    private function _build_stats($stats)
-    {
+    private function _build_stats($stats) {
         $suite = array_count_values($stats['suite']);
         $suite['success'] = ( isset($suite['success']) ) ? $suite['success'] : 0;
         $suite['failure'] = ( isset($suite['failure']) ) ? $suite['failure'] : 0;
@@ -121,8 +119,7 @@ class VPU
     *  @access private
     *  @return string
     */
-    private function _build_suite($suite)
-    {
+    private function _build_suite($suite) {
         $suite['expand'] = ( $suite['status'] == 'failure' ) ? '-' : '+';
         $suite['display'] = ( $suite['status'] == 'failure' ) ? 'show' : 'hide';
         $suite['time'] = 'Executed in ' . $suite['time'] . ' seconds.'; 
@@ -141,10 +138,8 @@ class VPU
     *  @access private
     *  @return string
     */
-    private function _build_test($test)
-    {
-        if ( $test['variables_message'] && $test['status'] === 'failure' ) 
-        {
+    private function _build_test($test) {
+        if ( $test['variables_message'] && $test['status'] === 'failure' ) {
             $test['expand'] = '-';
             $test['display'] = 'show';
         }
@@ -164,11 +159,9 @@ class VPU
     *  @access public
     *  @return void
     */
-    public function create_snapshot($data, $ext)
-    {
+    public function create_snapshot($data, $ext) {
         $top = BASE_INSTALL . '/' . SNAPSHOT_DIRECTORY;
-        if ( $top{strlen($top) - 1} !== '/' )
-        {
+        if ( $top{strlen($top) - 1} !== '/' ) {
             $top .= '/';
         }
         $filename = $top .  $ext . '/' . date('d-m-Y G:i') . '.' . $ext;
@@ -183,8 +176,7 @@ class VPU
     *  @access private
     *  @return void
     */
-    private function _empty_file($filename)
-    {
+    private function _empty_file($filename) {
         $this->_write_file($filename, '', 'w');
     }
 
@@ -203,16 +195,12 @@ class VPU
         $out_of_quotes = true;
         $length = strlen($json);
 
-        for ( $i=0; $i<=$length; $i++ ) 
-        {
+        for ( $i=0; $i<=$length; $i++ ) {
             $char = substr($json, $i, 1);
 
-            if ( $char == '"' && $prev_char != '\\' ) 
-            {
+            if ( $char == '"' && $prev_char != '\\' ) {
                 $out_of_quotes = !$out_of_quotes;
-            } 
-            elseif ( $out_of_quotes && ($char == '}' || $char == ']') ) 
-            {
+            } elseif ( $out_of_quotes && ($char == '}' || $char == ']') ) {
                 $result .= "\n";
                 $level--;
                 $result .= str_repeat("\t", $level);
@@ -220,8 +208,7 @@ class VPU
             
             $result .= $char;
 
-            if ( $out_of_quotes && ($char == ',' || $char == '{' || $char == '[') ) 
-            {
+            if ( $out_of_quotes && ($char == ',' || $char == '{' || $char == '[') ) {
                 $result .= "\n";
                 if ( $char == '{' || $char == '[' ) {
                     $level++;
@@ -242,8 +229,7 @@ class VPU
     *  @access private
     *  @return string
     */
-    private function _get_errors()
-    {
+    private function _get_errors() {
         $errors = file_get_contents(SANDBOX_FILENAME);
         $this->_empty_file(SANDBOX_FILENAME);
         return $errors;
@@ -256,22 +242,17 @@ class VPU
     *  @access private
     *  @return string
     */
-    private function _get_message($message)
-    {
-        if ( !$message ) 
-        {
+    private function _get_message($message) {
+        if ( !$message ) {
             return '';
         }
 
         $first = substr($message, 0, strpos($message, 'Failed'));
         $message_rest = str_replace($first, '', $message);
         $first = '<strong>' . $first . '</strong><br />';
-        if ( $message_rest ) 
-        {
+        if ( $message_rest ) {
             $message = $first . $message_rest;
-        } 
-        else
-        {
+        } else {
             $message = $first;
         }
         
@@ -286,24 +267,17 @@ class VPU
     *  @access private
     *  @return string
     */
-    private function _get_status($status, $message)
-    {
-        switch ( $status )
-        {
+    private function _get_status($status, $message) {
+        switch ( $status ) {
             case 'pass':
                 $status = 'success';
                 break;
             case 'error': 
-                if ( stripos($message, 'skipped') !== false )
-                {
+                if ( stripos($message, 'skipped') !== false ) {
                     $status = 'skipped';
-                }
-                elseif ( stripos($message, 'incomplete') !== false )
-                {
+                } elseif ( stripos($message, 'incomplete') !== false ) {
                     $status = 'incomplete';
-                }
-                else
-                {
+                } else {
                     $status = 'failure';
                 }
                 break;
@@ -325,41 +299,32 @@ class VPU
     *  @access private
     *  @return string
     */
-    private function _get_trace($trace)
-    {
-        if ( !$trace ) 
-        {
+    private function _get_trace($trace) {
+        if ( !$trace ) {
             return '';
         }
 
         $new_trace = array();
-        foreach ( $trace as $arr ) 
-        {
+        foreach ( $trace as $arr ) {
             $found = false;
-            foreach ( $this->_ignore_trace as $ignore )
-            {
-                if ( stripos($arr['file'], $ignore) !== false )
-                {
+            foreach ( $this->_ignore_trace as $ignore ) {
+                if ( stripos($arr['file'], $ignore) !== false ) {
                     $found = true;
                     break;
                 }
             }
 
-            if ( !$found )
-            {
+            if ( !$found ) {
                 $new_trace[] = $arr;
             }
         }
         
-        if ( !empty($new_trace) ) 
-        {
+        if ( !empty($new_trace) ) {
             ob_start();
             print_r($new_trace);
             $trace = trim(ob_get_contents());
             ob_end_clean();
-        } 
-        else 
-        {
+        } else {
             $trace = '';
         }
 
@@ -376,11 +341,9 @@ class VPU
     *  @access public
     *  @return bool
     */
-    public function handle_errors($err_no, $err_str, $err_file, $err_line)
-    {
+    public function handle_errors($err_no, $err_str, $err_file, $err_line) {
         $error = array();
-        switch ( $err_no ) 
-        {
+        switch ( $err_no ) {
             case E_NOTICE:
                 $error['type'] = 'Notice'; 
                 break;
@@ -414,8 +377,7 @@ class VPU
     *  @access private
     *  @return void
     */
-    public function _handle_exception($exception)
-    {
+    public function _handle_exception($exception) {
         $error = array(
             'type'    => 'Exception',
             'message' => $exception->getMessage(),
@@ -436,21 +398,16 @@ class VPU
     *  @access private
     *  @return array
     */
-    private function _load_tests($tests=null)
-    {
-        if ( is_null($tests) ) 
-        {
+    private function _load_tests($tests=null) {
+        if ( is_null($tests) ) {
             $tests = $this->_test_cases;
-        } 
-        elseif ( is_string($name) ) 
-        {
+        } elseif ( is_string($tests) ) {
             $tests = array($tests);
         }
 
         $loaded_classes = get_declared_classes();
 
-        foreach ( $tests as $test ) 
-        {
+        foreach ( $tests as $test ) {
             require $test;
         }
 
@@ -465,12 +422,10 @@ class VPU
     *  @access private
     *  @return array
     */
-    private function _parse_output($pu_output)
-    {
+    private function _parse_output($pu_output) {
         $results = '';
         $json_elements = $this->_pull($pu_output);
-        foreach ( $json_elements as $elem ) 
-        {
+        foreach ( $json_elements as $elem ) {
             $elem = '{' . $elem . '}';
             $pu_output = $this->_replace($elem, '|||', $pu_output);
             $results .= $elem . ',';
@@ -480,25 +435,21 @@ class VPU
         $results = str_replace('\n', '', $results);
         $results = str_replace('&quot;', '"', $results);
 
-        if ( CREATE_SNAPSHOTS )
-        {
+        if ( CREATE_SNAPSHOTS ) {
             $this->create_snapshot($this->_format_json($results), 'json');
         }
 
         $results = json_decode($results, true);
         
         $pu_output = explode('|||', $pu_output);
-        foreach ( $pu_output as $key=>$data ) 
-        {
-            if ( isset($results[$key]) ) 
-            {
+        foreach ( $pu_output as $key=>$data ) {
+            if ( isset($results[$key]) ) {
                 $results[$key]['collected'] = $data;
             }
         }
 
         // Remove the first element
-        if ( is_array($results) )
-        {
+        if ( is_array($results) ) {
             array_shift($results);
         }
 
@@ -512,31 +463,23 @@ class VPU
     *  @access private
     *  @return array
     */
-    private function _pull($str) 
-    {
-        try 
-        {
+    private function _pull($str) {
+        try {
             $tags = array();
             $nest = 0;
             $start_mark = 0;
             
             $length = strlen($str);
-            for ( $i=0; $i < $length; $i++ ) 
-            { 
+            for ( $i=0; $i < $length; $i++ ) { 
                 $char = $str{$i};
                 
-                if ( $char == '{' ) 
-                {
+                if ( $char == '{' ) {
                     $nest++;
-                    if ( $nest == 1 ) 
-                    {
+                    if ( $nest == 1 ) {
                         $start_mark = $i;
                     }
-                }
-                elseif ( $char == '}' ) 
-                {
-                    if ( $nest == 1 ) 
-                    {
+                } elseif ( $char == '}' ) {
+                    if ( $nest == 1 ) {
                         $tags[] = substr($str, $start_mark + 1, $i - $start_mark - 1);
                         $start_mark = $i;
                     }
@@ -544,15 +487,12 @@ class VPU
                 }
             }
             
-            if ( $nest !== 0 ) 
-            {
+            if ( $nest !== 0 ) {
                 throw new Exception('Unable to parse JSON response from PHPUnit.');
             }
 
             return $tags;
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             $this->_handle_exception($e);
             return false;
         }
@@ -568,21 +508,16 @@ class VPU
     *  @access private
     *  @return string
     */
-    private function _replace($old, $new, $subject) 
-    {
-        try
-        {
+    private function _replace($old, $new, $subject) {
+        try {
             $pos = strpos($subject, $old);
             
-            if ( $pos === false )
-            {
+            if ( $pos === false ) {
                 throw new Exception('Cannot find tag to replace (old: ' . $old . ', new: ' . htmlspecialchars($new) . ').');
             }
 
             return substr_replace($subject, $new, $pos, strlen($old));
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             $this->_handle_exception($e);
             return false;
         }
@@ -595,15 +530,12 @@ class VPU
     *  @access public
     *  @return string
     */
-    public function run($tests=null) 
-    {
+    public function run($tests=null) {
         $suite = new PHPUnit_Framework_TestSuite();
 
         $loaded_tests = $this->_load_tests($tests);
-        foreach ( $loaded_tests as $test ) 
-        {
-            if ( (stripos($test, TEST_FILENAME) !== false) && (stripos($test, 'PHPUnit_') === false) ) 
-            {
+        foreach ( $loaded_tests as $test ) {
+            if ( (stripos($test, TEST_FILENAME) !== false) && (stripos($test, 'PHPUnit_') === false) ) {
                 $suite->addTestSuite($test);
             }
         }
@@ -627,32 +559,25 @@ class VPU
     *  @access private
     *  @return void
     */
-    private function _set_dir($test_dir)
-    {
-        try
-        {
+    private function _set_dir($test_dir) {
+        try {
             $test_dir = realpath($test_dir);
-            if ( !is_dir($test_dir) ) 
-            {
+            if ( !is_dir($test_dir) ) {
                 throw new Exception($test_dir . 'is not a valid directory.');
             }
 
             $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($test_dir), RecursiveIteratorIterator::SELF_FIRST);
                             
             $pattern = '/' . TEST_FILENAME . '/i';
-            while ( $it->valid() ) 
-            {
+            while ( $it->valid() ) {
                 $filename = $it->getSubPathName();
-                if ( !$it->isDot() && preg_match($pattern, $filename) ) 
-                {
+                if ( !$it->isDot() && preg_match($pattern, $filename) ) {
                     $this->_test_cases[] = $filename;
                 }
 
                 $it->next();
             }
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             $this->_handle_exception($e);
             return false;
         }
@@ -665,11 +590,9 @@ class VPU
     *  @access public
     *  @return string
     */
-    public function to_HTML($pu_output) 
-    {
+    public function to_HTML($pu_output) {
         $results = $this->_parse_output($pu_output);    
-        if ( !is_array($results) )
-        {
+        if ( !is_array($results) ) {
             return '';
         }
 
@@ -680,12 +603,9 @@ class VPU
         );
         $suite = $test = array();
         
-        foreach ( $results as $key=>$event ) 
-        {
-            if ( $event['event'] === 'suiteStart' ) 
-            {
-                if ( isset($suite['tests']) )
-                {
+        foreach ( $results as $key=>$event ) {
+            if ( $event['event'] === 'suiteStart' ) {
+                if ( isset($suite['tests']) ) {
                     $stats['suite'][] = $suite['status'];
                     $final .= $this->_build_suite($suite);
                     $suite = $test = array();
@@ -695,24 +615,17 @@ class VPU
                 $suite['name'] = $event['suite'];
                 $suite['tests'] = '';
                 $suite['time'] = 0;
-            } 
-            elseif ( $event['event'] == 'test' ) 
-            {
+            } elseif ( $event['event'] == 'test' ) {
                 $test['status'] = $this->_get_status($event['status'], $event['message']);
                 $test['expand'] = ( $test['status'] == 'fail' ) ? '-' : '+';
                 $test['display'] = ( $test['status'] == 'fail' ) ? 'show' : 'hide';
                 $stats['test'][] = $test['status'];
 
-                if ( $test['status'] === 'incomplete' && $suite['status'] !== 'failure' && $suite['status'] !== 'skipped' ) 
-                {
+                if ( $test['status'] === 'incomplete' && $suite['status'] !== 'failure' && $suite['status'] !== 'skipped' ) {
                     $suite['status'] = 'incomplete';
-                } 
-                elseif ( $test['status'] === 'skipped' && $suite['status'] !== 'failure' ) 
-                {
+                } elseif ( $test['status'] === 'skipped' && $suite['status'] !== 'failure' ) {
                     $suite['status'] = 'skipped';
-                } 
-                elseif ( $test['status'] === 'failure' ) 
-                {
+                } elseif ( $test['status'] === 'failure' ) {
                     $suite['status'] = 'failure';
                 }
                 
@@ -734,15 +647,13 @@ class VPU
                         
         }
 
-        if ( isset($suite['tests']) )
-        {
+        if ( isset($suite['tests']) ) {
             $stats['suite'][] = $suite['status'];
             $final .= $this->_build_suite($suite);
             $final .= $this->_build_stats($stats);
         }
 
-        if ( SANDBOX_ERRORS )
-        {
+        if ( SANDBOX_ERRORS ) {
             $final .= $this->_exceptions . $this->_get_errors();
         }
 
@@ -758,22 +669,17 @@ class VPU
     *  @access private
     *  @return string
     */
-    private function _write_file($filename, $data, $mode='a')
-    {
-        try 
-        {
+    private function _write_file($filename, $data, $mode='a') {
+        try {
             $handle = @fopen($filename, $mode);
-            if ( !$handle )
-            {
+            if ( !$handle ) {
                 throw new Exception('Could not open ' . $filename . ' for writing.  Check the location and permissions of the file and try again.');
             }
 
             fwrite($handle, $data);
             fclose($handle);
             return true;
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             $this->_handle_exception($e);
             return false;
         }
