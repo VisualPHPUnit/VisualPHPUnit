@@ -100,7 +100,7 @@ class VPU {
             if ( $key == 'total' ) {
                 continue;
             }
-            $suite['percent_' . $key] = round($suite[$key] / $suite['total'] * 100, 1);
+            $suite['percent_' . $key] = $suite[$key] / $suite['total'] * 100;
         }
 
         $test = array_count_values($stats['test']);
@@ -114,7 +114,7 @@ class VPU {
             if ( $key == 'total' ) {
                 continue;
             }
-            $test['percent_' . $key] = round($test[$key] / $test['total'] * 100, 1);
+            $test['percent_' . $key] = $test[$key] / $test['total'] * 100;
         }
 
         ob_start(); 
