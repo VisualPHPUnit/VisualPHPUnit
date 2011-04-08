@@ -5,19 +5,27 @@
                             <div class="info">
                                 <ul>
                                     <li>
-                                        <span>Succeeded: </span><?php echo $suite['success'];?> (<?php echo round($suite['success'] / $suite['total'] * 100, 1);?>%) 
+                                        <div>
+                                            <span class='percent_success' title='Succeeded' data-percent='<?php echo $suite["percent_success"];?>'></span> 
+                                            <span class='percent_skipped' title='Skipped' data-percent='<?php echo $suite["percent_skipped"];?>'></span> 
+                                            <span class='percent_incomplete' title='Incomplete' data-percent='<?php echo $suite["percent_incomplete"];?>'></span> 
+                                            <span class='percent_failure' title='Failed' data-percent='<?php echo $suite["percent_failure"];?>'></span> 
+                                        </div>
                                     </li>
                                     <li>
-                                        <span>Failed: </span><?php echo $suite['failure'];?> (<?php echo round($suite['failure'] / $suite['total'] * 100, 1);?>%) 
+                                        <span class='category'>Succeeded: </span><?php echo $suite['success'];?> (<?php echo $suite['percent_success'];?>%) 
                                     </li>
                                     <li>
-                                        <span>Incomplete: </span><?php echo $suite['incomplete'];?> (<?php echo round($suite['incomplete'] / $suite['total'] * 100, 1);?>%) 
+                                        <span class='category'>Skipped: </span><?php echo $suite['skipped'];?> (<?php echo $suite['percent_skipped'];?>%) 
                                     </li>
                                     <li>
-                                        <span>Skipped: </span><?php echo $suite['skipped'];?> (<?php echo round($suite['skipped'] / $suite['total'] * 100, 1);?>%) 
+                                        <span class='category'>Incomplete: </span><?php echo $suite['incomplete'];?> (<?php echo $suite['percent_incomplete'];?>%) 
                                     </li>
                                     <li>
-                                        <span>Total: </span><?php echo $suite['total'];?> 
+                                        <span class='category'>Failed: </span><?php echo $suite['failure'];?> (<?php echo $suite['percent_failure'];?>%) 
+                                    </li>
+                                    <li>
+                                        <span class='category'>Total: </span><?php echo $suite['total'];?> 
                                     </li>
                                 </ul>
                             </div> 
@@ -30,19 +38,27 @@
                             <div class="info">
                                 <ul>
                                     <li>
-                                        <span>Succeeded: </span><?php echo $test['success'];?> (<?php echo round($test['success'] / $test['total'] * 100, 1);?>%) 
+                                        <div>
+                                            <span class='percent_success' title='Succeeded' data-percent='<?php echo $test["percent_success"];?>'></span> 
+                                            <span class='percent_skipped' title='Skipped' data-percent='<?php echo $test["percent_skipped"];?>'></span> 
+                                            <span class='percent_incomplete' title='Incomplete' data-percent='<?php echo $test["percent_incomplete"];?>'></span> 
+                                            <span class='percent_failure' title='Failed' data-percent='<?php echo $test["percent_failure"];?>'></span> 
+                                        </div>
                                     </li>
                                     <li>
-                                        <span>Failed: </span><?php echo $test['failure'];?> (<?php echo round($test['failure'] / $test['total'] * 100, 1);?>%) 
+                                        <span class='category'>Succeeded: </span><?php echo $test['success'];?> (<?php echo $test['percent_success'];?>%) 
                                     </li>
                                     <li>
-                                        <span>Incomplete: </span><?php echo $test['incomplete'];?> (<?php echo round($test['incomplete'] / $test['total'] * 100, 1);?>%) 
+                                        <span class='category'>Failed: </span><?php echo $test['failure'];?> (<?php echo $test['percent_failure'];?>%) 
                                     </li>
                                     <li>
-                                        <span>Skipped: </span><?php echo $test['skipped'];?> (<?php echo round($test['skipped'] / $test['total'] * 100, 1);?>%) 
+                                        <span class='category'>Incomplete: </span><?php echo $test['incomplete'];?> (<?php echo $test['percent_incomplete'];?>%) 
                                     </li>
                                     <li>
-                                        <span>Total: </span><?php echo $test['total'];?> 
+                                        <span class='category'>Skipped: </span><?php echo $test['skipped'];?> (<?php echo $test['percent_skipped'];?>%) 
+                                    </li>
+                                    <li>
+                                        <span class='category'>Total: </span><?php echo $test['total'];?> 
                                     </li>
                                 </ul>
                             </div> 

@@ -91,19 +91,31 @@ class VPU {
     private function _build_stats($stats) {
         $suite = array_count_values($stats['suite']);
         $suite['success'] = ( isset($suite['success']) ) ? $suite['success'] : 0;
-        $suite['failure'] = ( isset($suite['failure']) ) ? $suite['failure'] : 0;
-        $suite['incomplete'] = ( isset($suite['incomplete']) ) ? $suite['incomplete'] : 0;
         $suite['skipped'] = ( isset($suite['skipped']) ) ? $suite['skipped'] :  0;
+        $suite['incomplete'] = ( isset($suite['incomplete']) ) ? $suite['incomplete'] : 0;
+        $suite['failure'] = ( isset($suite['failure']) ) ? $suite['failure'] : 0;
         // Avoid divide by zero error
         $suite['total'] = ( count($stats['suite']) ) ?: 1;
+        foreach ( $suite as $key => $value ) {
+            if ( $key == 'total' ) {
+                continue;
+            }
+            $suite['percent_' . $key] = round($suite[$key] / $suite['total'] * 100, 1);
+        }
 
         $test = array_count_values($stats['test']);
         $test['success'] = ( isset($test['success']) ) ? $test['success'] : 0;
-        $test['failure'] = ( isset($test['failure']) ) ? $test['failure'] : 0;
-        $test['incomplete'] = ( isset($test['incomplete']) ) ? $test['incomplete'] : 0;
         $test['skipped'] = ( isset($test['skipped']) ) ? $test['skipped'] :  0;
+        $test['incomplete'] = ( isset($test['incomplete']) ) ? $test['incomplete'] : 0;
+        $test['failure'] = ( isset($test['failure']) ) ? $test['failure'] : 0;
         // Avoid divide by zero error
         $test['total'] = ( count($stats['test']) ) ?: 1;
+        foreach ( $test as $key => $value ) {
+            if ( $key == 'total' ) {
+                continue;
+            }
+            $test['percent_' . $key] = round($test[$key] / $test['total'] * 100, 1);
+        }
 
         ob_start(); 
         include 'ui/stats.html';
@@ -342,6 +354,13 @@ class VPU {
     *  @return bool
     */
     public function handle_errors($err_no, $err_str, $err_file, $err_line) {
+        $ignore = explode('|', SANDBOX_IGNORE);
+        $transform_to_constant = function($value) { return constant($value); };
+        $ignore = array_map($transform_to_constant, $ignore);
+        if ( in_array($err_no, $ignore) ) {
+            return true;
+        }
+
         $error = array();
         switch ( $err_no ) {
             case E_NOTICE:
@@ -355,6 +374,9 @@ class VPU {
                 break;
             case E_PARSE:
                 $error['type'] = 'Parse'; 
+                break;
+            case E_STRICT:
+                $error['type'] = 'Strict'; 
                 break;
             default:
                 $error['type'] = 'Unknown'; 

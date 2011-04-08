@@ -166,8 +166,41 @@ a img { border: none; }
         list-style:none;
 }
 
+.info ul li div {
+        border: 1px solid #858585;
+        width: 50%;
+        height: 1em;
+        padding: 1px;
+        margin-bottom: 5px;
+}
 
-.info ul li span {
+.info ul li div span {
+        display: inline-block;
+        height: 100%;
+        float: left;
+}
+
+.info ul li div .percent_success {
+	background-color: #40C43C;
+        width: 25%;
+}
+
+.info ul li div .percent_skipped {
+	background-color: #FFDD53;
+        width: 25%;
+}
+
+.info ul li div .percent_incomplete {
+	background-color: #A2A2A2;
+        width: 25%;
+}
+
+.info ul li div .percent_failure {
+	background-color: #E05151;
+        width: 25%;
+}
+
+.info ul li .category {
         display:inline-block;
         width:100px;
         font-weight:bold;

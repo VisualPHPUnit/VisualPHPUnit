@@ -70,4 +70,8 @@ define('SANDBOX_ERRORS', false);
 // The file to use as a temporary storage for PHP errors during PHPUnit runs
 define('SANDBOX_FILENAME', BASE_INSTALL . '/errors/errors.tmp');
 
+// Error types to ignore (separate each type with a `|`)
+// e.g. 'E_STRICT|E_NOTICE'
+define('SANDBOX_IGNORE', 'E_STRICT')
+
 ?>

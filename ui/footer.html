@@ -7,31 +7,27 @@
 
                 $('.expand.button').each(function(index) {
                     $(this).click(function(e) {
-                        if ( $(this).text() == '-' ) 
-                        {
-                            if ( $(this).parent().hasClass('test') ) 
-                            {
+                        if ( $(this).text() == '-' ) {
+                            if ( $(this).parent().hasClass('test') ) {
                                 $(this).next('.more').slideUp();
-                            } 
-                            else 
-                            {
+                            } else {
                                 $(this).parent().next('.more').slideUp();
                             }
                             $(this).text('+');
-                        } 
-                        else 
-                        {
-                            if ( $(this).parent().hasClass('test') ) 
-                            {
+                        } else {
+                            if ( $(this).parent().hasClass('test') ) {
                                 $(this).next('.more').slideDown();
-                            } 
-                            else 
-                            {
+                            } else {
                                 $(this).parent().next('.more').slideDown();
                             }
                             $(this).text('-');
                         }
                     });
+                });
+
+                $('ul li div span').each(function() {
+                    var width = $(this).attr('data-percent');
+                    $(this).css({ 'width': width + '%' });
                 });
 
             });
