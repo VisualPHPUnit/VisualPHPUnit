@@ -35,12 +35,13 @@ Installation
         iii. Also note that you will have to copy the `ui` directory over to the `html` directory specified in SNAPSHOT_DIRECTORY in order for the html files to display properly. 
     b. Change SANDBOX_ERRORS to *true* if you'd like VPU to display any PHP errors after the test results.  If so, please make note of the following:
         i. The file specified in SANDBOX_FILENAME will always be empty (VPU wipes it at the end of each test run).  However, PHP still needs to be able to write to it, so ensure that the filename specified with SANDBOX_FILENAME has the appropriate permissions. 
+        ii. Specific error types can be ignored using the SANDBOX_IGNORE setting.  Separate multiple error types with a `|` (e.g. 'E_STRICT|E_NOTICE').
 
 
 Version Information
 -------------------
 
-Current release is v1.1.1, last updated on 7 April 2011.
+Current stable release is v1.2, last updated on 8 April 2011.
 
 Feedback
 --------
