@@ -1,17 +1,17 @@
-                            <div class="test <?=$test['status']?>"> 
+                            <div class="test <?php echo $test['status'];?>"> 
                                 <div class="light rounded"></div> 
-                                <div class="name"><?=$test['name']?></div> 
-                                <div class="stats"><?=$test['message']?></div>
-                                <div class="expand button"><?=$test['expand']?></div>
-                                <div class="more test <?=$test['display']?>"> 
-                                    <div class="variables rounded <?=$test['variables_display']?>"> 
-                                        <pre><?=$test['variables_message']?></pre> 
+                                <div class="name"><?php echo $test['name'];?></div> 
+                                <div class="stats"><?php echo $test['message'];?></div>
+                                <div class="expand button"><?php echo $test['expand'];?></div>
+                                <div class="more test <?php echo $test['display'];?>"> 
+                                    <div class="variables rounded <?php echo $test['variables_display'];?>"> 
+                                        <pre><?php echo $test['variables_message'];?></pre> 
                                     </div> 
-                                    <div class="stacktrace rounded <?=$test['trace_display']?>"> 
-                                        <pre><?=$test['trace_message']?></pre> 
+                                    <div class="stacktrace rounded <?php echo $test['trace_display'];?>"> 
+                                        <pre><?php echo $test['trace_message'];?></pre> 
                                     </div> 
                                 </div> 
                             </div> 
-                            <? if ( $test['separator_display'] ) { ?>
+                            <?php if ( $test['separator_display'] ) { ?>
                                 <hr class="small" />
-                            <? } ?>
+                            <?php } ?>

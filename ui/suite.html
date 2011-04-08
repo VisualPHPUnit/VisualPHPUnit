@@ -1,12 +1,12 @@
                     <div class="box rounded"> 
-                        <div class="testsuite <?=$suite['status']?>"> 
+                        <div class="testsuite <?php echo $suite['status'];?>"> 
                             <div class="light rounded"></div> 
-                            <div class="name"><?=$suite['name']?></div> 
-                            <div class="stats"><?=$suite['time']?></div> 
-                            <div class="expand button"><?=$suite['expand']?></div> 
+                            <div class="name"><?php echo $suite['name'];?></div> 
+                            <div class="stats"><?php echo $suite['time'];?></div> 
+                            <div class="expand button"><?php echo $suite['expand'];?></div> 
                         </div> 
-                        <div class="more <?=$suite['display']?>"> 
+                        <div class="more <?php echo $suite['display'];?>"> 
                             <hr class = "big" /> 
-                            <?=$suite['tests']?>
+                            <?php echo $suite['tests'];?>
                         </div>
                     </div> 

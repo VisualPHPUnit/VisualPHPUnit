@@ -50,8 +50,9 @@ set_include_path(get_include_path().PATH_SEPARATOR.
 define('TEST_DIRECTORY', 'tests');
 
 // VPU scans the test directory supplied above and will only include files 
-// containing TEST_FILENAME (case-insensitive) within their filenames
-define('TEST_FILENAME', 'Test');
+// if their filenames match the regex defined by TEST_PATTERN 
+// (default is to include all files that end with the word `Test` [case-insensitive])
+define('TEST_PATTERN', '/[.]*(Test)+$/i');
 
 /*
  * Optional settings

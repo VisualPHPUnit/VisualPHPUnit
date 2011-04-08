@@ -535,7 +535,7 @@ class VPU {
 
         $loaded_tests = $this->_load_tests($tests);
         foreach ( $loaded_tests as $test ) {
-            if ( (stripos($test, TEST_FILENAME) !== false) && (stripos($test, 'PHPUnit_') === false) ) {
+            if ( preg_match(TEST_PATTERN, $test) && (stripos($test, 'PHPUnit_') === false) ) {
                 $suite->addTestSuite($test);
             }
         }
@@ -566,12 +566,11 @@ class VPU {
                 throw new Exception($test_dir . 'is not a valid directory.');
             }
 
-            $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($test_dir), RecursiveIteratorIterator::SELF_FIRST);
+            $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($test_dir), RecursiveIteratorIterator::LEAVES_ONLY);
                             
-            $pattern = '/' . TEST_FILENAME . '/i';
             while ( $it->valid() ) {
                 $filename = $it->getSubPathName();
-                if ( !$it->isDot() && preg_match($pattern, $filename) ) {
+                if ( !$it->isDot() && preg_match(TEST_PATTERN, basename($filename, '.php')) && !in_array($filename, $this->_test_cases) ) {
                     $this->_test_cases[] = $filename;
                 }
 
