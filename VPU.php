@@ -261,12 +261,15 @@ class VPU {
 
         $first = substr($message, 0, strpos($message, 'Failed'));
         $message_rest = str_replace($first, '', $message);
-        $first = '<strong>' . $first . '</strong><br />';
-        if ( $message_rest ) {
-            $message = $first . $message_rest;
+        if ( $first && $message_rest ) {
+            $message = '<strong>' . $first . '</strong><br />' . $message_rest;
+        } elseif ( $message_rest ) {
+            $message = '<strong>' . $message_rest . '</strong>';
         } else {
-            $message = $first;
+            $message = '<strong>' . $first . '</strong>';
         }
+
+        $message .= '<br /><br />';
         
         return $message;
     }
@@ -652,7 +655,7 @@ class VPU {
                 
                 $test['name'] = substr($event['test'], strpos($event['test'], '::') + 2);
                 $test['message'] = $this->_get_message($event['message']); 
-                $test['message'] .= '<br /><br />Executed in ' . $event['time'] . ' seconds.';
+                $test['message'] .= 'Executed in ' . $event['time'] . ' seconds.';
                 $suite['time'] += $event['time'];
 
                 $test['variables_message'] = ( isset($event['collected']) ) ? trim($event['collected']) : '';
