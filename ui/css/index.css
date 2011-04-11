@@ -78,9 +78,12 @@ a img { border: none; }
 
 #container {
 	width: 960px;
-        margin: 0 auto;
+        margin: 10px auto;
 	position:relative;
 }
+
+/* index
+------------------------------ */
 
 .box {
 	overflow:auto;
@@ -373,4 +376,26 @@ hr.small {
 .footer a {
 	text-decoration: none;
 	color: #E05151;
+}
+
+/* graph
+------------------------------ */
+
+form {
+        margin: 0 auto;
+        width: 960px;
+}
+
+form fieldset legend {
+        padding-bottom: 10px;
+}
+
+form fieldset ol li label {
+        display: inline-block;
+        width: 100px; 
+}
+
+form fieldset ol li select, input {
+        display: inline-block;
+        width: 140px; 
 }

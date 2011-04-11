@@ -4,19 +4,94 @@
 <head>
     <meta charset='utf-8' />
     <title>VisualPHPUnit</title>
+    <link rel="stylesheet" href="ui/css/index.css" media="screen" />
+    <link rel='stylesheet' href='ui/css/jquery-ui-1.8.11.custom.css' /> 
 </head>
 <body>
-    <div id="container" class="highcharts-container" style="width: 100%; height: 400px"></div>
+    <div id="container" class="highcharts-container"></div>
+
+    <form>
+        <fieldset> 
+            <legend>Options</legend> 
+            <ol> 
+                <li> 
+                    <label for='type'>Type:</label> 
+                    <select id='type'>
+                        <option value='Suite'>Suites</option>
+                        <option value='Test'>Tests</option>
+                    </select>
+                </li> 
+
+                <li> 
+                    <label for='time_frame'>Time Frame:</label> 
+                    <select id='time_frame'>
+                        <option value='Daily'>Daily</option>
+                        <option value='Weekly'>Weekly</option>
+                        <option value='Monthly'>Monthly</option>
+                    </select>
+                </li> 
+
+                <li> 
+                    <label for='start_date'>Start Date:</label> 
+                    <input type='text' id='start_date' tabindex=2 />
+                </li> 
+            
+                <li> 
+                    <label for='end_date'>End Date:</label> 
+                    <input type='text' id='end_date' tabindex=3 />
+                </li> 
+
+                <li> 
+                    <input type='button' id='redraw_graph' value='Redraw Graph' tabindex=4 />
+                </li> 
+            </ol> 
+        </fieldset> 
+    </form>
 </body>
-<script src="js/jquery-1.5.1.min.js"></script>
-<script src="js/highcharts.js"></script>
-<!-- why doesn't this work?
-<script src="js/themes/gray.js"><script>
-        -->
+<script src="ui/js/jquery-1.5.1.min.js"></script>
+<script src='ui/js/jquery-ui-1.8.11.custom.min.js'></script>
+<script src="ui/js/highcharts.js"></script>
+<script src="ui/js/themes/gray.js"></script>
 
 <script>
     var chart;
     $(document).ready(function() {
+
+	function constrainDates() {
+	    var startDate = $('#start_date').datepicker('getDate');
+	    var endDate = $('#end_date').datepicker('getDate'); 
+	    if ( endDate < startDate ) {
+		$('#end_date').datepicker('setDate', startDate);
+	    }
+	    if (startDate != null)
+	    {
+                var timeFrame = $('#time_frame').val();
+                switch ( timeFrame ) {
+                    case 'Daily': 
+                        var endDateMax = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 12);
+                        break;
+                    case 'Weekly':
+                        var endDateMax = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 84);
+                        break;
+                    case 'Monthly':
+                        var endDateMax = new Date(startDate.getFullYear(), startDate.getMonth() + 12, startDate.getDate());
+                        break;
+                }
+                $('#end_date').datepicker('option', {
+                    'maxDate': endDateMax,
+                    'minDate': startDate
+                });
+	    }
+	}
+
+        $('#start_date').datepicker({ 
+            onSelect: function(dateText, inst) {
+		constrainDates();
+	    }
+	});
+
+	$('#end_date').datepicker();
+
         chart = new Highcharts.Chart({
             chart: {
                     renderTo: 'container',
@@ -25,11 +100,11 @@
                     marginBottom: 25
             },
             title: {
-                    text: 'Monthly Average Temperature',
+                    text: $('#type').val() + ' Results',
                     x: -20 //center
             },
             subtitle: {
-                    text: 'Source: WorldClimate.com',
+                    text: '(' + $('#time_frame').val() + ')',
                     x: -20
             },
             xAxis: {
@@ -48,8 +123,8 @@
             },
             tooltip: {
                     formatter: function() {
-                    return '<b>'+ this.series.name +'</b><br/>'+
-                                    this.x +': '+ this.y +'°C';
+                        return '<b>' + this.series.name + '</b><br/>' + 
+                            this.x + ': ' + this.y;
                     }
             },
             legend: {
@@ -61,16 +136,16 @@
                     borderWidth: 0
             },
             series: [{
-                    name: 'Tokyo',
+                    name: 'Succeeded',
                     data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
             }, {
-                    name: 'New York',
+                    name: 'Skipped',
                     data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
             }, {
-                    name: 'Berlin',
+                    name: 'Incomplete',
                     data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
             }, {
-                    name: 'London',
+                    name: 'Failed',
                     data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
             }]
         });
