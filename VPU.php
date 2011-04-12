@@ -90,10 +90,10 @@ class VPU {
     */
     private function _build_stats($stats) {
         $suite = array_count_values($stats['suite']);
-        $suite['success'] = ( isset($suite['success']) ) ? $suite['success'] : 0;
-        $suite['skipped'] = ( isset($suite['skipped']) ) ? $suite['skipped'] :  0;
-        $suite['incomplete'] = ( isset($suite['incomplete']) ) ? $suite['incomplete'] : 0;
         $suite['failure'] = ( isset($suite['failure']) ) ? $suite['failure'] : 0;
+        $suite['incomplete'] = ( isset($suite['incomplete']) ) ? $suite['incomplete'] : 0;
+        $suite['skipped'] = ( isset($suite['skipped']) ) ? $suite['skipped'] :  0;
+        $suite['success'] = ( isset($suite['success']) ) ? $suite['success'] : 0;
         // Avoid divide by zero error
         $suite['total'] = ( count($stats['suite']) ) ?: 1;
         foreach ( $suite as $key => $value ) {
@@ -104,10 +104,10 @@ class VPU {
         }
 
         $test = array_count_values($stats['test']);
-        $test['success'] = ( isset($test['success']) ) ? $test['success'] : 0;
-        $test['skipped'] = ( isset($test['skipped']) ) ? $test['skipped'] :  0;
-        $test['incomplete'] = ( isset($test['incomplete']) ) ? $test['incomplete'] : 0;
         $test['failure'] = ( isset($test['failure']) ) ? $test['failure'] : 0;
+        $test['incomplete'] = ( isset($test['incomplete']) ) ? $test['incomplete'] : 0;
+        $test['skipped'] = ( isset($test['skipped']) ) ? $test['skipped'] :  0;
+        $test['success'] = ( isset($test['success']) ) ? $test['success'] : 0;
         // Avoid divide by zero error
         $test['total'] = ( count($stats['test']) ) ?: 1;
         foreach ( $test as $key => $value ) {
@@ -134,7 +134,6 @@ class VPU {
     private function _build_suite($suite) {
         $suite['expand'] = ( $suite['status'] == 'failure' ) ? '-' : '+';
         $suite['display'] = ( $suite['status'] == 'failure' ) ? 'show' : 'hide';
-        $suite['time'] = 'Executed in ' . $suite['time'] . ' seconds.'; 
 
         ob_start(); 
         include 'ui/suite.html';

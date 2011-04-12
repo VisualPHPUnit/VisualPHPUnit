@@ -2,8 +2,37 @@
 
 	</body>
 	<script src="ui/js/jquery-1.5.1.min.js"></script>
+	<script src="ui/js/jquery.sortElements.js"></script>
         <script>
             $(document).ready(function() {
+                
+                $('#sort_type').change(function() {
+                    var type = $(this).val();
+                    switch ( type ) {
+                        case 'Results (asc)':
+                            $('.box.rounded').sortElements(function(a, b) {
+                                return $(a).attr('data-suite-status') > $(b).attr('data-suite-status');
+                            });
+                            break;
+                        case 'Results (desc)':
+                            $('.box.rounded').sortElements(function(a, b) {
+                                return $(a).attr('data-suite-status') < $(b).attr('data-suite-status');
+                            });
+                            break;
+                        case 'Time (asc)':
+                            $('.box.rounded').sortElements(function(a, b) {
+                                return $(a).attr('data-suite-time') > $(b).attr('data-suite-time');
+                            });
+                            break;
+                        case 'Time (desc)':
+                            $('.box.rounded').sortElements(function(a, b) {
+                                return $(a).attr('data-suite-time') < $(b).attr('data-suite-time');
+                            });
+                            break;
+                    }
+                });
+
+                $('#sort_type').trigger('change');
 
                 $('.expand.button').each(function(index) {
                     $(this).click(function(e) {

@@ -209,6 +209,11 @@ a img { border: none; }
         font-weight:bold;
 }
 
+.info ul .options {
+        margin-top: 5px; 
+        font-weight: bold;
+}
+
 .light {
 	width:5px;
 	height: 5px;
@@ -359,23 +364,6 @@ hr.small {
 	font-size:24px;
 	color: white;
 	padding-top:3px;
-}
-
-.footer {
-	position:relative;
-	margin-left: auto;
-	margin-right: auto;
-	color: #858585;
-	font-family: "Lucida Grande", Helvetica, Arial, "MS Trebuchet", sans-serif;
-  	font-size: 12px;
-	width: 800px;
-	text-align:center;
-	margin-bottom: 20px;
-}
-
-.footer a {
-	text-decoration: none;
-	color: #E05151;
 }
 
 /* graph
