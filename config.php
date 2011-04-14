@@ -62,7 +62,7 @@ define('TEST_PATTERN', '/[.]*(Test)+$/i');
 define('CREATE_SNAPSHOTS', false);
 
 // The directory where the test results will be stored
-define('SNAPSHOT_DIRECTORY', 'history');
+define('SNAPSHOT_DIRECTORY', BASE_INSTALL . '/history/');
 
 // Whether or not to sandbox PHP errors
 define('SANDBOX_ERRORS', false);

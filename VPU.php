@@ -77,8 +77,8 @@ class VPU {
     public function __construct($test_dir=null) {
         if ( !is_null($test_dir) ) {
             $this->_set_dir($test_dir);
-            $this->_empty_file(SANDBOX_FILENAME);
         }
+        $this->_empty_file(SANDBOX_FILENAME);
     }
 
    /**
@@ -171,7 +171,7 @@ class VPU {
     *  @return void
     */
     public function create_snapshot($data, $ext) {
-        $top = BASE_INSTALL . '/' . SNAPSHOT_DIRECTORY;
+        $top = SNAPSHOT_DIRECTORY;
         if ( $top{strlen($top) - 1} !== '/' ) {
             $top .= '/';
         }
