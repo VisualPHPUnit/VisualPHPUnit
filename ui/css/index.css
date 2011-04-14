@@ -79,11 +79,59 @@ a img { border: none; }
 #container {
 	width: 960px;
         margin: 10px auto;
-	position:relative;
+	position: relative;
 }
 
 /* index
 ------------------------------ */
+
+form {
+        margin: 0 auto;
+        width: 450px;
+}
+
+form fieldset {
+        border-top: 1px solid #bbbbbb;
+}
+
+form fieldset legend {
+        padding: 10px 10px 10px 0px;
+        font-size: 18px;
+}
+
+form fieldset ol li label {
+        display: inline-block;
+        width: 170px; 
+}
+
+form fieldset ol li select, input {
+        display: inline-block;
+        width: 270px; 
+        margin-bottom: 6px;
+}
+
+form fieldset ol li div {
+        display: inline-block;
+        margin-left: -8px;
+        width: 250px;
+}
+
+form fieldset ol li div input {
+        width: 20px;
+}
+
+form fieldset ol li div label {
+        width: 90px;
+        font-size: 11px;
+}
+
+
+#run_tests {
+        margin-top: 18px;
+        margin-left: 170px;
+        width: 90px; 
+}
+
 
 .box {
 	overflow:auto;
@@ -369,6 +417,7 @@ hr.small {
 /* graph
 ------------------------------ */
 
+/*
 form {
         margin: 0 auto;
         width: 960px;
@@ -387,3 +436,5 @@ form fieldset ol li select, input {
         display: inline-block;
         width: 140px; 
 }
+
+*/

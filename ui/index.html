@@ -1,0 +1,82 @@
+<!DOCTYPE html> 
+<html lang='en'> 
+ 
+<head> 
+    <meta charset='utf-8' /> 
+    <title>VisualPHPUnit</title> 
+    <link rel="stylesheet" href="ui/css/index.css" media="screen" /> 
+</head> 
+
+<body> 
+<div id="container"> 
+    <form action='index.php' method='post'>
+
+        <fieldset> 
+            <legend>Files</legend> 
+            <ol> 
+                <li> 
+                </li> 
+            </ol> 
+        </fieldset> 
+
+        <fieldset> 
+            <legend>Options</legend> 
+            <ol> 
+                <li> 
+                    <label for='create_snapshots'>Create Snapshots:</label> 
+                    <select name='create_snapshots' id='create_snapshots'>
+                        <option value='0' <?php if ( !CREATE_SNAPSHOTS ) echo 'selected';?>>No</option>
+                        <option value='1' <?php if ( CREATE_SNAPSHOTS ) echo 'selected';?>>Yes</option>
+                    </select>
+                </li> 
+
+                <li> 
+                    <label for='snapshot_directory'>Snapshot Directory:</label> 
+                    <input type='text' name='snapshot_directory' id='snapshot_directory' value='<?php echo SNAPSHOT_DIRECTORY;?>' />
+                </li> 
+
+                <li> 
+                    <label for='sandbox_errors'>Sandbox Errors:</label> 
+                    <select name='sandbox_errors' id='sandbox_errors'>
+                        <option value='0' <?php if ( !SANDBOX_ERRORS ) echo 'selected';?>>No</option>
+                        <option value='1' <?php if ( SANDBOX_ERRORS ) echo 'selected';?>>Yes</option>
+                    </select>
+                </li> 
+            
+                <li> 
+                    <label for='sandbox_filename'>Sandbox Filename:</label> 
+                    <input type='text' name='sandbox_filename' id='sandbox_filename' value='<?php echo SANDBOX_FILENAME;?>' />
+                </li> 
+
+                <li> 
+                    <label for='sandbox_ignore'>Sandbox Ignore:</label> 
+                    <div>
+                        <input type='checkbox' name='sandbox_ignore[]' id='notice' value='E_NOTICE' />
+                        <label for='notice'>E_NOTICE</label>
+                        <input type='checkbox' name='sandbox_ignore[]' id='warning' value='E_WARNING' />
+                        <label for='warning'>E_WARNING</label>
+                        <input type='checkbox' name='sandbox_ignore[]' id='error' value='E_ERROR' />
+                        <label for='error'>E_ERROR</label>
+                        <input type='checkbox' name='sandbox_ignore[]' id='parse' value='E_PARSE' />
+                        <label for='parse'>E_PARSE</label>
+                        <input type='checkbox' name='sandbox_ignore[]' id='strict' value='E_STRICT' />
+                        <label for='strict'>E_STRICT</label>
+                    </div>
+                </li> 
+
+                <li>
+                    <input type='submit' id='run_tests' value='Run Tests' />
+                </li>
+            </ol> 
+        </fieldset> 
+    </form>
+</div> 
+
+</body> 
+<script src="ui/js/jquery-1.5.1.min.js"></script> 
+<script> 
+    $(document).ready(function() {
+        
+    });
+</script> 
+</html> 

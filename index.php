@@ -36,6 +36,21 @@
  */
 
     require 'config.php';
+
+    /*
+    if ( empty($_POST) ) {
+        include 'ui/index.html';
+        exit; 
+    }
+
+    // TODO: Sanitize all of this
+    $create_snapshots = $_POST['create_snapshots'];
+    $snapshot_directory = $_POST['snapshot_directory'];
+    $sandbox_errors = $_POST['sandbox_errors'];
+    $sandbox_filename = $_POST['sandbox_filename'];
+    $sandbox_ignore = $_POST['sandbox_ignore'];
+    */
+
     require 'VPU.php';
 
     $path = realpath(TEST_DIRECTORY); 	
