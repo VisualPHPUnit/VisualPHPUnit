@@ -47,12 +47,7 @@ set_include_path(get_include_path().PATH_SEPARATOR.
                  PHPUNIT_INSTALL.PATH_SEPARATOR);
 
 // The directory where the tests reside
-define('TEST_DIRECTORY', 'tests');
-
-// VPU scans the test directory supplied above and will only include files 
-// if their filenames match the regex defined by TEST_PATTERN 
-// (default is to include all files that end with the word `Test` [case-insensitive])
-define('TEST_PATTERN', '/[.]*(Test)+$/i');
+define('TEST_DIRECTORY', BASE_INSTALL . '/tests');
 
 /*
  * Optional settings

@@ -5,6 +5,7 @@
     <meta charset='utf-8' /> 
     <title>VisualPHPUnit</title> 
     <link rel="stylesheet" href="ui/css/index.css" media="screen" /> 
+    <link rel="stylesheet" href="ui/css/jqueryFileTree.css" media="screen" /> 
 </head> 
 
 <body> 
@@ -15,6 +16,8 @@
             <legend>Files</legend> 
             <ol> 
                 <li> 
+                    <div id='file_tree'></div>
+                    <input type='hidden' name='test_files' id='test_files' />
                 </li> 
             </ol> 
         </fieldset> 
@@ -43,12 +46,12 @@
                     </select>
                 </li> 
             
-                <li> 
+                <li class='sandbox'> 
                     <label for='sandbox_filename'>Sandbox Filename:</label> 
                     <input type='text' name='sandbox_filename' id='sandbox_filename' value='<?php echo SANDBOX_FILENAME;?>' />
                 </li> 
 
-                <li> 
+                <li class='sandbox'> 
                     <label for='sandbox_ignore'>Sandbox Ignore:</label> 
                     <div>
                         <input type='checkbox' name='sandbox_ignore[]' id='notice' value='E_NOTICE' />
@@ -74,8 +77,43 @@
 
 </body> 
 <script src="ui/js/jquery-1.5.1.min.js"></script> 
+<script src="ui/js/jqueryFileTree/jqueryFileTree.js"></script> 
 <script> 
     $(document).ready(function() {
+
+        function updateTests() {
+            var tests = '';
+            $('.selected_file').each(function() {
+               tests += $(this).children().attr('rel') + '|'; 
+            });
+            return tests;
+        }
+
+        $('#file_tree').fileTree({ 
+            root: '<?php echo TEST_DIRECTORY;?>',
+            script: 'ui/js/jqueryFileTree/connectors/jqueryFileTree.php' 
+        }, function(file) {
+            $('#test_files').val(updateTests());
+        });
+
+        $('#create_snapshots').change(function() {
+            if ( $(this).val() == 1 ) {
+                $(this).parent().next().show();
+            } else {
+                $(this).parent().next().hide();
+            }
+        });
+
+        $('#sandbox_errors').change(function() {
+            if ( $(this).val() == 1 ) {
+                $(this).parent().nextAll('.sandbox').show();
+            } else {
+                $(this).parent().nextAll('.sandbox').hide();
+            }
+        });
+
+        $('#create_snapshots').trigger('change');
+        $('#sandbox_errors').trigger('change');
         
     });
 </script> 

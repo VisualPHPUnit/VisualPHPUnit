@@ -37,7 +37,6 @@
 
     require 'config.php';
 
-    /*
     if ( empty($_POST) ) {
         include 'ui/index.html';
         exit; 
@@ -49,33 +48,29 @@
     $sandbox_errors = $_POST['sandbox_errors'];
     $sandbox_filename = $_POST['sandbox_filename'];
     $sandbox_ignore = $_POST['sandbox_ignore'];
-    */
+    $test_files = $_POST['test_files'];
+
+    $tests = explode('|', $test_files); 
 
     require 'VPU.php';
 
-    $path = realpath(TEST_DIRECTORY); 	
-    if ( !is_dir($path) ) {
-        die('The supplied TEST_DIRECTORY (' . TEST_DIRECTORY . ') is not a valid directory.  Check your configuration settings and try again.');
-    } 
-
-    chdir($path);
     ob_start(); 
 
-    $vpu = new VPU($path);
+    $vpu = new VPU();
 
-    if ( SANDBOX_ERRORS ) {
+    if ( $sandbox_errors ) {
         set_error_handler(array($vpu, 'handle_errors'));
     }
 
-    $results = $vpu->run();
+    $results = $vpu->run($tests);
 
     include 'ui/header.html';
-    echo $vpu->to_HTML($results);
+    echo $vpu->to_HTML($results, $sandbox_errors);
     include 'ui/footer.html';
 
-    if ( CREATE_SNAPSHOTS ) {
+    if ( $create_snapshots ) {
         $snapshot = ob_get_contents(); 
-        $vpu->create_snapshot($snapshot, 'html');
+        $vpu->create_snapshot($snapshot, $snapshot_directory);
     }
 
 ?>

@@ -41,14 +41,6 @@ require 'Util/Log/JSON.php';
 class VPU {
 
    /**
-    *  The collection of tests to run through PHPUnit. 
-    *
-    *  @var array
-    *  @access private
-    */
-    private $_test_cases = array();
-
-   /**
     *  The sandboxed exceptions.
     *
     *  @var string
@@ -68,16 +60,12 @@ class VPU {
     );
 
    /**
-    *  Loads tests from the supplied directory.
+    *  Empties the sandbox file.
     *
-    *  @param string $test_dir        The directory containing the tests.
     *  @access public
     *  @return void
     */
-    public function __construct($test_dir=null) {
-        if ( !is_null($test_dir) ) {
-            $this->_set_dir($test_dir);
-        }
+    public function __construct() {
         $this->_empty_file(SANDBOX_FILENAME);
     }
 
@@ -163,19 +151,18 @@ class VPU {
     }
 
    /**
-    *  Creates a snapshot of the test results.
+    *  Creates an HTML snapshot of the test results.
     *
     *  @param string $data            The data to be written.
-    *  @param string $ext             The filename extension to be used.
+    *  @param string $dir             The directory in which to store the snapshot.
     *  @access public
     *  @return void
     */
-    public function create_snapshot($data, $ext) {
-        $top = SNAPSHOT_DIRECTORY;
-        if ( $top{strlen($top) - 1} !== '/' ) {
-            $top .= '/';
+    public function create_snapshot($data, $dir) {
+        if ( $dir{strlen($dir) - 1} !== '/' ) {
+            $dir .= '/';
         }
-        $filename = $top .  $ext . '/' . date('d-m-Y G:i') . '.' . $ext;
+        $filename = $dir . date('d-m-Y G:i') . '.html';
         $this->_write_file($filename, $data);
         chmod($filename, 0777);
     }
@@ -416,19 +403,44 @@ class VPU {
     }
 
    /**
+    *  Iterates through the supplied directory and loads the test files.
+    *
+    *  @param string $test_dir       The directory containing the tests. 
+    *  @access private
+    *  @return void
+    */
+    private function _load_dir($test_dir) {
+        try {
+            $test_dir = realpath($test_dir);
+            if ( !is_dir($test_dir) ) {
+                throw new Exception($test_dir . 'is not a valid directory.');
+            }
+
+            $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($test_dir), RecursiveIteratorIterator::LEAVES_ONLY);
+                            
+            $test_cases = array();
+            while ( $it->valid() ) {
+                if ( !$it->isDot() ) {
+                    $test_cases[] = $it->key();
+                }
+
+                $it->next();
+            }
+            return $test_cases;
+        } catch (Exception $e) {
+            $this->_handle_exception($e);
+            return false;
+        }
+    }
+
+   /**
     *  Loads each of the supplied tests. 
     *
-    *  @param array|string $tests        The tests to be run through PHPUnit.
+    *  @param array $tests       The tests to be run through PHPUnit.
     *  @access private
     *  @return array
     */
-    private function _load_tests($tests=null) {
-        if ( is_null($tests) ) {
-            $tests = $this->_test_cases;
-        } elseif ( is_string($tests) ) {
-            $tests = array($tests);
-        }
-
+    private function _load_tests($tests) {
         $loaded_classes = get_declared_classes();
 
         foreach ( $tests as $test ) {
@@ -459,10 +471,6 @@ class VPU {
         $results = str_replace('\n', '', $results);
         $results = str_replace('&quot;', '"', $results);
 
-        if ( CREATE_SNAPSHOTS ) {
-            $this->create_snapshot($this->_format_json($results), 'json');
-        }
-
         $results = json_decode($results, true);
         
         $pu_output = explode('|||', $pu_output);
@@ -478,6 +486,19 @@ class VPU {
         }
 
         return $results;
+    }
+
+    private function _parse_tests($tests) {
+        $collection = array();
+
+        foreach ( $tests as $test )  {
+            if ( is_dir($test) ) {
+                $collection = array_merge($collection, $this->_load_dir($test));
+            } elseif ( file_exists($test) )  {
+                $collection[] = $test;
+            }
+        }
+        return $collection;
     }
 
    /**
@@ -550,16 +571,17 @@ class VPU {
    /**
     *  Runs supplied tests through PHPUnit.
     *
-    *  @param array|string $tests        The tests to be run through PHPUnit.
+    *  @param array $tests        The directories/filenames containing the tests to be run through PHPUnit.
     *  @access public
     *  @return string
     */
-    public function run($tests=null) {
+    public function run($tests) {
         $suite = new PHPUnit_Framework_TestSuite();
 
+        $tests = $this->_parse_tests($tests); 
         $loaded_tests = $this->_load_tests($tests);
         foreach ( $loaded_tests as $test ) {
-            if ( preg_match(TEST_PATTERN, $test) && (stripos($test, 'PHPUnit_') === false) ) {
+            if ( (stripos($test, 'PHPUnit_') === false) && (stripos($test, 'Text_Template') === false) ) {
                 $suite->addTestSuite($test);
             }
         }
@@ -577,43 +599,14 @@ class VPU {
     }
 
    /**
-    *  Iterates through the supplied directory and loads the test files.
-    *
-    *  @param string $test_dir       The directory containing the tests. 
-    *  @access private
-    *  @return void
-    */
-    private function _set_dir($test_dir) {
-        try {
-            $test_dir = realpath($test_dir);
-            if ( !is_dir($test_dir) ) {
-                throw new Exception($test_dir . 'is not a valid directory.');
-            }
-
-            $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($test_dir), RecursiveIteratorIterator::LEAVES_ONLY);
-                            
-            while ( $it->valid() ) {
-                $filename = $it->getSubPathName();
-                if ( !$it->isDot() && preg_match(TEST_PATTERN, basename($filename, '.php')) && !in_array($filename, $this->_test_cases) ) {
-                    $this->_test_cases[] = $filename;
-                }
-
-                $it->next();
-            }
-        } catch (Exception $e) {
-            $this->_handle_exception($e);
-            return false;
-        }
-    }
-
-   /**
     *  Renders the JSON from PHPUnit into HTML. 
     *
     *  @param string $pu_output        The JSON output from PHPUnit. 
+    *  @param bool $sandbox_errors     Whether or not to sandbox errors.
     *  @access public
     *  @return string
     */
-    public function to_HTML($pu_output) {
+    public function to_HTML($pu_output, $sandbox_errors) {
         $results = $this->_parse_output($pu_output);    
         if ( !is_array($results) ) {
             return '';
@@ -676,7 +669,7 @@ class VPU {
             $final .= $this->_build_stats($stats);
         }
 
-        if ( SANDBOX_ERRORS ) {
+        if ( $sandbox_errors ) {
             $final .= $this->_exceptions . $this->_get_errors();
         }
 

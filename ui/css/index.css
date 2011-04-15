@@ -99,6 +99,19 @@ form fieldset legend {
         font-size: 18px;
 }
 
+#file_tree {
+        width: 426px;
+        height: 400px;
+        border-top: solid 1px #BBB;
+        border-left: solid 1px #BBB;
+        border-bottom: solid 1px #FFF;
+        border-right: solid 1px #FFF;
+        background: #FFF;
+        overflow: scroll;
+        margin-left: 5px;
+        padding: 5px;
+}
+
 form fieldset ol li label {
         display: inline-block;
         width: 170px; 
