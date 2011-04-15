@@ -42,14 +42,21 @@
         exit; 
     }
 
-    // TODO: Sanitize all of this
-    $create_snapshots = $_POST['create_snapshots'];
-    $snapshot_directory = $_POST['snapshot_directory'];
-    $sandbox_errors = $_POST['sandbox_errors'];
-    $sandbox_filename = $_POST['sandbox_filename'];
-    $sandbox_ignore = $_POST['sandbox_ignore'];
-    $test_files = $_POST['test_files'];
-
+    // Sanitize all the $_POST data
+    $create_snapshots = (boolean) filter_var($_POST['create_snapshots'], FILTER_SANITIZE_NUMBER_INT);
+    $snapshot_directory = trim(strval(filter_var($_POST['snapshot_directory'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
+    $sandbox_errors = (boolean) filter_var($_POST['sandbox_errors'], FILTER_SANITIZE_NUMBER_INT);
+    $sandbox_filename = trim(strval(filter_var($_POST['sandbox_filename'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
+    if ( isset($_POST['sandbox_ignore']) ) {
+        $sandbox_ignore = array();
+        foreach ( $_POST['sandbox_ignore'] as $ignore ) {
+            $sandbox_ignore[] = trim(strval(filter_var($ignore, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
+        }
+        $sandbox_ignore = implode('|', $sandbox_ignore);
+    } else {
+        $sandbox_ignore = '';
+    }
+    $test_files = trim(strval(filter_var($_POST['test_files'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
     $tests = explode('|', $test_files); 
 
     require 'VPU.php';

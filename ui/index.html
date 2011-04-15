@@ -54,16 +54,16 @@
                 <li class='sandbox'> 
                     <label for='sandbox_ignore'>Sandbox Ignore:</label> 
                     <div>
-                        <input type='checkbox' name='sandbox_ignore[]' id='notice' value='E_NOTICE' />
-                        <label for='notice'>E_NOTICE</label>
-                        <input type='checkbox' name='sandbox_ignore[]' id='warning' value='E_WARNING' />
-                        <label for='warning'>E_WARNING</label>
-                        <input type='checkbox' name='sandbox_ignore[]' id='error' value='E_ERROR' />
-                        <label for='error'>E_ERROR</label>
-                        <input type='checkbox' name='sandbox_ignore[]' id='parse' value='E_PARSE' />
-                        <label for='parse'>E_PARSE</label>
-                        <input type='checkbox' name='sandbox_ignore[]' id='strict' value='E_STRICT' />
-                        <label for='strict'>E_STRICT</label>
+                        <input type='checkbox' name='sandbox_ignore[]' id='e_notice' value='E_NOTICE' />
+                        <label for='e_notice'>E_NOTICE</label>
+                        <input type='checkbox' name='sandbox_ignore[]' id='e_warning' value='E_WARNING' />
+                        <label for='e_warning'>E_WARNING</label>
+                        <input type='checkbox' name='sandbox_ignore[]' id='e_error' value='E_ERROR' />
+                        <label for='e_error'>E_ERROR</label>
+                        <input type='checkbox' name='sandbox_ignore[]' id='e_parse' value='E_PARSE' />
+                        <label for='e_parse'>E_PARSE</label>
+                        <input type='checkbox' name='sandbox_ignore[]' id='e_strict' value='E_STRICT' />
+                        <label for='e_strict'>E_STRICT</label>
                     </div>
                 </li> 
 
@@ -112,8 +112,16 @@
             }
         });
 
+        function updateIgnore(ignoreErrors) {
+            var ignore = ignoreErrors.split('|');
+            for ( var i = 0; i < ignore.length; i++ ) {
+                $('#' + ignore[i].toLowerCase()).attr('checked', 'checked');
+            }
+        }
+
         $('#create_snapshots').trigger('change');
         $('#sandbox_errors').trigger('change');
+        updateIgnore('<?php echo SANDBOX_IGNORE; ?>');
         
     });
 </script> 

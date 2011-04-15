@@ -44,39 +44,29 @@ class VPU {
     *  The sandboxed exceptions.
     *
     *  @var string
-    *  @access private
+    *  @access protected
     */
-    private $_exceptions = '';
+    protected $_exceptions = '';
     
    /**
     *  The list of files to be ignored when creating a stack trace. 
     *
     *  @var array
-    *  @access private
+    *  @access protected
     */
-    private $_ignore_trace = array(
+    protected $_ignore_trace = array(
         'vpu.php',
         'index.php'
     );
 
    /**
-    *  Empties the sandbox file.
-    *
-    *  @access public
-    *  @return void
-    */
-    public function __construct() {
-        $this->_empty_file(SANDBOX_FILENAME);
-    }
-
-   /**
     *  Builds the suite statistics.
     *
     *  @param array $stats        The stat-related variables to be transformed.
-    *  @access private
+    *  @access protected
     *  @return string
     */
-    private function _build_stats($stats) {
+    protected function _build_stats($stats) {
         $suite = array_count_values($stats['suite']);
         $suite['failure'] = ( isset($suite['failure']) ) ? $suite['failure'] : 0;
         $suite['incomplete'] = ( isset($suite['incomplete']) ) ? $suite['incomplete'] : 0;
@@ -116,10 +106,10 @@ class VPU {
     *  Builds a suite of tests.
     *
     *  @param array $suite        The suite-related variables to be displayed.
-    *  @access private
+    *  @access protected
     *  @return string
     */
-    private function _build_suite($suite) {
+    protected function _build_suite($suite) {
         $suite['expand'] = ( $suite['status'] == 'failure' ) ? '-' : '+';
         $suite['display'] = ( $suite['status'] == 'failure' ) ? 'show' : 'hide';
 
@@ -134,10 +124,10 @@ class VPU {
     *  Builds a test.
     *
     *  @param array $test             The test-related variables to be displayed.
-    *  @access private
+    *  @access protected
     *  @return string
     */
-    private function _build_test($test) {
+    protected function _build_test($test) {
         if ( $test['variables_message'] && $test['status'] === 'failure' ) {
             $test['expand'] = '-';
             $test['display'] = 'show';
@@ -164,6 +154,7 @@ class VPU {
         }
         $filename = $dir . date('d-m-Y G:i') . '.html';
         $this->_write_file($filename, $data);
+        // TODO: Add a try/catch for this
         chmod($filename, 0777);
     }
 
@@ -171,10 +162,10 @@ class VPU {
     *  Erases the contents of a file. 
     *
     *  @param string $filename        The file to be emptied.
-    *  @access private
+    *  @access protected
     *  @return void
     */
-    private function _empty_file($filename) {
+    protected function _empty_file($filename) {
         $this->_write_file($filename, '', 'w');
     }
 
@@ -182,10 +173,10 @@ class VPU {
     *  Transforms JSON into a more readable format.
     *
     *  @param string $json        The JSON to be formatted.
-    *  @access private
+    *  @access protected
     *  @return string
     */
-    private function _format_json($json) {
+    protected function _format_json($json) {
 
         $result= '';
         $level = 0;
@@ -224,12 +215,13 @@ class VPU {
    /**
     *  Retrieves all of the formatted errors.
     *
-    *  @access private
+    *  @access protected
     *  @return string
     */
-    private function _get_errors() {
-        $errors = file_get_contents(SANDBOX_FILENAME);
-        $this->_empty_file(SANDBOX_FILENAME);
+    protected function _get_errors() {
+        global $sandbox_filename;
+        $errors = file_get_contents($sandbox_filename);
+        $this->_empty_file($sandbox_filename);
         return $errors;
     }
 
@@ -237,10 +229,10 @@ class VPU {
     *  Retrieves any user-generated debugging messages from a PHPUnit test result. 
     *
     *  @param string $message        The message supplied by VPU's transformed JSON.
-    *  @access private
+    *  @access protected
     *  @return string
     */
-    private function _get_message($message) {
+    protected function _get_message($message) {
         if ( !$message ) {
             return '';
         }
@@ -265,10 +257,10 @@ class VPU {
     *
     *  @param string $status        The status supplied by VPU's transformed JSON.
     *  @param string $message       The message supplied by VPU's transformed JSON.
-    *  @access private
+    *  @access protected
     *  @return string
     */
-    private function _get_status($status, $message) {
+    protected function _get_status($status, $message) {
         switch ( $status ) {
             case 'pass':
                 $status = 'success';
@@ -297,10 +289,10 @@ class VPU {
     *  Retrieves the stack trace from a PHPUnit test result. 
     *
     *  @param string $trace        The message supplied by VPU's transformed JSON.
-    *  @access private
+    *  @access protected
     *  @return string
     */
-    private function _get_trace($trace) {
+    protected function _get_trace($trace) {
         if ( !$trace ) {
             return '';
         }
@@ -343,7 +335,9 @@ class VPU {
     *  @return bool
     */
     public function handle_errors($err_no, $err_str, $err_file, $err_line) {
-        $ignore = explode('|', SANDBOX_IGNORE);
+        global $sandbox_ignore, $sandbox_filename;
+
+        $ignore = explode('|', $sandbox_ignore);
         $transform_to_constant = function($value) { return constant($value); };
         $ignore = array_map($transform_to_constant, $ignore);
         if ( in_array($err_no, $ignore) ) {
@@ -376,7 +370,7 @@ class VPU {
         $error['file'] = $err_file;
         ob_start(); 
         include 'ui/error.html';
-        $this->_write_file(SANDBOX_FILENAME, ob_get_contents()); 
+        $this->_write_file($sandbox_filename, ob_get_contents()); 
         ob_end_clean();
         return true;
     }
@@ -385,10 +379,10 @@ class VPU {
     *  Formats exceptions for sandbox use.
     *
     *  @param Exception $exception            The thrown exception.
-    *  @access private
+    *  @access protected
     *  @return void
     */
-    public function _handle_exception($exception) {
+    protected function _handle_exception($exception) {
         $error = array(
             'type'    => 'Exception',
             'message' => $exception->getMessage(),
@@ -406,10 +400,10 @@ class VPU {
     *  Iterates through the supplied directory and loads the test files.
     *
     *  @param string $test_dir       The directory containing the tests. 
-    *  @access private
+    *  @access protected
     *  @return void
     */
-    private function _load_dir($test_dir) {
+    protected function _load_dir($test_dir) {
         try {
             $test_dir = realpath($test_dir);
             if ( !is_dir($test_dir) ) {
@@ -437,10 +431,10 @@ class VPU {
     *  Loads each of the supplied tests. 
     *
     *  @param array $tests       The tests to be run through PHPUnit.
-    *  @access private
+    *  @access protected
     *  @return array
     */
-    private function _load_tests($tests) {
+    protected function _load_tests($tests) {
         $loaded_classes = get_declared_classes();
 
         foreach ( $tests as $test ) {
@@ -455,10 +449,10 @@ class VPU {
     *  Parses and formats the JSON output from PHPUnit into an associative array. 
     *
     *  @param string $pu_output        The JSON output from PHPUnit. 
-    *  @access private
+    *  @access protected
     *  @return array
     */
-    private function _parse_output($pu_output) {
+    protected function _parse_output($pu_output) {
         $results = '';
         $json_elements = $this->_pull($pu_output);
         foreach ( $json_elements as $elem ) {
@@ -488,7 +482,7 @@ class VPU {
         return $results;
     }
 
-    private function _parse_tests($tests) {
+    protected function _parse_tests($tests) {
         $collection = array();
 
         foreach ( $tests as $test )  {
@@ -505,10 +499,10 @@ class VPU {
     *  Converts the first nested layer of PHPUnit-generated JSON to an associative array.
     *
     *  @param string $str        The JSON output from PHPUnit. 
-    *  @access private
+    *  @access protected
     *  @return array
     */
-    private function _pull($str) {
+    protected function _pull($str) {
         try {
             $tags = array();
             $nest = 0;
@@ -550,10 +544,10 @@ class VPU {
     *  @param string $old            The substring to be replaced. 
     *  @param string $new            The replacment string. 
     *  @param string $subject        The string whose contents will be replaced.
-    *  @access private
+    *  @access protected
     *  @return string
     */
-    private function _replace($old, $new, $subject) {
+    protected function _replace($old, $new, $subject) {
         try {
             $pos = strpos($subject, $old);
             
@@ -682,10 +676,10 @@ class VPU {
     *  @param string $filename        The name of the file.
     *  @param string $data            The data to be written.
     *  @param string $mode            The type of access to be granted to the file handle.
-    *  @access private
+    *  @access protected
     *  @return string
     */
-    private function _write_file($filename, $data, $mode='a') {
+    protected function _write_file($filename, $data, $mode='a') {
         try {
             $handle = @fopen($filename, $mode);
             if ( !$handle ) {
