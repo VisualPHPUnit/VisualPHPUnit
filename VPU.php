@@ -414,7 +414,7 @@ class VPU {
                             
             $test_cases = array();
             while ( $it->valid() ) {
-                if ( !$it->isDot() ) {
+                if ( !$it->isDot() && strtolower(pathinfo($it->key(), PATHINFO_EXTENSION)) == 'php' ) {
                     $test_cases[] = $it->key();
                 }
 
@@ -488,11 +488,12 @@ class VPU {
         foreach ( $tests as $test )  {
             if ( is_dir($test) ) {
                 $collection = array_merge($collection, $this->_load_dir($test));
-            } elseif ( file_exists($test) )  {
+            } elseif ( file_exists($test) && strtolower(pathinfo($test, PATHINFO_EXTENSION)) == 'php' )  {
                 $collection[] = $test;
             }
         }
-        return $collection;
+        // Avoid returning duplicates
+        return array_keys(array_flip($collection));
     }
 
    /**

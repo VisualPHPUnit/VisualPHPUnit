@@ -275,6 +275,19 @@ form fieldset ol li div label {
         font-weight: bold;
 }
 
+.info ul .options a,
+.info ul .options a:link,
+.info ul .options a:visited {
+    	color: #858585;
+    	text-decoration: none;
+}
+
+.info ul .options a:hover,
+.info ul .options a:active {
+    	color: #858585;
+    	text-decoration: underline;
+}
+
 .light {
 	width:5px;
 	height: 5px;
