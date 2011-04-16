@@ -123,6 +123,14 @@ form fieldset ol li select, input {
         margin-bottom: 6px;
 }
 
+form fieldset ol li span {
+        display: inline-block;
+        margin-left: 175px;
+        margin-bottom: 6px;
+        font-size: 11px;
+        color: #E05151;
+}
+
 form fieldset ol li div {
         display: inline-block;
         margin-left: -8px;

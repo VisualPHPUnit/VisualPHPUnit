@@ -35,6 +35,26 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+    // AJAX calls
+    if ( isset($_GET['dir']) ) {
+        if ( !file_exists($_GET['dir']) ) {
+            if ( $_GET['type'] == 'dir' ) {
+                echo 'Directory does not exist!';
+            } else {
+                echo 'File does not exist!';
+            }
+        } elseif ( !is_writable($_GET['dir']) ) {
+            if ( $_GET['type'] == 'dir' ) {
+                echo 'Directory is not writable! (Check permissions.)';
+            } else {
+                echo 'File is not writable! (Check permissions.)';
+            }
+        } else {
+            echo 'OK';
+        }
+        exit;
+    }
+
     require 'config.php';
 
     if ( empty($_POST) ) {

@@ -36,6 +36,7 @@
                 <li> 
                     <label for='snapshot_directory'>Snapshot Directory:</label> 
                     <input type='text' name='snapshot_directory' id='snapshot_directory' value='<?php echo SNAPSHOT_DIRECTORY;?>' />
+                    
                 </li> 
 
                 <li> 
@@ -96,20 +97,50 @@
             $('#test_files').val(updateTests());
         });
 
+        function handleSubmit() {
+            if ( !$('.error_message').length ) {
+                $('#run_tests').removeAttr('disabled');
+            } else {
+                $('#run_tests').attr('disabled', 'disabled');
+            }
+        }
+
+        function getError(selector, ajaxType) {
+            $.get('index.php', { dir: selector.val(), type: ajaxType }, function(data) {
+                selector.siblings('.error_message').remove();
+                if ( data != 'OK' ) {
+                    selector.after("<span class='error_message'>" + data + "</span>");
+                }
+                handleSubmit();
+            });
+        }
+
         $('#create_snapshots').change(function() {
             if ( $(this).val() == 1 ) {
                 $(this).parent().next().show();
+                getError($('#snapshot_directory'), 'dir');
             } else {
-                $(this).parent().next().hide();
+                $(this).parent().next().hide().children('.error_message').remove();
+                handleSubmit();
             }
         });
 
         $('#sandbox_errors').change(function() {
             if ( $(this).val() == 1 ) {
                 $(this).parent().nextAll('.sandbox').show();
+                getError($('#sandbox_filename'), 'file');
             } else {
-                $(this).parent().nextAll('.sandbox').hide();
+                $(this).parent().nextAll('.sandbox').hide().children('.error_message').remove();
+                handleSubmit();
             }
+        });
+
+        $('#snapshot_directory').blur(function() {
+            getError($(this), 'dir');
+        });
+
+        $('#sandbox_filename').blur(function() {
+            getError($(this), 'file');
         });
 
         function updateIgnore(ignoreErrors) {
