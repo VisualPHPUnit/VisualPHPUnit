@@ -7,6 +7,7 @@ v1.3
 * Added a start page to allow for specific choosing of tests and options
 * Added the ability to sort suite results by status and time
 * Cleaned up some configuration settings
+* Removed ability to save JSON snapshots
 
 v1.2
 ----
