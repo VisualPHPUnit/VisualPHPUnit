@@ -1,6 +1,12 @@
 Changelog
 =========
 
+v1.3.1
+------
+
+* Allow for relative paths in TEST_DIRECTORY
+* Use a better test loading mechanism
+
 v1.3
 ----
 
