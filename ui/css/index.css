@@ -123,7 +123,14 @@ form fieldset ol li select, input {
         margin-bottom: 6px;
 }
 
-form fieldset ol li span {
+form fieldset ol li #file_help {
+        display: inline-block;
+        margin-left: 5px;
+        margin-bottom: 6px;
+        font-size: 11px;
+}
+
+form fieldset ol li .error_message {
         display: inline-block;
         margin-left: 175px;
         margin-bottom: 6px;
