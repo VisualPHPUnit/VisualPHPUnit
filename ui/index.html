@@ -94,7 +94,7 @@
         }
 
         $('#file_tree').fileTree({ 
-            root: '<?php echo TEST_DIRECTORY;?>',
+            root: '<?php echo realpath(TEST_DIRECTORY);?>',
             script: 'ui/js/jqueryFileTree/connectors/jqueryFileTree.php' 
         }, function(file) {
             $('#test_files').val(updateTests());

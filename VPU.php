@@ -428,24 +428,6 @@ class VPU {
     }
 
    /**
-    *  Loads each of the supplied tests. 
-    *
-    *  @param array $tests       The tests to be run through PHPUnit.
-    *  @access protected
-    *  @return array
-    */
-    protected function _load_tests($tests) {
-        $loaded_classes = get_declared_classes();
-
-        foreach ( $tests as $test ) {
-            require $test;
-        }
-
-        // Only return the classes that were just loaded
-        return array_diff(get_declared_classes(), $loaded_classes); 
-    }
-
-   /**
     *  Parses and formats the JSON output from PHPUnit into an associative array. 
     *
     *  @param string $pu_output        The JSON output from PHPUnit. 
@@ -574,11 +556,9 @@ class VPU {
         $suite = new PHPUnit_Framework_TestSuite();
 
         $tests = $this->_parse_tests($tests); 
-        $loaded_tests = $this->_load_tests($tests);
-        foreach ( $loaded_tests as $test ) {
-            if ( (stripos($test, 'PHPUnit_') === false) && (stripos($test, 'Text_Template') === false) ) {
-                $suite->addTestSuite($test);
-            }
+        foreach ( $tests as $test ) {
+            require $test;
+            $suite->addTestSuite(basename($test, '.php'));
         }
 
         $result = new PHPUnit_Framework_TestResult;
