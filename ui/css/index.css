@@ -153,13 +153,11 @@ form fieldset ol li div label {
         font-size: 11px;
 }
 
-
 #run_tests {
         margin-top: 18px;
         margin-left: 170px;
         width: 90px; 
 }
-
 
 .box {
 	overflow:auto;
@@ -389,18 +387,16 @@ hr.small {
 	padding: 0px 29px;
 }
 
-.test .stacktrace {
+.test .stacktrace,
+.test .variables {
 	margin-top: 10px;
 	padding:10px;
 	border: 1px solid #888888;
 	background-color: #CCCCCC;
 }
 
-.test .variables {
-	margin-top: 10px;
-	padding:10px;
-	border: 1px solid #888888;
-	background-color: #CCCCCC;
+pre {
+        word-wrap: break-word;
 }
 
 .hide {
@@ -458,24 +454,28 @@ hr.small {
 /* graph
 ------------------------------ */
 
-/*
-form {
+#graph form {
         margin: 0 auto;
-        width: 960px;
+        width: 330px;
 }
 
-form fieldset legend {
+#graph form fieldset legend {
         padding-bottom: 10px;
 }
 
-form fieldset ol li label {
+#graph form fieldset ol li label {
         display: inline-block;
-        width: 100px; 
+        width: 130px; 
 }
 
-form fieldset ol li select, input {
+#graph form fieldset ol li select, input {
         display: inline-block;
         width: 140px; 
 }
 
-*/
+#redraw_graph {
+        margin-top: 18px;
+        margin-left: 110px;
+        width: 120px; 
+}
+
