@@ -117,9 +117,15 @@ form fieldset ol li label {
         width: 170px; 
 }
 
-form fieldset ol li select, input {
+form fieldset ol li select {
         display: inline-block;
         width: 270px; 
+        margin-bottom: 6px;
+}
+
+form fieldset ol li input {
+        display: inline-block;
+        width: 264px; 
         margin-bottom: 6px;
 }
 
@@ -458,32 +464,3 @@ pre {
 	color: white;
 	padding-top:3px;
 }
-
-/* graph
------------------------------- */
-
-#graph form {
-        margin: 0 auto;
-        width: 330px;
-}
-
-#graph form fieldset legend {
-        padding-bottom: 10px;
-}
-
-#graph form fieldset ol li label {
-        display: inline-block;
-        width: 130px; 
-}
-
-#graph form fieldset ol li select, input {
-        display: inline-block;
-        width: 140px; 
-}
-
-#redraw_graph {
-        margin-top: 18px;
-        margin-left: 110px;
-        width: 120px; 
-}
-
