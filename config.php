@@ -69,4 +69,13 @@ define('SANDBOX_FILENAME', BASE_INSTALL . '/errors/errors.tmp');
 // e.g. 'E_STRICT|E_NOTICE'
 define('SANDBOX_IGNORE', 'E_STRICT');
 
+// Paths to any necessary bootstraps
+$bootstraps = array(
+    // '/path/to/tests/bootstrap.php'
+);
+
+foreach ( $bootstraps as $bootstrap ) {
+    require $bootstrap;
+}
+
 ?>
