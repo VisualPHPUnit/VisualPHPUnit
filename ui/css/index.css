@@ -288,15 +288,20 @@ form fieldset ol li div label {
         font-weight: bold;
 }
 
-.info ul .options a,
-.info ul .options a:link,
-.info ul .options a:visited {
+.info ul .links {
+        margin-top: 15px; 
+        font-weight: bold;
+}
+
+.info ul .links a,
+.info ul .links a:link,
+.info ul .links a:visited {
     	color: #858585;
     	text-decoration: none;
 }
 
-.info ul .options a:hover,
-.info ul .options a:active {
+.info ul .links a:hover,
+.info ul .links a:active {
     	color: #858585;
     	text-decoration: underline;
 }
@@ -363,14 +368,17 @@ hr.small {
         width: 45%;
 }
 
+#stats_container {
+        margin-bottom: 15px;
+        height: 180px;
+}
+
 #left {
         float: left;
-        margin-bottom: 20px;
 }
 
 #right {
         float: right;
-        margin-bottom: 20px;
 }
 
 .test .button.expand {

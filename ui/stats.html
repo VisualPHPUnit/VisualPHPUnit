@@ -1,78 +1,80 @@
-                    <div class="box rounded collected" id="left"> 
-                        <div class="testsuite results"> 
-                            <div class="light rounded"></div> 
-                            <div class="name">Suite Statistics</div>
-                            <div class="info">
-                                <ul>
-                                    <li>
-                                        <div>
-                                            <span class='percent_failure' title='Failed' data-percent='<?php echo $suite["percent_failure"];?>'></span> 
-                                            <span class='percent_incomplete' title='Incomplete' data-percent='<?php echo $suite["percent_incomplete"];?>'></span> 
-                                            <span class='percent_skipped' title='Skipped' data-percent='<?php echo $suite["percent_skipped"];?>'></span> 
-                                            <span class='percent_success' title='Succeeded' data-percent='<?php echo $suite["percent_success"];?>'></span> 
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span class='category'>Failed: </span><?php echo $suite['failure'];?> (<?php echo round($suite['percent_failure'], 1);?>%) 
-                                    </li>
-                                    <li>
-                                        <span class='category'>Incomplete: </span><?php echo $suite['incomplete'];?> (<?php echo round($suite['percent_incomplete'], 1);?>%) 
-                                    </li>
-                                    <li>
-                                        <span class='category'>Skipped: </span><?php echo $suite['skipped'];?> (<?php echo round($suite['percent_skipped'], 1);?>%) 
-                                    </li>
-                                    <li>
-                                        <span class='category'>Succeeded: </span><?php echo $suite['success'];?> (<?php echo round($suite['percent_success'], 1);?>%) 
-                                    </li>
-                                    <li>
-                                        <span class='category'>Total: </span><?php echo $suite['total'];?> 
-                                    </li>
-                                    <li class='options'>
-                                        Sort by:
-                                        <select id='sort_type'>
-                                            <option value='Results (asc)'>Results (asc)</option>
-                                            <option value='Results (desc)'>Results (desc)</option>
-                                            <option value='Time (asc)'>Execution Time (asc)</option>
-                                            <option value='Time (desc)'>Execution Time (desc)</option>
-                                        </select>
-                                    </li>
-                                </ul>
+                    <div id="stats_container">
+                        <div class="box rounded collected" id="left"> 
+                            <div class="testsuite results"> 
+                                <div class="light rounded"></div> 
+                                <div class="name">Suite Statistics</div>
+                                <div class="info">
+                                    <ul>
+                                        <li>
+                                            <div>
+                                                <span class='percent_failure' title='Failed' data-percent='<?php echo $suite["percent_failure"];?>'></span> 
+                                                <span class='percent_incomplete' title='Incomplete' data-percent='<?php echo $suite["percent_incomplete"];?>'></span> 
+                                                <span class='percent_skipped' title='Skipped' data-percent='<?php echo $suite["percent_skipped"];?>'></span> 
+                                                <span class='percent_success' title='Succeeded' data-percent='<?php echo $suite["percent_success"];?>'></span> 
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <span class='category'>Failed: </span><?php echo $suite['failure'];?> (<?php echo round($suite['percent_failure'], 1);?>%) 
+                                        </li>
+                                        <li>
+                                            <span class='category'>Incomplete: </span><?php echo $suite['incomplete'];?> (<?php echo round($suite['percent_incomplete'], 1);?>%) 
+                                        </li>
+                                        <li>
+                                            <span class='category'>Skipped: </span><?php echo $suite['skipped'];?> (<?php echo round($suite['percent_skipped'], 1);?>%) 
+                                        </li>
+                                        <li>
+                                            <span class='category'>Succeeded: </span><?php echo $suite['success'];?> (<?php echo round($suite['percent_success'], 1);?>%) 
+                                        </li>
+                                        <li>
+                                            <span class='category'>Total: </span><?php echo $suite['total'];?> 
+                                        </li>
+                                        <li class='options'>
+                                            Sort by:
+                                            <select id='sort_type'>
+                                                <option value='Results (asc)'>Results (asc)</option>
+                                                <option value='Results (desc)'>Results (desc)</option>
+                                                <option value='Time (asc)'>Execution Time (asc)</option>
+                                                <option value='Time (desc)'>Execution Time (desc)</option>
+                                            </select>
+                                        </li>
+                                    </ul>
+                                </div> 
                             </div> 
                         </div> 
-                    </div> 
-                    <div class="box rounded collected" id="right"> 
-                        <div class="testsuite results"> 
-                            <div class="light rounded"></div> 
-                            <div class="name">Test Statistics</div> 
-                            <div class="info">
-                                <ul>
-                                    <li>
-                                        <div>
-                                            <span class='percent_failure' title='Failed' data-percent='<?php echo $test["percent_failure"];?>'></span> 
-                                            <span class='percent_incomplete' title='Incomplete' data-percent='<?php echo $test["percent_incomplete"];?>'></span> 
-                                            <span class='percent_skipped' title='Skipped' data-percent='<?php echo $test["percent_skipped"];?>'></span> 
-                                            <span class='percent_success' title='Succeeded' data-percent='<?php echo $test["percent_success"];?>'></span> 
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span class='category'>Failed: </span><?php echo $test['failure'];?> (<?php echo round($test['percent_failure'], 1);?>%) 
-                                    </li>
-                                    <li>
-                                        <span class='category'>Incomplete: </span><?php echo $test['incomplete'];?> (<?php echo round($test['percent_incomplete'], 1);?>%) 
-                                    </li>
-                                    <li>
-                                        <span class='category'>Skipped: </span><?php echo $test['skipped'];?> (<?php echo round($test['percent_skipped'], 1);?>%) 
-                                    </li>
-                                    <li>
-                                        <span class='category'>Succeeded: </span><?php echo $test['success'];?> (<?php echo round($test['percent_success'], 1);?>%) 
-                                    </li>
-                                    <li>
-                                        <span class='category'>Total: </span><?php echo $test['total'];?> 
-                                    </li>
-                                    <li class='options'>
-                                        <a href='/'>Run more tests</a>
-                                    </li>
-                                </ul>
+                        <div class="box rounded collected" id="right"> 
+                            <div class="testsuite results"> 
+                                <div class="light rounded"></div> 
+                                <div class="name">Test Statistics</div> 
+                                <div class="info">
+                                    <ul>
+                                        <li>
+                                            <div>
+                                                <span class='percent_failure' title='Failed' data-percent='<?php echo $test["percent_failure"];?>'></span> 
+                                                <span class='percent_incomplete' title='Incomplete' data-percent='<?php echo $test["percent_incomplete"];?>'></span> 
+                                                <span class='percent_skipped' title='Skipped' data-percent='<?php echo $test["percent_skipped"];?>'></span> 
+                                                <span class='percent_success' title='Succeeded' data-percent='<?php echo $test["percent_success"];?>'></span> 
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <span class='category'>Failed: </span><?php echo $test['failure'];?> (<?php echo round($test['percent_failure'], 1);?>%) 
+                                        </li>
+                                        <li>
+                                            <span class='category'>Incomplete: </span><?php echo $test['incomplete'];?> (<?php echo round($test['percent_incomplete'], 1);?>%) 
+                                        </li>
+                                        <li>
+                                            <span class='category'>Skipped: </span><?php echo $test['skipped'];?> (<?php echo round($test['percent_skipped'], 1);?>%) 
+                                        </li>
+                                        <li>
+                                            <span class='category'>Succeeded: </span><?php echo $test['success'];?> (<?php echo round($test['percent_success'], 1);?>%) 
+                                        </li>
+                                        <li>
+                                            <span class='category'>Total: </span><?php echo $test['total'];?> 
+                                        </li>
+                                        <li class='links'>
+                                            <a href='/'>&lt; Run more tests</a>
+                                        </li>
+                                    </ul>
+                                </div> 
                             </div> 
                         </div> 
-                    </div> 
+                    </div>
