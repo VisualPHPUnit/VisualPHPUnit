@@ -89,6 +89,7 @@
                                 <option value='<?php echo $file;?>'><?php echo $file;?></option>
                             <?php } ?>
                         </select>
+                        <input type='hidden' id='view_snapshot' name='view_snapshot' value='0' />
                     </li> 
 
                     <li>
@@ -178,11 +179,13 @@
 
         $('#legend_tests, #legend_options').click(function() {
             $('#legend_tests, #legend_options').next().slideToggle();
+            $('#view_snapshot').val(0);
             $('#legend_archives').next().slideUp();
         });
 
         $('#legend_archives').click(function() {
             $(this).next().slideToggle();
+            $('#view_snapshot').val(1);
             $('#legend_tests, #legend_options').next().slideUp();
         });
 

@@ -72,7 +72,7 @@
         exit; 
     }
 
-    if ( isset($_POST['select_snapshot']) ) {
+    if ( $_POST['view_snapshot'] == 1 ) {
         $dir = realpath(SNAPSHOT_DIRECTORY) . '/';
         $snapshot = realpath($dir . trim(strval(filter_var($_POST['select_snapshot'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES))));
         include $snapshot;
