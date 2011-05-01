@@ -80,6 +80,7 @@ a img { border: none; }
 	width: 960px;
         margin: 10px auto;
 	position: relative;
+	font-family: "Lucida Grande", Helvetica, Arial, "MS Trebuchet", sans-serif;
 }
 
 /* index
@@ -179,7 +180,6 @@ input[type='submit'] {
 	border:1px solid #A0A0A0;
 	padding:7px;
 	color: #858585;
-	font-family: "Lucida Grande", Helvetica, Arial, "MS Trebuchet", sans-serif;
   	font-size: 12px;
 	-webkit-box-shadow: 1px 1px 2px #CCC;
 	-moz-box-shadow: 1px 1px 2px #CCC;
