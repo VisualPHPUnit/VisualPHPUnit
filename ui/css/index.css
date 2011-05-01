@@ -85,8 +85,14 @@ a img { border: none; }
 /* index
 ------------------------------ */
 
-form {
-        margin: 0 auto;
+#tests {
+        float: left;
+        width: 450px;
+        clear: left;
+}
+
+#archives {
+        float: right;
         width: 450px;
 }
 
@@ -97,6 +103,7 @@ form fieldset {
 form fieldset legend {
         padding: 10px 10px 10px 0px;
         font-size: 18px;
+        cursor: pointer;
 }
 
 #file_tree {
@@ -159,7 +166,7 @@ form fieldset ol li div label {
         font-size: 11px;
 }
 
-#run_tests {
+input[type='submit'] {
         margin-top: 18px;
         margin-left: 170px;
         width: 90px; 

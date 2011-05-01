@@ -12,70 +12,93 @@
 <div id="container"> 
     <form action='index.php' method='post'>
 
-        <fieldset> 
-            <legend>Files</legend> 
-            <ol> 
-                <li> 
-                    <div id='file_tree'></div>
-                    <span id='file_help'>
-                        Tips: You can select multiple files by single-clicking them.  You can also use shift+click to select a range of files, or ctrl+click to select an entire directory.
-                    </span>
-                    <input type='hidden' name='test_files' id='test_files' />
-                </li> 
-            </ol> 
-        </fieldset> 
+        <div id='tests'>
+            <fieldset> 
+                <legend id='legend_tests'>Tests</legend> 
+                <ol> 
+                    <li> 
+                        <div id='file_tree'></div>
+                        <span id='file_help'>
+                            Tips: You can select multiple files by single-clicking them.  You can also use shift+click to select a range of files, or ctrl+click to select an entire directory.
+                        </span>
+                        <input type='hidden' name='test_files' id='test_files' />
+                    </li> 
+                </ol> 
+            </fieldset> 
 
-        <fieldset> 
-            <legend>Options</legend> 
-            <ol> 
-                <li> 
-                    <label for='create_snapshots'>Create Snapshots:</label> 
-                    <select name='create_snapshots' id='create_snapshots'>
-                        <option value='0' <?php if ( !CREATE_SNAPSHOTS ) echo 'selected';?>>No</option>
-                        <option value='1' <?php if ( CREATE_SNAPSHOTS ) echo 'selected';?>>Yes</option>
-                    </select>
-                </li> 
+            <fieldset> 
+                <legend id='legend_options'>Options</legend> 
+                <ol> 
+                    <li> 
+                        <label for='create_snapshots'>Create Snapshots:</label> 
+                        <select name='create_snapshots' id='create_snapshots'>
+                            <option value='0' <?php if ( !CREATE_SNAPSHOTS ) echo 'selected';?>>No</option>
+                            <option value='1' <?php if ( CREATE_SNAPSHOTS ) echo 'selected';?>>Yes</option>
+                        </select>
+                    </li> 
 
-                <li> 
-                    <label for='snapshot_directory'>Snapshot Directory:</label> 
-                    <input type='text' name='snapshot_directory' id='snapshot_directory' value='<?php echo SNAPSHOT_DIRECTORY;?>' />
-                    
-                </li> 
+                    <li> 
+                        <label for='snapshot_directory'>Snapshot Directory:</label> 
+                        <input type='text' name='snapshot_directory' id='snapshot_directory' value='<?php echo SNAPSHOT_DIRECTORY;?>' />
+                    </li> 
 
-                <li> 
-                    <label for='sandbox_errors'>Sandbox Errors:</label> 
-                    <select name='sandbox_errors' id='sandbox_errors'>
-                        <option value='0' <?php if ( !SANDBOX_ERRORS ) echo 'selected';?>>No</option>
-                        <option value='1' <?php if ( SANDBOX_ERRORS ) echo 'selected';?>>Yes</option>
-                    </select>
-                </li> 
-            
-                <li class='sandbox'> 
-                    <label for='sandbox_filename'>Sandbox Filename:</label> 
-                    <input type='text' name='sandbox_filename' id='sandbox_filename' value='<?php echo SANDBOX_FILENAME;?>' />
-                </li> 
+                    <li> 
+                        <label for='sandbox_errors'>Sandbox Errors:</label> 
+                        <select name='sandbox_errors' id='sandbox_errors'>
+                            <option value='0' <?php if ( !SANDBOX_ERRORS ) echo 'selected';?>>No</option>
+                            <option value='1' <?php if ( SANDBOX_ERRORS ) echo 'selected';?>>Yes</option>
+                        </select>
+                    </li> 
+                
+                    <li class='sandbox'> 
+                        <label for='sandbox_filename'>Sandbox Filename:</label> 
+                        <input type='text' name='sandbox_filename' id='sandbox_filename' value='<?php echo SANDBOX_FILENAME;?>' />
+                    </li> 
 
-                <li class='sandbox'> 
-                    <label for='sandbox_ignore'>Sandbox Ignore:</label> 
-                    <div>
-                        <input type='checkbox' name='sandbox_ignore[]' id='e_notice' value='E_NOTICE' />
-                        <label for='e_notice'>E_NOTICE</label>
-                        <input type='checkbox' name='sandbox_ignore[]' id='e_warning' value='E_WARNING' />
-                        <label for='e_warning'>E_WARNING</label>
-                        <input type='checkbox' name='sandbox_ignore[]' id='e_error' value='E_ERROR' />
-                        <label for='e_error'>E_ERROR</label>
-                        <input type='checkbox' name='sandbox_ignore[]' id='e_parse' value='E_PARSE' />
-                        <label for='e_parse'>E_PARSE</label>
-                        <input type='checkbox' name='sandbox_ignore[]' id='e_strict' value='E_STRICT' />
-                        <label for='e_strict'>E_STRICT</label>
-                    </div>
-                </li> 
+                    <li class='sandbox'> 
+                        <label for='sandbox_ignore'>Sandbox Ignore:</label> 
+                        <div>
+                            <input type='checkbox' name='sandbox_ignore[]' id='e_notice' value='E_NOTICE' />
+                            <label for='e_notice'>E_NOTICE</label>
+                            <input type='checkbox' name='sandbox_ignore[]' id='e_warning' value='E_WARNING' />
+                            <label for='e_warning'>E_WARNING</label>
+                            <input type='checkbox' name='sandbox_ignore[]' id='e_error' value='E_ERROR' />
+                            <label for='e_error'>E_ERROR</label>
+                            <input type='checkbox' name='sandbox_ignore[]' id='e_parse' value='E_PARSE' />
+                            <label for='e_parse'>E_PARSE</label>
+                            <input type='checkbox' name='sandbox_ignore[]' id='e_strict' value='E_STRICT' />
+                            <label for='e_strict'>E_STRICT</label>
+                        </div>
+                    </li> 
 
-                <li>
-                    <input type='submit' id='run_tests' value='Run Tests' />
-                </li>
-            </ol> 
-        </fieldset> 
+                    <li>
+                        <input type='submit' id='run_tests' value='Run Tests' />
+                    </li>
+                </ol> 
+            </fieldset> 
+        </div>
+
+        <div id='archives'>
+            <fieldset> 
+                <legend id='legend_archives'>Archives</legend> 
+                <ol> 
+                    <li> 
+                        <label for='select_snapshot'>Select Snapshot:</label> 
+                        <select name='select_snapshot' id='select_snapshot'>
+                            <?php foreach ( $results as $file ) { ?>
+                                <option value='<?php echo $file;?>'><?php echo $file;?></option>
+                            <?php } ?>
+                        </select>
+                    </li> 
+
+                    <li>
+                        <input type='submit' value='View' />
+                    </li>
+
+                </ol> 
+            </fieldset> 
+        </div>
+
     </form>
 </div> 
 
@@ -153,9 +176,20 @@
             }
         }
 
+        $('#legend_tests, #legend_options').click(function() {
+            $('#legend_tests, #legend_options').next().slideToggle();
+            $('#legend_archives').next().slideUp();
+        });
+
+        $('#legend_archives').click(function() {
+            $(this).next().slideToggle();
+            $('#legend_tests, #legend_options').next().slideUp();
+        });
+
         $('#create_snapshots').trigger('change');
         $('#sandbox_errors').trigger('change');
         updateIgnore('<?php echo SANDBOX_IGNORE; ?>');
+        $('#legend_tests, #legend_options, #legend_archives').next().css('display', 'none');
         
     });
 </script> 

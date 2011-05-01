@@ -152,7 +152,7 @@ class VPU {
         if ( $dir{strlen($dir) - 1} !== '/' ) {
             $dir .= '/';
         }
-        $filename = $dir . date('d-m-Y G:i') . '.html';
+        $filename = $dir . date('Y-m-d G:i') . '.html';
         $this->_write_file($filename, $data);
         // TODO: Add a try/catch for this
         chmod($filename, 0777);

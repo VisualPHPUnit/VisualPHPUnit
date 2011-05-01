@@ -58,8 +58,25 @@
     require 'config.php';
 
     if ( empty($_POST) ) {
+        $results = array();
+        $handler = opendir(SNAPSHOT_DIRECTORY);
+        while ( $file = readdir($handler) ) {
+            if ( $file != "." && $file != ".." ) {
+                $results[] = $file;
+            }
+        }
+        closedir($handler);
+        arsort($results);
+
         include 'ui/index.html';
         exit; 
+    }
+
+    if ( isset($_POST['select_snapshot']) ) {
+        $dir = realpath(SNAPSHOT_DIRECTORY) . '/';
+        $snapshot = realpath($dir . trim(strval(filter_var($_POST['select_snapshot'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES))));
+        include $snapshot;
+        exit;
     }
 
     // Sanitize all the $_POST data
