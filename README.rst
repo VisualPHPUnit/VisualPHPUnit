@@ -17,7 +17,7 @@ VisualPHPUnit provides the following features:
 Screenshot
 ----------
 
-.. image:: http://echodrop.net/code/vpu/ss.png
+.. image:: http://echodrop.net/code/vpu/ss2.png
 
 Installation
 ------------
@@ -29,8 +29,8 @@ Installation
 3. Point your browser to the location where you installed VisualPHPUnit!
 4. This should be enough for a basic installation.  However, you can set the default options for each test run by modifying a few more lines in config.php. 
     a. Change CREATE_SNAPSHOTS to *true* if you'd like to enable logging.  Logs are stored in the 'history' directory, though you can modify SNAPSHOT_DIRECTORY to point somewhere else if you please.  Please make note of the following:
-        i. Note that you will have to give the directory specified in SNAPSHOT_DIRECTORY the appropriate permissions in order to allow PHP to write to it.
-        ii. Also note that you will have to copy the 'ui' directory over to the directory specified in SNAPSHOT_DIRECTORY in order for the html files to display properly. 
+        i. You will have to give the directory specified in SNAPSHOT_DIRECTORY the appropriate permissions in order to allow PHP to write to it.
+        ii. The dropdown list under the 'Archives' section will only display the files within SNAPSHOT_DIRECTORY.
     b. Change SANDBOX_ERRORS to *true* if you'd like VPU to display any PHP errors after the test results.  If so, please make note of the following:
         i. The file specified in SANDBOX_FILENAME will always be empty (VPU wipes it at the end of each test run).  However, PHP still needs to be able to write to it, so ensure that the filename specified with SANDBOX_FILENAME has the appropriate permissions. 
         ii. Specific error types can be ignored using the SANDBOX_IGNORE setting.  Separate multiple error types with a '|' (e.g. 'E_STRICT|E_NOTICE').
@@ -39,7 +39,7 @@ Installation
 Version Information
 -------------------
 
-Current stable release is v1.3.1, last updated on 18 April 2011.
+Current stable release is v1.3.2, last updated on 30 April 2011.
 
 Feedback
 --------
@@ -51,4 +51,4 @@ Credits
 
 Special thanks to Matt Mueller (http://mattmueller.me/blog/), who came up with the initial concept, wrote the original code (https://github.com/MatthewMueller/PHPUnit-Test-Report), and was kind enough to share it.
 
-Thanks to Mike Zhou for his suggestions/improvements.
+Thanks to Mike Zhou, Hang Dao, and Thomas Ingham for their suggestions!

@@ -1,6 +1,14 @@
 Changelog
 =========
 
+v1.3.2
+------
+
+* Added support for bootstraps
+* Cleaned up the user interface
+* Added the ability to view snapshots from the homepage
+* Changed the snapshot filename format to Y-m-d
+
 v1.3.1
 ------
 
