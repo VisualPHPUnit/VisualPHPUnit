@@ -61,7 +61,7 @@
         $results = array();
         $handler = opendir(SNAPSHOT_DIRECTORY);
         while ( $file = readdir($handler) ) {
-            if ( $file != "." && $file != ".." ) {
+            if ( strpos($file, '.') !== 0 && strtolower(pathinfo($file, PATHINFO_EXTENSION)) == 'html' ) {
                 $results[] = $file;
             }
         }
