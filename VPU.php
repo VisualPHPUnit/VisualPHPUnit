@@ -140,6 +140,11 @@ class VPU {
         return $test_content;
     }
 
+    protected function _classname_only($class) {
+        $name = explode('\\', $class);
+        return array_pop($name);
+    }
+
    /**
     *  Creates an HTML snapshot of the test results.
     *
@@ -556,9 +561,18 @@ class VPU {
         $suite = new PHPUnit_Framework_TestSuite();
 
         $tests = $this->_parse_tests($tests); 
+        $original_classes = get_declared_classes();
+        $test_filenames = array();
         foreach ( $tests as $test ) {
             require $test;
-            $suite->addTestSuite(basename($test, '.php'));
+            $test_filenames[] = basename($test, '.php');
+        }
+        $new_classes = get_declared_classes();
+        $tests = array_diff($new_classes, $original_classes);
+        foreach ( $tests as $test ) {
+            if ( in_array($this->_classname_only($test), $test_filenames) ) {
+                $suite->addTestSuite($test);
+            }
         }
 
         $result = new PHPUnit_Framework_TestResult;
@@ -603,7 +617,7 @@ class VPU {
                 }
 
                 $suite['status'] = 'success';
-                $suite['name'] = $event['suite'];
+                $suite['name'] = $this->_classname_only($event['suite']);
                 $suite['tests'] = '';
                 $suite['time'] = 0;
             } elseif ( $event['event'] == 'test' ) {
