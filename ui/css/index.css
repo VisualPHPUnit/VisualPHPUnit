@@ -216,6 +216,7 @@ input[type='submit'] {
 	float: left;
 	width: 200px;
 	font-weight: bold;
+        word-wrap: break-word;
 }
 
 .testsuite .name {
