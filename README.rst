@@ -17,7 +17,7 @@ VisualPHPUnit provides the following features:
 Screenshot
 ----------
 
-.. image:: http://echodrop.net/code/vpu/ss2.png
+.. image:: http://echodrop.net/code/vpu/ss3.png
 
 Installation
 ------------
@@ -39,7 +39,7 @@ Installation
 Version Information
 -------------------
 
-Current stable release is v1.3.2, last updated on 30 April 2011.
+Current stable release is v1.4, last updated on 22 May 2011.
 
 Feedback
 --------

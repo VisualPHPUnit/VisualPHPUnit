@@ -47,7 +47,7 @@ set_include_path(get_include_path().PATH_SEPARATOR.
                  PHPUNIT_INSTALL.PATH_SEPARATOR);
 
 // The directory where the tests reside
-define('TEST_DIRECTORY', BASE_INSTALL . '/tests');
+define('TEST_DIRECTORY', '/srv/http/pu/tests');
 
 /*
  * Optional settings
@@ -71,7 +71,7 @@ define('SANDBOX_IGNORE', 'E_STRICT');
 
 // Paths to any necessary bootstraps
 $bootstraps = array(
-    // '/path/to/tests/bootstrap.php'
+     '/srv/http/nx/app/config/config.php'
 );
 
 foreach ( $bootstraps as $bootstrap ) {

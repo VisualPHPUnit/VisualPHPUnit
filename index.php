@@ -72,10 +72,15 @@
         exit; 
     }
 
-    if ( $_POST['view_snapshot'] == 1 ) {
+    if ( isset($_POST['view_snapshot']) && $_POST['view_snapshot'] == 1 ) {
         $dir = realpath(SNAPSHOT_DIRECTORY) . '/';
         $snapshot = realpath($dir . trim(strval(filter_var($_POST['select_snapshot'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES))));
+
+        ob_start(); 
         include $snapshot;
+        $content = ob_get_contents(); 
+        ob_end_clean();
+        echo $content;
         exit;
     }
 
@@ -108,9 +113,13 @@
 
     $results = $vpu->run($tests);
 
+    ob_start(); 
     include 'ui/header.html';
     echo $vpu->to_HTML($results, $sandbox_errors);
-    include 'ui/footer.html';
+    $content = ob_get_contents(); 
+    ob_end_clean();
+
+    echo $content;
 
     if ( $create_snapshots ) {
         $snapshot = ob_get_contents(); 

@@ -9,13 +9,13 @@
 </head> 
 
 <body> 
-<div id="container"> 
-    <form action='index.php' method='post'>
+    <div id='container'>
+        <div id='browser'>
+            <h1>VisualPHPUnit</h1>
 
-        <div id='tests'>
             <fieldset> 
                 <legend id='legend_tests'>Tests</legend> 
-                <ol> 
+                <ul> 
                     <li> 
                         <div id='file_tree'></div>
                         <span id='file_help'>
@@ -23,12 +23,12 @@
                         </span>
                         <input type='hidden' name='test_files' id='test_files' />
                     </li> 
-                </ol> 
+                </ul> 
             </fieldset> 
 
             <fieldset> 
                 <legend id='legend_options'>Options</legend> 
-                <ol> 
+                <ul> 
                     <li> 
                         <label for='create_snapshots'>Create Snapshots:</label> 
                         <select name='create_snapshots' id='create_snapshots'>
@@ -56,8 +56,8 @@
                     </li> 
 
                     <li class='sandbox'> 
-                        <label for='sandbox_ignore'>Sandbox Ignore:</label> 
-                        <div>
+                        <label>Sandbox Ignore:</label> 
+                        <div id='sandbox_inputs'>
                             <input type='checkbox' name='sandbox_ignore[]' id='e_notice' value='E_NOTICE' />
                             <label for='e_notice'>E_NOTICE</label>
                             <input type='checkbox' name='sandbox_ignore[]' id='e_warning' value='E_WARNING' />
@@ -74,14 +74,12 @@
                     <li>
                         <input type='submit' id='run_tests' value='Run Tests' />
                     </li>
-                </ol> 
-            </fieldset> 
-        </div>
+                </ul> 
+            </fieldset>
 
-        <div id='archives'>
             <fieldset> 
                 <legend id='legend_archives'>Archives</legend> 
-                <ol> 
+                <ul> 
                     <li> 
                         <label for='select_snapshot'>Select Snapshot:</label> 
                         <select name='select_snapshot' id='select_snapshot'>
@@ -93,18 +91,20 @@
                     </li> 
 
                     <li>
-                        <input type='submit' value='View' />
+                        <input type='submit' id='view_archive' value='View' />
                     </li>
-
-                </ol> 
+                </ul> 
             </fieldset> 
         </div>
 
-    </form>
-</div> 
+        <div id='output'>
 
+        </div>
+    </div>
 </body> 
+
 <script src="ui/js/jquery-1.5.1.min.js"></script> 
+<script src="ui/js/jquery.sortElements.js"></script>
 <script src="ui/js/jqueryFileTree/jqueryFileTree.js"></script> 
 <script> 
     $(document).ready(function() {
@@ -142,6 +142,12 @@
             });
         }
 
+        function updateBrowser() {
+            setTimeout(function() {
+                $('#container').css('height', $(document).height());
+            }, 100)
+        }
+
         $('#create_snapshots').change(function() {
             if ( $(this).val() == 1 ) {
                 $(this).parent().next().show();
@@ -150,6 +156,7 @@
                 $(this).parent().next().hide().children('.error_message').remove();
                 handleSubmit();
             }
+            updateBrowser();
         });
 
         $('#sandbox_errors').change(function() {
@@ -160,6 +167,7 @@
                 $(this).parent().nextAll('.sandbox').hide().children('.error_message').remove();
                 handleSubmit();
             }
+            updateBrowser();
         });
 
         $('#snapshot_directory').blur(function() {
@@ -180,13 +188,107 @@
         $('#legend_tests, #legend_options').click(function() {
             $('#legend_tests, #legend_options').next().slideToggle();
             $('#view_snapshot').val(0);
-            $('#legend_archives').next().slideUp();
+            $('#legend_archives').next().slideUp(300, function() {
+                updateBrowser();
+            });
         });
 
         $('#legend_archives').click(function() {
             $(this).next().slideToggle();
             $('#view_snapshot').val(1);
-            $('#legend_tests, #legend_options').next().slideUp();
+            $('#legend_tests, #legend_options').next().slideUp(300, function() {
+                updateBrowser();
+            });
+        });
+
+        function updateOutput() {
+            $('#sort_type').unbind();
+            $('#sort_type').bind('change', function() {
+                var type = $(this).val();
+                switch ( type ) {
+                    case 'Results (asc)':
+                        $('.box.rounded:not(.error)').sortElements(function(a, b) {
+                            return $(a).attr('data-suite-status') > $(b).attr('data-suite-status');
+                        });
+                        break;
+                    case 'Results (desc)':
+                        $('.box.rounded:not(.error)').sortElements(function(a, b) {
+                            return $(a).attr('data-suite-status') < $(b).attr('data-suite-status');
+                        });
+                        break;
+                    case 'Time (asc)':
+                        $('.box.rounded:not(.error)').sortElements(function(a, b) {
+                            return $(a).attr('data-suite-time') > $(b).attr('data-suite-time');
+                        });
+                        break;
+                    case 'Time (desc)':
+                        $('.box.rounded:not(.error)').sortElements(function(a, b) {
+                            return $(a).attr('data-suite-time') < $(b).attr('data-suite-time');
+                        });
+                        break;
+                }
+            });
+
+            $('#sort_type').trigger('change');
+
+            $('.expand.button').each(function(index) {
+                $(this).click(function(e) {
+                    if ( $(this).text() == '-' ) {
+                        if ( $(this).parent().hasClass('test') ) {
+                            $(this).next('.more').slideUp();
+                        } else {
+                            $(this).parent().next('.more').slideUp();
+                        }
+                        $(this).text('+');
+                    } else {
+                        if ( $(this).parent().hasClass('test') ) {
+                            $(this).next('.more').slideDown();
+                        } else {
+                            $(this).parent().next('.more').slideDown();
+                        }
+                        $(this).text('-');
+                    }
+                });
+            });
+
+            $('ul li div span').each(function() {
+                var width = $(this).attr('data-percent');
+                $(this).css({ 'width': width + '%' });
+            });
+        }
+
+        $('#view_archive').click(function(event) {
+            event.preventDefault();
+            $.post('/index.php', {
+                'select_snapshot' : $('#select_snapshot').val(),
+                'view_snapshot'   : $('#view_snapshot').val()
+            }, function(data) {
+                $('#output').html(data);
+                updateBrowser();
+                updateOutput();
+            }); 
+        });
+
+        $('#run_tests').click(function(event) {
+            event.preventDefault();
+
+            var sandboxIgnore = { 'types[]' : []};
+            $(":checked").each(function() {
+                sandboxIgnore['types[]'].push($(this).val());
+            });
+
+            $.post('/index.php', {
+                'create_snapshots'   : $('#create_snapshots').val(),
+                'snapshot_directory' : $('#snapshot_directory').val(),
+                'sandbox_errors'     : $('#sandbox_errors').val(),
+                'sandbox_filename'   : $('#sandbox_filename').val(),
+                'sandbox_ignore'     : sandboxIgnore,
+                'test_files'         : $('#test_files').val(),
+            }, function(data) {
+                $('#output').html(data);
+                updateBrowser();
+                updateOutput();
+            }); 
         });
 
         $('#create_snapshots').trigger('change');

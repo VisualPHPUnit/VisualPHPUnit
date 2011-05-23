@@ -1,28 +1,29 @@
 UL.jqueryFileTree {
-	font-family: Verdana, sans-serif;
-	font-size: 11px;
-	line-height: 18px;
-	padding: 0px;
-	margin: 0px;
+    font-family: Helvetica, Georgia, sans-serif;
+    font-size: 11px;
+    line-height: 18px;
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
 }
 
 UL.jqueryFileTree LI {
-	list-style: none;
-	padding: 0px;
-	padding-left: 20px;
-	margin: 0px;
-	white-space: nowrap;
+    list-style: none;
+    padding: 0px;
+    padding-left: 20px;
+    margin: 0px;
+    white-space: nowrap;
 }
 
 UL.jqueryFileTree LI.selected_file {
-        background-color: #BDF; 
+    background-color: #CAFF42; 
 }
 
 UL.jqueryFileTree A {
-	color: #333;
-	text-decoration: none;
-	display: block;
-	padding: 0px 2px;
+    color: #000000;
+    text-decoration: none;
+    display: block;
+    padding: 0px 2px;
 }
 
 /* Core Styles */

@@ -1,68 +1,150 @@
-/* -------------------------------------------------------------- 
-  
-   Reset default browser CSS.
-   
-   Based on work by Eric Meyer:
-   http://meyerweb.com/eric/tools/css/reset/index.html
-   
--------------------------------------------------------------- */
-
-/* v1.0 | 20080212 */
-
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, font, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	outline: 0;
-	font-size: 100%;
-	vertical-align: baseline;
-	background: transparent;
+html, body, #container {
+    height: 100%;
+    min-height: 100%;
 }
+
 body {
-	line-height: 1;
-}
-ol, ul {
-	list-style: none;
-}
-blockquote, q {
-	quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
+    font-family: Helvetica, Georgia, sans-serif;
+    margin: 0;
 }
 
-/* remember to define focus styles! */
-:focus {
-	outline: 0;
+#browser {
+    float: left;
+    width: 33%;
+    height: 100%;
+    padding-left: 5px;
+    padding-right: 10px;
+    border-right: 3px solid #49708A;
+    background-color: #EBF7F8;
 }
 
-/* remember to highlight inserts somehow! */
-ins {
-	text-decoration: none;
-}
-del {
-	text-decoration: line-through;
+#browser h1 {
+    margin: 5px 0 25px 0;
+    font-size: 28px;
+    color: #49708A;
 }
 
-/* tables still need 'cellspacing="0"' in the markup */
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
+#browser fieldset {
+    border-width: 2px 0 0 0;
+    border-style: solid;
+    border-color: #49708A;
+    padding-left: 0;
+    cursor: pointer;
 }
 
-a img { border: none; }
+#browser fieldset legend {
+    color: #49708A;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 0 1em 0 0;
+}
 
-/* end reset */
+#browser fieldset ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    cursor: default;
+}
+
+#browser fieldset ul li {
+    color: #FFFFFF;
+
+}
+
+#browser fieldset ul li #file_tree {
+    background-color: #FFFFFF;
+    border-top: 2px solid #49708A;
+    border-left: 2px solid #49708A;
+    -moz-border-radius-topleft: 12px;
+    -webkit-border-top-left-radius: 12px;
+    padding: 4px;
+    height: 330px;
+    overflow: scroll;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+#browser fieldset ul li #file_help {
+    font-size: 12px;
+    color: #49708A;
+}
+
+#browser fieldset ul li label {
+    font-size: 14px;
+    color: #49708A;
+    width: 42%;
+    display: inline-block;
+}
+
+#browser fieldset ul li input {
+    width: 55%;
+    display: inline-block;
+}
+
+#browser fieldset ul li select {
+    width: 55%;
+    display: inline-block;
+}
+
+#browser fieldset ul li input[type='submit'] {
+    width: 30%;
+    margin-left: 43%;
+    margin-top: 17px;
+}
+
+#browser fieldset ul li .error_message {
+    display: inline-block;
+    margin-left: 43%;
+    margin-bottom: 6px;
+    font-size: 11px;
+    font-weight: bold;
+    color: #FF847C;
+}
+
+
+#browser fieldset ul li #sandbox_inputs {
+    display: inline-block;
+    margin-left: -8px;
+    width: 150px;
+}
+
+#browser fieldset ul li #sandbox_inputs label {
+    width: 90px;
+    font-size: 11px;
+}
+
+
+#browser fieldset ul li #sandbox_inputs input {
+    width: 20px;
+}
+
+#output {
+    float: left;
+    padding-left: 10px;
+    width: 63%;
+}
+
+#output #header {
+    display: inline-block;
+    width: 100%;
+}
+
+#output #header h2 {
+    font-size: 24px;
+    color: #858585;
+    margin: 5px 0 25px 0;
+    display: inline-block;
+    float: left;
+}
+
+#output #header span {
+    font-size: 16px;
+    font-weight: bold;
+    color: #858585;
+    margin-top: 10px;
+    display: inline-block;
+    float: right;
+}
 
 .rounded {
   -moz-border-radius-bottomleft: 5px;
@@ -76,399 +158,287 @@ a img { border: none; }
 
 }
 
-#container {
-	width: 960px;
-        margin: 10px auto;
-	position: relative;
-	font-family: "Lucida Grande", Helvetica, Arial, "MS Trebuchet", sans-serif;
+#output .box {
+    overflow:auto;
+    margin: 10px 0;
+    background-color:#EEEEEE;
+    border:1px solid #A0A0A0;
+    padding:7px;
+    color: #858585;
+    font-size: 12px;
+    -webkit-box-shadow: 1px 1px 2px #CCC;
+    -moz-box-shadow: 1px 1px 2px #CCC;
+    box-shadow: 0px 0px 7px #999;
 }
 
-/* index
------------------------------- */
-
-#tests {
-        float: left;
-        width: 450px;
-        clear: left;
+#output .testsuite {
+    padding:4px 7px;
+    overflow:auto;
+    vertical-align: center;
 }
 
-#archives {
-        float: right;
-        width: 450px;
+#output .test {
+    padding: 3px 7px;
+    overflow:auto;
+    vertical-align: center;
+    clear:both;
 }
 
-form fieldset {
-        border-top: 1px solid #bbbbbb;
+#output .light {
+    float:left;
+    width: 5px;
+    height:5px;
+    margin-top:3px;
 }
 
-form fieldset legend {
-        padding: 10px 10px 10px 0px;
-        font-size: 18px;
-        cursor: pointer;
+#output .testsuite .light {
+    width:9px;
+    height: 9px;
 }
 
-#file_tree {
-        width: 426px;
-        height: 400px;
-        border-top: solid 1px #BBB;
-        border-left: solid 1px #BBB;
-        border-bottom: solid 1px #FFF;
-        border-right: solid 1px #FFF;
-        background: #FFF;
-        overflow: scroll;
-        margin-left: 5px;
-        padding: 5px;
+#output .name {
+    margin-left: 20px;
+    float: left;
+    width: 30%;
+    font-weight: bold;
+    word-wrap: break-word;
 }
 
-form fieldset ol li label {
-        display: inline-block;
-        width: 170px; 
+#output .testsuite .name {
+    font-size: 15px;
+    font-weight:bold;
 }
 
-form fieldset ol li select {
-        display: inline-block;
-        width: 270px; 
-        margin-bottom: 6px;
+#output .results .name {
+    width: 50%;
 }
 
-form fieldset ol li input {
-        display: inline-block;
-        width: 264px; 
-        margin-bottom: 6px;
+#output .test .name {
+    padding-left:2px;
 }
 
-form fieldset ol li #file_help {
-        display: inline-block;
-        margin-left: 5px;
-        margin-bottom: 6px;
-        font-size: 11px;
+#output .test .light {
+    margin-left: 2px;
 }
 
-form fieldset ol li .error_message {
-        display: inline-block;
-        margin-left: 175px;
-        margin-bottom: 6px;
-        font-size: 11px;
-        color: #E05151;
+#output .expand {
+    float:right;
+    width:15px;
 }
 
-form fieldset ol li div {
-        display: inline-block;
-        margin-left: -8px;
-        width: 250px;
+#output .stats {
+    margin-left: 20px;
+    float: left;
+    width: 60%;
 }
 
-form fieldset ol li div input {
-        width: 20px;
+#output .testsuite .stats {
+    margin-top: 2px;
 }
 
-form fieldset ol li div label {
-        width: 90px;
-        font-size: 11px;
+#output .testsuite .info {
+    clear:both; 
+    margin-top:19px;
+    margin-left:32px;
 }
 
-input[type='submit'] {
-        margin-top: 18px;
-        margin-left: 170px;
-        width: 90px; 
+#output .info ul {
+    list-style:none;
+    padding: 0;
 }
 
-.box {
-	overflow:auto;
-	margin: 10px 0;
-	background-color:#EEEEEE;
-	border:1px solid #A0A0A0;
-	padding:7px;
-	color: #858585;
-  	font-size: 12px;
-	-webkit-box-shadow: 1px 1px 2px #CCC;
-	-moz-box-shadow: 1px 1px 2px #CCC;
-	box-shadow: 0px 0px 7px #999;
+#output .info ul li div {
+    border: 1px solid #858585;
+    width: 90%;
+    height: 1em;
+    padding: 1px;
+    margin-bottom: 5px;
 }
 
-.testsuite {
-	padding:4px 7px;
-	overflow:auto;
-	vertical-align: center;
+#output .info ul li div span {
+    display: inline-block;
+    height: 100%;
+    float: left;
 }
 
-.test {
-	padding: 3px 7px;
-	overflow:auto;
-	vertical-align: center;
-	clear:both;
+#output .info ul li div .percent_success {
+    background-color: #40C43C;
+    width: 25%;
 }
 
-.light {
-	float:left;
-	width: 5px;
-	height:5px;
-	margin-top:3px;
+#output .info ul li div .percent_skipped {
+    background-color: #FFDD53;
+    width: 25%;
 }
 
-.testsuite .light {
-	width:9px;
-	height: 9px;
+#output .info ul li div .percent_incomplete {
+    background-color: #A2A2A2;
+    width: 25%;
 }
 
-.name {
-	margin-left: 20px;
-	float: left;
-	width: 200px;
-	font-weight: bold;
-        word-wrap: break-word;
+#output .info ul li div .percent_failure {
+    background-color: #E05151;
+    width: 25%;
 }
 
-.testsuite .name {
-	font-size: 15px;
-	font-weight:bold;
+#output .info ul li .category {
+    display:inline-block;
+    width:100px;
+    font-weight:bold;
 }
 
-.test .name {
-	padding-left:2px;
+#output .light {
+    width:5px;
+    height: 5px;
 }
 
-.test .light {
-	margin-left: 2px;
+#output .success .light {
+    background-color: #40C43C;
+    border: 1px solid #21881D;
 }
 
-.expand {
-	float:right;
-	width:15px;
+#output .failure .light {
+    background-color: #E05151;
+    border: 1px solid #9E2626;
 }
 
-.stats {
-	margin-left:20px;
-	float:left;
-	max-width:700px;
+#output .incomplete .light {
+    background-color: #A2A2A2;
+    border: 1px solid #4D4D4D;
 }
 
-.testsuite .stats {
-	margin-top:2px;
+#output .skipped .light {
+    background-color: #FFDD53;
+    border: 1px solid #C09D12;
 }
 
-.testsuite .info {
-        clear:both; 
-	margin-top:19px;
-        margin-left:32px;
+#output .results .light {
+    background-color: #0099FF;  
+    border: 1px solid #000066;
 }
 
-.info ul {
-        list-style:none;
+#output hr.big {
+    background-color: #A0A0A0;
+    height: 1px;
+    border: none;
 }
 
-.info ul li div {
-        border: 1px solid #858585;
-        width: 50%;
-        height: 1em;
-        padding: 1px;
-        margin-bottom: 5px;
+#output hr.small {
+    background-color: #CCCCCC;
+    clear:both;
+    height: 1px;
+    border: none;
 }
 
-.info ul li div span {
-        display: inline-block;
-        height: 100%;
-        float: left;
+#output .button.expand {
+    border: 1px solid #888888;
+    width: 14px;
+    height: 14px;
+    text-align:center;
+    font-weight:bold;
+    cursor: pointer;
+    -moz-border-radius-bottomleft: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    -moz-border-radius-bottomright: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    -moz-border-radius-topleft: 10px;
+    -webkit-border-top-left-radius: 10px;
+    -moz-border-radius-topright: 10px;
+    -webkit-border-top-right-radius: 10px;
+    background-color: #CCCCCC;
 }
 
-.info ul li div .percent_success {
-	background-color: #40C43C;
-        width: 25%;
+#output .collected {
+    width: 45%;
 }
 
-.info ul li div .percent_skipped {
-	background-color: #FFDD53;
-        width: 25%;
+#output #stats_container {
+    margin-bottom: 15px;
+    height: 180px;
 }
 
-.info ul li div .percent_incomplete {
-	background-color: #A2A2A2;
-        width: 25%;
+#output #left {
+    float: left;
 }
 
-.info ul li div .percent_failure {
-	background-color: #E05151;
-        width: 25%;
+#output #right {
+    float: right;
 }
 
-.info ul li .category {
-        display:inline-block;
-        width:100px;
-        font-weight:bold;
+#output .test .button.expand {
+    margin-right:2px;
+    width: 11px;
+    height: 11px;
+    font-size:10px;
 }
 
-.info ul .options {
-        margin-top: 5px; 
-        font-weight: bold;
+#output .more_test {
+    clear:both;
+    float:left;
+    width:879px;
+    padding: 0px 29px;
 }
 
-.info ul .links {
-        margin-top: 15px; 
-        font-weight: bold;
+#output .test .stacktrace,
+#output .test .variables {
+    margin-top: 10px;
+    padding:10px;
+    border: 1px solid #888888;
+    background-color: #CCCCCC;
 }
 
-.info ul .links a,
-.info ul .links a:link,
-.info ul .links a:visited {
-    	color: #858585;
-    	text-decoration: none;
+#output pre {
+    word-wrap: break-word;
 }
 
-.info ul .links a:hover,
-.info ul .links a:active {
-    	color: #858585;
-    	text-decoration: underline;
+#output .hide {
+    display:none;
 }
 
-.light {
-	width:5px;
-	height: 5px;
+#output .show {
+    display:block;
 }
 
-.success .light {
-	background-color: #40C43C;
-	border: 1px solid #21881D;
-}
-.failure .light {
-	background-color: #E05151;
-	border: 1px solid #9E2626;
-}
-.incomplete .light {
-	background-color: #A2A2A2;
-	border: 1px solid #4D4D4D;
-}
-.skipped .light {
-	background-color: #FFDD53;
-	border: 1px solid #C09D12;
+#output .error {
+    clear: both;
 }
 
-.results .light {
-        background-color: #0099FF;  
-	border: 1px solid #000066;
+#output .error .message {
+    font-size: 16px;
+    margin: 11px;
+    float: left;
+    width: 85%;
 }
 
-hr.big {
-	background-color: #A0A0A0;
-	height: 1px;
-	border: none;
+#output .error .file {
+    float:right;
+    margin-top:10px;
+    font-size: 16px;
+    margin-right: 10px;
 }
 
-hr.small {
-	background-color: #CCCCCC;
-	clear:both;
-	height: 1px;
-	border: none;
+#output .error .line {
+    float:right;
+    font-size: 20px;
+    margin-top: 8px;
 }
 
-.button.expand {
-	border: 1px solid #888888;
-	width: 14px;
-	height: 14px;
-	text-align:center;
-	font-weight:bold;
-	cursor: pointer;
-	-moz-border-radius-bottomleft: 10px;
-	-webkit-border-bottom-left-radius: 10px;
-	-moz-border-radius-bottomright: 10px;
-	-webkit-border-bottom-right-radius: 10px;
-	-moz-border-radius-topleft: 10px;
-	-webkit-border-top-left-radius: 10px;
-	-moz-border-radius-topright: 10px;
-	-webkit-border-top-right-radius: 10px;
-	background-color: #CCCCCC;
-}
-
-.collected {
-        width: 45%;
-}
-
-#stats_container {
-        margin-bottom: 15px;
-        height: 180px;
-}
-
-#left {
-        float: left;
-}
-
-#right {
-        float: right;
-}
-
-.test .button.expand {
-	margin-right:2px;
-	width: 11px;
-	height: 11px;
-	font-size:10px;
-}
-
-.more_test {
-	clear:both;
-	float:left;
-	width:879px;
-	padding: 0px 29px;
-}
-
-.test .stacktrace,
-.test .variables {
-	margin-top: 10px;
-	padding:10px;
-	border: 1px solid #888888;
-	background-color: #CCCCCC;
-}
-
-pre {
-        word-wrap: break-word;
-}
-
-.hide {
-	display:none;
-}
-
-.show {
-	display:block;
-}
-
-.error {
-        clear: both;
-}
-
-.error .message {
-	font-size: 16px;
-	margin: 11px;
-	float:left;
-        width: 65%;
-}
-
-.error .file {
-	float:right;
-	margin-top:10px;
-	font-size: 16px;
-	margin-right: 10px;
-}
-
-.error .line {
-	float:right;
-	font-size: 20px;
-	margin-top: 8px;
-}
-
-.error .light {
-	-moz-border-radius-bottomleft: 20px;
-	-webkit-border-bottom-left-radius: 20px;
-	-moz-border-radius-bottomright: 20px;
-	-webkit-border-bottom-right-radius: 20px;
-	-moz-border-radius-topleft: 20px;
-	-webkit-border-top-left-radius: 20px;
-	-moz-border-radius-topright: 20px;
-	-webkit-border-top-right-radius: 20px;
-	background-color: #E05151;
-	border: 1px solid #9E2626;
-	width: 30px;
-	height: 27px;
-	text-align:center;
-	font-weight:bold;
-	font-size:24px;
-	color: white;
-	padding-top:3px;
+#output .error .light {
+    -moz-border-radius-bottomleft: 20px;
+    -webkit-border-bottom-left-radius: 20px;
+    -moz-border-radius-bottomright: 20px;
+    -webkit-border-bottom-right-radius: 20px;
+    -moz-border-radius-topleft: 20px;
+    -webkit-border-top-left-radius: 20px;
+    -moz-border-radius-topright: 20px;
+    -webkit-border-top-right-radius: 20px;
+    background-color: #E05151;
+    border: 1px solid #9E2626;
+    width: 30px;
+    height: 27px;
+    text-align:center;
+    font-weight:bold;
+    font-size:24px;
+    color: white;
+    padding-top:3px;
 }

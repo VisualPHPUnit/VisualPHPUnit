@@ -1,6 +1,14 @@
 Changelog
 =========
 
+v1.4
+------
+
+* Overhauled the UI
+* Fixed issues with namespaced tests 
+* Implemented a better check for archived files
+
+
 v1.3.2
 ------
 

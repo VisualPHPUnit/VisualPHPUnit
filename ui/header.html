@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html lang='en'>
-
-    <head>
-        <meta charset='utf-8' />
-        <title>VisualPHPUnit</title>
-        <link rel="stylesheet" href="ui/css/index.css" media="screen" />
-    </head>
-    <body>
-        <div id="container">
+<div id='header'>
+    <h2><?php echo date('Y-m-d G:i');?></h2>
+    <span>
+        Sort by:
+        <select id='sort_type'>
+            <option value='Results (asc)'>Results (asc)</option>
+            <option value='Results (desc)'>Results (desc)</option>
+            <option value='Time (asc)'>Execution Time (asc)</option>
+            <option value='Time (desc)'>Execution Time (desc)</option>
+        </select>
+    </span>
+</div>
