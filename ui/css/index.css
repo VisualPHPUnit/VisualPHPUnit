@@ -158,6 +158,11 @@ body {
 
 }
 
+#output .loader {
+    text-align: center;
+    margin-top: 28%;
+}
+
 #output .box {
     overflow:auto;
     margin: 10px 0;

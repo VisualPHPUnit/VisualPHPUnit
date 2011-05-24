@@ -271,6 +271,7 @@
 
         $('#run_tests').click(function(event) {
             event.preventDefault();
+            $('#output').html("<div class='loader'><img src='ui/images/loading.gif' /></div>");
 
             var sandboxIgnore = { 'types[]' : []};
             $(":checked").each(function() {
@@ -285,7 +286,9 @@
                 'sandbox_ignore'     : sandboxIgnore,
                 'test_files'         : $('#test_files').val(),
             }, function(data) {
-                $('#output').html(data);
+                $('#output').fadeOut(300, function() {
+                    $(this).html(data).fadeIn(300);
+                });
                 updateBrowser();
                 updateOutput();
             }); 
