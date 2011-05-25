@@ -118,7 +118,8 @@
         }
 
         $('#file_tree').fileTree({ 
-            root: '<?php echo realpath(TEST_DIRECTORY);?>',
+            /* fix for Windoze filepaths */
+            root: '<?php echo str_replace('\\', '/', realpath(TEST_DIRECTORY));?>',
             script: 'ui/js/jqueryFileTree/connectors/jqueryFileTree.php' 
         }, function(file) {
             $('#test_files').val(updateTests());
