@@ -39,7 +39,7 @@ Installation
 Version Information
 -------------------
 
-Current stable release is v1.4, last updated on 22 May 2011.
+Current stable release is v1.4.1, last updated on 24 May 2011.
 
 Feedback
 --------

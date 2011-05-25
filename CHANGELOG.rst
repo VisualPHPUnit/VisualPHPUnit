@@ -1,6 +1,12 @@
 Changelog
 =========
 
+v1.4.1
+------
+
+* Fixed Windows path issues
+* Added a progress bar to indicate that tests are being processed
+
 v1.4
 ------
 
