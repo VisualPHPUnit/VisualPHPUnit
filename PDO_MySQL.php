@@ -35,7 +35,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-class PDO_MySQL extends \nx\core\Object {
+class PDO_MySQL {
 
    /**
     *  The db handle. 
