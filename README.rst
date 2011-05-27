@@ -29,17 +29,17 @@ Installation
 3. Point your browser to the location where you installed VisualPHPUnit!
 4. This should be enough for a basic installation.  However, you can set the default options for each test run by modifying a few more lines in config.php. 
     a. Change CREATE_SNAPSHOTS to *true* if you'd like to enable logging.  Logs are stored in the 'history' directory, though you can modify SNAPSHOT_DIRECTORY to point somewhere else if you please.  Please make note of the following:
-        i. You will have to give the directory specified in SNAPSHOT_DIRECTORY the appropriate permissions in order to allow PHP to write to it.
-        ii. The dropdown list under the 'Archives' section on the homepage will only display the files found within SNAPSHOT_DIRECTORY.
+        - You will have to give the directory specified in SNAPSHOT_DIRECTORY the appropriate permissions in order to allow PHP to write to it.
+        - The dropdown list under the 'Archives' section on the homepage will only display the files found within SNAPSHOT_DIRECTORY.
     b. Change SANDBOX_ERRORS to *true* if you'd like VPU to display any PHP errors after the test results.  If so, please make note of the following:
-        i. The file specified in SANDBOX_FILENAME will always be empty (VPU wipes it at the end of each test run).  However, PHP still needs to be able to write to it, so ensure that the filename specified with SANDBOX_FILENAME has the appropriate permissions. 
-        ii. Specific error types can be ignored using the SANDBOX_IGNORE setting.  Separate multiple error types with a '|' (e.g. 'E_STRICT|E_NOTICE').
+        - The file specified in SANDBOX_FILENAME will always be empty (VPU wipes it at the end of each test run).  However, PHP still needs to be able to write to it, so ensure that the filename specified with SANDBOX_FILENAME has the appropriate permissions. 
+        - Specific error types can be ignored using the SANDBOX_IGNORE setting.  Separate multiple error types with a '|' (e.g. 'E_STRICT|E_NOTICE').
 
 
 Version Information
 -------------------
 
-Current stable release is v1.4, last updated on 22 May 2011.
+Current stable release is v1.4.1, last updated on 24 May 2011.
 
 Feedback
 --------
