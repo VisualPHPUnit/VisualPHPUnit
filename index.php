@@ -101,7 +101,7 @@
     $test_files = trim(strval(filter_var($_POST['test_files'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
     $tests = explode('|', $test_files); 
 
-    require 'VPU.php';
+    require 'lib/VPU.php';
 
     ob_start(); 
 
