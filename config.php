@@ -52,6 +52,13 @@ define('TEST_DIRECTORY', BASE_INSTALL . '/tests/');
 /*
  * Optional settings
  */
+// Whether or not to store the statistics in a DB
+define('STORE_STATISTICS', false);
+
+define('DATABASE_NAME', 'vpu');
+define('DATABASE_HOST', 'localhost');
+define('DATABASE_USER', 'root');
+define('DATABASE_PASS', 'admin');
 
 // Whether or not to create snapshots of the test results
 define('CREATE_SNAPSHOTS', false);
