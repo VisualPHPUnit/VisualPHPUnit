@@ -66,33 +66,21 @@ class VPU {
     *  @access protected
     *  @return string
     */
-    protected function _build_stats($stats) {
-        $suite = array_count_values($stats['suite']);
-        $suite['failure'] = ( isset($suite['failure']) ) ? $suite['failure'] : 0;
-        $suite['incomplete'] = ( isset($suite['incomplete']) ) ? $suite['incomplete'] : 0;
-        $suite['skipped'] = ( isset($suite['skipped']) ) ? $suite['skipped'] :  0;
-        $suite['success'] = ( isset($suite['success']) ) ? $suite['success'] : 0;
-        // Avoid divide by zero error
-        $suite['total'] = ( count($stats['suite']) ) ?: 1;
-        foreach ( $suite as $key => $value ) {
-            if ( $key == 'total' ) {
-                continue;
+    protected function _build_stats($statistics) {
+        $results = array();
+        foreach ( $statistics as $name => $stats ) {
+            $results[$name] = $stats;
+            foreach ( $stats as $key => $value ) {
+                if ( $key == 'total' ) {
+                    continue;
+                }
+                // Avoid divide by zero error
+                if ( $stats['total'] ) {
+                    $results[$name]['percent_' . $key] = $stats[$key] / $stats['total'] * 100;
+                } else {
+                    $results[$name]['percent_' . $key] = 0;
+                }
             }
-            $suite['percent_' . $key] = $suite[$key] / $suite['total'] * 100;
-        }
-
-        $test = array_count_values($stats['test']);
-        $test['failure'] = ( isset($test['failure']) ) ? $test['failure'] : 0;
-        $test['incomplete'] = ( isset($test['incomplete']) ) ? $test['incomplete'] : 0;
-        $test['skipped'] = ( isset($test['skipped']) ) ? $test['skipped'] :  0;
-        $test['success'] = ( isset($test['success']) ) ? $test['success'] : 0;
-        // Avoid divide by zero error
-        $test['total'] = ( count($stats['test']) ) ?: 1;
-        foreach ( $test as $key => $value ) {
-            if ( $key == 'total' ) {
-                continue;
-            }
-            $test['percent_' . $key] = $test[$key] / $test['total'] * 100;
         }
 
         ob_start(); 
@@ -140,9 +128,74 @@ class VPU {
         return $test_content;
     }
 
+   /**
+    *  Returns the class name without the namespace.
+    *
+    *  @param string $class           The class name.
+    *  @access protected
+    *  @return string
+    */
     protected function _classname_only($class) {
         $name = explode('\\', $class);
         return array_pop($name);
+    }
+
+   /**
+    *  Organizes the output from PHPUnit into a more manageable array
+    *  of suites and statistics. 
+    *
+    *  @param string $pu_output        The JSON output from PHPUnit. 
+    *  @access protected
+    *  @return array
+    */
+    protected function _compile_suites($pu_output) {
+        $results = $this->_parse_output($pu_output);    
+
+        $collection = array();
+        $statistics = array(
+            'suites' => array(
+                'success'    => 0,
+                'skipped'    => 0,
+                'incomplete' => 0,
+                'failure'    => 0,
+                'total'      => 0
+            )
+        );
+        $statistics['tests'] = $statistics['suites'];
+        foreach ( $results as $result ) {
+            if ( $result['event'] != 'test' ) {
+                continue;
+            }
+
+            $suite_name = $this->_classname_only($result['suite']);
+
+            if ( !isset($collection[$suite_name]) ) {
+                $collection[$suite_name] = array(
+                    'tests'  => array(),
+                    'name'   => $suite_name,
+                    'status' => 'success',
+                    'time'   => 0
+                );
+            }
+            $result = $this->_format_test_results($result);
+            $collection[$suite_name]['tests'][] = $result;
+            $collection[$suite_name]['status'] = $this->_get_suite_status($result['status'], $collection[$suite_name]['status']);
+            $collection[$suite_name]['time'] += $result['time'];
+            $statistics['tests'][$result['status']] += 1;
+            $statistics['tests']['total'] += 1;
+        }
+
+        foreach ( $collection as $suite ) {
+            $statistics['suites'][$suite['status']] += 1;
+            $statistics['suites']['total'] += 1;
+        }
+
+        $final = array(
+            'suites' => $collection,
+            'stats'  => $statistics
+        );
+
+        return $final;
     }
 
    /**
@@ -175,46 +228,33 @@ class VPU {
     }
 
    /**
-    *  Transforms JSON into a more readable format.
+    *  Normalizes the test results.
     *
-    *  @param string $json        The JSON to be formatted.
+    *  @see VPU->_parse_output()
+    *  @see VPU->_compile_suites()
+    *  @param array $test_results     The parsed test results.
     *  @access protected
     *  @return string
     */
-    protected function _format_json($json) {
+    protected function _format_test_results($test_results) {
+        $test_status = $this->_get_test_status($test_results['status'], $test_results['message']);
+        $variables_message = ( isset($test_results['variables_message']) ) ? trim($test_results['variables_message']) : '';
+        $trace_message = $this->_get_trace($test_results['trace']);
 
-        $result= '';
-        $level = 0;
-        $prev_char = '';
-        $out_of_quotes = true;
-        $length = strlen($json);
+        $test = array(
+            'status'            => $test_status,
+            'expand'            => ( $test_status == 'fail' ) ? '-' : '+',
+            'display'           => ( $test_status == 'fail' ) ? 'show' : 'hide',
+            'name'              => substr($test_results['test'], strpos($test_results['test'], '::') + 2),
+            'message'           => $this->_get_message($test_results['message']) . 'Executed in ' . $test_results['time'] . ' seconds.',
+            'time'              => $test_results['time'],
+            'variables_message' => $variables_message, 
+            'variables_display' => ( $variables_message ) ? 'show' : 'hide',
+            'trace_message'     => $trace_message,
+            'trace_display'     => ( $trace_message ) ? 'show' : 'hide'
+        );
 
-        for ( $i=0; $i<=$length; $i++ ) {
-            $char = substr($json, $i, 1);
-
-            if ( $char == '"' && $prev_char != '\\' ) {
-                $out_of_quotes = !$out_of_quotes;
-            } elseif ( $out_of_quotes && ($char == '}' || $char == ']') ) {
-                $result .= "\n";
-                $level--;
-                $result .= str_repeat("\t", $level);
-            }
-            
-            $result .= $char;
-
-            if ( $out_of_quotes && ($char == ',' || $char == '{' || $char == '[') ) {
-                $result .= "\n";
-                if ( $char == '{' || $char == '[' ) {
-                    $level++;
-                }
-                
-                $result .= str_repeat("\t", $level);
-            }
-            
-            $prev_char = $char;
-        }
-
-        return $result;
+        return $test;
     }
 
    /**
@@ -258,6 +298,26 @@ class VPU {
     }
 
    /**
+    *  Determines the overall suite status based on the current status
+    *  of the suite and the status of a single test.
+    *
+    *  @param string $test_status     The status of the test.
+    *  @param string $suite_status    The current status of the suite.
+    *  @access protected
+    *  @return string
+    */
+    protected function _get_suite_status($test_status, $suite_status) {
+        if ( $test_status === 'incomplete' && $suite_status !== 'failure' && $suite_status !== 'skipped' ) {
+            return 'incomplete';
+        } elseif ( $test_status === 'skipped' && $suite_status !== 'failure' ) {
+            return 'skipped';
+        } elseif ( $test_status === 'failure' ) {
+            return 'failure';
+        }
+        return $suite_status;
+    }
+
+   /**
     *  Retrieves the status from a PHPUnit test result. 
     *
     *  @param string $status        The status supplied by VPU's transformed JSON.
@@ -265,29 +325,23 @@ class VPU {
     *  @access protected
     *  @return string
     */
-    protected function _get_status($status, $message) {
+    protected function _get_test_status($status, $message) {
         switch ( $status ) {
             case 'pass':
-                $status = 'success';
-                break;
+                return 'success';
             case 'error': 
                 if ( stripos($message, 'skipped') !== false ) {
-                    $status = 'skipped';
+                    return 'skipped';
                 } elseif ( stripos($message, 'incomplete') !== false ) {
-                    $status = 'incomplete';
+                    return 'incomplete';
                 } else {
-                    $status = 'failure';
+                    return 'failure';
                 }
-                break;
             case 'fail':
-                $status = 'failure';
-                break;
+                return 'failure';
             default:
-                $status = '';
-                break;
+                return '';
         }
-
-        return $status;
     }
 
    /**
@@ -441,8 +495,7 @@ class VPU {
     */
     protected function _parse_output($pu_output) {
         $results = '';
-        $json_elements = $this->_pull($pu_output);
-        foreach ( $json_elements as $elem ) {
+        foreach ( $this->_pull($pu_output) as $elem ) {
             $elem = '{' . $elem . '}';
             $pu_output = $this->_replace($elem, '|||', $pu_output);
             $results .= $elem . ',';
@@ -455,20 +508,23 @@ class VPU {
         $results = json_decode($results, true);
         
         $pu_output = explode('|||', $pu_output);
-        foreach ( $pu_output as $key=>$data ) {
-            if ( isset($results[$key]) ) {
-                $results[$key]['collected'] = $data;
+        foreach ( $pu_output as $key => $data ) {
+            if ( $data ) {
+                $results[$key]['variables_message'] = $data;
             }
-        }
-
-        // Remove the first element
-        if ( is_array($results) ) {
-            array_shift($results);
         }
 
         return $results;
     }
 
+   /**
+    *  Retrieves the files from any supplied directories, and filters 
+    *  the list of tests by ensuring that the files exist and are PHP files.
+    *
+    *  @param array $tests       The directories/filenames containing the tests to be run through PHPUnit.
+    *  @access protected
+    *  @return array
+    */
     protected function _parse_tests($tests) {
         $collection = array();
 
@@ -555,7 +611,7 @@ class VPU {
     *
     *  @param array $tests        The directories/filenames containing the tests to be run through PHPUnit.
     *  @access public
-    *  @return string
+    *  @return array
     */
     public function run($tests) {
         $suite = new PHPUnit_Framework_TestSuite();
@@ -576,7 +632,6 @@ class VPU {
         }
 
         $result = new PHPUnit_Framework_TestResult;
-
         $result->addListener(new PHPUnit_Util_Log_JSON);
         
         ob_start();
@@ -584,79 +639,29 @@ class VPU {
         $results = ob_get_contents();
         ob_end_clean();
         
-        return $results;
+        return $this->_compile_suites($results);
     }
 
    /**
-    *  Renders the JSON from PHPUnit into HTML. 
+    *  Outputs suite and statistics data in HTML.
     *
-    *  @param string $pu_output        The JSON output from PHPUnit. 
-    *  @param bool $sandbox_errors     Whether or not to sandbox errors.
+    *  @see VPU->_compile_suites()
+    *  @param array $collection       The array containing the suites and statistics to be displayed.
+    *  @param bool $sandbox_errors    Whether or not to sandbox errors.
     *  @access public
     *  @return string
     */
-    public function to_HTML($pu_output, $sandbox_errors) {
-        $results = $this->_parse_output($pu_output);    
-        if ( !is_array($results) ) {
-            return '';
-        }
-
+    public function to_HTML($collection, $sandbox_errors) {
         $final = '';
-        $stats = array(
-            'suite' => array(), 
-            'test' => array()
-        );
-        $suite = $test = array();
-        
-        foreach ( $results as $key=>$event ) {
-            if ( $event['event'] === 'suiteStart' ) {
-                if ( isset($suite['tests']) ) {
-                    $stats['suite'][] = $suite['status'];
-                    $final .= $this->_build_suite($suite);
-                    $suite = $test = array();
-                }
-
-                $suite['status'] = 'success';
-                $suite['name'] = $this->_classname_only($event['suite']);
-                $suite['tests'] = '';
-                $suite['time'] = 0;
-            } elseif ( $event['event'] == 'test' ) {
-                $test['status'] = $this->_get_status($event['status'], $event['message']);
-                $test['expand'] = ( $test['status'] == 'fail' ) ? '-' : '+';
-                $test['display'] = ( $test['status'] == 'fail' ) ? 'show' : 'hide';
-                $stats['test'][] = $test['status'];
-
-                if ( $test['status'] === 'incomplete' && $suite['status'] !== 'failure' && $suite['status'] !== 'skipped' ) {
-                    $suite['status'] = 'incomplete';
-                } elseif ( $test['status'] === 'skipped' && $suite['status'] !== 'failure' ) {
-                    $suite['status'] = 'skipped';
-                } elseif ( $test['status'] === 'failure' ) {
-                    $suite['status'] = 'failure';
-                }
-                
-                $test['name'] = substr($event['test'], strpos($event['test'], '::') + 2);
-                $test['message'] = $this->_get_message($event['message']); 
-                $test['message'] .= 'Executed in ' . $event['time'] . ' seconds.';
-                $suite['time'] += $event['time'];
-
-                $test['variables_message'] = ( isset($event['collected']) ) ? trim($event['collected']) : '';
-                $test['variables_display'] = ( $test['variables_message'] ) ? 'show' : 'hide';
-
-                $test['trace_message'] = $this->_get_trace($event['trace']);
-                $test['trace_display'] = ( $test['trace_message'] ) ? 'show' : 'hide';
-                
-                $test['separator_display'] = ( isset($results[$key + 1]) && $results[$key +1 ]['event'] !== 'suiteStart' ); 
-
-                $suite['tests'] .= $this->_build_test($test); 
-            }	
-                        
-        }
-
-        if ( isset($suite['tests']) ) {
-            $stats['suite'][] = $suite['status'];
+        foreach ( $collection['suites'] as $suite ) {
+            $suite['test_results'] = '';
+            foreach ( $suite['tests'] as $key => $test ) {
+                $test['separator_display'] = ( isset($suite['tests'][$key + 1]) );
+                $suite['test_results'] .= $this->_build_test($test);
+            }
             $final .= $this->_build_suite($suite);
-            $final .= $this->_build_stats($stats);
         }
+        $final .= $this->_build_stats($collection['stats']);
 
         if ( $sandbox_errors ) {
             $final .= $this->_exceptions . $this->_get_errors();

@@ -30,6 +30,14 @@
                 <legend id='legend_options'>Options</legend> 
                 <ul> 
                     <li> 
+                    <label for='store_statistics'>Store Statistics:</label> 
+                    <select name='store_statistics' id='store_statistics'>
+                        <option value='0' <?php if ( !STORE_STATISTICS ) echo 'selected';?>>No</option>
+                        <option value='1' <?php if ( STORE_STATISTICS ) echo 'selected';?>>Yes</option>
+                    </select>
+                    </li> 
+
+                    <li> 
                         <label for='create_snapshots'>Create Snapshots:</label> 
                         <select name='create_snapshots' id='create_snapshots'>
                             <option value='0' <?php if ( !CREATE_SNAPSHOTS ) echo 'selected';?>>No</option>
