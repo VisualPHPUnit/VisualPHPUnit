@@ -642,6 +642,14 @@ class VPU {
         return $this->_compile_suites($results);
     }
 
+   /**
+    *  Saves the statistics to a database.
+    *
+    *  @param array $results      The array containing the statistics to be saved.
+    *  @param object $db          The database handler.
+    *  @access public
+    *  @return bool
+    */
     public function save_results($results, $db) {
         $now = date('Y-m-d H:i:s');
         foreach ( $results['stats'] as $key => $result ) {
