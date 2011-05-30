@@ -1,109 +1,25 @@
-<!DOCTYPE html>
-<html lang='en'>
+<div id='graph_container' class='highcharts-container'></div>
 
-<head>
-    <meta charset='utf-8' />
-    <title>VisualPHPUnit - Test Results Graph</title>
-    <link rel="stylesheet" href="ui/css/index.css" media="screen" />
-    <link rel='stylesheet' href='ui/css/jquery-ui-1.8.11.custom.css' /> 
-</head>
-<body id='graph'>
-    <div id="container" class="highcharts-container"></div>
-
-    <form>
-        <fieldset> 
-            <legend>Options</legend> 
-            <ol> 
-                <li> 
-                    <label for='type'>Type:</label> 
-                    <select id='type'>
-                        <option value='Suite'>Suites</option>
-                        <option value='Test'>Tests</option>
-                    </select>
-                </li> 
-
-                <li> 
-                    <label for='time_frame'>Time Frame:</label> 
-                    <select id='time_frame'>
-                        <option value='Daily'>Daily</option>
-                        <option value='Weekly'>Weekly</option>
-                        <option value='Monthly'>Monthly</option>
-                    </select>
-                </li> 
-
-                <li> 
-                    <label for='start_date'>Start Date:</label> 
-                    <input type='text' id='start_date' tabindex=2 />
-                </li> 
-            
-                <li> 
-                    <label for='end_date'>End Date:</label> 
-                    <input type='text' id='end_date' tabindex=3 />
-                </li> 
-
-                <li> 
-                    <input type='button' id='redraw_graph' value='Redraw Graph' tabindex=4 />
-                </li> 
-            </ol> 
-        </fieldset> 
-    </form>
-</body>
-<script src="ui/js/jquery-1.5.1.min.js"></script>
-<script src='ui/js/jquery-ui-1.8.11.custom.min.js'></script>
+<script src="ui/js/jquery-1.5.1.min.js"></script> 
 <script src="ui/js/Highcharts-2.1.4/highcharts.js"></script>
 <script src="ui/js/Highcharts-2.1.4/themes/gray.js"></script>
 
 <script>
     var chart;
     $(document).ready(function() {
-
-	function constrainDates() {
-	    var startDate = $('#start_date').datepicker('getDate');
-	    var endDate = $('#end_date').datepicker('getDate'); 
-	    if ( endDate < startDate ) {
-		$('#end_date').datepicker('setDate', startDate);
-	    }
-	    if (startDate != null) {
-                var timeFrame = $('#time_frame').val();
-                switch ( timeFrame ) {
-                    case 'Daily': 
-                        var endDateMax = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 12);
-                        break;
-                    case 'Weekly':
-                        var endDateMax = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 84);
-                        break;
-                    case 'Monthly':
-                        var endDateMax = new Date(startDate.getFullYear(), startDate.getMonth() + 12, startDate.getDate());
-                        break;
-                }
-                $('#end_date').datepicker('option', {
-                    'maxDate': endDateMax,
-                    'minDate': startDate
-                });
-	    }
-	}
-
-        $('#start_date').datepicker({ 
-            onSelect: function(dateText, inst) {
-		constrainDates();
-	    }
-	});
-
-	$('#end_date').datepicker();
-
         chart = new Highcharts.Chart({
             chart: {
-                    renderTo: 'container',
+                    renderTo: 'graph_container',
                     defaultSeriesType: 'line',
                     marginRight: 130,
                     marginBottom: 25
             },
             title: {
-                    text: $('#type').val() + ' Results',
+                    text: 'CHANGEME Results',
                     x: -20 //center
             },
             subtitle: {
-                    text: '(' + $('#time_frame').val() + ')',
+                    text: '(USE TIMEFRAME HERE)'
                     x: -20
             },
             xAxis: {
