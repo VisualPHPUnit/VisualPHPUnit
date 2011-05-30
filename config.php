@@ -52,9 +52,12 @@ define('TEST_DIRECTORY', BASE_INSTALL . '/tests/');
 /*
  * Optional settings
  */
-// Whether or not to store the statistics in a DB
+
+// Whether or not to store the statistics in a database
+// (these statistics will be used to generate graphs)
 define('STORE_STATISTICS', false);
 
+// The database settings
 define('DATABASE_NAME', 'vpu');
 define('DATABASE_HOST', 'localhost');
 define('DATABASE_USER', 'root');

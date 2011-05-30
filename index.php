@@ -85,6 +85,7 @@
     }
 
     // Sanitize all the $_POST data
+    $store_statistics = (boolean) filter_var($_POST['store_statistics'], FILTER_SANITIZE_NUMBER_INT);
     $create_snapshots = (boolean) filter_var($_POST['create_snapshots'], FILTER_SANITIZE_NUMBER_INT);
     $snapshot_directory = trim(strval(filter_var($_POST['snapshot_directory'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
     $sandbox_errors = (boolean) filter_var($_POST['sandbox_errors'], FILTER_SANITIZE_NUMBER_INT);
@@ -112,6 +113,18 @@
     }
 
     $results = $vpu->run($tests);
+
+    if ( $store_statistics ) {
+        require 'lib/PDO_MySQL.php';
+        $config = array(
+            'database' => DATABASE_NAME,
+            'host'     => DATABASE_HOST, 
+            'username' => DATABASE_USER,
+            'password' => DATABASE_PASS
+        );
+        $db = new PDO_MySQL($config);
+        $vpu->save_results($results, $db);
+    }
 
     ob_start(); 
     include 'ui/header.html';

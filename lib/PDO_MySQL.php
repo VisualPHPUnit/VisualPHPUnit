@@ -104,8 +104,10 @@ class PDO_MySQL {
             $this->_dbh->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             return true;
         } catch ( PDOException $e ) {
-            // TODO: How to handle error reporting?
-            return false;
+            echo 'An error occurred: ' . $e->getMessage();
+            echo '<br /><br />Traceback:<pre>';
+            echo var_dump($e->getTrace());
+            die('</pre>');
         }
     }
 
@@ -317,9 +319,10 @@ class PDO_MySQL {
         try {
             $statement->execute($data);
     	} catch ( \PDOException $e ) {
-            // TODO: How to handle error reporting?
-            die($e->getMessage() . $sql . var_dump($data) . var_dump($e->getTrace()));
-            return false;
+            echo 'An error occurred: ' . $e->getMessage();
+            echo '<br /><br />Traceback:<pre>';
+            echo var_dump($e->getTrace());
+            die('</pre>');
         }
 
     	$this->_affected_rows = $statement->rowCount();
@@ -367,10 +370,10 @@ class PDO_MySQL {
         try {
             $statement->execute();
     	} catch ( \PDOException $e ) {
-            // TODO: How to handle error reporting?
-            die($e->getMessage() . $sql . var_dump($parameters) . var_dump($e->getTrace()));
-            $this->_affected_rows = 0;
-            return false;
+            echo 'An error occurred: ' . $e->getMessage();
+            echo '<br /><br />Traceback:<pre>';
+            echo var_dump($e->getTrace());
+            die('</pre>');
         }
     
     	$this->_affected_rows = $statement->rowCount();
@@ -455,9 +458,10 @@ class PDO_MySQL {
         try {
             $statement->execute($data);
     	} catch ( \PDOException $e ) {
-            // TODO: How to handle error reporting?
-            die($e->getMessage() . $sql . var_dump($data) . var_dump($e->getTrace()));
-            return false;
+            echo 'An error occurred: ' . $e->getMessage();
+            echo '<br /><br />Traceback:<pre>';
+            echo var_dump($e->getTrace());
+            die('</pre>');
         }
     
     	$this->_affected_rows = $statement->rowCount();
@@ -494,9 +498,10 @@ class PDO_MySQL {
         try {
             $statement->execute($data);
     	} catch ( \PDOException $e ) {
-            // TODO: How to handle error reporting?
-            die($e->getMessage() . $sql . var_dump($data) . var_dump($e->getTrace()));
-            return false;
+            echo 'An error occurred: ' . $e->getMessage();
+            echo '<br /><br />Traceback:<pre>';
+            echo var_dump($e->getTrace());
+            die('</pre>');
         }
 
     	$this->_affected_rows = $statement->rowCount();

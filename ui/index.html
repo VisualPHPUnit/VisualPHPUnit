@@ -268,13 +268,18 @@
 
         $('#view_archive').click(function(event) {
             event.preventDefault();
+            $('#output').html("<div class='loader'><img src='ui/images/loading.gif' /></div>");
+
             $.post('/index.php', {
                 'select_snapshot' : $('#select_snapshot').val(),
                 'view_snapshot'   : $('#view_snapshot').val()
             }, function(data) {
-                $('#output').html(data);
-                updateBrowser();
-                updateOutput();
+                $('#output').fadeOut(300, function() {
+                    $(this).html(data).fadeIn(300, function() {
+                        updateBrowser();
+                        updateOutput();
+                    });
+                });
             }); 
         });
 
@@ -288,6 +293,7 @@
             });
 
             $.post('/index.php', {
+                'store_statistics'   : $('#store_statistics').val(),
                 'create_snapshots'   : $('#create_snapshots').val(),
                 'snapshot_directory' : $('#snapshot_directory').val(),
                 'sandbox_errors'     : $('#sandbox_errors').val(),

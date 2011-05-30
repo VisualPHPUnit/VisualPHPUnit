@@ -642,6 +642,22 @@ class VPU {
         return $this->_compile_suites($results);
     }
 
+    public function save_results($results, $db) {
+        $now = date('Y-m-d H:i:s');
+        foreach ( $results['stats'] as $key => $result ) {
+            $data = array(
+                'run_date'   => $now,
+                'failed'     => $result['failure'],
+                'incomplete' => $result['incomplete'],
+                'skipped'    => $result['skipped'],
+                'success'    => $result['success']
+            );
+            $table = ucfirst(rtrim($key, 's')) . 'Result';
+            $db->insert($table, $data);
+        }
+        return true;
+    }
+
    /**
     *  Outputs suite and statistics data in HTML.
     *
