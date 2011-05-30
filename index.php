@@ -72,6 +72,7 @@
         exit; 
     }
 
+    // Archives
     if ( isset($_POST['view_snapshot']) && $_POST['view_snapshot'] == 1 ) {
         $dir = realpath(SNAPSHOT_DIRECTORY) . '/';
         $snapshot = realpath($dir . trim(strval(filter_var($_POST['select_snapshot'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES))));
@@ -83,6 +84,31 @@
         echo $content;
         exit;
     }
+
+    require 'lib/VPU.php';
+    $vpu = new VPU();
+
+    // Graphs
+    if ( isset($_POST['graph_type']) ) {
+        $graph_type = trim(strval(filter_var($_POST['graph_type'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
+        $time_frame = trim(strval(filter_var($_POST['time_frame'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
+        $start_date = trim(strval(filter_var($_POST['start_date'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
+        $end_date = trim(strval(filter_var($_POST['end_date'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
+        
+        require 'lib/PDO_MySQL.php';
+        $config = array(
+            'database' => DATABASE_NAME,
+            'host'     => DATABASE_HOST, 
+            'username' => DATABASE_USER,
+            'password' => DATABASE_PASS
+        );
+        $db = new PDO_MySQL($config);
+
+        echo $vpu->build_graph($graph_type, $time_frame, $start_date, $end_date, $db);
+        exit;
+    }
+
+    // Tests
 
     // Sanitize all the $_POST data
     $store_statistics = (boolean) filter_var($_POST['store_statistics'], FILTER_SANITIZE_NUMBER_INT);
@@ -102,11 +128,7 @@
     $test_files = trim(strval(filter_var($_POST['test_files'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
     $tests = explode('|', $test_files); 
 
-    require 'lib/VPU.php';
-
     ob_start(); 
-
-    $vpu = new VPU();
 
     if ( $sandbox_errors ) {
         set_error_handler(array($vpu, 'handle_errors'));

@@ -144,7 +144,9 @@ class PDO_MySQL {
     public function delete($table, $where = null) {
         $sql = 'DELETE FROM `' . $table . '`';
 
-        $sql .= $this->_format_where($where);
+        $formatted = $this->_format_where($where);
+        $sql .= $formatted['sql'];
+        $where = $formatted['where'];
 
         if ( is_string($where) ) {
             return $this->query($sql);
@@ -217,7 +219,9 @@ class PDO_MySQL {
         }
 
         $sql .= ' FROM `' . $table . '`';
-        $sql .= $this->_format_where($where);
+        $formatted = $this->_format_where($where);
+        $sql .= $formatted['sql'];
+        $where = $formatted['where'];
         if ( !is_null($additional) ) {
             $sql .= ' ' . $additional;
         }
@@ -244,7 +248,7 @@ class PDO_MySQL {
     *
     *  @param string|array $where        The clause to be parsed.
     *  @access protected
-    *  @return string
+    *  @return array
     */
     protected function _format_where($where = null) {
         $sql = '';
@@ -263,8 +267,8 @@ class PDO_MySQL {
                 }
                 elseif ( is_array($val) ) {
                     foreach ( $val as $sign => $constraint ) {
-                        $new_name = $name .  '__' . $constraint;
-                        $sql .=  '`' . $new_name . '` ';
+                        $new_name = $name .  '__' . str_replace('-', '_', $constraint);
+                        $sql .=  '`' . $name . '` ';
                         switch ( $sign ) {
                             case 'gt':
                                 $sql .= '>';
@@ -291,8 +295,13 @@ class PDO_MySQL {
             }
             $sql = substr($sql, 0, strlen($sql) - strlen(' and '));
         }
+        
+        $final = array(
+            'sql'   => $sql,
+            'where' => $where
+        );
 
-        return $sql;
+        return $final;
     }
 
    /**

@@ -60,6 +60,99 @@ class VPU {
     );
 
    /**
+    *  Builds a graph of statistics collected within a given date range.
+    *
+    *  @param string $type         The type of graph (`Suites` or `Tests`).
+    *  @param string $time_frame   The time frame (`Daily`, `Weekly`, or `Monthly`).
+    *  @param string $start_date   The starting date.
+    *  @param string $end_date     The ending date.
+    *  @param object $db           The database handler.
+    *  @access public
+    *  @return string
+    */
+    public function build_graph($type, $time_frame, $start_date, $end_date, $db) {
+        switch ( $time_frame ) {
+            case 'Daily':
+                $interval = 86400;
+                $sql_format = 'Y-m-d';
+                $output = 'm/d';
+                break;
+            case 'Weekly':
+                $interval = 604800;
+                $sql_format = 'Y-m-d';
+                $output = 'm/d';
+                break;
+            case 'Monthly':
+                $interval = 2678400;
+                $sql_format = 'Y-m-01';
+                $output = 'M Y';
+                break;
+        }
+
+        $current = $start = strtotime($start_date);
+        $end = strtotime($end_date) + $interval;
+
+        $table = ucfirst(rtrim($type, 's')) . 'Result';
+
+        $categories = array();
+        $plot_values = array(
+            'failed'     => array(),
+            'incomplete' => array(),
+            'skipped'    => array(),
+            'success'    => array()
+        );
+
+        while ( $current < $end ) {
+            $categories[] = date($output, $current);
+            $next = $current + $interval;
+            $where = array(
+                'run_date' => array(
+                    'gte' => date($sql_format, $current),
+                    'lt'  => date($sql_format, $next)
+                )
+            );
+
+            $data = array(
+                'failed'     => 0,
+                'incomplete' => 0,
+                'skipped'    => 0,
+                'success'    => 0
+            );
+
+            $db->find(array_keys($data), $table, $where);
+            $results = $db->fetch_all();
+            $num_rows = count($results);
+
+            if ( $num_rows > 0 ) {
+                foreach ( $results as $result ) {
+                    foreach ( $result as $key => $value ) {
+                        $data[$key] += $value;
+                    }
+                }
+            }
+
+            foreach ( $data as $key => $val ) {
+                if ( $num_rows > 0 ) {
+                    $plot_values[$key][] = round($val / $num_rows, 2);
+                } else {
+                    $plot_values[$key][] = 0;
+                }
+            }
+
+            $current = $next;
+        }
+
+        $plot_values = array_map(function($val) { return json_encode($val); }, $plot_values);
+        $categories = json_encode($categories);
+
+        ob_start(); 
+        include 'ui/graph.html';
+        $graph_content = ob_get_contents(); 
+        ob_end_clean();
+        return $graph_content;
+    }
+
+   /**
     *  Builds the suite statistics.
     *
     *  @param array $stats        The stat-related variables to be transformed.

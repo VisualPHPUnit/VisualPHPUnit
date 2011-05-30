@@ -127,16 +127,16 @@
 
                     <li> 
                         <label for='start_date'>Start Date:</label> 
-                        <input type='text' id='start_date' tabindex=2 />
+                        <input type='text' id='start_date' />
                     </li> 
                 
                     <li> 
                         <label for='end_date'>End Date:</label> 
-                        <input type='text' id='end_date' tabindex=3 />
+                        <input type='text' id='end_date' />
                     </li> 
 
                     <li> 
-                        <input type='button' id='redraw_graph' value='Draw Graph' tabindex=4 />
+                        <input type='submit' id='draw_graph' value='Draw Graph' />
                     </li> 
                 </ul> 
             </fieldset> 
@@ -315,6 +315,28 @@
                 $(this).css({ 'width': width + '%' });
             });
         }
+
+        $('#draw_graph').click(function(event) {
+            event.preventDefault();
+            $('#output').html("<div class='loader'><img src='ui/images/loading.gif' /></div>");
+
+            $.post('/index.php', {
+                'graph_type' : $('#graph_type').val(),
+                'time_frame' : $('#time_frame').val(),
+                'start_date' : $('#start_date').val(),
+                'end_date'   : $('#end_date').val()
+            }, function(data) {
+                var chart = $.parseJSON(data);
+                $('#output').fadeOut(300, function() {
+                    $(this).html("<div id='graph_container' class='highcharts-container'></div>");
+                    new Highcharts.Chart(chart);
+                    $(this).fadeIn(300, function() {
+                        updateBrowser();
+                        updateOutput();
+                    });
+                });
+            }); 
+        });
 
         $('#view_archive').click(function(event) {
             event.preventDefault();
