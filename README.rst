@@ -18,7 +18,7 @@ VisualPHPUnit provides the following features:
 Screenshots
 ----------
 
-.. image:: http://echodrop.net/code/vpu/ss3.png
+.. image:: http://echodrop.net/code/vpu/ss5.png
 .. image:: http://echodrop.net/code/vpu/ss4.png
 
 Installation
