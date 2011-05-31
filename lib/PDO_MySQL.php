@@ -254,7 +254,11 @@ class PDO_MySQL {
         $sql = '';
 
         if ( is_null($where) ) {
-            return $sql;
+            $final = array(
+                'sql'   => $sql,
+                'where' => $where
+            );
+            return $final;
         }
 
         $sql = ' WHERE ';
