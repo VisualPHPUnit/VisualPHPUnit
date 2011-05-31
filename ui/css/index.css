@@ -447,3 +447,7 @@ body {
     color: white;
     padding-top:3px;
 }
+
+#output .highcharts-container {
+    margin-top: 70px;
+}

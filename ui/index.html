@@ -136,7 +136,7 @@
                     </li> 
 
                     <li> 
-                        <input type='submit' id='draw_graph' value='Draw Graph' />
+                        <input type='submit' id='draw_graph' value='Draw Graph' disabled />
                     </li> 
                 </ul> 
             </fieldset> 
@@ -405,6 +405,7 @@
                     'maxDate': endDateMax,
                     'minDate': startDate
                 });
+                $('#end_date').trigger('change');
 	    }
 	}
 
@@ -418,6 +419,14 @@
 
         $('#time_frame').change(function() {
             constrainDates();
+        });
+
+        $('#start_date, #end_date').change(function() {
+            if ( $('#start_date').val().length && $('#end_date').val().length ) {
+                $('#draw_graph').removeAttr('disabled');
+            } else {
+                $('#draw_graph').attr('disabled', 'disabled');
+            }
         });
 
         $('#create_snapshots').trigger('change');

@@ -146,7 +146,7 @@ class VPU {
         $categories = json_encode($categories);
 
         ob_start(); 
-        include 'ui/graph.html';
+        include 'ui/graph.json';
         $graph_content = ob_get_contents(); 
         ob_end_clean();
         return $graph_content;
