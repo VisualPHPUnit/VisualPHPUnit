@@ -1,6 +1,11 @@
 Changelog
 =========
 
+v1.5
+------
+
+* Added ability to generate graphs of test results
+
 v1.4.1
 ------
 

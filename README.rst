@@ -9,6 +9,7 @@ Features
 VisualPHPUnit provides the following features:
 
 * A stunning front-end which organizes test and suite results
+* The ability to view unit testing progress via graphs
 * An option to maintain a history of unit test results through the use of visual logs 
 * Enumeration of PHPUnit statistics and messages
 * Convenient display of any debug messages written within unit tests
