@@ -60,7 +60,7 @@ class VPU {
     );
 
    /**
-    *  Builds a graph of statistics collected within a given date range.
+    *  Collects the statistics within a given date range and generates a graph.
     *
     *  @param string $type         The type of graph (`Suites` or `Tests`).
     *  @param string $time_frame   The time frame (`Daily`, `Weekly`, or `Monthly`).

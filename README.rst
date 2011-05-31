@@ -14,10 +14,11 @@ VisualPHPUnit provides the following features:
 * Convenient display of any debug messages written within unit tests
 * Sandboxing of PHP errors/exceptions
 
-Screenshot
+Screenshots
 ----------
 
 .. image:: http://echodrop.net/code/vpu/ss3.png
+.. image:: http://echodrop.net/code/vpu/ss4.png
 
 Installation
 ------------
@@ -34,12 +35,16 @@ Installation
     b. Change SANDBOX_ERRORS to *true* if you'd like VPU to display any PHP errors after the test results.  If so, please make note of the following:
         - The file specified in SANDBOX_FILENAME will always be empty (VPU wipes it at the end of each test run).  However, PHP still needs to be able to write to it, so ensure that the filename specified with SANDBOX_FILENAME has the appropriate permissions. 
         - Specific error types can be ignored using the SANDBOX_IGNORE setting.  Separate multiple error types with a '|' (e.g. 'E_STRICT|E_NOTICE').
+    c. If you'd like to enable graph generation, you will have to do the following:
+        - Change STORE_STATISTICS to *true*.  If you'd like, you can keep this set as 'false', though you will have to change the 'Store Statistics' option to 'Yes' if you want the test statistics to be used in graph generation.
+        - Run the migration 01_CREATE_SCHEMA (found in the 'migrations' directory) against a MySQL database.  Note that this will automatically create a database named 'vpu' with the tables needed to save your test statistics.
+        - Update each of the DATABASE_* constants to reflect your database settings.  Note that if you're using the migration described above, DATABASE_NAME should remain set to 'vpu'. 
 
 
 Version Information
 -------------------
 
-Current stable release is v1.4.1, last updated on 24 May 2011.
+Current stable release is v1.5, last updated on 30 May 2011.
 
 Feedback
 --------
