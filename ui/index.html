@@ -320,7 +320,7 @@
             event.preventDefault();
             $('#output').html("<div class='loader'><img src='ui/images/loading.gif' /></div>");
 
-            $.post('/index.php', {
+            $.post('index.php', {
                 'graph_type' : $('#graph_type').val(),
                 'time_frame' : $('#time_frame').val(),
                 'start_date' : $('#start_date').val(),
@@ -342,7 +342,7 @@
             event.preventDefault();
             $('#output').html("<div class='loader'><img src='ui/images/loading.gif' /></div>");
 
-            $.post('/index.php', {
+            $.post('index.php', {
                 'select_snapshot' : $('#select_snapshot').val(),
                 'view_snapshot'   : $('#view_snapshot').val()
             }, function(data) {
@@ -364,7 +364,7 @@
                 sandboxIgnore['types[]'].push($(this).val());
             });
 
-            $.post('/index.php', {
+            $.post('index.php', {
                 'store_statistics'   : $('#store_statistics').val(),
                 'create_snapshots'   : $('#create_snapshots').val(),
                 'snapshot_directory' : $('#snapshot_directory').val(),
