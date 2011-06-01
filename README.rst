@@ -40,6 +40,7 @@ Installation
         - Change STORE_STATISTICS to *true*.  If you'd like, you can keep this set as 'false', though you will have to change the 'Store Statistics' option to 'Yes' on the UI if you want the test statistics to be used in graph generation.
         - Run the migration 01_CREATE_SCHEMA (found in the 'migrations' directory) against a MySQL database.  Note that this will automatically create a database named 'vpu' with the tables needed to save your test statistics.
         - Update each of the DATABASE_* constants to reflect your database settings.  Note that if you're using the migration described above, DATABASE_NAME should remain set to 'vpu'. 
+    d. If your unit tests require any bootstraps, you can define them at the bottom of config.php in the appropriate '$bootstraps' array.
 
 
 Version Information
