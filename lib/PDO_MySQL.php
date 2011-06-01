@@ -143,10 +143,7 @@ class PDO_MySQL {
     */
     public function delete($table, $where = null) {
         $sql = 'DELETE FROM `' . $table . '`';
-
-        $formatted = $this->_format_where($where);
-        $sql .= $formatted['sql'];
-        $where = $formatted['where'];
+        $sql .= $this->_format_where($where);
 
         if ( is_string($where) ) {
             return $this->query($sql);
@@ -219,9 +216,7 @@ class PDO_MySQL {
         }
 
         $sql .= ' FROM `' . $table . '`';
-        $formatted = $this->_format_where($where);
-        $sql .= $formatted['sql'];
-        $where = $formatted['where'];
+        $sql .= $this->_format_where($where);
         if ( !is_null($additional) ) {
             $sql .= ' ' . $additional;
         }
@@ -248,17 +243,13 @@ class PDO_MySQL {
     *
     *  @param string|array $where        The clause to be parsed.
     *  @access protected
-    *  @return array
+    *  @return string
     */
-    protected function _format_where($where = null) {
+    protected function _format_where(&$where = null) {
         $sql = '';
 
         if ( is_null($where) ) {
-            $final = array(
-                'sql'   => $sql,
-                'where' => $where
-            );
-            return $final;
+            return $sql;
         }
 
         $sql = ' WHERE ';
@@ -271,7 +262,9 @@ class PDO_MySQL {
                 }
                 elseif ( is_array($val) ) {
                     foreach ( $val as $sign => $constraint ) {
-                        $new_name = $name .  '__' . str_replace('-', '_', $constraint);
+                        do {
+                            $new_name = $name .  '__' . rand();
+                        } while ( isset($where[$new_name]) );
                         $sql .=  '`' . $name . '` ';
                         switch ( $sign ) {
                             case 'gt':
@@ -299,13 +292,8 @@ class PDO_MySQL {
             }
             $sql = substr($sql, 0, strlen($sql) - strlen(' and '));
         }
-        
-        $final = array(
-            'sql'   => $sql,
-            'where' => $where
-        );
 
-        return $final;
+        return $sql;
     }
 
    /**
