@@ -655,7 +655,8 @@ class VPU {
                         $start_mark = $i;
                     }
                 } elseif ( $char == '}' ) {
-                    if ( $nest == 1 ) {
+                    // Ensure we're only adding events to the array
+                    if ( $nest == 1 && substr($str, $start_mark, 18) == '{&quot;event&quot;' ) {
                         $tags[] = substr($str, $start_mark + 1, $i - $start_mark - 1);
                         $start_mark = $i;
                     }
@@ -727,9 +728,14 @@ class VPU {
         $result = new PHPUnit_Framework_TestResult;
         $result->addListener(new PHPUnit_Util_Log_JSON);
         
+        // We need to temporarily turn off html_errors to ensure correct parsing of test debug output
+	$html_errors = ini_get("html_errors");
+
         ob_start();
+        ini_set("html_errors", 0);
         $suite->run($result);
         $results = ob_get_contents();
+        ini_set("html_errors", $html_errors);
         ob_end_clean();
         
         return $this->_compile_suites($results);

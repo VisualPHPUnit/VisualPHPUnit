@@ -58,4 +58,4 @@ Credits
 
 Special thanks to Matt Mueller (http://mattmueller.me/blog/), who came up with the initial concept, wrote the original code (https://github.com/MatthewMueller/PHPUnit-Test-Report), and was kind enough to share it.
 
-Thanks to Mike Zhou, Hang Dao, and Thomas Ingham for their suggestions!
+Thanks to Mike Zhou, Hang Dao, Thomas Ingham, and Fredrik Wollsén for their suggestions!
