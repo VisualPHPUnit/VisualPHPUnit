@@ -650,13 +650,17 @@ class VPU {
                 $char = $str{$i};
                 
                 if ( $char == '{' ) {
+                    // Ensure we're only adding events to the array
+                    if ( $nest == 0 && substr($str, $i, 18) != '{&quot;event&quot;' ) {
+                        continue;
+                    }
+
                     $nest++;
                     if ( $nest == 1 ) {
                         $start_mark = $i;
                     }
-                } elseif ( $char == '}' ) {
-                    // Ensure we're only adding events to the array
-                    if ( $nest == 1 && substr($str, $start_mark, 18) == '{&quot;event&quot;' ) {
+                } elseif ( $char == '}' && $nest > 0 ) {
+                    if ( $nest == 1 ) {
                         $tags[] = substr($str, $start_mark + 1, $i - $start_mark - 1);
                         $start_mark = $i;
                     }
