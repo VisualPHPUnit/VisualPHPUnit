@@ -11,7 +11,7 @@ body {
 }
 
 hgroup h1 { 
-    font-size: 4.8em; 
+    font-size: 77px; 
     color: #000; 
     margin: 0;
 }
@@ -21,20 +21,10 @@ hgroup h1 a {
 }
 
 hgroup h2 { 
-    margin: 0;
-    font-size: 2.5em; 
+    margin: -28px 0 15px 20px;
+    font-size: 40px; 
     color: #000; 
-}
-
-.ss {
-    height: 85%;
-    width: 85%;
 }
 
 h3 { text-align: center; color: #40807a; }
 a { color: #000; }
-.description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-.download { float: right; }
-pre { background: #000; color: #fff; padding: 15px;}
-hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-.footer { text-align:center; padding-top:30px; font-style: italic; }
