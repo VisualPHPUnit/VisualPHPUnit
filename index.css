@@ -5,9 +5,13 @@ body {
     color: #000000;
 }
 
+a { 
+    color: #000; 
+}
+
 #container {
     margin: 0 auto;
-    width: 960px;
+    width: 925px;
 }
 
 hgroup h1 { 
@@ -26,5 +30,33 @@ hgroup h2 {
     color: #000; 
 }
 
-h3 { text-align: center; color: #40807a; }
-a { color: #000; }
+p {
+    font-size: 16px;
+    margin: 16px;
+    padding: 0;
+}
+
+#ss_cli {
+    width: 922px;
+    height: 567px;
+}
+
+#ss_main {
+    width: 922px;
+    height: 709px;
+    margin-bottom: 20px;
+}
+
+ul {
+    margin-left: 10px;
+}
+
+ul li {
+    margin: 0;
+}
+
+#footer p {
+    text-align: center;
+    font-size: 12px;
+    margin-bottom: 20px;
+}
