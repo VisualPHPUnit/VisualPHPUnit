@@ -379,6 +379,17 @@
                         updateOutput();
                     });
                 });
+
+                // Update the snapshot list
+                $.get('index.php', {
+                    'snapshots' : '1'
+                }, function(data) {
+                    var snapshots = $.parseJSON(data);
+                    $('#select_snapshot').html('');
+                    $.each(snapshots, function(key, snapshot) {
+                        $('#select_snapshot').append($('<option></option>').attr('value', snapshot).text(snapshot)); 
+                    });
+                });
             }); 
         });
 

@@ -35,6 +35,23 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+    require 'config.php';
+
+    // Helper functions
+    function get_snapshots() {
+        $results = array();
+        $handler = opendir(SNAPSHOT_DIRECTORY);
+        while ( $file = readdir($handler) ) {
+            if ( strpos($file, '.') !== 0 && strtolower(pathinfo($file, PATHINFO_EXTENSION)) == 'html' ) {
+                $results[] = $file;
+            }
+        }
+        closedir($handler);
+        rsort($results);
+
+        return $results;
+    }
+
     // AJAX calls
     if ( isset($_GET['dir']) ) {
         if ( !file_exists($_GET['dir']) ) {
@@ -53,20 +70,14 @@
             echo 'OK';
         }
         exit;
+    } elseif ( isset($_GET['snapshots']) && $_GET['snapshots'] == '1' ) {
+        $results = get_snapshots();
+        echo json_encode($results);
+        exit;
     }
 
-    require 'config.php';
-
     if ( empty($_POST) ) {
-        $results = array();
-        $handler = opendir(SNAPSHOT_DIRECTORY);
-        while ( $file = readdir($handler) ) {
-            if ( strpos($file, '.') !== 0 && strtolower(pathinfo($file, PATHINFO_EXTENSION)) == 'html' ) {
-                $results[] = $file;
-            }
-        }
-        closedir($handler);
-        arsort($results);
+        $results = get_snapshots();
 
         include 'ui/index.html';
         exit; 
