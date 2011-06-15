@@ -709,7 +709,7 @@ class VPU {
     *
     *  @param array $tests        The directories/filenames containing the tests to be run through PHPUnit.
     *  @access public
-    *  @return array
+    *  @return string
     */
     public function run($tests) {
         $suite = new PHPUnit_Framework_TestSuite();
@@ -742,18 +742,20 @@ class VPU {
         ini_set("html_errors", $html_errors);
         ob_end_clean();
         
-        return $this->_compile_suites($results);
+        return $results;
     }
 
    /**
     *  Saves the statistics to a database.
     *
-    *  @param array $results      The array containing the statistics to be saved.
+    *  @see VPU->_compile_suites()
+    *  @param string $results     The JSON output from PHPUnit.
     *  @param object $db          The database handler.
     *  @access public
     *  @return bool
     */
     public function save_results($results, $db) {
+        $results = $this->_compile_suites($results);
         $now = date('Y-m-d H:i:s');
         foreach ( $results['stats'] as $key => $result ) {
             $data = array(
@@ -773,12 +775,13 @@ class VPU {
     *  Outputs suite and statistics data in HTML.
     *
     *  @see VPU->_compile_suites()
-    *  @param array $collection       The array containing the suites and statistics to be displayed.
+    *  @param string $results         The JSON output from PHPUnit.
     *  @param bool $sandbox_errors    Whether or not to sandbox errors.
     *  @access public
     *  @return string
     */
-    public function to_HTML($collection, $sandbox_errors) {
+    public function to_HTML($results, $sandbox_errors) {
+        $collection = $this->_compile_suites($results);
         $final = '';
         foreach ( $collection['suites'] as $suite ) {
             $suite['test_results'] = '';
