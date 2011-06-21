@@ -14,26 +14,25 @@ body {
     height: 100%;
     padding-left: 5px;
     padding-right: 10px;
-    border-right: 3px solid #49708A;
-    background-color: #EBF7F8;
+    border-right: 1px dashed #343434;
 }
 
 #browser h1 {
     margin: 5px 0 25px 0;
     font-size: 28px;
-    color: #49708A;
+    color: #343434;
 }
 
 #browser fieldset {
     border-width: 2px 0 0 0;
     border-style: solid;
-    border-color: #49708A;
+    border-color: #343434;
     padding-left: 0;
     cursor: pointer;
 }
 
 #browser fieldset legend {
-    color: #49708A;
+    color: #343434;
     font-size: 18px;
     font-weight: bold;
     padding: 0 1em 0 0;
@@ -53,8 +52,8 @@ body {
 
 #browser fieldset ul li #file_tree {
     background-color: #FFFFFF;
-    border-top: 2px solid #49708A;
-    border-left: 2px solid #49708A;
+    border-top: 2px solid #343434;
+    border-left: 2px solid #343434;
     -moz-border-radius-topleft: 12px;
     -webkit-border-top-left-radius: 12px;
     padding: 4px;
@@ -66,12 +65,12 @@ body {
 
 #browser fieldset ul li #file_help {
     font-size: 12px;
-    color: #49708A;
+    color: #343434;
 }
 
 #browser fieldset ul li label {
     font-size: 14px;
-    color: #49708A;
+    color: #343434;
     width: 42%;
     display: inline-block;
 }
@@ -120,7 +119,7 @@ body {
 
 #output {
     float: left;
-    padding-left: 10px;
+    padding-left: 15px;
     width: 63%;
 }
 

@@ -16,7 +16,7 @@ UL.jqueryFileTree LI {
 }
 
 UL.jqueryFileTree LI.selected_file {
-    background-color: #CAFF42; 
+    background-color: #addfff; 
 }
 
 UL.jqueryFileTree A {
