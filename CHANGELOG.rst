@@ -1,8 +1,17 @@
 Changelog
 =========
 
-v1.5
+v1.5.1
 ------
+
+* Update color scheme
+* Update snapshot list each time a test is run (GH-10)
+* Fix snapshot filenames to be compatible with Windows systems (GH-11)
+* Allow debug display of JSON within tests (GH-9)
+* Fix POST locations to use relative URIs
+
+v1.5
+----
 
 * Added ability to generate graphs of test results
 
@@ -13,7 +22,7 @@ v1.4.1
 * Added a progress bar to indicate that tests are being processed
 
 v1.4
-------
+----
 
 * Overhauled the UI
 * Fixed issues with namespaced tests 

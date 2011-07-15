@@ -51,7 +51,7 @@ If you wish to  set the default options for each test run, you can do so by modi
 Version Information
 -------------------
 
-Current stable release is v1.5, last updated on 30 May 2011.
+Current stable release is v1.5.1, last updated on 15 July 2011.
 
 Feedback
 --------
