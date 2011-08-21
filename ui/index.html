@@ -290,6 +290,17 @@
 
             $('#sort_type').trigger('change');
 
+            $('.display').unbind();
+            $('.display').bind('click', function() {
+                var checkbox = $(this);
+                var suites = $('.suite_' + checkbox.attr('target'));
+                if ( checkbox.is(':checked') ) {
+                    suites.fadeIn();
+                } else  {
+                    suites.fadeOut();
+                }
+            });
+
             $('.expand.button').each(function(index) {
                 $(this).click(function(e) {
                     if ( $(this).text() == '-' ) {
@@ -332,7 +343,6 @@
                     new Highcharts.Chart(chart);
                     $(this).fadeIn(300, function() {
                         updateBrowser();
-                        updateOutput();
                     });
                 });
             }); 
@@ -394,12 +404,12 @@
         });
 
         function constrainDates() {
-	    var startDate = $('#start_date').datepicker('getDate');
-	    var endDate = $('#end_date').datepicker('getDate'); 
-	    if ( endDate < startDate ) {
-		$('#end_date').datepicker('setDate', startDate);
-	    }
-	    if (startDate != null) {
+            var startDate = $('#start_date').datepicker('getDate');
+            var endDate = $('#end_date').datepicker('getDate'); 
+            if ( endDate < startDate ) {
+                $('#end_date').datepicker('setDate', startDate);
+            }
+            if (startDate != null) {
                 var timeFrame = $('#time_frame').val();
                 switch ( timeFrame ) {
                     case 'Daily': 
@@ -417,16 +427,16 @@
                     'minDate': startDate
                 });
                 $('#end_date').trigger('change');
-	    }
-	}
+            }
+        }
 
         $('#start_date').datepicker({ 
             onSelect: function(dateText, inst) {
-		constrainDates();
-	    }
-	});
+                constrainDates();
+            }
+        });
 
-	$('#end_date').datepicker();
+        $('#end_date').datepicker();
 
         $('#time_frame').change(function() {
             constrainDates();

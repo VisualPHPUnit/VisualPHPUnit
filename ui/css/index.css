@@ -136,13 +136,30 @@ body {
     float: left;
 }
 
-#output #header span {
+.display_settings {
     font-size: 16px;
     font-weight: bold;
     color: #858585;
     margin-top: 10px;
-    display: inline-block;
     float: right;
+    vertical-align: top;
+}
+
+.display_settings div {
+    display: inline-block;
+}
+
+.display_settings label {
+    vertical-align: top;
+}
+
+.display_options {
+    margin-bottom: 5px;
+}
+
+.display_options label {
+    display: inline-block;
+    font-size: 12px;
 }
 
 .rounded {
