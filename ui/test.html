@@ -1,6 +1,6 @@
                             <div class="test <?php echo $test['status'];?>"> 
                                 <div class="light rounded"></div> 
-                                <div class="name"><?php echo $test['name'];?></div> 
+                                <div class="name" title="Test Status: <?php echo ucfirst($test['status']);?>"><?php echo $test['name'];?></div> 
                                 <div class="stats"><?php echo $test['message'];?></div>
                                 <div class="expand button"><?php echo $test['expand'];?></div>
                                 <div class="more test <?php echo $test['display'];?>"> 
