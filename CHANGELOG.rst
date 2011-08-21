@@ -1,6 +1,12 @@
 Changelog
 =========
 
+v1.5.2
+------
+
+* Add tooltips to compensate for colorblind usage problem (GH-17)
+* Add ability to filter suite results (GH-14)
+
 v1.5.1
 ------
 
@@ -13,29 +19,29 @@ v1.5.1
 v1.5
 ----
 
-* Added ability to generate graphs of test results
+* Add ability to generate graphs of test results
 
 v1.4.1
 ------
 
-* Fixed Windows path issues
-* Added a progress bar to indicate that tests are being processed
+* Fix Windows path issues
+* Add a progress bar to indicate that tests are being processed
 
 v1.4
 ----
 
-* Overhauled the UI
-* Fixed issues with namespaced tests 
-* Implemented a better check for archived files
+* Overhaul the UI
+* Fix issues with namespaced tests 
+* Implement a better check for archived files
 
 
 v1.3.2
 ------
 
-* Added support for bootstraps
-* Cleaned up the user interface
-* Added the ability to view snapshots from the homepage
-* Changed the snapshot filename format to Y-m-d
+* Add support for bootstraps
+* Clean up the user interface
+* Add the ability to view snapshots from the homepage
+* Change the snapshot filename format to Y-m-d
 
 v1.3.1
 ------
@@ -46,21 +52,21 @@ v1.3.1
 v1.3
 ----
 
-* Added a start page to allow for specific choosing of tests and options
-* Added the ability to sort suite results by status and time
-* Cleaned up some configuration settings
-* Removed ability to save JSON snapshots
+* Add a start page to allow for specific choosing of tests and options
+* Add the ability to sort suite results by status and time
+* Clean up some configuration settings
+* Remove ability to save JSON snapshots
 
 v1.2
 ----
 
-* Added statistic bars to display the suite results visually
+* Add statistic bars to display the suite results visually
 
 v1.1.1
 ------
 
 * Fix to allow for loading a single test directly
-* Adjusted code to allow for proper execution with 'short_open_tag' off
+* Adjust code to allow for proper execution with 'short_open_tag' off
 * Fix to match test files with the word 'Test' at the end of the filename
 * Fix to eliminate duplicate tests
 
