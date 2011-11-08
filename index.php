@@ -80,7 +80,7 @@
         $results = get_snapshots();
 
         include 'ui/index.html';
-        exit; 
+        exit;
     }
 
     // Archives
@@ -88,9 +88,9 @@
         $dir = realpath(SNAPSHOT_DIRECTORY) . '/';
         $snapshot = realpath($dir . trim(strval(filter_var($_POST['select_snapshot'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES))));
 
-        ob_start(); 
+        ob_start();
         include $snapshot;
-        $content = ob_get_contents(); 
+        $content = ob_get_contents();
         ob_end_clean();
         echo $content;
         exit;
@@ -105,11 +105,11 @@
         $time_frame = trim(strval(filter_var($_POST['time_frame'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
         $start_date = trim(strval(filter_var($_POST['start_date'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
         $end_date = trim(strval(filter_var($_POST['end_date'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
-        
+
         require 'lib/PDO_MySQL.php';
         $config = array(
             'database' => DATABASE_NAME,
-            'host'     => DATABASE_HOST, 
+            'host'     => DATABASE_HOST,
             'username' => DATABASE_USER,
             'password' => DATABASE_PASS
         );
@@ -127,7 +127,7 @@
     $snapshot_directory = trim(strval(filter_var($_POST['snapshot_directory'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
     $sandbox_errors = (boolean) filter_var($_POST['sandbox_errors'], FILTER_SANITIZE_NUMBER_INT);
     $sandbox_filename = trim(strval(filter_var($_POST['sandbox_filename'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
-    if ( isset($_POST['sandbox_ignore']) ) {
+    if ( isset($_POST['sandbox_ignore']) && !empty($_POST['sandbox_ignore']) ) {
         $sandbox_ignore = array();
         foreach ( $_POST['sandbox_ignore'] as $ignore ) {
             $sandbox_ignore[] = trim(strval(filter_var($ignore, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
@@ -137,9 +137,9 @@
         $sandbox_ignore = '';
     }
     $test_files = trim(strval(filter_var($_POST['test_files'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
-    $tests = explode('|', $test_files); 
+    $tests = explode('|', $test_files);
 
-    ob_start(); 
+    ob_start();
 
     if ( $sandbox_errors ) {
         set_error_handler(array($vpu, 'handle_errors'));
@@ -151,7 +151,7 @@
         require 'lib/PDO_MySQL.php';
         $config = array(
             'database' => DATABASE_NAME,
-            'host'     => DATABASE_HOST, 
+            'host'     => DATABASE_HOST,
             'username' => DATABASE_USER,
             'password' => DATABASE_PASS
         );
@@ -159,16 +159,16 @@
         $vpu->save_results($results, $db);
     }
 
-    ob_start(); 
+    ob_start();
     include 'ui/header.html';
     echo $vpu->to_HTML($results, $sandbox_errors);
-    $content = ob_get_contents(); 
+    $content = ob_get_contents();
     ob_end_clean();
 
     echo $content;
 
     if ( $create_snapshots ) {
-        $snapshot = ob_get_contents(); 
+        $snapshot = ob_get_contents();
         $vpu->create_snapshot($snapshot, $snapshot_directory);
     }
 

@@ -38,7 +38,7 @@
 ini_set('display_errors', 1);
 
 // The directory where this application is installed
-define("BASE_INSTALL", realpath(__DIR__)); 
+define("BASE_INSTALL", realpath(__DIR__));
 
 // The directory where PHPUnit is installed
 define('PHPUNIT_INSTALL', '/usr/share/pear/PHPUnit');

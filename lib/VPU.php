@@ -47,9 +47,9 @@ class VPU {
     *  @access protected
     */
     protected $_exceptions = '';
-    
+
    /**
-    *  The list of files to be ignored when creating a stack trace. 
+    *  The list of files to be ignored when creating a stack trace.
     *
     *  @var array
     *  @access protected
@@ -145,9 +145,9 @@ class VPU {
         $plot_values = array_map(function($val) { return json_encode($val); }, $plot_values);
         $categories = json_encode($categories);
 
-        ob_start(); 
+        ob_start();
         include 'ui/graph.json';
-        $graph_content = ob_get_contents(); 
+        $graph_content = ob_get_contents();
         ob_end_clean();
         return $graph_content;
     }
@@ -176,9 +176,9 @@ class VPU {
             }
         }
 
-        ob_start(); 
+        ob_start();
         include 'ui/stats.html';
-        $stats_content = ob_get_contents(); 
+        $stats_content = ob_get_contents();
         ob_end_clean();
         return $stats_content;
     }
@@ -194,9 +194,9 @@ class VPU {
         $suite['expand'] = ( $suite['status'] == 'failure' ) ? '-' : '+';
         $suite['display'] = ( $suite['status'] == 'failure' ) ? 'show' : 'hide';
 
-        ob_start(); 
+        ob_start();
         include 'ui/suite.html';
-        $suite_content = ob_get_contents(); 
+        $suite_content = ob_get_contents();
         ob_end_clean();
         return $suite_content;
     }
@@ -213,10 +213,10 @@ class VPU {
             $test['expand'] = '-';
             $test['display'] = 'show';
         }
-                
-        ob_start(); 
+
+        ob_start();
         include 'ui/test.html';
-        $test_content = ob_get_contents(); 
+        $test_content = ob_get_contents();
         ob_end_clean();
         return $test_content;
     }
@@ -235,14 +235,14 @@ class VPU {
 
    /**
     *  Organizes the output from PHPUnit into a more manageable array
-    *  of suites and statistics. 
+    *  of suites and statistics.
     *
-    *  @param string $pu_output        The JSON output from PHPUnit. 
+    *  @param string $pu_output        The JSON output from PHPUnit.
     *  @access protected
     *  @return array
     */
     protected function _compile_suites($pu_output) {
-        $results = $this->_parse_output($pu_output);    
+        $results = $this->_parse_output($pu_output);
 
         $collection = array();
         $statistics = array(
@@ -310,7 +310,7 @@ class VPU {
     }
 
    /**
-    *  Erases the contents of a file. 
+    *  Erases the contents of a file.
     *
     *  @param string $filename        The file to be emptied.
     *  @access protected
@@ -341,7 +341,7 @@ class VPU {
             'name'              => substr($test_results['test'], strpos($test_results['test'], '::') + 2),
             'message'           => $this->_get_message($test_results['message']) . 'Executed in ' . $test_results['time'] . ' seconds.',
             'time'              => $test_results['time'],
-            'variables_message' => $variables_message, 
+            'variables_message' => $variables_message,
             'variables_display' => ( $variables_message ) ? 'show' : 'hide',
             'trace_message'     => $trace_message,
             'trace_display'     => ( $trace_message ) ? 'show' : 'hide'
@@ -364,7 +364,7 @@ class VPU {
     }
 
    /**
-    *  Retrieves any user-generated debugging messages from a PHPUnit test result. 
+    *  Retrieves any user-generated debugging messages from a PHPUnit test result.
     *
     *  @param string $message        The message supplied by VPU's transformed JSON.
     *  @access protected
@@ -386,7 +386,7 @@ class VPU {
         }
 
         $message .= '<br /><br />';
-        
+
         return $message;
     }
 
@@ -411,7 +411,7 @@ class VPU {
     }
 
    /**
-    *  Retrieves the status from a PHPUnit test result. 
+    *  Retrieves the status from a PHPUnit test result.
     *
     *  @param string $status        The status supplied by VPU's transformed JSON.
     *  @param string $message       The message supplied by VPU's transformed JSON.
@@ -422,7 +422,7 @@ class VPU {
         switch ( $status ) {
             case 'pass':
                 return 'success';
-            case 'error': 
+            case 'error':
                 if ( stripos($message, 'skipped') !== false ) {
                     return 'skipped';
                 } elseif ( stripos($message, 'incomplete') !== false ) {
@@ -438,7 +438,7 @@ class VPU {
     }
 
    /**
-    *  Retrieves the stack trace from a PHPUnit test result. 
+    *  Retrieves the stack trace from a PHPUnit test result.
     *
     *  @param string $trace        The message supplied by VPU's transformed JSON.
     *  @access protected
@@ -463,7 +463,7 @@ class VPU {
                 $new_trace[] = $arr;
             }
         }
-        
+
         if ( !empty($new_trace) ) {
             ob_start();
             print_r($new_trace);
@@ -477,7 +477,7 @@ class VPU {
     }
 
    /**
-    *  Serves as the error handler.  Formats the errors, and then writes them to the sandbox file. 
+    *  Serves as the error handler.  Formats the errors, and then writes them to the sandbox file.
     *
     *  @param int $err_no            The level of the error raised.
     *  @param string $err_str        The error message.
@@ -489,40 +489,42 @@ class VPU {
     public function handle_errors($err_no, $err_str, $err_file, $err_line) {
         global $sandbox_ignore, $sandbox_filename;
 
-        $ignore = explode('|', $sandbox_ignore);
-        $transform_to_constant = function($value) { return constant($value); };
-        $ignore = array_map($transform_to_constant, $ignore);
-        if ( in_array($err_no, $ignore) ) {
-            return true;
+        if ( $sandbox_ignore != '' ) {
+            $ignore = explode('|', $sandbox_ignore);
+            $transform_to_constant = function($value) { return constant($value); };
+            $ignore = array_map($transform_to_constant, $ignore);
+            if ( in_array($err_no, $ignore) ) {
+                return true;
+            }
         }
 
         $error = array();
         switch ( $err_no ) {
             case E_NOTICE:
-                $error['type'] = 'Notice'; 
+                $error['type'] = 'Notice';
                 break;
             case E_WARNING:
-                $error['type'] = 'Warning'; 
+                $error['type'] = 'Warning';
                 break;
             case E_ERROR:
-                $error['type'] = 'Error'; 
+                $error['type'] = 'Error';
                 break;
             case E_PARSE:
-                $error['type'] = 'Parse'; 
+                $error['type'] = 'Parse';
                 break;
             case E_STRICT:
-                $error['type'] = 'Strict'; 
+                $error['type'] = 'Strict';
                 break;
             default:
-                $error['type'] = 'Unknown'; 
+                $error['type'] = 'Unknown';
                 break;
         }
         $error['message'] = $err_str;
         $error['line'] = $err_line;
         $error['file'] = $err_file;
-        ob_start(); 
+        ob_start();
         include 'ui/error.html';
-        $this->_write_file($sandbox_filename, ob_get_contents()); 
+        $this->_write_file($sandbox_filename, ob_get_contents());
         ob_end_clean();
         return true;
     }
@@ -542,16 +544,16 @@ class VPU {
             'file'    => $exception->getFile()
         );
 
-        ob_start(); 
+        ob_start();
         include 'ui/error.html';
-        $this->_exceptions .= ob_get_contents(); 
+        $this->_exceptions .= ob_get_contents();
         ob_end_clean();
     }
 
    /**
     *  Iterates through the supplied directory and loads the test files.
     *
-    *  @param string $test_dir       The directory containing the tests. 
+    *  @param string $test_dir       The directory containing the tests.
     *  @access protected
     *  @return void
     */
@@ -563,7 +565,7 @@ class VPU {
             }
 
             $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($test_dir), RecursiveIteratorIterator::LEAVES_ONLY);
-                            
+
             $test_cases = array();
             while ( $it->valid() ) {
                 if ( !$it->isDot() && strtolower(pathinfo($it->key(), PATHINFO_EXTENSION)) == 'php' ) {
@@ -580,9 +582,9 @@ class VPU {
     }
 
    /**
-    *  Parses and formats the JSON output from PHPUnit into an associative array. 
+    *  Parses and formats the JSON output from PHPUnit into an associative array.
     *
-    *  @param string $pu_output        The JSON output from PHPUnit. 
+    *  @param string $pu_output        The JSON output from PHPUnit.
     *  @access protected
     *  @return array
     */
@@ -599,7 +601,7 @@ class VPU {
         $results = str_replace('&quot;', '"', $results);
 
         $results = json_decode($results, true);
-        
+
         $pu_output = explode('|||', $pu_output);
         foreach ( $pu_output as $key => $data ) {
             if ( $data ) {
@@ -611,7 +613,7 @@ class VPU {
     }
 
    /**
-    *  Retrieves the files from any supplied directories, and filters 
+    *  Retrieves the files from any supplied directories, and filters
     *  the list of tests by ensuring that the files exist and are PHP files.
     *
     *  @param array $tests       The directories/filenames containing the tests to be run through PHPUnit.
@@ -635,7 +637,7 @@ class VPU {
    /**
     *  Converts the first nested layer of PHPUnit-generated JSON to an associative array.
     *
-    *  @param string $str        The JSON output from PHPUnit. 
+    *  @param string $str        The JSON output from PHPUnit.
     *  @access protected
     *  @return array
     */
@@ -644,11 +646,11 @@ class VPU {
             $tags = array();
             $nest = 0;
             $start_mark = 0;
-            
+
             $length = strlen($str);
-            for ( $i=0; $i < $length; $i++ ) { 
+            for ( $i=0; $i < $length; $i++ ) {
                 $char = $str{$i};
-                
+
                 if ( $char == '{' ) {
                     // Ensure we're only adding events to the array
                     if ( $nest == 0 && substr($str, $i, 18) != '{&quot;event&quot;' ) {
@@ -667,7 +669,7 @@ class VPU {
                     $nest--;
                 }
             }
-            
+
             if ( $nest !== 0 ) {
                 throw new Exception('Unable to parse JSON response from PHPUnit.');
             }
@@ -677,14 +679,14 @@ class VPU {
             $this->_handle_exception($e);
             return false;
         }
-        
+
     }
 
    /**
-    *  Replaces text within a string. 
+    *  Replaces text within a string.
     *
-    *  @param string $old            The substring to be replaced. 
-    *  @param string $new            The replacment string. 
+    *  @param string $old            The substring to be replaced.
+    *  @param string $new            The replacment string.
     *  @param string $subject        The string whose contents will be replaced.
     *  @access protected
     *  @return string
@@ -692,7 +694,7 @@ class VPU {
     protected function _replace($old, $new, $subject) {
         try {
             $pos = strpos($subject, $old);
-            
+
             if ( $pos === false ) {
                 throw new Exception('Cannot find tag to replace (old: ' . $old . ', new: ' . htmlspecialchars($new) . ').');
             }
@@ -703,7 +705,7 @@ class VPU {
             return false;
         }
     }
-	
+
    /**
     *  Runs supplied tests through PHPUnit.
     *
@@ -714,7 +716,7 @@ class VPU {
     public function run($tests) {
         $suite = new PHPUnit_Framework_TestSuite();
 
-        $tests = $this->_parse_tests($tests); 
+        $tests = $this->_parse_tests($tests);
         $original_classes = get_declared_classes();
         $test_filenames = array();
         foreach ( $tests as $test ) {
@@ -731,17 +733,17 @@ class VPU {
 
         $result = new PHPUnit_Framework_TestResult;
         $result->addListener(new PHPUnit_Util_Log_JSON);
-        
+
         // We need to temporarily turn off html_errors to ensure correct parsing of test debug output
-	$html_errors = ini_get("html_errors");
+        $html_errors = ini_get('html_errors');
 
         ob_start();
-        ini_set("html_errors", 0);
+        ini_set('html_errors', 0);
         $suite->run($result);
         $results = ob_get_contents();
-        ini_set("html_errors", $html_errors);
+        ini_set('html_errors', $html_errors);
         ob_end_clean();
-        
+
         return $results;
     }
 
