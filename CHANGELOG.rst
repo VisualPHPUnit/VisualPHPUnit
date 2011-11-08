@@ -1,6 +1,12 @@
 Changelog
 =========
 
+v1.5.3
+------
+
+* Fix SANDBOX_IGNORE settings (GH-21)
+* Update history file (GH-20)
+
 v1.5.2
 ------
 
