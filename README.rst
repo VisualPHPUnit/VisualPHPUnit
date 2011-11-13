@@ -21,6 +21,11 @@ Screenshots
 .. image:: http://echodrop.net/code/vpu/ss7.png
 .. image:: http://echodrop.net/code/vpu/ss8.png
 
+Requirements
+------------
+
+VisualPHPUnit only supports PHPUnit v3.5 and above.
+
 Installation
 ------------
 
