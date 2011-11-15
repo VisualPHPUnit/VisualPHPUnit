@@ -31,7 +31,7 @@ Installation
 
 1. Download and extract the project to a web-accessible directory.
 2. Open config.php with your favorite editor.
-    a. Change PHPUNIT_INSTALL so that it points to the directory where PHPUnit is installed.
+    a. Change PEAR_PATH so that it points to the directory where PEAR is located.
     b. Update TEST_DIRECTORY so that it points to the root directory where your unit tests are stored.
 3. Point your browser to the location where you installed VisualPHPUnit!
 
@@ -56,7 +56,7 @@ If you wish to  set the default options for each test run, you can do so by modi
 Version Information
 -------------------
 
-Current stable release is v1.5.3, last updated on 8 November 2011.
+Current stable release is v1.5.4, last updated on 14 November 2011.
 
 Feedback
 --------

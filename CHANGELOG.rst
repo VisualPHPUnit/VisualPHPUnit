@@ -1,6 +1,11 @@
 Changelog
 =========
 
+v1.5.4
+------
+
+* Fix include_path issues (GH-26)
+
 v1.5.3
 ------
 
