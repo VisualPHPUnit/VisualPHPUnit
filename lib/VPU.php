@@ -209,7 +209,7 @@ class VPU {
     *  @return string
     */
     protected function _build_test($test) {
-        if ( $test['variables_message'] && $test['status'] === 'failure' ) {
+        if ( $test['output'] && $test['status'] === 'failure' ) {
             $test['expand'] = '-';
             $test['display'] = 'show';
         }
@@ -331,7 +331,7 @@ class VPU {
     */
     protected function _format_test_results($test_results) {
         $test_status = $this->_get_test_status($test_results['status'], $test_results['message']);
-        $variables_message = ( isset($test_results['variables_message']) ) ? trim($test_results['variables_message']) : '';
+        $output = ( isset($test_results['output']) ) ? trim($test_results['output']) : '';
         $trace_message = $this->_get_trace($test_results['trace']);
 
         $test = array(
@@ -341,8 +341,8 @@ class VPU {
             'name'              => substr($test_results['test'], strpos($test_results['test'], '::') + 2),
             'message'           => $this->_get_message($test_results['message']) . 'Executed in ' . $test_results['time'] . ' seconds.',
             'time'              => $test_results['time'],
-            'variables_message' => $variables_message,
-            'variables_display' => ( $variables_message ) ? 'show' : 'hide',
+            'output'            => $output,
+            'output_display'    => ( $output ) ? 'show' : 'hide',
             'trace_message'     => $trace_message,
             'trace_display'     => ( $trace_message ) ? 'show' : 'hide'
         );
@@ -602,10 +602,11 @@ class VPU {
 
         $results = json_decode($results, true);
 
+        // For PHPUnit 3.5.x, which doesn't include test output in the JSON
         $pu_output = explode('|||', $pu_output);
         foreach ( $pu_output as $key => $data ) {
             if ( $data ) {
-                $results[$key]['variables_message'] = $data;
+                $results[$key]['output'] = $data;
             }
         }
 
