@@ -1,145 +1,149 @@
-<!DOCTYPE html> 
-<html lang='en'> 
- 
-<head> 
-    <meta charset='utf-8' /> 
-    <title>VisualPHPUnit</title> 
-    <link rel="stylesheet" href="ui/css/index.css" media="screen" /> 
-    <link rel="stylesheet" href="ui/css/jqueryFileTree.css" media="screen" /> 
-    <link rel='stylesheet' href='ui/css/jquery-ui-1.8.11.custom.css' /> 
-</head> 
+<!DOCTYPE html>
+<html lang='en'>
 
-<body> 
+<head>
+    <meta charset='utf-8' />
+    <title>VisualPHPUnit</title>
+    <link rel="stylesheet" href="ui/css/index.css" media="screen" />
+    <link rel="stylesheet" href="ui/css/jqueryFileTree.css" media="screen" />
+    <link rel='stylesheet' href='ui/css/jquery-ui-1.8.11.custom.css' />
+</head>
+
+<body>
     <div id='container'>
         <div id='browser'>
             <h1>VisualPHPUnit</h1>
 
-            <fieldset> 
-                <legend id='legend_tests'>Tests</legend> 
-                <ul> 
-                    <li> 
+            <fieldset>
+                <legend id='legend_tests'>Tests</legend>
+                <ul>
+                    <li>
                         <div id='file_tree'></div>
                         <span id='file_help'>
                             Tips: You can select multiple files by single-clicking them.  You can also use shift+click to select a range of files, or ctrl+click to select an entire directory.
                         </span>
                         <input type='hidden' name='test_files' id='test_files' />
-                    </li> 
-                </ul> 
-            </fieldset> 
+                    </li>
+                </ul>
+            </fieldset>
 
-            <fieldset> 
-                <legend id='legend_options'>Options</legend> 
-                <ul> 
-                    <li> 
-                    <label for='store_statistics'>Store Statistics:</label> 
+            <fieldset>
+                <legend id='legend_options'>Options</legend>
+                <ul>
+                    <li>
+                    <label for='store_statistics'>Store Statistics:</label>
                     <select name='store_statistics' id='store_statistics'>
                         <option value='0' <?php if ( !STORE_STATISTICS ) echo 'selected';?>>No</option>
                         <option value='1' <?php if ( STORE_STATISTICS ) echo 'selected';?>>Yes</option>
                     </select>
-                    </li> 
+                    </li>
 
-                    <li> 
-                        <label for='create_snapshots'>Create Snapshots:</label> 
+                    <li>
+                        <label for='create_snapshots'>Create Snapshots:</label>
                         <select name='create_snapshots' id='create_snapshots'>
                             <option value='0' <?php if ( !CREATE_SNAPSHOTS ) echo 'selected';?>>No</option>
                             <option value='1' <?php if ( CREATE_SNAPSHOTS ) echo 'selected';?>>Yes</option>
                         </select>
-                    </li> 
+                    </li>
 
-                    <li> 
-                        <label for='snapshot_directory'>Snapshot Directory:</label> 
+                    <li>
+                        <label for='snapshot_directory'>Snapshot Directory:</label>
                         <input type='text' name='snapshot_directory' id='snapshot_directory' value='<?php echo SNAPSHOT_DIRECTORY;?>' />
-                    </li> 
+                    </li>
 
-                    <li> 
-                        <label for='sandbox_errors'>Sandbox Errors:</label> 
+                    <li>
+                        <label for='sandbox_errors'>Sandbox Errors:</label>
                         <select name='sandbox_errors' id='sandbox_errors'>
                             <option value='0' <?php if ( !SANDBOX_ERRORS ) echo 'selected';?>>No</option>
                             <option value='1' <?php if ( SANDBOX_ERRORS ) echo 'selected';?>>Yes</option>
                         </select>
-                    </li> 
-                
-                    <li class='sandbox'> 
-                        <label for='sandbox_filename'>Sandbox Filename:</label> 
-                        <input type='text' name='sandbox_filename' id='sandbox_filename' value='<?php echo SANDBOX_FILENAME;?>' />
-                    </li> 
+                    </li>
 
-                    <li class='sandbox'> 
-                        <label>Sandbox Ignore:</label> 
+                    <li class='sandbox'>
+                        <label for='sandbox_filename'>Sandbox Filename:</label>
+                        <input type='text' name='sandbox_filename' id='sandbox_filename' value='<?php echo SANDBOX_FILENAME;?>' />
+                    </li>
+
+                    <li class='sandbox'>
+                        <label>Sandbox Ignore:</label>
                         <div id='sandbox_inputs'>
                             <input type='checkbox' name='sandbox_ignore[]' id='e_notice' value='E_NOTICE' />
                             <label for='e_notice'>E_NOTICE</label>
+                            <br />
                             <input type='checkbox' name='sandbox_ignore[]' id='e_warning' value='E_WARNING' />
                             <label for='e_warning'>E_WARNING</label>
+                            <br />
                             <input type='checkbox' name='sandbox_ignore[]' id='e_error' value='E_ERROR' />
                             <label for='e_error'>E_ERROR</label>
+                            <br />
                             <input type='checkbox' name='sandbox_ignore[]' id='e_parse' value='E_PARSE' />
                             <label for='e_parse'>E_PARSE</label>
+                            <br />
                             <input type='checkbox' name='sandbox_ignore[]' id='e_strict' value='E_STRICT' />
                             <label for='e_strict'>E_STRICT</label>
                         </div>
-                    </li> 
+                    </li>
 
                     <li>
                         <input type='submit' id='run_tests' value='Run Tests' />
                     </li>
-                </ul> 
+                </ul>
             </fieldset>
 
-            <fieldset> 
-                <legend id='legend_archives'>Archives</legend> 
-                <ul> 
-                    <li> 
-                        <label for='select_snapshot'>Select Snapshot:</label> 
+            <fieldset>
+                <legend id='legend_archives'>Archives</legend>
+                <ul>
+                    <li>
+                        <label for='select_snapshot'>Select Snapshot:</label>
                         <select name='select_snapshot' id='select_snapshot'>
                             <?php foreach ( $results as $file ) { ?>
                                 <option value='<?php echo $file;?>'><?php echo $file;?></option>
                             <?php } ?>
                         </select>
                         <input type='hidden' id='view_snapshot' name='view_snapshot' value='0' />
-                    </li> 
+                    </li>
 
                     <li>
                         <input type='submit' id='view_archive' value='View' />
                     </li>
-                </ul> 
-            </fieldset> 
+                </ul>
+            </fieldset>
 
-            <fieldset> 
-                <legend id='legend_graphs'>Graphs</legend> 
-                <ul> 
-                    <li> 
-                        <label for='graph_type'>Type:</label> 
+            <fieldset>
+                <legend id='legend_graphs'>Graphs</legend>
+                <ul>
+                    <li>
+                        <label for='graph_type'>Type:</label>
                         <select id='graph_type'>
                             <option value='Suite'>Suites</option>
                             <option value='Test'>Tests</option>
                         </select>
-                    </li> 
+                    </li>
 
-                    <li> 
-                        <label for='time_frame'>Time Frame:</label> 
+                    <li>
+                        <label for='time_frame'>Time Frame:</label>
                         <select id='time_frame'>
                             <option value='Daily'>Daily</option>
                             <option value='Weekly'>Weekly</option>
                             <option value='Monthly'>Monthly</option>
                         </select>
-                    </li> 
+                    </li>
 
-                    <li> 
-                        <label for='start_date'>Start Date:</label> 
+                    <li>
+                        <label for='start_date'>Start Date:</label>
                         <input type='text' id='start_date' />
-                    </li> 
-                
-                    <li> 
-                        <label for='end_date'>End Date:</label> 
-                        <input type='text' id='end_date' />
-                    </li> 
+                    </li>
 
-                    <li> 
+                    <li>
+                        <label for='end_date'>End Date:</label>
+                        <input type='text' id='end_date' />
+                    </li>
+
+                    <li>
                         <input type='submit' id='draw_graph' value='Draw Graph' disabled />
-                    </li> 
-                </ul> 
-            </fieldset> 
+                    </li>
+                </ul>
+            </fieldset>
 
 
 
@@ -150,27 +154,27 @@
         </div>
     </div>
 
-<script src="ui/js/jquery-1.5.1.min.js"></script> 
+<script src="ui/js/jquery-1.5.1.min.js"></script>
 <script src="ui/js/jquery.sortElements.js"></script>
-<script src="ui/js/jqueryFileTree/jqueryFileTree.js"></script> 
+<script src="ui/js/jqueryFileTree/jqueryFileTree.js"></script>
 <script src='ui/js/jquery-ui-1.8.11.custom.min.js'></script>
 <script src="ui/js/Highcharts-2.1.4/highcharts.js"></script>
 <script src="ui/js/Highcharts-2.1.4/themes/gray.js"></script>
-<script> 
+<script>
     $(document).ready(function() {
 
         function updateTests() {
             var tests = '';
             $('.selected_file').each(function() {
-               tests += $(this).children().attr('rel') + '|'; 
+               tests += $(this).children().attr('rel') + '|';
             });
             return tests;
         }
 
-        $('#file_tree').fileTree({ 
+        $('#file_tree').fileTree({
             /* fix for Windoze filepaths */
             root: '<?php echo str_replace('\\', '/', realpath(TEST_DIRECTORY));?>',
-            script: 'ui/js/jqueryFileTree/connectors/jqueryFileTree.php' 
+            script: 'ui/js/jqueryFileTree/connectors/jqueryFileTree.php'
         }, function(file) {
             $('#test_files').val(updateTests());
         });
@@ -346,7 +350,7 @@
                         updateBrowser();
                     });
                 });
-            }); 
+            });
         });
 
         $('#view_archive').click(function(event) {
@@ -363,7 +367,7 @@
                         updateOutput();
                     });
                 });
-            }); 
+            });
         });
 
         $('#run_tests').click(function(event) {
@@ -371,7 +375,7 @@
             $('#output').html("<div class='loader'><img src='ui/images/loading.gif' /></div>");
 
             var sandboxIgnore = [];
-            $(":checked").each(function() {
+            $("input[type='checkbox']:checked").each(function() {
                 sandboxIgnore.push($(this).val());
             });
 
@@ -398,22 +402,22 @@
                     var snapshots = $.parseJSON(data);
                     $('#select_snapshot').html('');
                     $.each(snapshots, function(key, snapshot) {
-                        $('#select_snapshot').append($('<option></option>').attr('value', snapshot).text(snapshot)); 
+                        $('#select_snapshot').append($('<option></option>').attr('value', snapshot).text(snapshot));
                     });
                 });
-            }); 
+            });
         });
 
         function constrainDates() {
             var startDate = $('#start_date').datepicker('getDate');
-            var endDate = $('#end_date').datepicker('getDate'); 
+            var endDate = $('#end_date').datepicker('getDate');
             if ( endDate < startDate ) {
                 $('#end_date').datepicker('setDate', startDate);
             }
             if (startDate != null) {
                 var timeFrame = $('#time_frame').val();
                 switch ( timeFrame ) {
-                    case 'Daily': 
+                    case 'Daily':
                         var endDateMax = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 12);
                         break;
                     case 'Weekly':
@@ -431,7 +435,7 @@
             }
         }
 
-        $('#start_date').datepicker({ 
+        $('#start_date').datepicker({
             onSelect: function(dateText, inst) {
                 constrainDates();
             }
@@ -455,8 +459,8 @@
         $('#sandbox_errors').trigger('change');
         updateIgnore('<?php echo SANDBOX_IGNORE; ?>');
         $('#legend_tests, #legend_options, #legend_archives, #legend_graphs').next().css('display', 'none');
-        
+
     });
-</script> 
+</script>
 </body>
-</html> 
+</html>
