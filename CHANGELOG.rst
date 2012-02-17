@@ -1,6 +1,13 @@
 Changelog
 =========
 
+v1.5.5
+------
+
+* Change require -> require_once to avoid errors (GH-34)
+* Don't require files to share the same name as the test classes (GH-33)
+* Fix output buffering (GH-23)
+
 v1.5.4
 ------
 
@@ -42,7 +49,7 @@ v1.4
 ----
 
 * Overhaul the UI
-* Fix issues with namespaced tests 
+* Fix issues with namespaced tests
 * Implement a better check for archived files
 
 
