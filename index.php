@@ -110,6 +110,7 @@
         $config = array(
             'database' => DATABASE_NAME,
             'host'     => DATABASE_HOST,
+            'port'     => DATABASE_PORT,
             'username' => DATABASE_USER,
             'password' => DATABASE_PASS
         );
@@ -152,6 +153,7 @@
         $config = array(
             'database' => DATABASE_NAME,
             'host'     => DATABASE_HOST,
+            'port'     => DATABASE_PORT,
             'username' => DATABASE_USER,
             'password' => DATABASE_PASS
         );
