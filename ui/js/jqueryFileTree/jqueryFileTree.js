@@ -67,7 +67,7 @@ if(jQuery) (function($){
                 function bindTree(t) {
                     $(t).find('LI A').bind(o.folderEvent, function(e) {
                         if( $(this).parent().hasClass('directory') ) {
-                            if ( e.ctrlKey ) {
+                            if ( e.metaKey ) {
                                 $(this).parent().toggleClass('selected_file');
                                 h($(this).attr('rel'));
                             }
