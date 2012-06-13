@@ -24,7 +24,11 @@ class Home extends \app\core\Controller {
         $suites = $results['suites'];
         $stats = $results['stats'];
 
-        return compact('suites', 'stats');
+        $test_directory = str_replace(
+            '\\', '/', realpath(\app\lib\Library::retrieve('test_directory'))
+        );
+
+        return compact('suites', 'stats', 'test_directory');
     }
 
 }

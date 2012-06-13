@@ -53,31 +53,7 @@
               <li class='nav-header'>Files</li>
 
               <li>
-                <div style='height: 330px; overflow: scroll;'>
-
-                  <ul class='nav' style='list-style: none;'>
-                    <li>
-                      <a href='#'>
-                        <i class='icon-file'></i>
-                        List View
-                      </a>
-                    </li>
-                    <li class='active'>
-                      <a href='#'>
-                        <i class='icon-folder-open'></i>
-                        Gallery View
-                        <ul style='list-style: none;'>
-                          <li class='active'>
-                            <a href='#'>
-                              <i class='icon-folder-close'></i>
-                              List View
-                            </a>
-                          </li>
-                        </ul>
-                      </a>
-                    </li>
-                  </ul>
-
+                <div class='file-selector'>
                 </div>
               </li>
 
@@ -215,26 +191,17 @@
     </div>
 
     <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
-    <script type="text/html" id='usageList'>
-      <div id="file_tree" class="">
-        <ul class="jqueryFileTree" style="">
-          <li class="directory collapsed">
-            <a href="#" rel="/srv/http/pu/tests/sample_dir/">sample_dir</a>
-            <ul class="jqueryFileTree" style="">
-              <li class="file ext_php selected_file"><a href="#" rel="/srv/http/pu/tests/DateTest.php">DateTest.php</a></li>
-              <li class="file ext_php selected_file"><a href="#" rel="/srv/http/pu/tests/IncompleteTest.php">IncompleteTest.php</a></li>
-            </ul>
-          </li>
-          <li class="file ext_php selected_file"><a href="#" rel="/srv/http/pu/tests/DateTest.php">DateTest.php</a></li>
-          <li class="file ext_php selected_file"><a href="#" rel="/srv/http/pu/tests/IncompleteTest.php">IncompleteTest.php</a></li>
-          <li class="file ext_php selected_file"><a href="#" rel="/srv/http/pu/tests/PUTest.php">PUTest.php</a></li>
-          <li class="file ext_php"><a href="#" rel="/srv/http/pu/tests/PUTest2.php">PUTest2.php</a></li>
-          <li class="file ext_php"><a href="#" rel="/srv/http/pu/tests/SkippedTest.php">SkippedTest.php</a></li>
-        </ul>
-      </div>
-    </script>
+    <script src='/js/jqueryFileSelector.js'></script>
     <script>
       $(document).ready(function() {
+        $('.file-selector').fileSelector({
+          callback: function(file) {
+            console.log(file);
+          },
+          root: '<?=$test_directory;?>',
+          serverEndpoint: '/file-list'
+        });
+
 
       });
     </script>

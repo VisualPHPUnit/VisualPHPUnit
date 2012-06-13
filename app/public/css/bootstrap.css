@@ -4964,3 +4964,17 @@ a.badge:hover {
 .invisible {
   visibility: hidden;
 }
+
+.file-selector {
+  height: 330px;
+  overflow: scroll;
+}
+
+.file-selector ul {
+  list-style: none;
+}
+
+.directory,
+.file {
+  width: 125%;
+}

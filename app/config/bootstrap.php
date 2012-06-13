@@ -1,8 +1,12 @@
 <?php
 
 $config = array(
-    'pear_path' => '/usr/share/pear',
-    'db'        => array(
+    // Required
+    'pear_path'      => '/usr/share/pear',
+    'test_directory' => '/srv/http/pu/',
+
+    // Optional
+    'db'             => array(
         'plugin'   => '\app\lib\PDO_MySQL',
         'database' => 'vpu',
         'host'     => 'localhost',
@@ -28,6 +32,6 @@ spl_autoload_register(function($class) {
     require $file;
 });
 
-\app\lib\Connections::add_db($config['db']);
+\app\lib\Library::store($config);
 
 ?>

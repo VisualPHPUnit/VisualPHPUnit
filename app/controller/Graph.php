@@ -26,7 +26,7 @@ class Graph extends \app\core\Controller {
             );
         }
 
-        $db_options = \app\lib\Connections::get_db();
+        $db_options = \app\lib\Library::retrieve('db');
         $db = new $db_options['plugin']();
         $db->connect($db_options);
 
