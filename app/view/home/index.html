@@ -48,13 +48,12 @@
       <div class='row'>
 
         <div class='span3'>
-          <div class='well' style='padding: 8px 0;'>
+          <form action='/' method='post' class='well' style='padding: 8px 0;'>
             <ul class="nav nav-list">
               <li class='nav-header'>Files</li>
 
               <li>
-                <div class='file-selector'>
-                </div>
+                <div class='file-selector'></div>
               </li>
 
               <li>
@@ -69,140 +68,197 @@
 
               <li class='nav-header'>Options</li>
               <li>
-                <i class='icon-pencil'></i>
-                Store Statistics
+                <span class='options-description'>
+                  <i class='icon-pencil'></i>
+                  Store Statistics
+                </span>
+                <select name='store_statistics' class='test-options'>
+                  <option value='0'>No</option>
+                  <option value='1'>Yes</option>
+                </select>
               </li>
               <li>
-                <i class='icon-camera'></i>
-                Create Snapshots
+                <span class='options-description'>
+                  <i class='icon-camera'></i>
+                  Create Snapshots
+                </span>
+                <select name='create_snapshots' class='test-options'>
+                  <option value='0'>No</option>
+                  <option value='1'>Yes</option>
+                </select>
               </li>
               <li>
-                <i class='icon-exclamation-sign'></i>
-                Sandbox Errors
+                <span class='options-description'>
+                  <i class='icon-exclamation-sign'></i>
+                  Sandbox Errors
+                </span>
+                <select name='sandbox_errors' class='test-options'>
+                  <option value='0'>No</option>
+                  <option value='1'>Yes</option>
+                </select>
               </li>
 
               <li class='divider'></li>
 
               <li style='text-align: center;'>
-                <button type="submit" class="btn btn-primary">Run Tests</button>
+                <input type='hidden' name='test_files' id='test-files' />
+                <button type="submit" id='run-tests' class="btn btn-primary">Run Tests</button>
               </li>
 
             </ul>
-          </div>
+          </form>
         </div>
 
-        <div class='span9'>
-            <div class='row'>
-                <div class='span9'>
-                  <?php foreach ( $suites as $key => $suite ): ?>
-
-                    <h3><?=$suite['name'];?></h3>
-                    <div style='margin-bottom: 10px;'>
-                      <span class="label label-<?=$suite['status'];?>"><?=ucfirst($suite['status']);?></span>
-                    </div>
-
-                    <?php foreach ( $suite['tests'] as $test ): ?>
-                      <div class="alert alert-block alert-<?=$test['status'];?>">
-                        <h4 class="alert-heading"><?=$test['name'];?></h4>
-                        <?php if ( $test['message']): ?>
-                        <p style='margin-top: 10px;'>
-                          <strong><?=$test['message'];?></strong>
-                        </p>
-                        <?php endif; ?>
-                        <ul class='nav'>
-                          <li style='margin-top: 5px;'>
-                            <em>Execution time:</em>
-                            <?=$test['time'];?>s
-                          </li>
-                          <?php if ( $test['output']): ?>
-                            <li style='margin-top: 5px;'>
-                              <em>Debug Output:</em>
-                              <pre><?=$test['output'];?></pre>
-                            </li>
-                          <?php endif; ?>
-                          <?php if ( $test['trace']): ?>
-                            <li style='margin-top: 5px;'>
-                              <em>Stack Trace:</em>
-                              <pre><?=$test['trace'];?></pre>
-                            </li>
-                          <?php endif; ?>
-                        </ul>
-                      </div>
-                    <?php endforeach; ?>
-
-                  <?php endforeach; ?>
-                </div>
-            </div>
-
-            <div class='row'>
-                <div class='span4'>
-                    <h3>Suite Statistics</h3>
-
-                    <h4>Failed (<?=$stats['suites']['failed'];?>/<?=$stats['suites']['total'];?>)</h4>
-                    <div class="progress progress-danger" style="margin-bottom: 9px;">
-                      <div class="bar" style="width: <?=$stats['suites']['percent_failed'];?>%"></div>
-                    </div>
-
-                    <h4>Incomplete (<?=$stats['suites']['incomplete'];?>/<?=$stats['suites']['total'];?>)</h4>
-                    <div class="progress progress-warning" style="margin-bottom: 9px;">
-                      <div class="bar" style="width: <?=$stats['suites']['percent_incomplete'];?>%"></div>
-                    </div>
-
-                    <h4>Skipped (<?=$stats['suites']['skipped'];?>/<?=$stats['suites']['total'];?>)</h4>
-                    <div class="progress progress-info" style="margin-bottom: 9px;">
-                      <div class="bar" style="width: <?=$stats['suites']['percent_skipped'];?>%"></div>
-                    </div>
-
-                    <h4>Succeeded (<?=$stats['suites']['succeeded'];?>/<?=$stats['suites']['total'];?>)</h4>
-                    <div class="progress progress-success" style="margin-bottom: 9px;">
-                      <div class="bar" style="width: <?=$stats['suites']['percent_succeeded'];?>%"></div>
-                    </div>
-                </div>
-
-                <div class='span4 offset1'>
-                    <h3>Test Statistics</h3>
-
-                    <h4>Failed (<?=$stats['tests']['failed'];?>/<?=$stats['tests']['total'];?>)</h4>
-                    <div class="progress progress-danger" style="margin-bottom: 9px;">
-                      <div class="bar" style="width: <?=$stats['tests']['percent_failed'];?>%"></div>
-                    </div>
-
-                    <h4>Incomplete (<?=$stats['tests']['incomplete'];?>/<?=$stats['tests']['total'];?>)</h4>
-                    <div class="progress progress-warning" style="margin-bottom: 9px;">
-                      <div class="bar" style="width: <?=$stats['tests']['percent_incomplete'];?>%"></div>
-                    </div>
-
-                    <h4>Skipped (<?=$stats['tests']['skipped'];?>/<?=$stats['tests']['total'];?>)</h4>
-                    <div class="progress progress-info" style="margin-bottom: 9px;">
-                      <div class="bar" style="width: <?=$stats['tests']['percent_skipped'];?>%"></div>
-                    </div>
-
-                    <h4>Succeeded (<?=$stats['tests']['succeeded'];?>/<?=$stats['tests']['total'];?>)</h4>
-                    <div class="progress progress-success" style="margin-bottom: 9px;">
-                      <div class="bar" style="width: <?=$stats['tests']['percent_succeeded'];?>%"></div>
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
+        <div id='test-output' class='span9'></div>
       </div>
 
     </div>
 
     <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js'></script>
     <script src='/js/jqueryFileSelector.js'></script>
+    <script src='/js/bootstrap-alert.js'></script>
+
+    <script type='text/html' id='test-results'>
+      <% _.each(notifications, function(notification, notificationKey, notificationList) { %>
+        <div class="alert alert-block alert-<%= notification.type %>">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          <p style='margin-top: 10px;'><%= notification.message %></p>
+        </div>
+      <% }) %>
+
+      <% _.each(suites, function(suite, suiteKey, suiteList) { %>
+        <% var statusCap = suite.status.charAt(0).toUpperCase() + suite.status.slice(1); %>
+        <h3><%= suite.name %></h3>
+        <div style='margin-bottom: 10px;'>
+          <span class="label label-<%= suite.status %>"><%= statusCap %></span>
+        </div>
+
+
+        <% _.each(suite.tests, function(test, testKey, testList) { %>
+          <div class="alert alert-block alert-<%= test.status %>">
+            <h4 class="alert-heading"><%= test.name %></h4>
+            <% if ( test.message) { %>
+            <p style='margin-top: 10px;'>
+              <strong><%= test.message %></strong>
+            </p>
+            <% } %>
+            <ul class='nav'>
+              <li style='margin-top: 5px;'>
+                <em>Execution time:</em>
+                <%= test.time %>s
+              </li>
+              <% if ( test.output ) { %>
+              <li style='margin-top: 5px;'>
+                <em>Debug Output:</em>
+                <pre><%= test.output %></pre>
+              </li>
+              <% } %>
+              <% if ( test.trace ) { %>
+              <li style='margin-top: 5px;'>
+                <em>Stack Trace:</em>
+                <pre><%= test.trace %></pre>
+              </li>
+              <% } %>
+            </ul>
+          </div>
+
+        <% }) %>
+
+      <% }) %>
+
+      <div class='row'>
+        <div class='span4'>
+          <h3>Suite Statistics</h3>
+
+          <h4>Failed (<%= stats.suites.failed %>/<%= stats.suites.total %>)</h4>
+          <div class="progress progress-danger" style="margin-bottom: 9px;">
+            <div class="bar" style="width: <%= stats.suites.percentFailed %>%"></div>
+          </div>
+
+          <h4>Incomplete (<%= stats.suites.incomplete %>/<%= stats.suites.total %>)</h4>
+          <div class="progress progress-warning" style="margin-bottom: 9px;">
+            <div class="bar" style="width: <%= stats.suites.percentIncomplete %>%"></div>
+          </div>
+
+          <h4>Skipped (<%= stats.suites.skipped %>/<%= stats.suites.total %>)</h4>
+          <div class="progress progress-info" style="margin-bottom: 9px;">
+            <div class="bar" style="width: <%= stats.suites.percentSkipped %>%"></div>
+          </div>
+
+          <h4>Succeeded (<%= stats.suites.succeeded %>/<%= stats.suites.total %>)</h4>
+          <div class="progress progress-success" style="margin-bottom: 9px;">
+            <div class="bar" style="width: <%= stats.suites.percentSucceeded %>%"></div>
+          </div>
+        </div>
+
+        <div class='span4 offset1'>
+          <h3>Test Statistics</h3>
+
+          <h4>Failed (<%= stats.tests.failed %>/<%= stats.tests.total %>)</h4>
+          <div class="progress progress-danger" style="margin-bottom: 9px;">
+            <div class="bar" style="width: <%= stats.tests.percentFailed %>%"></div>
+          </div>
+
+          <h4>Incomplete (<%= stats.tests.incomplete %>/<%= stats.tests.total %>)</h4>
+          <div class="progress progress-warning" style="margin-bottom: 9px;">
+            <div class="bar" style="width: <%= stats.tests.percentIncomplete %>%"></div>
+          </div>
+
+          <h4>Skipped (<%= stats.tests.skipped %>/<%= stats.tests.total %>)</h4>
+          <div class="progress progress-info" style="margin-bottom: 9px;">
+            <div class="bar" style="width: <%= stats.tests.percentSkipped %>%"></div>
+          </div>
+
+          <h4>Succeeded (<%= stats.tests.succeeded %>/<%= stats.tests.total %>)</h4>
+          <div class="progress progress-success" style="margin-bottom: 9px;">
+            <div class="bar" style="width: <%= stats.tests.percentSucceeded %>%"></div>
+          </div>
+        </div>
+      </div>
+    </script>
+
     <script>
       $(document).ready(function() {
+
+        $('#run-tests').click(function(event) {
+          var $form = $(this).closest('form'),
+              $output = $('#test-output');
+
+          event.preventDefault();
+
+          $output.fadeOut(300, function() {
+            $output.html(
+              "<div class='loader'><img src='/img/ajax-loader.gif'></div>"
+            ).fadeIn(300);
+          });
+
+          $.post($form.attr('action'), $form.serialize(), function(response) {
+            var template = $("#test-results").html();
+
+            response = $.parseJSON(response);
+
+            $output.fadeOut(300, function() {
+              $output.html(_.template(template, {
+                notifications: response.notifications,
+                suites: response.suites,
+                stats: response.stats
+              })).fadeIn(300);
+            });
+          });
+        });
+
         $('.file-selector').fileSelector({
-          callback: function(file) {
-            console.log(file);
+          callback: function() {
+            var tests = '';
+            $('.file.active, .directory.active').each(function() {
+              tests += $(this).children('a').attr('rel') + '|';
+            });
+            $('#test-files').val(tests.slice(0, -1));
           },
           root: '<?=$test_directory;?>',
           serverEndpoint: '/file-list'
         });
-
-
       });
     </script>
 

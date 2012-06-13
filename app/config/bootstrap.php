@@ -1,12 +1,16 @@
 <?php
 
+$root = dirname(dirname(__DIR__));
+
 $config = array(
     // Required
     'pear_path'      => '/usr/share/pear',
-    'test_directory' => '/srv/http/pu/',
+    'test_directory' => '/srv/http/pu/app/',
 
     // Optional
-    'db'             => array(
+    'snapshot_directory' => $root . '/app/history/',
+
+    'db' => array(
         'plugin'   => '\app\lib\PDO_MySQL',
         'database' => 'vpu',
         'host'     => 'localhost',
@@ -17,10 +21,9 @@ $config = array(
 );
 
 
-$root = PATH_SEPARATOR . dirname(dirname(__DIR__));
 set_include_path(
     get_include_path()
-    . $root
+    . PATH_SEPARATOR . $root
     . PATH_SEPARATOR . $config['pear_path']
 );
 

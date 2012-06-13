@@ -1,0 +1,88 @@
+            <?php foreach ( $suites as $key => $suite ): ?>
+
+                <h3><?=$suite['name'];?></h3>
+                <div style='margin-bottom: 10px;'>
+                    <span class="label label-<?=$suite['status'];?>"><?=ucfirst($suite['status']);?></span>
+                </div>
+
+                <?php foreach ( $suite['tests'] as $test ): ?>
+                <div class="alert alert-block alert-<?=$test['status'];?>">
+                    <h4 class="alert-heading"><?=$test['name'];?></h4>
+                    <?php if ( $test['message']): ?>
+                    <p style='margin-top: 10px;'>
+                        <strong><?=$test['message'];?></strong>
+                    </p>
+                    <?php endif; ?>
+                    <ul class='nav'>
+                        <li style='margin-top: 5px;'>
+                        <em>Execution time:</em>
+                        <?=$test['time'];?>s
+                        </li>
+                        <?php if ( $test['output']): ?>
+                        <li style='margin-top: 5px;'>
+                            <em>Debug Output:</em>
+                            <pre><?=$test['output'];?></pre>
+                        </li>
+                        <?php endif; ?>
+                        <?php if ( $test['trace']): ?>
+                        <li style='margin-top: 5px;'>
+                            <em>Stack Trace:</em>
+                            <pre><?=$test['trace'];?></pre>
+                        </li>
+                        <?php endif; ?>
+                    </ul>
+                </div>
+                <?php endforeach; ?>
+
+            <?php endforeach; ?>
+
+            <div class='row'>
+                <div class='span4'>
+                    <h3>Suite Statistics</h3>
+
+                    <h4>Failed (<?=$stats['suites']['failed'];?>/<?=$stats['suites']['total'];?>)</h4>
+                    <div class="progress progress-danger" style="margin-bottom: 9px;">
+                      <div class="bar" style="width: <?=$stats['suites']['percent_failed'];?>%"></div>
+                    </div>
+
+                    <h4>Incomplete (<?=$stats['suites']['incomplete'];?>/<?=$stats['suites']['total'];?>)</h4>
+                    <div class="progress progress-warning" style="margin-bottom: 9px;">
+                      <div class="bar" style="width: <?=$stats['suites']['percent_incomplete'];?>%"></div>
+                    </div>
+
+                    <h4>Skipped (<?=$stats['suites']['skipped'];?>/<?=$stats['suites']['total'];?>)</h4>
+                    <div class="progress progress-info" style="margin-bottom: 9px;">
+                      <div class="bar" style="width: <?=$stats['suites']['percent_skipped'];?>%"></div>
+                    </div>
+
+                    <h4>Succeeded (<?=$stats['suites']['succeeded'];?>/<?=$stats['suites']['total'];?>)</h4>
+                    <div class="progress progress-success" style="margin-bottom: 9px;">
+                      <div class="bar" style="width: <?=$stats['suites']['percent_succeeded'];?>%"></div>
+                    </div>
+                </div>
+
+                <div class='span4 offset1'>
+                    <h3>Test Statistics</h3>
+
+                    <h4>Failed (<?=$stats['tests']['failed'];?>/<?=$stats['tests']['total'];?>)</h4>
+                    <div class="progress progress-danger" style="margin-bottom: 9px;">
+                      <div class="bar" style="width: <?=$stats['tests']['percent_failed'];?>%"></div>
+                    </div>
+
+                    <h4>Incomplete (<?=$stats['tests']['incomplete'];?>/<?=$stats['tests']['total'];?>)</h4>
+                    <div class="progress progress-warning" style="margin-bottom: 9px;">
+                      <div class="bar" style="width: <?=$stats['tests']['percent_incomplete'];?>%"></div>
+                    </div>
+
+                    <h4>Skipped (<?=$stats['tests']['skipped'];?>/<?=$stats['tests']['total'];?>)</h4>
+                    <div class="progress progress-info" style="margin-bottom: 9px;">
+                      <div class="bar" style="width: <?=$stats['tests']['percent_skipped'];?>%"></div>
+                    </div>
+
+                    <h4>Succeeded (<?=$stats['tests']['succeeded'];?>/<?=$stats['tests']['total'];?>)</h4>
+                    <div class="progress progress-success" style="margin-bottom: 9px;">
+                      <div class="bar" style="width: <?=$stats['tests']['percent_succeeded'];?>%"></div>
+                    </div>
+
+                </div>
+            </div>

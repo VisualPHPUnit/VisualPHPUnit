@@ -29,10 +29,10 @@ class VPU {
                 }
                 // Avoid divide by zero error
                 if ( $stats['total'] ) {
-                    $results[$name]['percent_' . $key] =
+                    $results[$name]['percent' . ucfirst($key)] =
                         round($stats[$key] / $stats['total'] * 100, 1);
                 } else {
-                    $results[$name]['percent_' . $key] = 0;
+                    $results[$name]['percent' . ucfirst($key)] = 0;
                 }
             }
         }

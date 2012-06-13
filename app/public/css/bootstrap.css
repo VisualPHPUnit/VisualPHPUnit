@@ -3225,6 +3225,7 @@ input[type="submit"].btn.btn-mini {
   padding-right: 15px;
   padding-left: 15px;
   margin-bottom: 0;
+  margin-left: 0;
 }
 
 .nav-list > li > a,
@@ -4977,4 +4978,20 @@ a.badge:hover {
 .directory,
 .file {
   width: 125%;
+}
+
+.loader {
+  text-align: center;
+  margin-top: 20%;
+}
+
+.test-options {
+  display: inline-block;
+  margin-left: 10px;
+  width: 80px;
+}
+
+.options-description {
+  display: inline-block;
+  width: 140px;
 }
