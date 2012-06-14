@@ -36,7 +36,7 @@
 
             <?php endforeach; ?>
 
-            <div class='row'>
+            <div class='row' style='margin-bottom: 20px;'>
                 <div class='span4'>
                     <h3>Suite Statistics</h3>
 
@@ -86,3 +86,26 @@
 
                 </div>
             </div>
+
+            <?php if ( !empty($errors) ): ?>
+            <h3>Errors</h3>
+            <? endif; ?>
+
+            <?php foreach ( $errors as $error ): ?>
+                <div class="alert alert-block alert-failed">
+                <h4 class="alert-heading"><?=$error['type'];?></h4>
+                <p style='margin-top: 10px;'>
+                    <strong><?=$error['message'];?></strong>
+                </p>
+                <ul class='nav'>
+                    <li style='margin-top: 5px;'>
+                        <em>File:</em>
+                        <?=$error['file'];?>
+                    </li>
+                    <li style='margin-top: 5px;'>
+                        <em>Line:</em>
+                        <?=$error['line'];?>
+                    </li>
+                </ul>
+                </div>
+            <?php endforeach; ?>

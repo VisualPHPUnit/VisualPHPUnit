@@ -57,7 +57,7 @@
               </li>
 
               <li>
-                <p>
+                <p style='margin: 9px 0;'>
                   Tips: You can select multiple files by single-clicking them.
                   You can also use shift+click to select a range of files, or
                   ctrl+click to select an entire directory.
@@ -74,7 +74,7 @@
                 </span>
                 <select name='store_statistics' class='test-options'>
                   <option value='0'>No</option>
-                  <option value='1'>Yes</option>
+                  <option value='1' <?php if ( $store_statistics ) echo "selected='selected'"?>>Yes</option>
                 </select>
               </li>
               <li>
@@ -84,7 +84,7 @@
                 </span>
                 <select name='create_snapshots' class='test-options'>
                   <option value='0'>No</option>
-                  <option value='1'>Yes</option>
+                  <option value='1' <?php if ( $create_snapshots ) echo "selected='selected'"?>>Yes</option>
                 </select>
               </li>
               <li>
@@ -94,7 +94,7 @@
                 </span>
                 <select name='sandbox_errors' class='test-options'>
                   <option value='0'>No</option>
-                  <option value='1'>Yes</option>
+                  <option value='1' <?php if ( $sandbox_errors ) echo "selected='selected'"?>>Yes</option>
                 </select>
               </li>
 
@@ -120,14 +120,15 @@
     <script src='/js/bootstrap-alert.js'></script>
 
     <script type='text/html' id='test-results'>
-      <% _.each(notifications, function(notification, notificationKey, notificationList) { %>
+      <% _.each(notifications, function(notification) { %>
         <div class="alert alert-block alert-<%= notification.type %>">
           <button type="button" class="close" data-dismiss="alert">×</button>
+          <h4 class="alert-heading"><%= notification.title %></h4>
           <p style='margin-top: 10px;'><%= notification.message %></p>
         </div>
       <% }) %>
 
-      <% _.each(suites, function(suite, suiteKey, suiteList) { %>
+      <% _.each(suites, function(suite) { %>
         <% var statusCap = suite.status.charAt(0).toUpperCase() + suite.status.slice(1); %>
         <h3><%= suite.name %></h3>
         <div style='margin-bottom: 10px;'>
@@ -135,7 +136,7 @@
         </div>
 
 
-        <% _.each(suite.tests, function(test, testKey, testList) { %>
+        <% _.each(suite.tests, function(test) { %>
           <div class="alert alert-block alert-<%= test.status %>">
             <h4 class="alert-heading"><%= test.name %></h4>
             <% if ( test.message) { %>
@@ -167,7 +168,7 @@
 
       <% }) %>
 
-      <div class='row'>
+      <div class='row' style='margin-bottom: 20px;'>
         <div class='span4'>
           <h3>Suite Statistics</h3>
 
@@ -216,6 +217,30 @@
           </div>
         </div>
       </div>
+
+      <% if ( errors.length ) { %>
+        <h3>Errors</h3>
+      <% } %>
+
+      <% _.each(errors, function(error) { %>
+        <div class="alert alert-block alert-failed">
+          <h4 class="alert-heading"><%= error.type %></h4>
+          <p style='margin-top: 10px;'>
+            <strong><%= error.message %></strong>
+          </p>
+          <ul class='nav'>
+            <li style='margin-top: 5px;'>
+              <em>File:</em>
+              <%= error.file %>
+            </li>
+            <li style='margin-top: 5px;'>
+              <em>Line:</em>
+              <%= error.line %>
+            </li>
+          </ul>
+        </div>
+      <% }) %>
+
     </script>
 
     <script>
@@ -240,6 +265,7 @@
 
             $output.fadeOut(300, function() {
               $output.html(_.template(template, {
+                errors: response.errors,
                 notifications: response.notifications,
                 suites: response.suites,
                 stats: response.stats

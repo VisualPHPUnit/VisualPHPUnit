@@ -5,12 +5,12 @@ namespace app\lib;
 class VPU {
 
    /**
-    *  The sandboxed exceptions.
+    *  The error messages collected by the custom error handler.
     *
-    *  @var string
+    *  @var array
     *  @access protected
     */
-    protected $_exceptions = '';
+    protected $_errors = array();
 
    /**
     * Adds percentage statistics to the provided statistics.
@@ -113,32 +113,46 @@ class VPU {
     }
 
    /**
-    *  Creates an HTML snapshot of the test results.
+    * Converts the first nested layer of PHPUnit-generated JSON to an
+    * associative array.
     *
-    *  @param string $data            The data to be written.
-    *  @param string $dir             The directory in which to store the snapshot.
-    *  @access public
-    *  @return void
+    * @param string $str    The JSON output from PHPUnit.
+    * @access protected
+    * @return array
     */
-    public function create_snapshot($data, $dir) {
-        if ( $dir{strlen($dir) - 1} !== '/' ) {
-            $dir .= '/';
-        }
-        $filename = $dir . date('Y-m-d_G-i') . '.html';
-        $this->_write_file($filename, $data);
-        // TODO: Add a try/catch for this
-        chmod($filename, 0777);
-    }
+    protected function _convert_json($str) {
+        $tags = array();
+        $nest = 0;
+        $start_mark = 0;
 
-   /**
-    *  Erases the contents of a file.
-    *
-    *  @param string $filename        The file to be emptied.
-    *  @access protected
-    *  @return void
-    */
-    protected function _empty_file($filename) {
-        $this->_write_file($filename, '', 'w');
+        $length = strlen($str);
+        for ( $i = 0; $i < $length; $i++ ) {
+            $char = $str{$i};
+
+            if ( $char == '{' ) {
+                // Ensure we're only adding events to the array
+                if (
+                    $nest == 0 && substr($str, $i, 18) != '{&quot;event&quot;'
+                ) {
+                    continue;
+                }
+
+                $nest++;
+                if ( $nest == 1 ) {
+                    $start_mark = $i;
+                }
+            } elseif ( $char == '}' && $nest > 0 ) {
+                if ( $nest == 1 ) {
+                    $tags[] = substr(
+                        $str, $start_mark + 1, $i - $start_mark - 1
+                    );
+                    $start_mark = $i;
+                }
+                $nest--;
+            }
+        }
+
+        return $tags;
     }
 
    /**
@@ -173,16 +187,13 @@ class VPU {
     }
 
    /**
-    *  Retrieves all of the formatted errors.
+    *  Returns the errors collected by the custom error handler.
     *
-    *  @access protected
-    *  @return string
+    *  @access public
+    *  @return array
     */
-    protected function _get_errors() {
-        global $sandbox_filename;
-        $errors = file_get_contents($sandbox_filename);
-        $this->_empty_file($sandbox_filename);
-        return $errors;
+    public function get_errors() {
+        return $this->_errors;
     }
 
    /**
@@ -259,77 +270,54 @@ class VPU {
     }
 
    /**
-    *  Serves as the error handler.  Formats the errors, and then writes them to the sandbox file.
+    *  Serves as the error handler.
     *
-    *  @param int $err_no            The level of the error raised.
-    *  @param string $err_str        The error message.
-    *  @param string $err_file       The file in which the error was raised.
-    *  @param int $err_line          The line number at which the error was raised.
+    *  @param int $number        The level of the error raised.
+    *  @param string $message    The error message.
+    *  @param string $file       The file in which the error was raised.
+    *  @param int $line          The line number at which the error was raised.
     *  @access public
     *  @return bool
     */
-    public function handle_errors($err_no, $err_str, $err_file, $err_line) {
-        global $sandbox_ignore, $sandbox_filename;
-
-        if ( $sandbox_ignore != '' ) {
-            $ignore = explode('|', $sandbox_ignore);
-            $transform_to_constant = function($value) { return constant($value); };
-            $ignore = array_map($transform_to_constant, $ignore);
-            if ( in_array($err_no, $ignore) ) {
-                return true;
-            }
+    public function handle_errors($number, $message, $file, $line) {
+        if ( $number > error_reporting() ) {
+            return true;
         }
 
-        $error = array();
-        switch ( $err_no ) {
-            case E_NOTICE:
-                $error['type'] = 'Notice';
-                break;
+        switch ( $number ) {
             case E_WARNING:
-                $error['type'] = 'Warning';
+                $type = 'E_WARNING';
                 break;
-            case E_ERROR:
-                $error['type'] = 'Error';
+            case E_NOTICE:
+                $type = 'E_NOTICE';
                 break;
-            case E_PARSE:
-                $error['type'] = 'Parse';
+            case E_USER_ERROR:
+                $type = 'E_USER_ERROR';
+                break;
+            case E_USER_WARNING:
+                $type = 'E_USER_WARNING';
+                break;
+            case E_USER_NOTICE:
+                $type = 'E_USER_NOTICE';
                 break;
             case E_STRICT:
-                $error['type'] = 'Strict';
+                $type = 'E_STRICT';
+                break;
+            case E_RECOVERABLE_ERROR:
+                $type = 'E_RECOVERABLE_ERROR';
+                break;
+            case E_DEPRECATED:
+                $type = 'E_DEPRECATED';
+                break;
+            case E_USER_DEPRECATED:
+                $type = 'E_USER_DEPRECATED';
                 break;
             default:
-                $error['type'] = 'Unknown';
+                $type = 'Unknown';
                 break;
         }
-        $error['message'] = $err_str;
-        $error['line'] = $err_line;
-        $error['file'] = $err_file;
-        ob_start();
-        include 'ui/error.html';
-        $this->_write_file($sandbox_filename, ob_get_contents());
-        ob_end_clean();
+        $this->_errors[] = compact('type', 'message', 'file', 'line');
         return true;
-    }
-
-   /**
-    *  Formats exceptions for sandbox use.
-    *
-    *  @param Exception $exception            The thrown exception.
-    *  @access protected
-    *  @return void
-    */
-    protected function _handle_exception($exception) {
-        $error = array(
-            'type'    => 'Exception',
-            'message' => $exception->getMessage(),
-            'line'    => $exception->getLine(),
-            'file'    => $exception->getFile()
-        );
-
-        ob_start();
-        include 'ui/error.html';
-        $this->_exceptions .= ob_get_contents();
-        ob_end_clean();
     }
 
    /**
@@ -403,49 +391,6 @@ class VPU {
     }
 
    /**
-    * Converts the first nested layer of PHPUnit-generated JSON to an
-    * associative array.
-    *
-    * @param string $str    The JSON output from PHPUnit.
-    * @access protected
-    * @return array
-    */
-    protected function _convert_json($str) {
-        $tags = array();
-        $nest = 0;
-        $start_mark = 0;
-
-        $length = strlen($str);
-        for ( $i = 0; $i < $length; $i++ ) {
-            $char = $str{$i};
-
-            if ( $char == '{' ) {
-                // Ensure we're only adding events to the array
-                if (
-                    $nest == 0 && substr($str, $i, 18) != '{&quot;event&quot;'
-                ) {
-                    continue;
-                }
-
-                $nest++;
-                if ( $nest == 1 ) {
-                    $start_mark = $i;
-                }
-            } elseif ( $char == '}' && $nest > 0 ) {
-                if ( $nest == 1 ) {
-                    $tags[] = substr(
-                        $str, $start_mark + 1, $i - $start_mark - 1
-                    );
-                    $start_mark = $i;
-                }
-                $nest--;
-            }
-        }
-
-        return $tags;
-    }
-
-   /**
     * Runs supplied tests through PHPUnit.
     *
     * @param array $tests    The directories/filenames containing the tests
@@ -491,76 +436,6 @@ class VPU {
         ini_set('html_errors', $html_errors);
 
         return $results;
-    }
-
-   /**
-    *  Saves the statistics to a database.
-    *
-    *  @param string $results     The JSON output from PHPUnit.
-    *  @param object $db          The database handler.
-    *  @access public
-    *  @return bool
-    */
-    public function save_results($results, $db) {
-        $results = $this->_compile_suites($results);
-        $now = date('Y-m-d H:i:s');
-        foreach ( $results['stats'] as $key => $result ) {
-            $data = array(
-                'run_date'   => $now,
-                'failed'     => $result['failed'],
-                'incomplete' => $result['incomplete'],
-                'skipped'    => $result['skipped'],
-                'succeeded'  => $result['succeeded']
-            );
-            $table = ucfirst(rtrim($key, 's')) . 'Result';
-            $db->insert($table, $data);
-        }
-        return true;
-    }
-
-   /**
-    * Outputs suite and statistics data in HTML.
-    *
-    * @param string $results         The JSON output from PHPUnit.
-    * @param bool $sandbox_errors    Whether or not to sandbox errors.
-    * @access public
-    * @return string
-    */
-    public function to_HTML($results, $sandbox_errors) {
-        $collection = $this->_compile_suites($results);
-        $final = '';
-        $final .= $this->_build_stats($collection['stats']);
-
-        if ( $sandbox_errors ) {
-            $final .= $this->_exceptions . $this->_get_errors();
-        }
-
-        return $final;
-    }
-
-   /**
-    *  Writes data to a file.
-    *
-    *  @param string $filename        The name of the file.
-    *  @param string $data            The data to be written.
-    *  @param string $mode            The type of access to be granted to the file handle.
-    *  @access protected
-    *  @return string
-    */
-    protected function _write_file($filename, $data, $mode='a') {
-        try {
-            $handle = @fopen($filename, $mode);
-            if ( !$handle ) {
-                throw new \Exception('Could not open ' . $filename . ' for writing.  Check the location and permissions of the file and try again.');
-            }
-
-            fwrite($handle, $data);
-            fclose($handle);
-            return true;
-        } catch (Exception $e) {
-            $this->_handle_exception($e);
-            return false;
-        }
     }
 
 }

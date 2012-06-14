@@ -4,63 +4,124 @@ namespace app\controller;
 
 class Home extends \app\core\Controller {
 
+    protected function _create_snapshot($view_data) {
+        $filename = realpath(
+            \app\lib\Library::retrieve('snapshot_directory')
+        ) . '/' . date('Y-m-d_G-i') . '.html';
+
+        $contents = $this->render_html('index', $view_data);
+
+        $handle = @fopen($filename, 'a');
+        if ( !$handle ) {
+            return array(
+                'type'    => 'failed',
+                'title'   => 'Error Creating Snapshot',
+                'message' => 'Could not create a snapshot.  Please ensure '
+                    . 'that the <code>snapshot_directory</code> in '
+                    . '<code>app/config/bootstrap.php</code> exists and '
+                    . 'has the proper permissions.'
+            );
+        }
+
+        fwrite($handle, $contents);
+        fclose($handle);
+        return array(
+            'type'    => 'succeeded',
+            'title'   => 'Snapshot Created',
+            'message' => 'Snapshot can be found at <code>' . $filename
+                . '</code>.'
+        );
+    }
+
     // GET
     public function index($request) {
-        $test_directory = str_replace(
-            '\\', '/', realpath(\app\lib\Library::retrieve('test_directory'))
-        );
-
         if ( $request->is('get') ) {
+            $test_directory = str_replace(
+                '\\', '/', realpath(\app\lib\Library::retrieve('test_directory'))
+            );
             $suites = array();
             $stats = array();
+            $store_statistics = \app\lib\Library::retrieve('store_statistics');
+            $create_snapshots = \app\lib\Library::retrieve('create_snapshots');
+            $sandbox_errors = \app\lib\Library::retrieve('sandbox_errors');
             return compact(
+                'create_snapshots',
+                'sandbox_errors',
                 'stats',
+                'store_statistics',
                 'suites',
                 'test_directory'
             );
         }
 
         $tests = explode('|', $request->data['test_files']);
-
         $vpu = new \app\lib\VPU();
+
+        if ( $request->data['sandbox_errors'] ) {
+            error_reporting(\app\lib\Library::retrieve('error_reporting'));
+            set_error_handler(array($vpu, 'handle_errors'));
+        }
+
         $results = $vpu->run($tests);
         $results = $vpu->compile_suites($results);
+
+        if ( $request->data['sandbox_errors'] ) {
+            restore_error_handler();
+        }
+
         $suites = $results['suites'];
         $stats = $results['stats'];
-
-        $to_view = compact('suites', 'stats');
+        $errors = $vpu->get_errors();
+        $to_view = compact('suites', 'stats', 'errors');
 
         $notifications = array();
-
         if ( $request->data['create_snapshots'] ) {
-            $filename = realpath(
-                \app\lib\Library::retrieve('snapshot_directory')
-            ) . '/' . date('Y-m-d_G-i') . '.html';
-
-            $contents = $this->render_html('index', $to_view);
-
-            $handle = @fopen($filename, 'a');
-            if ( !$handle ) {
-                $notifications[] = array(
-                    'type'    => 'failed',
-                    'message' => 'Could not create a snapshot.  Please ensure '
-                        . 'that the <code>snapshot_directory</code> in '
-                        . '<code>app/config/bootstrap.php</code> exists and '
-                        . 'has the proper permissions.'
-                );
-            } else {
-                fwrite($handle, $contents);
-                fclose($handle);
-                $notifications[] = array(
-                    'type'    => 'succeeded',
-                    'message' => 'Snapshot created at <code>' . $filename
-                        . '</code>.'
-                );
-
-            }
+            $notifications[] = $this->_create_snapshot($to_view);
+        }
+        if ( $request->data['store_statistics'] ) {
+            $notifications[] = $this->_store_statistics($stats);
         }
 
         return $to_view + compact('notifications');
+    }
+
+    protected function _store_statistics($stats) {
+        $db_options = \app\lib\Library::retrieve('db');
+        $db = new $db_options['plugin']();
+        if ( !$db->connect($db_options) ) {
+            return array(
+                'type'    => 'failed',
+                'title'   => 'Error Connecting to Database',
+                'message' => implode(' ', $db->get_errors())
+            );
+        }
+
+        $now = date('Y-m-d H:i:s');
+        foreach ( $stats as $key => $stat ) {
+            $data = array(
+                'run_date'   => $now,
+                'failed'     => $stat['failed'],
+                'incomplete' => $stat['incomplete'],
+                'skipped'    => $stat['skipped'],
+                'succeeded'  => $stat['succeeded']
+            );
+            $table = ucfirst(rtrim($key, 's')) . 'Result';
+            if ( !$db->insert($table, $data) ) {
+                return array(
+                    'type'    => 'failed',
+                    'title'   => 'Error Inserting Record',
+                    'message' => implode(' ', $db->get_errors())
+                );
+            }
+        }
+
+        return array(
+            'type'    => 'succeeded',
+            'title'   => 'Statistics Stored',
+            'message' => 'The statistics generated during this test run were '
+                . 'successfully stored.'
+        );
+
     }
 
 }
