@@ -21,6 +21,11 @@ class Routes {
                 return $controller->call('index', $request);
             }),
 
+            array('get', '/help', function($request) {
+                $controller = new \app\controller\Home();
+                return $controller->call('help', $request);
+            }),
+
             // 404
             array('get', '*', function($request) {
                 return array(

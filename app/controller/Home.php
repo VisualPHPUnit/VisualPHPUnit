@@ -34,6 +34,11 @@ class Home extends \app\core\Controller {
     }
 
     // GET
+    public function help($request) {
+        return array();
+    }
+
+    // GET/POST
     public function index($request) {
         if ( $request->is('get') ) {
             $test_directory = str_replace(
