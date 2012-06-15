@@ -1,5 +1,6 @@
             <?php foreach ( $suites as $key => $suite ): ?>
 
+            <div class='suite' data-suite-status='<?= $suite["status"]; ?>' data-suite-time='<?= $suite["time"]; ?>'>
                 <h3><?=$suite['name'];?></h3>
                 <div style='margin-bottom: 10px;'>
                     <span class="label label-<?=$suite['status'];?>"><?=ucfirst($suite['status']);?></span>
@@ -33,6 +34,7 @@
                     </ul>
                 </div>
                 <?php endforeach; ?>
+            </div>
 
             <?php endforeach; ?>
 
@@ -42,22 +44,22 @@
 
                     <h4>Failed (<?=$stats['suites']['failed'];?>/<?=$stats['suites']['total'];?>)</h4>
                     <div class="progress progress-danger" style="margin-bottom: 9px;">
-                      <div class="bar" style="width: <?=$stats['suites']['percent_failed'];?>%"></div>
+                      <div class="bar" style="width: <?=$stats['suites']['percentFailed'];?>%"></div>
                     </div>
 
                     <h4>Incomplete (<?=$stats['suites']['incomplete'];?>/<?=$stats['suites']['total'];?>)</h4>
                     <div class="progress progress-warning" style="margin-bottom: 9px;">
-                      <div class="bar" style="width: <?=$stats['suites']['percent_incomplete'];?>%"></div>
+                      <div class="bar" style="width: <?=$stats['suites']['percentIncomplete'];?>%"></div>
                     </div>
 
                     <h4>Skipped (<?=$stats['suites']['skipped'];?>/<?=$stats['suites']['total'];?>)</h4>
                     <div class="progress progress-info" style="margin-bottom: 9px;">
-                      <div class="bar" style="width: <?=$stats['suites']['percent_skipped'];?>%"></div>
+                      <div class="bar" style="width: <?=$stats['suites']['percentSkipped'];?>%"></div>
                     </div>
 
                     <h4>Succeeded (<?=$stats['suites']['succeeded'];?>/<?=$stats['suites']['total'];?>)</h4>
                     <div class="progress progress-success" style="margin-bottom: 9px;">
-                      <div class="bar" style="width: <?=$stats['suites']['percent_succeeded'];?>%"></div>
+                      <div class="bar" style="width: <?=$stats['suites']['percentSucceeded'];?>%"></div>
                     </div>
                 </div>
 
@@ -66,22 +68,22 @@
 
                     <h4>Failed (<?=$stats['tests']['failed'];?>/<?=$stats['tests']['total'];?>)</h4>
                     <div class="progress progress-danger" style="margin-bottom: 9px;">
-                      <div class="bar" style="width: <?=$stats['tests']['percent_failed'];?>%"></div>
+                      <div class="bar" style="width: <?=$stats['tests']['percentFailed'];?>%"></div>
                     </div>
 
                     <h4>Incomplete (<?=$stats['tests']['incomplete'];?>/<?=$stats['tests']['total'];?>)</h4>
                     <div class="progress progress-warning" style="margin-bottom: 9px;">
-                      <div class="bar" style="width: <?=$stats['tests']['percent_incomplete'];?>%"></div>
+                      <div class="bar" style="width: <?=$stats['tests']['percentIncomplete'];?>%"></div>
                     </div>
 
                     <h4>Skipped (<?=$stats['tests']['skipped'];?>/<?=$stats['tests']['total'];?>)</h4>
                     <div class="progress progress-info" style="margin-bottom: 9px;">
-                      <div class="bar" style="width: <?=$stats['tests']['percent_skipped'];?>%"></div>
+                      <div class="bar" style="width: <?=$stats['tests']['percentSkipped'];?>%"></div>
                     </div>
 
                     <h4>Succeeded (<?=$stats['tests']['succeeded'];?>/<?=$stats['tests']['total'];?>)</h4>
                     <div class="progress progress-success" style="margin-bottom: 9px;">
-                      <div class="bar" style="width: <?=$stats['tests']['percent_succeeded'];?>%"></div>
+                      <div class="bar" style="width: <?=$stats['tests']['percentSucceeded'];?>%"></div>
                     </div>
 
                 </div>
@@ -89,10 +91,10 @@
 
             <?php if ( !empty($errors) ): ?>
             <h3>Errors</h3>
-            <? endif; ?>
+            <?php endif; ?>
 
             <?php foreach ( $errors as $error ): ?>
-                <div class="alert alert-block alert-failed">
+            <div class="alert alert-block alert-failed">
                 <h4 class="alert-heading"><?=$error['type'];?></h4>
                 <p style='margin-top: 10px;'>
                     <strong><?=$error['message'];?></strong>
@@ -107,5 +109,5 @@
                         <?=$error['line'];?>
                     </li>
                 </ul>
-                </div>
+            </div>
             <?php endforeach; ?>

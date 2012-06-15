@@ -11,6 +11,11 @@ class Routes {
                 return $controller->call('index', $request);
             }),
 
+            array('get', '/archives', function($request) {
+                $controller = new \app\controller\Archives();
+                return $controller->call('index', $request);
+            }),
+
             array(array('get', 'post'), '/graphs', function($request) {
                 $controller = new \app\controller\Graph();
                 return $controller->call('index', $request);

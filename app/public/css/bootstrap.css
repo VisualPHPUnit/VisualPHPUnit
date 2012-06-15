@@ -602,8 +602,10 @@ em {
 }
 
 abbr[title] {
+  /*
   cursor: help;
   border-bottom: 1px dotted #ddd;
+  */
 }
 
 abbr.initialism {
@@ -4994,4 +4996,19 @@ a.badge:hover {
 .options-description {
   display: inline-block;
   width: 140px;
+}
+
+.display-description {
+  display: inline-block;
+  width: 80px;
+}
+
+.test-display {
+  display: inline-block;
+  width: 150px;
+}
+
+label.checkbox {
+  display: inline-block;
+  margin-right: 5px;
 }

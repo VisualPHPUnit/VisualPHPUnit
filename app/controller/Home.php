@@ -9,7 +9,7 @@ class Home extends \app\core\Controller {
             \app\lib\Library::retrieve('snapshot_directory')
         ) . '/' . date('Y-m-d_G-i') . '.html';
 
-        $contents = $this->render_html('index', $view_data);
+        $contents = $this->render_html('partial/test_results', $view_data);
 
         $handle = @fopen($filename, 'a');
         if ( !$handle ) {

@@ -27,7 +27,7 @@
               var classAttr = ( isActive ) ? ' active' : '';
 
               html += "<li class='" + file.type + classAttr + "'>" +
-                        "<a href='#' rel='" + file.path + "'>" +
+                        "<a href='#' data-path='" + file.path + "'>" +
                           "<i class='" + icon + "'></i>" +
                           file.name +
                         '</a>' +
@@ -61,13 +61,13 @@
               if ( event.metaKey || event.ctrlKey ) {
                 $parent.toggleClass('active');
                 $parent.find('li').toggleClass('active');
-                options.callback($this.attr('rel'));
+                options.callback($this.attr('data-path'));
               } else {
                 if ( $children.hasClass('icon-folder-close') ) {
                   $parent.find('ul').remove();
                   buildTree(
                     $parent,
-                    encodeURIComponent($this.attr('rel')),
+                    encodeURIComponent($this.attr('data-path')),
                     $parent.hasClass('active')
                   );
                   $children.removeClass().addClass('icon-folder-open');
@@ -92,7 +92,7 @@
               }
 
               $parent.toggleClass('active');
-              options.callback($this.attr('rel'));
+              options.callback($this.attr('data-path'));
             }
 
           });

@@ -61,7 +61,10 @@ class Controller {
         if ( $request->is('ajax') ) {
             $this->_response['body'] = $this->render_json($results);
         } else {
-            $this->_response['body'] = $this->render_html($action, $results);
+            $class = explode('\\', get_called_class());
+            $classname = end($class);
+            $file = lcfirst($classname) . "/{$action}";
+            $this->_response['body'] = $this->render_html($file, $results);
         }
 
         return $this->_response;
@@ -93,21 +96,16 @@ class Controller {
     }
 
    /**
-    *  Renders a view located at app/view/web/$controller/$action.html.
+    *  Renders a view.
     *
-    *  @param string $action    The controller action.
+    *  @param string $action    The file to be rendered.
     *  @param array $vars       The variables to be substituted in the view.
     *  @access public
     *  @return string
     */
-    public function render_html($action, $vars = array()) {
+    public function render_html($file, $vars = array()) {
         $view = $this->_config['dependencies']['view'];
         $view = new $view();
-
-        $class = explode('\\', get_called_class());
-        $classname = end($class);
-
-        $file = lcfirst($classname) . "/{$action}";
         return $view->render($file, $vars);
     }
 

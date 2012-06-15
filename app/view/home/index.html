@@ -34,7 +34,7 @@
           <div class="nav-collapse">
             <ul class="nav">
               <li class='active'><a href="/">Home</a></li>
-              <li><a href="/">Archives</a></li>
+              <li><a href="/archives">Archives</a></li>
               <li><a href="/graphs">Graphs</a></li>
               <li><a href="/help">Help</a></li>
             </ul>
@@ -68,34 +68,74 @@
 
               <li class='nav-header'>Options</li>
               <li>
-                <span class='options-description'>
+                <label for='store_statistics' class='options-description'>
                   <i class='icon-pencil'></i>
                   Store Statistics
-                </span>
-                <select name='store_statistics' class='test-options'>
+                </label>
+                <select id='store_statistics' name='store_statistics' class='test-options'>
                   <option value='0'>No</option>
                   <option value='1' <?php if ( $store_statistics ) echo "selected='selected'"?>>Yes</option>
                 </select>
               </li>
               <li>
-                <span class='options-description'>
+                <label for='create_snapshots' class='options-description'>
                   <i class='icon-camera'></i>
                   Create Snapshots
-                </span>
-                <select name='create_snapshots' class='test-options'>
+                </label>
+                <select id='create_snapshots' name='create_snapshots' class='test-options'>
                   <option value='0'>No</option>
                   <option value='1' <?php if ( $create_snapshots ) echo "selected='selected'"?>>Yes</option>
                 </select>
               </li>
               <li>
-                <span class='options-description'>
+                <label for='sandbox_errors' class='options-description'>
                   <i class='icon-exclamation-sign'></i>
                   Sandbox Errors
-                </span>
-                <select name='sandbox_errors' class='test-options'>
+                </label>
+                <select id='sandbox_errors' name='sandbox_errors' class='test-options'>
                   <option value='0'>No</option>
                   <option value='1' <?php if ( $sandbox_errors ) echo "selected='selected'"?>>Yes</option>
                 </select>
+              </li>
+
+              <li class='divider'></li>
+
+
+              <li class='nav-header'>Display</li>
+              <li>
+                <label for='sort' class='display-description'>
+                  <i class='icon-tasks'></i>
+                  Sort
+                </label>
+                <select id='sort' class='test-display'>
+                  <option value='Results (asc)'>Results (asc)</option>
+                  <option value='Results (desc)'>Results (desc)</option>
+                  <option value='Time (asc)'>Time (asc)</option>
+                  <option value='Time (desc)'>Time (desc)</option>
+                </select>
+              </li>
+
+              <li>
+                <span class='display-description'>
+                  <i class='icon-eye-open'></i>
+                  Show
+                </span>
+                <label for='display-failed' class='checkbox'>
+                  <input type='checkbox' id='display-failed' class='display-suite' value='1' checked='checked' data-target='failed' />
+                  <abbr title='Failed'>F</abbr>
+                </label>
+                <label for='display-incomplete' class='checkbox'>
+                  <input type='checkbox' id='display-incomplete' class='display-suite' value='1' checked='checked' data-target='incomplete' />
+                  <abbr title='Incomplete'>I</abbr>
+                </label>
+                <label for='display-skipped' class='checkbox'>
+                  <input type='checkbox' id='display-skipped' class='display-suite' value='1' checked='checked' data-target='skipped' />
+                  <abbr title='Skipped'>Sk</abbr>
+                </label>
+                <label for='display-succeeded' class='checkbox'>
+                  <input type='checkbox' id='display-succeeded' class='display-suite' value='1' checked='checked' data-target='succeeded' />
+                  <abbr title='Succeeded'>Su</abbr>
+                </label>
               </li>
 
               <li class='divider'></li>
@@ -117,6 +157,7 @@
     <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
     <script src='http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js'></script>
     <script src='/js/jqueryFileSelector.js'></script>
+    <script src='/js/jquery.sortElements.js'></script>
     <script src='/js/bootstrap-alert.js'></script>
 
     <script type='text/html' id='test-results'>
@@ -129,42 +170,42 @@
       <% }) %>
 
       <% _.each(suites, function(suite) { %>
-        <% var statusCap = suite.status.charAt(0).toUpperCase() + suite.status.slice(1); %>
-        <h3><%= suite.name %></h3>
-        <div style='margin-bottom: 10px;'>
-          <span class="label label-<%= suite.status %>"><%= statusCap %></span>
-        </div>
-
-
-        <% _.each(suite.tests, function(test) { %>
-          <div class="alert alert-block alert-<%= test.status %>">
-            <h4 class="alert-heading"><%= test.name %></h4>
-            <% if ( test.message) { %>
-            <p style='margin-top: 10px;'>
-              <strong><%= test.message %></strong>
-            </p>
-            <% } %>
-            <ul class='nav'>
-              <li style='margin-top: 5px;'>
-                <em>Execution time:</em>
-                <%= test.time %>s
-              </li>
-              <% if ( test.output ) { %>
-              <li style='margin-top: 5px;'>
-                <em>Debug Output:</em>
-                <pre><%= test.output %></pre>
-              </li>
-              <% } %>
-              <% if ( test.trace ) { %>
-              <li style='margin-top: 5px;'>
-                <em>Stack Trace:</em>
-                <pre><%= test.trace %></pre>
-              </li>
-              <% } %>
-            </ul>
+        <div class='suite' data-suite-status='<%= suite.status %>' data-suite-time='<%= suite.time %>'>
+          <% var statusCap = suite.status.charAt(0).toUpperCase() + suite.status.slice(1); %>
+          <h3><%= suite.name %></h3>
+          <div style='margin-bottom: 10px;'>
+            <span class="label label-<%= suite.status %>"><%= statusCap %></span>
           </div>
 
-        <% }) %>
+          <% _.each(suite.tests, function(test) { %>
+            <div class="alert alert-block alert-<%= test.status %>">
+              <h4 class="alert-heading"><%= test.name %></h4>
+              <% if ( test.message) { %>
+              <p style='margin-top: 10px;'>
+                <strong><%= test.message %></strong>
+              </p>
+              <% } %>
+              <ul class='nav'>
+                <li style='margin-top: 5px;'>
+                  <em>Execution time:</em>
+                  <%= test.time %>s
+                </li>
+                <% if ( test.output ) { %>
+                <li style='margin-top: 5px;'>
+                  <em>Debug Output:</em>
+                  <pre><%= test.output %></pre>
+                </li>
+                <% } %>
+                <% if ( test.trace ) { %>
+                <li style='margin-top: 5px;'>
+                  <em>Stack Trace:</em>
+                  <pre><%= test.trace %></pre>
+                </li>
+                <% } %>
+              </ul>
+            </div>
+          <% }) %>
+        </div>
 
       <% }) %>
 
@@ -256,29 +297,74 @@
             $output.html(
               "<div class='loader'><img src='/img/ajax-loader.gif'></div>"
             ).fadeIn(300);
-          });
 
-          $.post($form.attr('action'), $form.serialize(), function(response) {
-            var template = $("#test-results").html();
+            $.post($form.attr('action'), $form.serialize(), function(response) {
+              var template = $("#test-results").html();
 
-            response = $.parseJSON(response);
+              response = $.parseJSON(response);
 
-            $output.fadeOut(300, function() {
-              $output.html(_.template(template, {
-                errors: response.errors,
-                notifications: response.notifications,
-                suites: response.suites,
-                stats: response.stats
-              })).fadeIn(300);
+              $output.fadeOut(300, function() {
+                $output.html(_.template(template, {
+                  errors: response.errors,
+                  notifications: response.notifications,
+                  suites: response.suites,
+                  stats: response.stats
+                }));
+
+                $('#sort').triggerHandler('change');
+
+                $output.fadeIn(300, function() {
+                  $('.display-suite').each(function(index, element) {
+                    $(element).triggerHandler('click');
+                  });
+                });
+              });
+
             });
           });
+
+        });
+
+        $('#sort').change(function() {
+          switch ( $(this).val() ) {
+            case 'Results (asc)':
+              $('.suite').sortElements(function(a, b) {
+                return $(a).attr('data-suite-status') > $(b).attr('data-suite-status');
+              });
+              break;
+            case 'Results (desc)':
+              $('.suite').sortElements(function(a, b) {
+                return $(a).attr('data-suite-status') < $(b).attr('data-suite-status');
+              });
+              break;
+            case 'Time (asc)':
+              $('.suite').sortElements(function(a, b) {
+                return $(a).attr('data-suite-time') > $(b).attr('data-suite-time');
+              });
+              break;
+            case 'Time (desc)':
+              $('.suite').sortElements(function(a, b) {
+                return $(a).attr('data-suite-time') < $(b).attr('data-suite-time');
+              });
+              break;
+          }
+        });
+
+        $('.display-suite').click(function() {
+          var $checkbox = $(this),
+              $suites = $('.suite[data-suite-status="' + $checkbox.attr('data-target') + '"]');
+          if ( $checkbox.is(':checked') ) {
+              $suites.fadeIn();
+          } else  {
+              $suites.fadeOut();
+          }
         });
 
         $('.file-selector').fileSelector({
           callback: function() {
             var tests = '';
             $('.file.active, .directory.active').each(function() {
-              tests += $(this).children('a').attr('rel') + '|';
+              tests += $(this).children('a').attr('data-path') + '|';
             });
             $('#test-files').val(tests.slice(0, -1));
           },
