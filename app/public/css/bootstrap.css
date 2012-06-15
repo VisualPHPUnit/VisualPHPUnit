@@ -4971,6 +4971,7 @@ a.badge:hover {
 .file-selector {
   height: 330px;
   overflow: scroll;
+  margin-bottom: 9px;
 }
 
 .file-selector ul {

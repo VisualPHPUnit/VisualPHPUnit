@@ -398,7 +398,7 @@ class VPU {
     * @access public
     * @return string
     */
-    public function run($tests) {
+    public function run_tests($tests) {
         $suite = new \PHPUnit_Framework_TestSuite();
 
         $tests = $this->_parse_tests($tests);
@@ -420,8 +420,8 @@ class VPU {
             $suite->addTestSuite($test);
         }
 
-        $result = new \PHPUnit_Framework_TestResult;
-        $result->addListener(new \PHPUnit_Util_Log_JSON);
+        $result = new \PHPUnit_Framework_TestResult();
+        $result->addListener(new \PHPUnit_Util_Log_JSON());
 
         // We need to temporarily turn off html_errors to ensure correct
         // parsing of test debug output
@@ -434,8 +434,35 @@ class VPU {
         ob_end_clean();
 
         ini_set('html_errors', $html_errors);
-
         return $results;
+    }
+
+   /**
+    * Runs PHPUnit with the supplied XML configuration file.
+    *
+    * @param mixed $xml_config    The path to the PHPUnit XML configuration
+    *                             file.
+    * @access public
+    * @return string
+    */
+    public function run_with_xml($xml_config) {
+        $command = new \PHPUnit_TextUI_Command();
+
+        // We need to temporarily turn off html_errors to ensure correct
+        // parsing of test debug output
+        $html_errors = ini_get('html_errors');
+        ini_set('html_errors', 0);
+
+        ob_start();
+        $command->run(array('--configuration', $xml_config), false);
+        $results = ob_get_contents();
+        ob_end_clean();
+
+        ini_set('html_errors', $html_errors);
+
+        $start = strpos($results, '{');
+        $end = strrpos($results, '}');
+        return substr($results, $start, $end - $start + 1);
     }
 
 }

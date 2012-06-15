@@ -57,7 +57,7 @@
               </li>
 
               <li>
-                <p style='margin: 9px 0;'>
+                <p class='help-block'>
                   Tips: You can select multiple files by single-clicking them.
                   You can also use shift+click to select a range of files, or
                   ctrl+click to select an entire directory.
@@ -74,7 +74,7 @@
                 </label>
                 <select id='store_statistics' name='store_statistics' class='test-options'>
                   <option value='0'>No</option>
-                  <option value='1' <?php if ( $store_statistics ) echo "selected='selected'"?>>Yes</option>
+                  <option value='1' <?php if ( $store_statistics ) echo "selected='selected'"; ?>>Yes</option>
                 </select>
               </li>
               <li>
@@ -84,7 +84,7 @@
                 </label>
                 <select id='create_snapshots' name='create_snapshots' class='test-options'>
                   <option value='0'>No</option>
-                  <option value='1' <?php if ( $create_snapshots ) echo "selected='selected'"?>>Yes</option>
+                  <option value='1' <?php if ( $create_snapshots ) echo "selected='selected'"; ?>>Yes</option>
                 </select>
               </li>
               <li>
@@ -94,8 +94,21 @@
                 </label>
                 <select id='sandbox_errors' name='sandbox_errors' class='test-options'>
                   <option value='0'>No</option>
-                  <option value='1' <?php if ( $sandbox_errors ) echo "selected='selected'"?>>Yes</option>
+                  <option value='1' <?php if ( $sandbox_errors ) echo "selected='selected'"; ?>>Yes</option>
                 </select>
+              </li>
+              <li>
+                <label for='use_xml' class='options-description'>
+                  <i class='icon-wrench'></i>
+                  Use XML Config
+                </label>
+                <select id='use_xml' name='use_xml' class='test-options'>
+                  <option value='0'>No</option>
+                  <option value='1' <?php if ( $use_xml ) echo "selected='selected'"; ?>>Yes</option>
+                </select>
+                <p class='help-block'>
+                  Note that setting this to "Yes" will cause VPU to ignore the tests selected above and use the tests specified in the XML file instead.
+                </p>
               </li>
 
               <li class='divider'></li>

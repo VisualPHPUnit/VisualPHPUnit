@@ -52,6 +52,11 @@ $config = array(
     // http://us3.php.net/set_error_handler
     'error_reporting' => E_ALL | E_STRICT,
 
+    // The PHPUnit XML configuration file to use
+    // (set to false to disable)
+    'xml_configuration_file' => false,
+    //'xml_configuration_file' => $root . '/app/config/phpunit.xml',
+
     // Paths to any necessary bootstraps
     'bootstraps' => array(
         // '/path/to/bootstrap.php'

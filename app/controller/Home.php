@@ -16,8 +16,8 @@ class Home extends \app\core\Controller {
             return array(
                 'type'    => 'failed',
                 'title'   => 'Error Creating Snapshot',
-                'message' => 'Could not create a snapshot.  Please ensure '
-                    . 'that the <code>snapshot_directory</code> in '
+                'message' => 'Please ensure that the '
+                    . '<code>snapshot_directory</code> in '
                     . '<code>app/config/bootstrap.php</code> exists and '
                     . 'has the proper permissions.'
             );
@@ -49,13 +49,15 @@ class Home extends \app\core\Controller {
             $store_statistics = \app\lib\Library::retrieve('store_statistics');
             $create_snapshots = \app\lib\Library::retrieve('create_snapshots');
             $sandbox_errors = \app\lib\Library::retrieve('sandbox_errors');
+            $use_xml = \app\lib\Library::retrieve('xml_configuration_file');
             return compact(
                 'create_snapshots',
                 'sandbox_errors',
                 'stats',
                 'store_statistics',
                 'suites',
-                'test_directory'
+                'test_directory',
+                'use_xml'
             );
         }
 
@@ -67,7 +69,26 @@ class Home extends \app\core\Controller {
             set_error_handler(array($vpu, 'handle_errors'));
         }
 
-        $results = $vpu->run($tests);
+        $xml_config = false;
+
+        $notifications = array();
+        if ( $request->data['use_xml'] ) {
+            $xml_config = \app\lib\Library::retrieve('xml_configuration_file');
+            if ( !$xml_config || !$xml_config = realpath($xml_config) ) {
+                $notifications[] = array(
+                    'type'    => 'failed',
+                    'title'   => 'No Valid XML Configuration File Found',
+                    'message' => 'Please ensure that the '
+                    . '<code>xml_configuration_file</code> in '
+                    . '<code>app/config/bootstrap.php</code> exists and '
+                    . 'has the proper permissions.'
+                );
+            }
+        }
+
+        $results = ( $xml_config )
+            ? $vpu->run_with_xml($xml_config)
+            : $vpu->run_tests($tests);
         $results = $vpu->compile_suites($results);
 
         if ( $request->data['sandbox_errors'] ) {
@@ -79,7 +100,6 @@ class Home extends \app\core\Controller {
         $errors = $vpu->get_errors();
         $to_view = compact('suites', 'stats', 'errors');
 
-        $notifications = array();
         if ( $request->data['create_snapshots'] ) {
             $notifications[] = $this->_create_snapshot($to_view);
         }
