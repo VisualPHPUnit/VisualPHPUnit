@@ -2,15 +2,15 @@
 
 <phpunit>
 
-<testsuites>
-  <testsuite>
+  <testsuites>
+    <testsuite>
       <directory>/srv/http/pu/app/test</directory>
-  </testsuite>
-</testsuites>
+    </testsuite>
+  </testsuites>
 
-<!-- This is required for VPU to work correctly -->
-<listeners>
-  <listener class="PHPUnit_Util_Log_JSON"></listener>
-</listeners>
+  <!-- This is required for VPU to work correctly -->
+  <listeners>
+    <listener class="PHPUnit_Util_Log_JSON"></listener>
+  </listeners>
 
 </phpunit>

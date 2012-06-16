@@ -1,14 +1,10 @@
 # VisualPHPUnit
 
-VisualPHPUnit is a visual front-end for PHPUnit.  Written in PHP, it aims to make unit testing more appealing.
-
-## Features
-
-VisualPHPUnit provides the following features:
+VisualPHPUnit is a visual front-end for PHPUnit.  It offers the following features:
 
 * A stunning front-end which organizes test and suite results
 * The ability to view unit testing progress via graphs
-* An option to maintain a history of unit test results through the use of visual logs
+* An option to maintain a history of unit test results through the use of snapshots
 * Enumeration of PHPUnit statistics and messages
 * Convenient display of any debug messages written within unit tests
 * Sandboxing of PHP errors
@@ -25,18 +21,22 @@ VisualPHPUnit only supports PHPUnit v3.5 and above.
 ## Installation
 
 1. Download and extract (or git clone) the project to a web-accessible directory.
-2. Change the permissions of app/resource/cache to 777.
+2. Change the permissions of `app/resource/cache` to 777.
 
 ```bash
 # from the project root
 chmod 777 app/resource/cache
 ```
 
+3. Open `app/config/bootstrap.php` with your favorite editor.
+    1. Within the `$config` array, change `pear_path` so that it points to the directory where PEAR is located.
+    2. Within the `$config` array, change `test_directory` so that it points to the root directory where your unit tests are stored.
+
 ## Web Server Configuration
 
 ### nginx
 
-Place this code block within the `http {}` block in your nginx.conf file:
+Place this code block within the `http {}` block in your `nginx.conf` file:
 
 ```nginx
 
@@ -65,7 +65,7 @@ Note that you will have to change the `server_name` to the name you use in your 
 
 ### Apache
 
-In your httpd.conf file, locate your `DocumentRoot`. It will look something like this:
+In your `httpd.conf` file, locate your `DocumentRoot`. It will look something like this:
 
 ```apache
 DocumentRoot "/srv/http"
@@ -129,7 +129,39 @@ Restart your web server, and then point your browser at the server name you chos
 
 ## Project Configuration (optional)
 
-TODO
+VPU comes with many of its features disabled by default.  In order to take advantage of them, you'll have to modify a few more lines in `app/config/bootstrap.php`.
+
+1. If you'd like to enable graph generation, you will have to do the following:
+    1. Within the `$config` array, change `store_statistics` to `true`.  If you'd like, you can keep this set as `false`, though you will have to change the 'Store Statistics' option to 'Yes' on the UI if you want the test statistics to be used in graph generation.
+    2. Run the migration `app/resource/migration/01_CreateSchema.sql` against a MySQL database.
+        - Note that this will automatically create a database named `vpu` with the tables needed to save your test statistics.
+    3. Within the `$config` array, change the settings within the `db` array to reflect your database settings.
+        - Note that if you're using the migration described above, `database` should remain set to `vpu`.
+        - The `plugin` directive should not be changed.
+
+2. If you'd like to enable snapshots, you will have to do the following:
+    1. Within the `$config` array, change `create_snapshots` to `true`.  If you'd like, you can keep this set as `false`, though you will have to change the 'Create Snapshots' option to 'Yes' on the UI if you want the test results to be saved.
+    2. Within the `$config` array, change `snapshot_directory` to a directory where you would like the snapshots to be saved.
+        - Note that this directory must have the appropriate permissions in order to allow PHP to write to it.
+        - Note that the dropdown list on the 'Archives' page will only display the files found within `snapshot_directory`.
+
+3. If you'd like to enable error sandboxing, you will have to do the following:
+    1. Within the `$config` array, change `sandbox_errors` to `true`.  If you'd like, you can keep this set as `false`, though you will have to change the 'Sandbox Errors' option to 'Yes' on the UI if you want the errors encountered during the test run to be sandboxed.
+    2. Within the `$config` array, change `error_reporting` to reflect which errors you'd like to have sandboxed.  See PHP's manual entry on [error_reporting](http://php.net/manual/en/function.error-reporting.php) for more information.
+
+4. If you'd like to use a PHPUnit XML configuration file to define which tests to run, you will have to do the following:
+    1. Within the `$config` array, change `xml_configuration_file` to the path where the configuration file can be found.
+        - Note that if you leave this set to `false`, but select 'Yes' for the 'Use XML Config' option on the UI, VPU will complain and run with the tests chosen in the file selector instead.
+    2. Modify your PHPUnit XML configuration file to include this block:
+       ```xml
+       <!-- This is required for VPU to work correctly -->
+       <listeners>
+         <listener class="PHPUnit_Util_Log_JSON"></listener>
+       </listeners>
+       ```
+
+5. If you'd like to load any bootstraps, you will have to do the following:
+    1. Within the `$config` array, list the paths to each of the bootstraps within the `bootstraps` array.
 
 ## Version Information
 

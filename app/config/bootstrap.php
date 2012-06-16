@@ -1,7 +1,5 @@
 <?php
 
-$root = dirname(dirname(__DIR__));
-
 $config = array(
     /* Required */
 
@@ -9,7 +7,7 @@ $config = array(
     'pear_path'      => '/usr/share/pear',
 
     // The directory where the tests reside
-    'test_directory' => '/srv/http/pu/app/',
+    'test_directory' => '/srv/http/pu/app/test',
 
 
     /* Optional */
@@ -35,7 +33,7 @@ $config = array(
     'create_snapshots' => false,
 
     // The directory where the test results will be stored
-    'snapshot_directory' => $root . '/app/history/',
+    'snapshot_directory' => '/srv/http/pu/app/history/',
 
     // Whether or not to sandbox PHP errors
     'sandbox_errors' => false,
@@ -54,8 +52,11 @@ $config = array(
 
     // The PHPUnit XML configuration file to use
     // (set to false to disable)
+    //
+    // In order for VPU to function correctly, the configuration file must
+    // contain a JSON listener (see the README for more information)
     'xml_configuration_file' => false,
-    //'xml_configuration_file' => $root . '/app/config/phpunit.xml',
+    //'xml_configuration_file' => '/srv/http/pu/app/config/phpunit.xml',
 
     // Paths to any necessary bootstraps
     'bootstraps' => array(
@@ -63,6 +64,7 @@ $config = array(
     )
 );
 
+$root = dirname(dirname(__DIR__));
 
 set_include_path(
     get_include_path()
