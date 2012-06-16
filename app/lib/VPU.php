@@ -5,10 +5,10 @@ namespace app\lib;
 class VPU {
 
    /**
-    *  The error messages collected by the custom error handler.
+    * The error messages collected by the custom error handler.
     *
-    *  @var array
-    *  @access protected
+    * @var array
+    * @access protected
     */
     protected $_errors = array();
 
@@ -53,14 +53,15 @@ class VPU {
     }
 
    /**
-    *  Organizes the output from PHPUnit into a more manageable array
-    *  of suites and statistics.
+    * Organizes the output from PHPUnit into a more manageable array
+    * of suites and statistics.
     *
-    *  @param string $pu_output        The JSON output from PHPUnit.
-    *  @access public
-    *  @return array
+    * @param string $pu_output    The JSON output from PHPUnit.
+    * @param string $source       The executing source (web or cli).
+    * @access public
+    * @return array
     */
-    public function compile_suites($pu_output) {
+    public function compile_suites($pu_output, $source) {
         $results = $this->_parse_output($pu_output);
 
         $collection = array();
@@ -89,7 +90,7 @@ class VPU {
                     'time'   => 0
                 );
             }
-            $result = $this->_format_test_results($result);
+            $result = $this->_format_test_results($result, $source);
             $collection[$suite_name]['tests'][] = $result;
             $collection[$suite_name]['status'] = $this->_get_suite_status(
                 $result['status'], $collection[$suite_name]['status']
@@ -121,6 +122,8 @@ class VPU {
     * @return array
     */
     protected function _convert_json($str) {
+        $str = str_replace('&quot;', '"', $str);
+
         $tags = array();
         $nest = 0;
         $start_mark = 0;
@@ -131,9 +134,7 @@ class VPU {
 
             if ( $char == '{' ) {
                 // Ensure we're only adding events to the array
-                if (
-                    $nest == 0 && substr($str, $i, 18) != '{&quot;event&quot;'
-                ) {
+                if ( $nest == 0 && substr($str, $i, 8) != '{"event"' ) {
                     continue;
                 }
 
@@ -159,10 +160,11 @@ class VPU {
     * Normalizes the test results.
     *
     * @param array $test_results    The parsed test results.
+    * @param string $source         The executing source (web or cli).
     * @access protected
     * @return string
     */
-    protected function _format_test_results($test_results) {
+    protected function _format_test_results($test_results, $source) {
         $status = $this->_get_test_status(
             $test_results['status'], $test_results['message']
         );
@@ -174,7 +176,7 @@ class VPU {
         $output = ( isset($test_results['output']) )
             ? trim($test_results['output'])
             : '';
-        $trace = $this->_get_trace($test_results['trace']);
+        $trace = $this->_get_trace($test_results['trace'], $source);
 
         return compact(
             'status',
@@ -187,10 +189,10 @@ class VPU {
     }
 
    /**
-    *  Returns the errors collected by the custom error handler.
+    * Returns the errors collected by the custom error handler.
     *
-    *  @access public
-    *  @return array
+    * @access public
+    * @return array
     */
     public function get_errors() {
         return $this->_errors;
@@ -249,20 +251,25 @@ class VPU {
     }
 
    /**
-    * Filters the stack trace from a PHPUnit test result to exclude the VPU's
+    * Filters the stack trace from a PHPUnit test result to exclude VPU's
     * trace.
     *
-    * @param string $stack    The stack trace.
+    * @param string $stack      The stack trace.
+    * @param string $source     The executing source (web or cli).
     * @access protected
     * @return string
     */
-    protected function _get_trace($stack) {
+    protected function _get_trace($stack, $source) {
         if ( !$stack ) {
             return '';
         }
 
         ob_start();
-        print_r(array_slice($stack, 0, -6));
+        if ( $source == 'web' ) {
+            print_r(array_slice($stack, 0, -6));
+        } else {
+            print_r(array_slice($stack, 0, -2));
+        }
         $trace = trim(ob_get_contents());
         ob_end_clean();
 
@@ -270,14 +277,14 @@ class VPU {
     }
 
    /**
-    *  Serves as the error handler.
+    * Serves as the error handler.
     *
-    *  @param int $number        The level of the error raised.
-    *  @param string $message    The error message.
-    *  @param string $file       The file in which the error was raised.
-    *  @param int $line          The line number at which the error was raised.
-    *  @access public
-    *  @return bool
+    * @param int $number        The level of the error raised.
+    * @param string $message    The error message.
+    * @param string $file       The file in which the error was raised.
+    * @param int $line          The line number at which the error was raised.
+    * @access public
+    * @return bool
     */
     public function handle_errors($number, $message, $file, $line) {
         if ( $number > error_reporting() ) {
@@ -337,7 +344,6 @@ class VPU {
         }
 
         $results = '[' . rtrim($results, ',') . ']';
-        $results = str_replace('&quot;', '"', $results);
 
         $results = json_decode($results, true);
 

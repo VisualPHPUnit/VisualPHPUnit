@@ -28,8 +28,7 @@ class Home extends \app\core\Controller {
         return array(
             'type'    => 'succeeded',
             'title'   => 'Snapshot Created',
-            'message' => 'Snapshot can be found at <code>' . $filename
-                . '</code>.'
+            'message' => "Snapshot can be found at <code>{$filename}</code>."
         );
     }
 
@@ -89,7 +88,7 @@ class Home extends \app\core\Controller {
         $results = ( $xml_config )
             ? $vpu->run_with_xml($xml_config)
             : $vpu->run_tests($tests);
-        $results = $vpu->compile_suites($results);
+        $results = $vpu->compile_suites($results, 'web');
 
         if ( $request->data['sandbox_errors'] ) {
             restore_error_handler();
