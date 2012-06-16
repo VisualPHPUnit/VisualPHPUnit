@@ -1,5 +1,12 @@
 # Changelog
 
+## v2.0
+
+* Overhaul the entire code base
+* Give the UI a facelift
+* Add ability to run tests using a phpunit.xml configuration file (GH-31)
+* Add ability to generate test results from the command line (GH-32)
+
 ## v1.5.5
 
 * Change require -> require_once to avoid errors (GH-34)
