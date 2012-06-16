@@ -2467,7 +2467,7 @@ table .span24 {
 
 .well {
   min-height: 20px;
-  padding: 19px;
+  padding: 8px 0;
   margin-bottom: 20px;
   background-color: #f5f5f5;
   border: 1px solid #eee;
@@ -4622,7 +4622,7 @@ a.badge:hover {
 
 .progress {
   height: 18px;
-  margin-bottom: 18px;
+  margin-bottom: 9px;
   overflow: hidden;
   background-color: #f7f7f7;
   background-image: -moz-linear-gradient(top, #f5f5f5, #f9f9f9);
@@ -5012,4 +5012,27 @@ a.badge:hover {
 label.checkbox {
   display: inline-block;
   margin-right: 5px;
+}
+
+.centered {
+  text-align: center;
+}
+
+.notification-message,
+.test-message,
+.error-message {
+  margin-top: 10px;
+}
+
+.suite-status {
+  margin-bottom: 10px;
+}
+
+.test-details,
+.error-details {
+  margin-top: 5px;
+}
+
+.statistics {
+  margin-bottom: 20px;
 }

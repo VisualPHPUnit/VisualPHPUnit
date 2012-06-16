@@ -76,7 +76,7 @@ class VPU {
         );
         $statistics['tests'] = $statistics['suites'];
         foreach ( $results as $result ) {
-            if ( $result['event'] != 'test' ) {
+            if ( !isset($result['event']) || $result['event'] != 'test' ) {
                 continue;
             }
 

@@ -9,7 +9,10 @@ class Archives extends \app\core\Controller {
         $snapshot_directory = \app\lib\Library::retrieve('snapshot_directory');
         if ( !$request->is('ajax') ) {
             $snapshots = array();
-            $handler = opendir($snapshot_directory);
+            $handler = @opendir($snapshot_directory);
+            if ( !$handler ) {
+                return compact('snapshots');
+            }
             while ( $file = readdir($handler) ) {
                 $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
                 if ( strpos($file, '.') === 0 || $ext != 'html' ) {

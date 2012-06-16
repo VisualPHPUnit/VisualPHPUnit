@@ -48,7 +48,7 @@
       <div class='row'>
 
         <div class='span3'>
-          <form action='/' method='post' class='well' style='padding: 8px 0;'>
+          <form action='/' method='post' class='well'>
             <ul class="nav nav-list">
               <li class='nav-header'>Files</li>
 
@@ -153,7 +153,7 @@
 
               <li class='divider'></li>
 
-              <li style='text-align: center;'>
+              <li class='centered'>
                 <input type='hidden' name='test_files' id='test-files' />
                 <button type="submit" id='run-tests' class="btn btn-primary">Run Tests</button>
               </li>
@@ -178,7 +178,7 @@
         <div class="alert alert-block alert-<%= notification.type %>">
           <button type="button" class="close" data-dismiss="alert">×</button>
           <h4 class="alert-heading"><%= notification.title %></h4>
-          <p style='margin-top: 10px;'><%= notification.message %></p>
+          <p class='notification-message'><%= notification.message %></p>
         </div>
       <% }) %>
 
@@ -186,7 +186,7 @@
         <div class='suite' data-suite-status='<%= suite.status %>' data-suite-time='<%= suite.time %>'>
           <% var statusCap = suite.status.charAt(0).toUpperCase() + suite.status.slice(1); %>
           <h3><%= suite.name %></h3>
-          <div style='margin-bottom: 10px;'>
+          <div class='suite-status'>
             <span class="label label-<%= suite.status %>"><%= statusCap %></span>
           </div>
 
@@ -194,23 +194,23 @@
             <div class="alert alert-block alert-<%= test.status %>">
               <h4 class="alert-heading"><%= test.name %></h4>
               <% if ( test.message) { %>
-              <p style='margin-top: 10px;'>
+              <p class='test-message'>
                 <strong><%= test.message %></strong>
               </p>
               <% } %>
               <ul class='nav'>
-                <li style='margin-top: 5px;'>
+                <li class='test-details'>
                   <em>Execution time:</em>
                   <%= test.time %>s
                 </li>
                 <% if ( test.output ) { %>
-                <li style='margin-top: 5px;'>
+                <li class='test-details'>
                   <em>Debug Output:</em>
                   <pre><%= test.output %></pre>
                 </li>
                 <% } %>
                 <% if ( test.trace ) { %>
-                <li style='margin-top: 5px;'>
+                <li class='test-details'>
                   <em>Stack Trace:</em>
                   <pre><%= test.trace %></pre>
                 </li>
@@ -222,27 +222,27 @@
 
       <% }) %>
 
-      <div class='row' style='margin-bottom: 20px;'>
+      <div class='row statistics'>
         <div class='span4'>
           <h3>Suite Statistics</h3>
 
           <h4>Failed (<%= stats.suites.failed %>/<%= stats.suites.total %>)</h4>
-          <div class="progress progress-danger" style="margin-bottom: 9px;">
+          <div class="progress progress-danger">
             <div class="bar" style="width: <%= stats.suites.percentFailed %>%"></div>
           </div>
 
           <h4>Incomplete (<%= stats.suites.incomplete %>/<%= stats.suites.total %>)</h4>
-          <div class="progress progress-warning" style="margin-bottom: 9px;">
+          <div class="progress progress-warning">
             <div class="bar" style="width: <%= stats.suites.percentIncomplete %>%"></div>
           </div>
 
           <h4>Skipped (<%= stats.suites.skipped %>/<%= stats.suites.total %>)</h4>
-          <div class="progress progress-info" style="margin-bottom: 9px;">
+          <div class="progress progress-info">
             <div class="bar" style="width: <%= stats.suites.percentSkipped %>%"></div>
           </div>
 
           <h4>Succeeded (<%= stats.suites.succeeded %>/<%= stats.suites.total %>)</h4>
-          <div class="progress progress-success" style="margin-bottom: 9px;">
+          <div class="progress progress-success">
             <div class="bar" style="width: <%= stats.suites.percentSucceeded %>%"></div>
           </div>
         </div>
@@ -251,22 +251,22 @@
           <h3>Test Statistics</h3>
 
           <h4>Failed (<%= stats.tests.failed %>/<%= stats.tests.total %>)</h4>
-          <div class="progress progress-danger" style="margin-bottom: 9px;">
+          <div class="progress progress-danger">
             <div class="bar" style="width: <%= stats.tests.percentFailed %>%"></div>
           </div>
 
           <h4>Incomplete (<%= stats.tests.incomplete %>/<%= stats.tests.total %>)</h4>
-          <div class="progress progress-warning" style="margin-bottom: 9px;">
+          <div class="progress progress-warning">
             <div class="bar" style="width: <%= stats.tests.percentIncomplete %>%"></div>
           </div>
 
           <h4>Skipped (<%= stats.tests.skipped %>/<%= stats.tests.total %>)</h4>
-          <div class="progress progress-info" style="margin-bottom: 9px;">
+          <div class="progress progress-info">
             <div class="bar" style="width: <%= stats.tests.percentSkipped %>%"></div>
           </div>
 
           <h4>Succeeded (<%= stats.tests.succeeded %>/<%= stats.tests.total %>)</h4>
-          <div class="progress progress-success" style="margin-bottom: 9px;">
+          <div class="progress progress-success">
             <div class="bar" style="width: <%= stats.tests.percentSucceeded %>%"></div>
           </div>
         </div>
@@ -279,15 +279,15 @@
       <% _.each(errors, function(error) { %>
         <div class="alert alert-block alert-failed">
           <h4 class="alert-heading"><%= error.type %></h4>
-          <p style='margin-top: 10px;'>
+          <p class='error-message'>
             <strong><%= error.message %></strong>
           </p>
           <ul class='nav'>
-            <li style='margin-top: 5px;'>
+            <li class='error-details'>
               <em>File:</em>
               <%= error.file %>
             </li>
-            <li style='margin-top: 5px;'>
+            <li class='error-details'>
               <em>Line:</em>
               <%= error.line %>
             </li>
