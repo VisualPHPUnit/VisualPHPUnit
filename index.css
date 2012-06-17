@@ -5,8 +5,8 @@ body {
     color: #000000;
 }
 
-a { 
-    color: #000; 
+a {
+    color: #000;
 }
 
 #container {
@@ -14,20 +14,20 @@ a {
     width: 925px;
 }
 
-hgroup h1 { 
-    font-size: 77px; 
-    color: #000; 
+hgroup h1 {
+    font-size: 77px;
+    color: #000;
     margin: 0;
 }
 
-hgroup h1 a { 
+hgroup h1 a {
     text-decoration: none;
 }
 
-hgroup h2 { 
+hgroup h2 {
     margin: -18px 0 15px 20px;
-    font-size: 40px; 
-    color: #000; 
+    font-size: 40px;
+    color: #000;
 }
 
 p {
@@ -43,7 +43,6 @@ p {
 
 #ss_main {
     width: 922px;
-    height: 709px;
     margin-bottom: 20px;
 }
 
