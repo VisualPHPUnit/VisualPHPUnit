@@ -7,6 +7,13 @@
 * Add ability to run tests using a phpunit.xml configuration file (GH-31)
 * Add ability to generate test results from the command line (GH-32)
 
+## v1.5.6
+
+* Replace line breaks with <br>s instead of empty strings (GH-42)
+* Fix jqueryFileTree folder selection for Macs (GH-41)
+* Fix display of debugging output (GH-39)
+* Add ability to set MySQL port (GH-37)
+
 ## v1.5.5
 
 * Change require -> require_once to avoid errors (GH-34)

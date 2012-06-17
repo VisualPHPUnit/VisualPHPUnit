@@ -12,11 +12,31 @@ VisualPHPUnit is a visual front-end for PHPUnit.  It offers the following featur
 
 ## Screenshots
 
-TODO
+![Screenshot of VisualPHPUnit, displaying a breakdown of test results.](http://nsinopoli.github.com/VisualPHPUnit/vpu2_main.png "VisualPHPUnit Test Results")
+![Screenshot of VisualPHPUnit, displaying a graph of test results.](http://nsinopoli.github.com/VisualPHPUnit/vpu2_graphs.png "VisualPHPUnit Statistics Graph")
 
 ## Requirements
 
 VisualPHPUnit only supports PHPUnit v3.5 and above.
+
+## Upgrading From v1.x
+
+VPU underwent a complete rewrite in v2.0.  Users who are looking to upgrade from v1.x are encouraged to follow the installation instructions outlined below.
+
+### What About My Data?
+
+Because the UI has been changed, snapshots from v1.x will not render correctly in v2.x.
+
+Test statistics generated in v1.x, however, can still be used.  When installing, ignore the [migration](#graph-generation) and run the following commands against your old VPU database instead:
+
+```sql
+alter table SuiteResult change success succeeded int(11) not null;
+alter table TestResult change success succeeded int(11) not null;
+```
+
+### I Miss v1.x!
+
+While no longer actively supported, v1.x can be found on its [own branch](https://github.com/NSinopoli/VisualPHPUnit/tree/1.x).
 
 ## Installation
 
@@ -145,7 +165,7 @@ If you'd like to enable snapshots, you will have to do the following:
     - Note that this directory must have the appropriate permissions in order to allow PHP to write to it.
     - Note that the dropdown list on the 'Archives' page will only display the files found within `snapshot_directory`.
 
-### <a name='sandboxing'</a>Error Sandboxing
+### <a name='sandboxing'></a>Error Sandboxing
 
 If you'd like to enable error sandboxing, you will have to do the following:
 
@@ -181,7 +201,7 @@ VPU can be run at the command line, making it possible to automate the generatio
 
 The CLI script requires that the `xml_configuration_file` setting within the `$config` array of `app/config/bootstrap.php` be properly set.  VPU will run the tests specified in the XML configuration file.  Please be sure that the [configuration file](#xml-configuration) contains the required JSON listener.
 
-In order to [save](#snapshots) the test results, the CLI script also requires that the `snapshot_directory` setting within the `$config` array of `app/config/bootstrap.php` be properly set.
+In order to [save](#snapshots) the test results, the CLI script also requires that the `snapshot_directory` setting within the `$config` array of `app/config/bootstrap.php` be properly set.  Note that the value of `create_snapshots` within the `$config` array has no effect on the CLI script.
 
 Errors will be [sandboxed](#sandboxing) if `sandbox_errors` is set to `true` within the `$config` array of `app/config/bootstrap.php`.
 
@@ -198,7 +218,7 @@ bin/vpu
 
 ## Version Information
 
-TODO
+Current stable release is v2.0, last updated on June 16, 2012.
 
 ## Feedback
 
