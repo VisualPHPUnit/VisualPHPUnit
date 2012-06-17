@@ -17,7 +17,7 @@ VisualPHPUnit is a visual front-end for PHPUnit.  It offers the following featur
 
 ## Requirements
 
-VisualPHPUnit only supports PHPUnit v3.5 and above.
+VisualPHPUnit requires PHP 5.3+ and PHPUnit v3.5+.
 
 ## Upgrading From v1.x
 
