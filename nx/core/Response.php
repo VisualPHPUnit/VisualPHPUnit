@@ -1,27 +1,20 @@
 <?php
 
-/**
- * NX
- *
- * @author    Nick Sinopoli <NSinopoli@gmail.com>
- * @copyright Copyright (c) 2011-2012, Nick Sinopoli
- * @license   http://opensource.org/licenses/bsd-license.php The BSD License
- */
-
 namespace nx\core;
 
-/*
- *  The `Response` class is used to render an HTTP response.
+/**
+ * The Response class is used to render an HTTP response.
  *
- *  @package core
+ * @author    Nick Sinopoli <NSinopoli@gmail.com>
+ * @copyright 2011-2012 Nick Sinopoli
+ * @license   http://opensource.org/licenses/BSD-3-Clause The BSD License
  */
 class Response {
 
    /**
-    *  The configuration settings.
+    * The configuration settings.
     *
-    *  @var array
-    *  @access protected
+    * @var array
     */
     protected $_config = array();
 
@@ -29,7 +22,6 @@ class Response {
     *  The HTTP status codes.
     *
     *  @var array
-    *  @access protected
     */
     protected $_statuses = array(
         100 => 'Continue',
@@ -74,14 +66,14 @@ class Response {
     );
 
    /**
-    *  Sets the configuration options.
+    * Sets the configuration options.
     *
-    *  @param array $config    The configuration options.  Possible keys
-    *                          include:
-    *                          'buffer_size' - the number of bytes each chunk
-    *                          of output should contain
-    *  @access public
-    *  @return void
+    * Possible keys include the following:
+    *
+    * * 'buffer_size' - The number of bytes each chunk of output should contain
+    *
+    * @param array $config    The configuration options.
+    * @return void
     */
     public function __construct(array $config = array()) {
         $defaults = array(
@@ -91,11 +83,10 @@ class Response {
     }
 
    /**
-    *  Converts an integer status to a well-formed HTTP status header.
+    * Converts an integer status to a well-formed HTTP status header.
     *
-    *  @param int $code    The integer associated with the HTTP status.
-    *  @access protected
-    *  @return string
+    * @param int $code    The integer associated with the HTTP status.
+    * @return string
     */
     protected function _convert_status($code) {
         if ( isset($this->_statuses[$code]) ) {
@@ -105,27 +96,18 @@ class Response {
     }
 
    /**
-    *  Parses a response.
+    * Parses a response.
     *
-    *  @param mixed $response    The response to be parsed.  Can be an array
-    *                            containing 'body', 'headers', and/or 'status'
-    *                            keys, or a string which will be used as the
-    *                            body of the response.  Note that the headers
-    *                            must be well-formed HTTP headers, and the
-    *                            status must be an integer (i.e., the one
-    *                            associated with the HTTP status code).
-    *  @access protected
-    *  @return array
+    * @param mixed $response    The response to be parsed.  Can be an array
+    *                           containing 'body', 'headers', and/or 'status'
+    *                           keys, or a string which will be used as the
+    *                           body of the response.  Note that the headers
+    *                           must be well-formed HTTP headers, and the
+    *                           status must be an integer (i.e., the one
+    *                           associated with the HTTP status code).
+    * @return array
     */
     protected function _parse($response) {
-        if ( !$response ) {
-          return array(
-              'body'    => '',
-              'headers' => array('Content-Type: text/html; charset=utf-8'),
-              'status'  => 500
-          );
-        }
-
         $defaults = array(
             'body'    => '',
             'headers' => array('Content-Type: text/html; charset=utf-8'),
@@ -133,27 +115,29 @@ class Response {
         );
         if ( is_array($response) ) {
             $response += $defaults;
+        } elseif ( is_string($response) ) {
+            $defaults['body'] = $response;
+            $response = $defaults;
         } else {
-            $defaults['body'] = (string) $response;
+            $defaults['status'] = 500;
             $response = $defaults;
         }
         return $response;
     }
 
    /**
-    *  Renders a response.
+    * Renders a response.
     *
-    *  @param mixed $response    The response to be rendered.  Can be an array
-    *                            containing 'body', 'headers', and/or 'status'
-    *                            keys, or a string which will be used as the
-    *                            body of the response.  Note that the headers
-    *                            must be well-formed HTTP headers, and the
-    *                            status must be an integer (i.e., the one
-    *                            associated with the HTTP status code).  The
-    *                            response body is chunked according to the
-    *                            buffer_size set in the constructor.
-    *  @access public
-    *  @return bool
+    * @param mixed $response    The response to be rendered.  Can be an array
+    *                           containing 'body', 'headers', and/or 'status'
+    *                           keys, or a string which will be used as the
+    *                           body of the response.  Note that the headers
+    *                           must be well-formed HTTP headers, and the
+    *                           status must be an integer (i.e., the one
+    *                           associated with the HTTP status code).  The
+    *                           response body is chunked according to the
+    *                           buffer_size set in the constructor.
+    * @return void
     */
     public function render($response) {
         $response = $this->_parse($response);
@@ -168,7 +152,6 @@ class Response {
         for ( $i = 0; $i < $length; $i += $buffer_size ) {
             echo substr($response['body'], $i, $buffer_size);
         }
-        return true;
     }
 
 }

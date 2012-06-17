@@ -26,10 +26,16 @@ class Graph extends \app\core\Controller {
             );
         }
 
-        // TODO: Implement notifications for potential db problems
         $db_options = \app\lib\Library::retrieve('db');
         $db = new $db_options['plugin']();
-        $db->connect($db_options);
+        if ( !$db->connect($db_options) ) {
+            return array(
+                'error' => array(
+                    'title'   => 'Error Connecting to Database',
+                    'message' => implode(' ', $db->get_errors())
+                )
+            );
+        }
 
         switch ( $request->data['time_frame'] ) {
             case 'Monthly':

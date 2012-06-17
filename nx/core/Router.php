@@ -1,28 +1,21 @@
 <?php
 
-/**
- * NX
- *
- * @author    Nick Sinopoli <NSinopoli@gmail.com>
- * @copyright Copyright (c) 2011-2012, Nick Sinopoli
- * @license   http://opensource.org/licenses/bsd-license.php The BSD License
- */
-
 namespace nx\core;
 
-/*
- *  The `Router` class is used to handle url routing.
+/**
+ * The Router is used to handle url routing.
  *
- *  @package core
+ * @author    Nick Sinopoli <NSinopoli@gmail.com>
+ * @copyright 2011-2012 Nick Sinopoli
+ * @license   http://opensource.org/licenses/BSD-3-Clause The BSD License
  */
 class Router {
 
    /**
-    *  Compiles the regex necessary to capture all match types within a route.
+    * Compiles the regex necessary to capture all match types within a route.
     *
-    *  @param string $route    The route.
-    *  @access protected
-    *  @return string
+    * @param string $route    The route.
+    * @return string
     */
     protected function _compile_regex($route) {
         $pattern = '`(/|\.|)\[([^:\]]*+)(?::([^:\]]*+))?\](\?|)`';
@@ -59,58 +52,69 @@ class Router {
     }
 
    /**
-    *  Parses the supplied request uri based on the supplied routes and
-    *  the request method (i.e., GET/POST/PUT/DELETE).  Routes should be of
-    *  the following format:
+    * Parses the supplied request uri based on the supplied routes and
+    * the request method.
     *
-    *  $routes = array(
-    *      array(
-    *          mixed $request_method, string $request_uri, callable $callback
-    *      ),
-    *      ...
-    *  );
+    * Routes should be of the following format:
     *
-    *  where:
+    * <code>
+    * $routes = array(
+    *     array(
+    *         mixed $request_method, string $request_uri, callable $callback
+    *     ),
+    *     ...
+    * );
+    * </code>
     *
-    *  $request_method can be a string ('GET', 'POST', 'PUT', 'DELETE'),
-    *  or an array (e.g., array('GET, 'POST')).  Note that $request_method
-    *  is case-insensitive.
+    * where:
     *
+    * <code>
+    * $request_method can be a string ('GET', 'POST', 'PUT', 'DELETE'),
+    * or an array (e.g., array('GET, 'POST')).  Note that $request_method
+    * is case-insensitive.
+    * </code>
     *
-    *  $request_uri is a string, with optional match types.  Valid match types
-    *  are as follows:
+    * <code>
+    * $request_uri is a string, with optional match types.  Valid match types
+    * are as follows:
     *
-    *  [i] - integer
-    *  [a] - alphanumeric
-    *  [h] - hexadecimal
-    *  [*] - anything
+    * [i] - integer
+    * [a] - alphanumeric
+    * [h] - hexadecimal
+    * [*] - anything
     *
-    *  Match types can be combined with parameter names, which will be
-    *  captured:
+    * Match types can be combined with parameter names, which will be
+    * captured:
     *
-    *  [i:id] - will match an integer, storing it within the returned 'params'
-    *  array under the 'id' key
-    *  [a:name] - will match an alphanumeric value, storing it within the
-    *  returned 'params' array under the 'name' key
+    * [i:id] - will match an integer, storing it within the returned 'params'
+    * array under the 'id' key
+    * [a:name] - will match an alphanumeric value, storing it within the
+    * returned 'params' array under the 'name' key
     *
-    *  Here are some examples to help illustrate:
+    * Here are some examples to help illustrate:
     *
-    *  /post/[i:id] - will match on /post/32 (with the returned 'params' array
-    *  containing an 'id' key with a value of 32), but will not match on
-    *  /post/today
+    * /post/[i:id] - will match on /post/32 (with the returned 'params' array
+    * containing an 'id' key with a value of 32), but will not match on
+    * /post/today
     *
-    *  /find/[h:serial] - will match on /find/ae32 (with the returned 'params'
-    *  array containing a 'serial' key will a value of 'ae32'), but will not
-    *  match on /find/john
+    * /find/[h:serial] - will match on /find/ae32 (with the returned 'params'
+    * array containing a 'serial' key will a value of 'ae32'), but will not
+    * match on /find/john
+    * </code>
     *
+    * <code>
+    * $callback is a valid callback function.
+    * </code>
     *
-    *  $callback is a valid callback function.
+    * Returns an array containing the following keys:
     *
-    *  @param string $request_uri       The request uri.
-    *  @param string $request_method    The request method.
-    *  @param array $routes             The routes.
-    *  @access public
-    *  @return array
+    * * 'params'   - The parameters collected from the matched uri
+    * * 'callback' - The callback function pulled from the matched route
+    *
+    * @param string $request_uri       The request uri.
+    * @param string $request_method    The request method.
+    * @param array $routes             The routes.
+    * @return array
     */
     public function parse($request_uri, $request_method, $routes) {
         foreach ( $routes as $route ) {

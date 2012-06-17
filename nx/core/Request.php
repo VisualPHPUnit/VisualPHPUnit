@@ -1,75 +1,60 @@
 <?php
 
-/**
- * NX
- *
- * @author    Nick Sinopoli <NSinopoli@gmail.com>
- * @copyright Copyright (c) 2011-2012, Nick Sinopoli
- * @license   http://opensource.org/licenses/bsd-license.php The BSD License
- */
-
 namespace nx\core;
 
-/*
- *  The `Request` class is used to handle all data
- *  pertaining to an incoming HTTP request.
+/**
+ * The Request class is used to handle all data pertaining to an incoming HTTP
+ * request.
  *
- *  @package core
+ * @author    Nick Sinopoli <NSinopoli@gmail.com>
+ * @copyright 2011-2012 Nick Sinopoli
+ * @license   http://opensource.org/licenses/BSD-3-Clause The BSD License
  */
 class Request {
 
    /**
-    *  The POST/PUT/DELETE data.
+    * The POST/PUT/DELETE data.
     *
-    *  @var array
-    *  @access public
+    * @var array
     */
     public $data = array();
 
    /**
-    *  The environment variables.
+    * The environment variables.
     *
-    *  @var array
-    *  @access protected
+    * @var array
     */
     protected $_env = array();
 
    /**
-    *  The GET data.
+    * The GET data.
     *
-    *  @var array
-    *  @access public
+    * @var array
     */
     public $query = array();
 
    /**
-    *  The parameters parsed from the request url.
+    * The parameters parsed from the request url.
     *
-    *  @var array
-    *  @access public
+    * @var array
     */
     public $params;
 
    /**
-    *  The url of the request.
+    * The url of the request.
     *
-    *  @var string
-    *  @access public
+    * @var string
     */
     public $url;
 
    /**
-    *  Sets the configuration options.
+    * Sets the configuration options.
     *
-    *  @param array $config    The configuration options.  Possible keys
-    *                          include:
-    *                          'data' - the POST/PUT/DELETE data
-    *                          'query' - the GET data
-    *                          TODO: Include other options?
-    *                          TODO: Write up documentation about value of
-    *                          injecting these
-    *  @access public
-    *  @return void
+    * @param array $config    The configuration options.  Possible keys
+    *                         include:
+    *                         'data' - the POST/PUT/DELETE data
+    *                         'query' - the GET data
+    * @return void
     */
     public function __construct(array $config = array()) {
         $defaults = array(
@@ -136,42 +121,74 @@ class Request {
     }
 
    /**
-    *  Returns an environment variable.
+    * Returns an environment variable.
     *
-    *  @param string $key    The environment variable.
-    *  @access public
-    *  @return mixed
+    * @param string $key    The environment variable.
+    * @return mixed
     */
-    public function get_env($key) {
+    public function __get($key) {
         $key = strtoupper($key);
-        return ( isset($this->_env[strtoupper($key)]) )
-            ? $this->_env[strtoupper($key)]
-            : null;
+        return ( isset($this->_env[$key]) ) ? $this->_env[$key] : null;
     }
 
    /**
-    *  Checks for request characteristics.
+    * Checks for request characteristics.
     *
-    *  @param string $characteristic    The characteristic.
-    *  @access public
-    *  @return bool
+    * The full list of request characteristics is as follows:
+    *
+    * * 'ajax' - XHR
+    * * 'delete' - DELETE REQUEST_METHOD
+    * * 'flash' - "Shockwave Flash" HTTP_USER_AGENT
+    * * 'get' - GET REQUEST_METHOD
+    * * 'head' - HEAD REQUEST_METHOD
+    * * 'mobile'  - any one of the following HTTP_USER_AGENTS:
+    *
+    * 1. 'Android'
+    * 1. 'AvantGo'
+    * 1. 'Blackberry'
+    * 1. 'DoCoMo'
+    * 1. 'iPod'
+    * 1. 'iPhone'
+    * 1. 'J2ME'
+    * 1. 'NetFront'
+    * 1. 'Nokia'
+    * 1. 'MIDP'
+    * 1. 'Opera Mini'
+    * 1. 'PalmOS'
+    * 1. 'PalmSource'
+    * 1. 'Plucker'
+    * 1. 'portalmmm'
+    * 1. 'ReqwirelessWeb'
+    * 1. 'SonyEricsson'
+    * 1. 'Symbian'
+    * 1. 'UP.Browser'
+    * 1. 'Windows CE'
+    * 1. 'Xiino'
+    *
+    * * 'options' - OPTIONS REQUEST_METHOD
+    * * 'post'    - POST REQUEST_METHOD
+    * * 'put'     - PUT REQUEST_METHOD
+    * * 'ssl'     - HTTPS
+    *
+    * @param string $characteristic    The characteristic.
+    * @return bool
     */
     public function is($characteristic) {
-        switch ( $characteristic ) {
+        switch ( strtolower($characteristic) ) {
             case 'ajax':
                 return (
-                    $this->get_env('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+                    $this->http_x_requested_with == 'XMLHttpRequest'
                 );
             case 'delete':
-                return ( $this->get_env('REQUEST_METHOD') == 'DELETE' );
+                return ( $this->request_method == 'DELETE' );
             case 'flash':
                 return (
-                    $this->get_env('HTTP_USER_AGENT') == 'Shockwave Flash'
+                    $this->http_user_agent == 'Shockwave Flash'
                 );
             case 'get':
-                return ( $this->get_env('REQUEST_METHOD') == 'GET' );
+                return ( $this->request_method == 'GET' );
             case 'head':
-                return ( $this->get_env('REQUEST_METHOD') == 'HEAD' );
+                return ( $this->request_method == 'HEAD' );
             case 'mobile':
                 $mobile_user_agents = array(
                     'Android', 'AvantGo', 'Blackberry', 'DoCoMo', 'iPod',
@@ -182,16 +199,16 @@ class Request {
                 );
                 $pattern = '/' . implode('|', $mobile_user_agents) . '/i';
                 return (boolean) preg_match(
-                    $pattern, $this->get_env('HTTP_USER_AGENT')
+                    $pattern, $this->http_user_agent
                 );
             case 'options':
-                return ( $this->get_env('REQUEST_METHOD') == 'OPTIONS' );
+                return ( $this->request_method == 'OPTIONS' );
             case 'post':
-                return ( $this->get_env('REQUEST_METHOD') == 'POST' );
+                return ( $this->request_method == 'POST' );
             case 'put':
-                return ( $this->get_env('REQUEST_METHOD') == 'PUT' );
+                return ( $this->request_method == 'PUT' );
             case 'ssl':
-                return $this->get_env('HTTPS');
+                return $this->https;
             default:
                 return false;
         }
