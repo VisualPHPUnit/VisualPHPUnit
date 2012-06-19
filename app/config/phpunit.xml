@@ -4,7 +4,7 @@
 
   <testsuites>
     <testsuite>
-      <directory>/srv/http/pu/app/test</directory>
+      <directory>/srv/http/vpu/app/test</directory>
     </testsuite>
   </testsuites>
 
