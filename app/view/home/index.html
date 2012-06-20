@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
 
-    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="./css/bootstrap.css" rel="stylesheet">
     <style>
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
     </style>
-    <link href="/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="./css/bootstrap-responsive.css" rel="stylesheet">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -30,13 +30,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="/">VisualPHPUnit</a>
+          <a class="brand" href="./">VisualPHPUnit</a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li class='active'><a href="/">Home</a></li>
-              <li><a href="/archives">Archives</a></li>
-              <li><a href="/graphs">Graphs</a></li>
-              <li><a href="/help">Help</a></li>
+              <li class='active'><a href="./">Home</a></li>
+              <li><a href="./archives">Archives</a></li>
+              <li><a href="./graphs">Graphs</a></li>
+              <li><a href="./help">Help</a></li>
             </ul>
           </div>
         </div>
@@ -48,7 +48,7 @@
       <div class='row'>
 
         <div class='span3'>
-          <form action='/' method='post' class='well'>
+          <form action='./' method='post' class='well'>
             <ul class="nav nav-list">
               <li class='nav-header'>Files</li>
 
@@ -169,9 +169,9 @@
 
     <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
     <script src='http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js'></script>
-    <script src='/js/jqueryFileSelector.js'></script>
-    <script src='/js/jquery.sortElements.js'></script>
-    <script src='/js/bootstrap-alert.js'></script>
+    <script src='./js/jqueryFileSelector.js'></script>
+    <script src='./js/jquery.sortElements.js'></script>
+    <script src='./js/bootstrap-alert.js'></script>
 
     <script type='text/html' id='test-results'>
       <% _.each(notifications, function(notification) { %>
@@ -308,7 +308,7 @@
 
           $output.fadeOut(300, function() {
             $output.html(
-              "<div class='loader'><img src='/img/ajax-loader.gif'></div>"
+              "<div class='loader'><img src='./img/ajax-loader.gif'></div>"
             ).fadeIn(300);
 
             $.post($form.attr('action'), $form.serialize(), function(response) {
@@ -382,7 +382,7 @@
             $('#test-files').val(tests.slice(0, -1));
           },
           root: '<?=$test_directory;?>',
-          serverEndpoint: '/file-list'
+          serverEndpoint: './file-list'
         });
       });
     </script>

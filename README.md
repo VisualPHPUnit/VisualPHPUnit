@@ -77,69 +77,11 @@ Place this code block within the `http {}` block in your `nginx.conf` file:
 
 Note that you will have to change the `server_name` to the name you use in your hosts file. You will also have to adjust the directories according to where you installed the code. In this configuration, /srv/http/vpu/ is the project root. The public-facing part of VisualPHPUnit, however, is located in app/public within the project root (so in this example, it's /srv/http/vpu/app/public).
 
+When that's done, restart your web server, and then point your browser at the server name you chose above!
+
 ### Apache
 
-In your `httpd.conf` file, locate your `DocumentRoot`. It will look something like this:
-
-```apache
-DocumentRoot "/srv/http"
-```
-
-Now find the `<Directory>` tag that corresponds to your `DocumentRoot`. It will look like this:
-
-```apache
-<Directory "/srv/http">
-```
-
-Within that tag, change the `AllowOverride` setting:
-
-```apache
-AllowOverride All
-```
-
-Ensure that your `DirectoryIndex` setting contains index.php:
-
-```apache
-DirectoryIndex index.php
-```
-
-Now uncomment the following line:
-
-```apache
-Include conf/extra/httpd-vhosts.conf
-```
-
-Edit your conf/extra/httpd-vhosts.conf file and add the following code block:
-
-```apache
-<VirtualHost *:80>
-    DocumentRoot "/srv/http/vpu/app/public"
-    ServerName vpu
-    ErrorLog "/var/log/httpd/vpu_error.log"
-    CustomLog "/var/log/httpd/vpu_access.log" common
-    <Directory /srv/http/vpu/app/public>
-        Options +FollowSymLinks
-    </Directory>
-</VirtualHost>
-```
-
-Note that you will have to change the `ServerName` to the name you use in your hosts file. You will also have to adjust the directories ( in `DocumentRoot`, as well as the `<Directory>` tag) according to where you checked out the code. In this configuration, /srv/http/vpu/ is the project root. The public-facing part of VisualPHPUnit, however, is located in app/public within the project root (so in this example, it's /srv/http/vpu/app/public).
-
-Within your project's public root, create an .htaccess file (in our case, it'd be located at /srv/http/vpu/app/public/.htaccess) and paste the following block inside:
-
-```apache
-<IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !favicon.ico$
-    RewriteRule ^(.*)$ index.php [QSA,L]
-</IfModule>
-```
-
-### Restart Your Web Server
-
-Restart your web server, and then point your browser at the server name you chose above!
+VPU comes with .htaccess files, so you won't have to worry about configuring anything.  Simply point your browser at the location where you installed the code!
 
 ## Project Configuration (optional)
 

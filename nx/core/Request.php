@@ -84,10 +84,14 @@ class Request {
             $this->_env['DOCUMENT_ROOT'], '', $this->_env['SCRIPT_FILENAME']
         ));
 
-        $uri = $this->_env['REQUEST_URI'];
-        $parsed = parse_url($uri);
+        $parsed = parse_url($this->_env['REQUEST_URI']);
 
-        $this->url = $parsed['path'];
+        $base = str_replace('\\', '/', dirname($this->_env['PHP_SELF']));
+        $base = rtrim(str_replace('/app/public', '', $base), '/');
+        $pattern = '/^' . preg_quote($base, '/') . '/';
+        $this->url = '/' . trim(
+            preg_replace($pattern, '', $parsed['path']),
+        '/');
 
         $query = array();
         if ( isset($parsed['query']) ) {
