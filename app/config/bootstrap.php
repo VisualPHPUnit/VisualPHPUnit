@@ -72,17 +72,20 @@ set_include_path(
     . PATH_SEPARATOR . $config['pear_path']
 );
 
-foreach ( $config['bootstraps'] as $bootstrap ) {
-    require $bootstrap;
-}
-
 require_once 'PHPUnit/Autoload.php';
 require_once 'PHPUnit/Util/Log/JSON.php';
 
-spl_autoload_register(function($class) {
-    $file = str_replace('\\', '/', $class) . '.php';
-    require $file;
+spl_autoload_register(function($class) use ($root) {
+    $class = str_replace('\\', '/', $class);
+    $file = "{$root}/{$class}.php";
+    if ( file_exists($file) ) {
+        require $file;
+    }
 });
+
+foreach ( $config['bootstraps'] as $bootstrap ) {
+    require $bootstrap;
+}
 
 \app\lib\Library::store($config);
 
