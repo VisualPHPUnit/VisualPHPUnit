@@ -26,9 +26,13 @@ class Archives extends \app\core\Controller {
             return compact('snapshots');
         }
 
+        if ( !isset($request->query['snapshot']) ) {
+            return '';
+        }
+
         $file = realpath($snapshot_directory)
             . "/{$request->query['snapshot']}";
-        return file_get_contents($file);
+        return ( file_exists($file) ) ? file_get_contents($file) : '';
     }
 
 }
