@@ -127,10 +127,22 @@ class VPU {
         $tags = array();
         $nest = 0;
         $start_mark = 0;
+        $in_quotes = false;
 
         $length = strlen($str);
         for ( $i = 0; $i < $length; $i++ ) {
             $char = $str{$i};
+
+            if ( $char == '"' ) {
+                // Escaped quote in debug output
+                if ( !$in_quotes || $str{$i - 1} == "\\" ) {
+                    $i = strpos($str, '"', $i + 1) - 1;
+                    $in_quotes = true;
+                } else {
+                    $in_quotes = false;
+                }
+                continue;
+            }
 
             if ( $char == '{' ) {
                 // Ensure we're only adding events to the array
