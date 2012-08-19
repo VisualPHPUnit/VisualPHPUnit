@@ -114,7 +114,7 @@ If you'd like to enable error sandboxing, you will have to do the following:
 1. Within the `$config` array, change `sandbox_errors` to `true`.  If you'd like, you can keep this set as `false`, though you will have to change the 'Sandbox Errors' option to 'Yes' on the UI if you want the errors encountered during the test run to be sandboxed.
 2. Within the `$config` array, change `error_reporting` to reflect which errors you'd like to have sandboxed.  See PHP's manual entry on [error_reporting](http://php.net/manual/en/function.error-reporting.php) for more information.
 
-### Ignore Hidden Files
+### Ignore Hidden Folders
 
 By default, the file selector does not display hidden folders (i.e., folders with a '.' prefix).  If you'd like to display hidden folders, you will have to do the following:
 
@@ -166,7 +166,7 @@ bin/vpu
 
 ## Version Information
 
-Current stable release is v2.0, last updated on June 16, 2012.
+Current stable release is v2.1, last updated on August 19, 2012.
 
 ## Feedback
 

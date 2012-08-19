@@ -1,5 +1,16 @@
 # Changelog
 
+## v2.1
+
+* Add ability to ignore hidden files (GH-57)
+* Add error handler for non-JSON responses from the server (GH-48, GH-58)
+* Use strict checking with readdir() (GH-56)
+* Handle unbalanced braces properly (GH-54)
+* Fix error that occurs when no snapshot is selected on Archives page (GH-50)
+* Reduce complexity of Apache installations (GH-45)
+* Fix autoloader to only load files required by VPU (GH-46)
+* Only return child directories of test_directory (GH-44)
+
 ## v2.0
 
 * Overhaul the entire code base
