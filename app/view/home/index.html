@@ -222,55 +222,57 @@
 
       <% }) %>
 
-      <div class='row statistics'>
-        <div class='span4'>
-          <h3>Suite Statistics</h3>
+      <% if ( stats.length ) { %>
+        <div class='row statistics'>
+            <div class='span4'>
+            <h3>Suite Statistics</h3>
 
-          <h4>Failed (<%= stats.suites.failed %>/<%= stats.suites.total %>)</h4>
-          <div class="progress progress-danger">
-            <div class="bar" style="width: <%= stats.suites.percentFailed %>%"></div>
-          </div>
+            <h4>Failed (<%= stats.suites.failed %>/<%= stats.suites.total %>)</h4>
+            <div class="progress progress-danger">
+                <div class="bar" style="width: <%= stats.suites.percentFailed %>%"></div>
+            </div>
 
-          <h4>Incomplete (<%= stats.suites.incomplete %>/<%= stats.suites.total %>)</h4>
-          <div class="progress progress-warning">
-            <div class="bar" style="width: <%= stats.suites.percentIncomplete %>%"></div>
-          </div>
+            <h4>Incomplete (<%= stats.suites.incomplete %>/<%= stats.suites.total %>)</h4>
+            <div class="progress progress-warning">
+                <div class="bar" style="width: <%= stats.suites.percentIncomplete %>%"></div>
+            </div>
 
-          <h4>Skipped (<%= stats.suites.skipped %>/<%= stats.suites.total %>)</h4>
-          <div class="progress progress-info">
-            <div class="bar" style="width: <%= stats.suites.percentSkipped %>%"></div>
-          </div>
+            <h4>Skipped (<%= stats.suites.skipped %>/<%= stats.suites.total %>)</h4>
+            <div class="progress progress-info">
+                <div class="bar" style="width: <%= stats.suites.percentSkipped %>%"></div>
+            </div>
 
-          <h4>Succeeded (<%= stats.suites.succeeded %>/<%= stats.suites.total %>)</h4>
-          <div class="progress progress-success">
-            <div class="bar" style="width: <%= stats.suites.percentSucceeded %>%"></div>
-          </div>
+            <h4>Succeeded (<%= stats.suites.succeeded %>/<%= stats.suites.total %>)</h4>
+            <div class="progress progress-success">
+                <div class="bar" style="width: <%= stats.suites.percentSucceeded %>%"></div>
+            </div>
+            </div>
+
+            <div class='span4 offset1'>
+            <h3>Test Statistics</h3>
+
+            <h4>Failed (<%= stats.tests.failed %>/<%= stats.tests.total %>)</h4>
+            <div class="progress progress-danger">
+                <div class="bar" style="width: <%= stats.tests.percentFailed %>%"></div>
+            </div>
+
+            <h4>Incomplete (<%= stats.tests.incomplete %>/<%= stats.tests.total %>)</h4>
+            <div class="progress progress-warning">
+                <div class="bar" style="width: <%= stats.tests.percentIncomplete %>%"></div>
+            </div>
+
+            <h4>Skipped (<%= stats.tests.skipped %>/<%= stats.tests.total %>)</h4>
+            <div class="progress progress-info">
+                <div class="bar" style="width: <%= stats.tests.percentSkipped %>%"></div>
+            </div>
+
+            <h4>Succeeded (<%= stats.tests.succeeded %>/<%= stats.tests.total %>)</h4>
+            <div class="progress progress-success">
+                <div class="bar" style="width: <%= stats.tests.percentSucceeded %>%"></div>
+            </div>
+            </div>
         </div>
-
-        <div class='span4 offset1'>
-          <h3>Test Statistics</h3>
-
-          <h4>Failed (<%= stats.tests.failed %>/<%= stats.tests.total %>)</h4>
-          <div class="progress progress-danger">
-            <div class="bar" style="width: <%= stats.tests.percentFailed %>%"></div>
-          </div>
-
-          <h4>Incomplete (<%= stats.tests.incomplete %>/<%= stats.tests.total %>)</h4>
-          <div class="progress progress-warning">
-            <div class="bar" style="width: <%= stats.tests.percentIncomplete %>%"></div>
-          </div>
-
-          <h4>Skipped (<%= stats.tests.skipped %>/<%= stats.tests.total %>)</h4>
-          <div class="progress progress-info">
-            <div class="bar" style="width: <%= stats.tests.percentSkipped %>%"></div>
-          </div>
-
-          <h4>Succeeded (<%= stats.tests.succeeded %>/<%= stats.tests.total %>)</h4>
-          <div class="progress progress-success">
-            <div class="bar" style="width: <%= stats.tests.percentSucceeded %>%"></div>
-          </div>
-        </div>
-      </div>
+      <% } %>
 
       <% if ( errors.length ) { %>
         <h3>Errors</h3>
@@ -314,7 +316,20 @@
             $.post($form.attr('action'), $form.serialize(), function(response) {
               var template = $("#test-results").html();
 
-              response = $.parseJSON(response);
+              try {
+                response = $.parseJSON(response);
+              } catch (e) {
+                response = {
+                  errors: [],
+                  suites: [],
+                  stats: [],
+                  notifications: [{
+                    type: 'failed',
+                    title: 'Error Parsing Response From Server',
+                    message: response
+                  }]
+                };
+              }
 
               $output.fadeOut(300, function() {
                 $output.html(_.template(template, {
