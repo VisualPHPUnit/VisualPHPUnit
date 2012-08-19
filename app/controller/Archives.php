@@ -13,7 +13,7 @@ class Archives extends \app\core\Controller {
             if ( !$handler ) {
                 return compact('snapshots');
             }
-            while ( $file = readdir($handler) ) {
+            while ( ($file = readdir($handler)) !== false ) {
                 $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
                 if ( strpos($file, '.') === 0 || $ext != 'html' ) {
                     continue;
