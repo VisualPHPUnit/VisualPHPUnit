@@ -52,6 +52,10 @@ $config = array(
     // http://us3.php.net/set_error_handler
     'error_reporting' => E_ALL | E_STRICT,
 
+    // Whether or not to ignore hidden folders
+    // (i.e., folders with a '.' prefix)
+    'ignore_hidden_folders' => true,
+
     // The PHPUnit XML configuration file to use
     // (set to false to disable)
     //

@@ -23,10 +23,16 @@ class FileList extends \app\core\Controller {
             return array();
         }
 
+        $ignore_hidden = \app\lib\Library::retrieve('ignore_hidden_folders');
+
         $final_dirs = array();
         $final_files = array();
         foreach ( $files as $file ) {
-            if ( $file != '.' && $file != '..' ) {
+            $is_hidden = ( strpos($file, '.') === 0 );
+            if (
+                $file != '.' && $file != '..'
+                && (!$is_hidden || !$ignore_hidden)
+            ) {
                 $path = $dir . $file;
                 $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
                 if ( is_dir($path) ) {

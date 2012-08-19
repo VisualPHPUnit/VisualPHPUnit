@@ -114,6 +114,12 @@ If you'd like to enable error sandboxing, you will have to do the following:
 1. Within the `$config` array, change `sandbox_errors` to `true`.  If you'd like, you can keep this set as `false`, though you will have to change the 'Sandbox Errors' option to 'Yes' on the UI if you want the errors encountered during the test run to be sandboxed.
 2. Within the `$config` array, change `error_reporting` to reflect which errors you'd like to have sandboxed.  See PHP's manual entry on [error_reporting](http://php.net/manual/en/function.error-reporting.php) for more information.
 
+### Ignore Hidden Files
+
+By default, the file selector does not display hidden folders (i.e., folders with a '.' prefix).  If you'd like to display hidden folders, you will have to do the following:
+
+1.  Within the `$config` array, change `ignore_hidden_folders` to `false`.
+
 ### <a name='xml-configuration'></a>PHPUnit XML Configuration File
 
 If you'd like to use a [PHPUnit XML configuration file](http://www.phpunit.de/manual/current/en/appendixes.configuration.html) to define which tests to run, you will have to do the following:
