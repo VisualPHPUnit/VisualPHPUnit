@@ -145,11 +145,6 @@ class VPU {
             }
 
             if ( $char == '{' ) {
-                // Ensure we're only adding events to the array
-                if ( $nest == 0 && substr($str, $i, 8) != '{"event"' ) {
-                    continue;
-                }
-
                 $nest++;
                 if ( $nest == 1 ) {
                     $start_mark = $i;
