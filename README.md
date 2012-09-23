@@ -141,6 +141,12 @@ If you'd like to load any bootstraps, you will have to do the following:
 
 1. Within the `$config` array, list the paths to each of the bootstraps within the `bootstraps` array.
 
+## Keyboard Shortcuts
+
+### Home Page
+
+`t - Run Tests`
+
 ## Running VPU at the Command Line
 
 VPU can be run at the command line, making it possible to automate the generation of test results via cron.

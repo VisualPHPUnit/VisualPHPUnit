@@ -48,7 +48,7 @@
       <div class='row'>
 
         <div class='span3'>
-          <form action='./' method='post' class='well'>
+          <form id='test-container' action='./' method='post' class='well'>
             <ul class="nav nav-list">
               <li class='nav-header'>Files</li>
 
@@ -172,6 +172,7 @@
     <script src='./js/jqueryFileSelector.js'></script>
     <script src='./js/jquery.sortElements.js'></script>
     <script src='./js/bootstrap-alert.js'></script>
+    <script src='./js/jquery.hotkeys.js'></script>
 
     <script type='text/html' id='test-results'>
       <% _.each(notifications, function(notification) { %>
@@ -302,8 +303,8 @@
     <script>
       $(document).ready(function() {
 
-        $('#run-tests').click(function(event) {
-          var $form = $(this).closest('form'),
+        var runTests = function(event) {
+          var $form = $('#test-container'),
               $output = $('#test-output');
 
           event.preventDefault();
@@ -350,8 +351,10 @@
 
             });
           });
+        };
 
-        });
+        $('#run-tests').click(runTests);
+        $(document).bind('keydown.t', runTests);
 
         $('#sort').change(function() {
           switch ( $(this).val() ) {
