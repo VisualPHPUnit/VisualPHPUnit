@@ -86,7 +86,9 @@ class Request {
 
         $parsed = parse_url($this->_env['REQUEST_URI']);
 
-        $base = str_replace('\\', '/', dirname($this->_env['PHP_SELF']));
+        $base = '/' . ltrim(
+          str_replace('\\', '/', dirname($this->_env['PHP_SELF'])),
+        '/');
         $base = rtrim(str_replace('/app/public', '', $base), '/');
         $pattern = '/^' . preg_quote($base, '/') . '/';
         $this->url = '/' . trim(

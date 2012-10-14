@@ -83,6 +83,19 @@ When that's done, restart your web server, and then point your browser at the se
 
 VPU comes with .htaccess files, so you won't have to worry about configuring anything.  Simply point your browser at the location where you installed the code!
 
+#### Troubleshooting
+
+1. Make sure `mod_rewrite` is enabled.
+2. Make sure `AllowOverride` in your `httpd.conf` is set to `all`.
+3. If you're using WAMP, you'll need to adjust the two `.htaccess` files to reflect the location where you extracted VPU.  (In this example, VPU has been extracted to `C:\wamp\www\vpu`, where `C:/wamp/www/` has been set as the `DocumentRoot` in `httpd.conf`.)
+  - In the `.htaccess` file located at the root of the repository, add the following line after line 2:
+    ```
+    RewriteBase /vpu
+    ```
+  - In `app/public/.htaccess`, add the following line after line 2:
+    ```
+    RewriteBase /vpu/app/public
+
 ## Project Configuration (optional)
 
 VPU comes with many of its features disabled by default.  In order to take advantage of them, you'll have to modify a few more lines in `app/config/bootstrap.php`.
