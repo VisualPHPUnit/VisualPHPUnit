@@ -89,12 +89,9 @@ VPU comes with .htaccess files, so you won't have to worry about configuring any
 2. Make sure `AllowOverride` in your `httpd.conf` is set to `all`.
 3. If you're using WAMP, you'll need to adjust the two `.htaccess` files to reflect the location where you extracted VPU.  (In this example, VPU has been extracted to `C:\wamp\www\vpu`, where `C:/wamp/www/` has been set as the `DocumentRoot` in `httpd.conf`.)
   - In the `.htaccess` file located at the root of the repository, add the following line after line 2:
-    ```
-    RewriteBase /vpu
-    ```
+    `RewriteBase /vpu`
   - In `app/public/.htaccess`, add the following line after line 2:
-    ```
-    RewriteBase /vpu/app/public
+    `RewriteBase /vpu/app/public`
 
 ## Project Configuration (optional)
 
