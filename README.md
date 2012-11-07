@@ -45,8 +45,23 @@ While no longer actively supported, v1.x can be found on its [own branch](https:
 3. Open `app/config/bootstrap.php` with your favorite editor.
     1. Within the `$config` array, change `pear_path` so that it points to the directory where PEAR is located.
     2. Within the `$config` array, change `test_directory` so that it points to the root directory where your unit tests are stored.
+4. Configure your web server (see below).
 
 ## Web Server Configuration
+
+### Apache
+
+VPU comes with .htaccess files, so you won't have to worry about configuring anything.  Simply point your browser at the location where you installed the code!
+
+#### Troubleshooting
+
+1. Make sure `mod_rewrite` is enabled.
+2. Make sure `AllowOverride` in your `httpd.conf` is set to `all`.
+3. If you're using WAMP, you'll need to adjust the two `.htaccess` files to reflect the location where you extracted VPU.  (In this example, VPU has been extracted to `C:\wamp\www\vpu`, where `C:/wamp/www/` has been set as the `DocumentRoot` in `httpd.conf`.)
+  - In the `.htaccess` file located at the root of the repository, add the following line after line 2:
+    `RewriteBase /vpu`
+  - In `app/public/.htaccess`, add the following line after line 2:
+    `RewriteBase /vpu/app/public`
 
 ### nginx
 
@@ -78,20 +93,6 @@ Place this code block within the `http {}` block in your `nginx.conf` file:
 Note that you will have to change the `server_name` to the name you use in your hosts file. You will also have to adjust the directories according to where you installed the code. In this configuration, /srv/http/vpu/ is the project root. The public-facing part of VisualPHPUnit, however, is located in app/public within the project root (so in this example, it's /srv/http/vpu/app/public).
 
 When that's done, restart your web server, and then point your browser at the server name you chose above!
-
-### Apache
-
-VPU comes with .htaccess files, so you won't have to worry about configuring anything.  Simply point your browser at the location where you installed the code!
-
-#### Troubleshooting
-
-1. Make sure `mod_rewrite` is enabled.
-2. Make sure `AllowOverride` in your `httpd.conf` is set to `all`.
-3. If you're using WAMP, you'll need to adjust the two `.htaccess` files to reflect the location where you extracted VPU.  (In this example, VPU has been extracted to `C:\wamp\www\vpu`, where `C:/wamp/www/` has been set as the `DocumentRoot` in `httpd.conf`.)
-  - In the `.htaccess` file located at the root of the repository, add the following line after line 2:
-    `RewriteBase /vpu`
-  - In `app/public/.htaccess`, add the following line after line 2:
-    `RewriteBase /vpu/app/public`
 
 ## Project Configuration (optional)
 
@@ -184,9 +185,9 @@ bin/vpu
 
 Current stable release is v2.1, last updated on August 19, 2012.
 
-## Feedback
+## Contributing
 
-Feel free to send any feedback you may have regarding this project to NSinopoli@gmail.com.
+Please use the project's [issue tracker](https://github.com/NSinopoli/VisualPHPUnit/issues) to report any issues you may have.
 
 ## Credits
 
