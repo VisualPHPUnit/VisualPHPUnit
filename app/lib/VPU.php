@@ -421,17 +421,10 @@ class VPU {
         }
         $new_classes = get_declared_classes();
         $tests = array_diff($new_classes, $original_classes);
-        $parent_class = 'PHPUnit_Framework_TestCase';
         foreach ( $tests as $test ) {
-            $classname = $this->_classname_only($test);
-            if (
-                $classname == $parent_class
-                || !is_subclass_of($classname, $parent_class)
-            ) {
-                continue;
+            if ( is_subclass_of($test, 'PHPUnit_Framework_TestCase') ) {
+                $suite->addTestSuite($test);
             }
-
-            $suite->addTestSuite($test);
         }
 
         $result = new \PHPUnit_Framework_TestResult();
