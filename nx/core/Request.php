@@ -80,10 +80,6 @@ class Request {
             $this->_env['HTTPS'] = false;
         }
 
-        $this->_env['PHP_SELF'] = str_replace('\\', '/', str_replace(
-            $this->_env['DOCUMENT_ROOT'], '', $this->_env['SCRIPT_FILENAME']
-        ));
-
         $parsed = parse_url($this->_env['REQUEST_URI']);
 
         $base = '/' . ltrim(
