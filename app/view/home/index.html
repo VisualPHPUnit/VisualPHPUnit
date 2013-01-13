@@ -314,41 +314,46 @@
               "<div class='loader'><img src='./img/ajax-loader.gif'></div>"
             ).fadeIn(300);
 
-            $.post($form.attr('action'), $form.serialize(), function(response) {
-              var template = $("#test-results").html();
+            $.ajax({
+              type: 'POST',
+              url: $form.attr('action'),
+              data: $form.serialize(),
+              complete: function(xhr) {
+                var response = xhr.responseText,
+                    template = $("#test-results").html();
 
-              try {
-                response = $.parseJSON(response);
-              } catch (e) {
-                response = {
-                  errors: [],
-                  suites: [],
-                  stats: [],
-                  notifications: [{
-                    type: 'failed',
-                    title: 'Error Parsing Response From Server',
-                    message: response
-                  }]
-                };
-              }
+                try {
+                  response = $.parseJSON(response);
+                } catch (e) {
+                  response = {
+                    errors: [],
+                    suites: [],
+                    stats: [],
+                    notifications: [{
+                      type: 'failed',
+                      title: 'Error Parsing Response From Server',
+                      message: response
+                    }]
+                  };
+                }
 
-              $output.fadeOut(300, function() {
-                $output.html(_.template(template, {
-                  errors: response.errors,
-                  notifications: response.notifications,
-                  suites: response.suites,
-                  stats: response.stats
-                }));
+                $output.fadeOut(300, function() {
+                  $output.html(_.template(template, {
+                    errors: response.errors,
+                    notifications: response.notifications,
+                    suites: response.suites,
+                    stats: response.stats
+                  }));
 
-                $('#sort').triggerHandler('change');
+                  $('#sort').triggerHandler('change');
 
-                $output.fadeIn(300, function() {
-                  $('.display-suite').each(function(index, element) {
-                    $(element).triggerHandler('click');
+                  $output.fadeIn(300, function() {
+                    $('.display-suite').each(function(index, element) {
+                      $(element).triggerHandler('click');
+                    });
                   });
                 });
-              });
-
+              }
             });
           });
         };
