@@ -53,7 +53,7 @@
                 $parent = $this.parent(),
                 $children = $this.children(),
                 selector,
-                nearest;
+                $nearest;
 
             event.preventDefault();
 
