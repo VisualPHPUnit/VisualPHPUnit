@@ -396,7 +396,7 @@ class VPU {
 
             $ext = strtolower(pathinfo($test, PATHINFO_EXTENSION));
             if ( file_exists($test) && $ext == 'php' )  {
-                $collection[] = $test;
+                $collection[] = realpath($test);
             }
         }
         // Avoid returning duplicates
