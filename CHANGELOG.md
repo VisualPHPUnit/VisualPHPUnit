@@ -1,5 +1,20 @@
 # Changelog
 
+## v2.1.1
+
+* Don't allow duplicate files if the parent folder is selected (GH-90)
+* Pad snapshot time with zero for better sorting (GH-87)
+* Only collect JSON when using XML configuration files (GH-84)
+* Show server error if AJAX request fails (GH-83)
+* Don't rewrite PHP_SELF (GH-80)
+* Use namespace when checking if tests are subclasses of PHPUnit_Framework_TestCase (GH-78)
+* Fix WAMP routing issues (GH-53)
+* Implement keyboard shortcuts (GH-67)
+* Fix output parsing to handle pretty-printed JSON (GH-65)
+* Fix display of statistics (GH-63)
+* Clarify directory selection key combination (GH-60)
+* Check if tests are subclasses of PHPUnit_Framework_TestCase (GH-59)
+
 ## v2.1
 
 * Add ability to ignore hidden files (GH-57)

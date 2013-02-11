@@ -183,7 +183,7 @@ bin/vpu
 
 ## Version Information
 
-Current stable release is v2.1, last updated on August 19, 2012.
+Current stable release is v2.1.1, last updated on February 11, 2013.
 
 ## Contributing
 
