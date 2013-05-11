@@ -40,9 +40,13 @@ class Home extends \app\core\Controller {
     // GET/POST
     public function index($request) {
         if ( $request->is('get') ) {
-            $test_directory = str_replace(
-                '\\', '/', realpath(\app\lib\Library::retrieve('test_directory'))
-            );
+            $normalize_path = function($path) {
+                return str_replace('\\', '/', realpath($path));
+            };
+            $test_directories = json_encode(array_map(
+                $normalize_path, \app\lib\Library::retrieve('test_directories')
+            ));
+
             $suites = array();
             $stats = array();
             $store_statistics = \app\lib\Library::retrieve('store_statistics');
@@ -55,7 +59,7 @@ class Home extends \app\core\Controller {
                 'stats',
                 'store_statistics',
                 'suites',
-                'test_directory',
+                'test_directories',
                 'use_xml'
             );
         }

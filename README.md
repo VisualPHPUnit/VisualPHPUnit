@@ -44,7 +44,7 @@ While no longer actively supported, v1.x can be found on its [own branch](https:
 2. Change the permissions of `app/resource/cache` to `777`.
 3. Open `app/config/bootstrap.php` with your favorite editor.
     1. Within the `$config` array, change `pear_path` so that it points to the directory where PEAR is located.
-    2. Within the `$config` array, change `test_directory` so that it points to the root directory where your unit tests are stored.
+    2. Within the `$config` array, change the contents of `test_directories` to reflect the location(s) of your unit tests. Note that each directory acts as a root directory.
 4. Configure your web server (see below).
 
 ## Web Server Configuration

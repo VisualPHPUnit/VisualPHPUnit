@@ -404,7 +404,7 @@
             });
             $('#test-files').val(tests.slice(0, -1));
           },
-          root: '<?=$test_directory;?>',
+          roots: <?php echo $test_directories; ?>,
           serverEndpoint: './file-list'
         });
       });

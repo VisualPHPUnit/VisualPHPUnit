@@ -6,7 +6,7 @@
         callback: function() {},
         collapseSpeed: 500,
         expandSpeed: 500,
-        root: '/',
+        roots: ['/'],
         serverEndpoint: '/'
       }, options);
 
@@ -14,7 +14,7 @@
 
         function buildTree($fileSelector, dir, isActive) {
           $.get(options.serverEndpoint, {dir: dir}, function(response) {
-            var classAttr = ( dir == options.root ) ? " nav" : '',
+            var classAttr = ( $.inArray(dir, options.roots) ) ? " nav" : '',
                 html = "<ul class='nav-list" + classAttr + "' " +
                   "style='display: none;'>";
 
@@ -35,15 +35,16 @@
             });
 
             html += '</ul>';
-            $fileSelector.append(html);
+            var $ul = $(html);
+            $fileSelector.append($ul);
 
-            if ( dir == options.root ) {
+            if ( $.inArray(dir, options.roots) ) {
               $fileSelector.find('ul:hidden').show();
             } else {
               $fileSelector.find('ul:hidden').slideDown(options.expandSpeed);
             }
 
-            bindTree($fileSelector);
+            bindTree($ul);
           });
         }
 
@@ -98,8 +99,11 @@
           });
         }
 
-        options.root = encodeURIComponent(options.root);
-        buildTree($(this), options.root);
+        var length = options.roots.length;
+        var $self = $(this);
+        for ( var i = 0; i < length; i++ ) {
+          buildTree($self, encodeURIComponent(options.roots[i]));
+        }
       });
     }
   });

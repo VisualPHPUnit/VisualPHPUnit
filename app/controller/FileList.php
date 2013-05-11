@@ -11,8 +11,20 @@ class FileList extends \app\core\Controller {
         }
 
         $dir = realpath(urldecode($request->query['dir']));
-        $test_dir = realpath(\app\lib\Library::retrieve('test_directory'));
-        if ( !$dir || strpos($dir, $test_dir) !== 0 ) {
+        if ( !$dir ) {
+            return array();
+        }
+
+        $test_directories = \app\lib\Library::retrieve('test_directories');
+        $valid_dir = false;
+        foreach ( $test_directories as $test_directory ) {
+            if ( strpos($dir, realpath($test_directory)) === 0 ) {
+                $valid_dir = true;
+                break;
+            }
+        }
+
+        if ( !$valid_dir ) {
             return array();
         }
 

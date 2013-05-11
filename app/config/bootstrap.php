@@ -8,8 +8,10 @@ $config = array(
     // The directory where PEAR is located
     'pear_path'      => '/usr/share/pear',
 
-    // The directory where the tests reside
-    'test_directory' => "{$root}/app/test",
+    // The directories where the tests reside
+    'test_directories' => array(
+        "{$root}/app/test"
+    ),
 
 
     /* Optional */
