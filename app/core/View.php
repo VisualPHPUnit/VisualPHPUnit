@@ -49,6 +49,13 @@ class View {
         $options = compact('path');
         $__template__ = $compiler::compile($file, $options);
 
+        if ( !$__template__ ) {
+            throw new \RuntimeException(
+                'Could not write cache file. Please ensure that the '
+                . "permissions of {$path} are correct."
+            );
+        }
+
         if ( is_array($vars) ) {
             extract($vars);
         }
