@@ -445,14 +445,44 @@ class VPU {
     }
 
    /**
+    * Checks that the provided XML configuration file contains the necessary
+    * JSON listener.
+    *
+    * @param string $xml_config    The path to the PHPUnit XML configuration
+    *                              file.
+    * @access protected
+    * @return void
+    */
+    protected function _check_xml_configuration($xml_config) {
+        $configuration = \PHPUnit_Util_Configuration::getInstance($xml_config);
+        $listeners = $configuration->getListenerConfiguration();
+
+        $required_listener = 'PHPUnit_Util_Log_JSON';
+        $found = false;
+        foreach ( $listeners as $listener ) {
+            if ( $listener['class'] === $required_listener ) {
+                $found = true;
+                break;
+            }
+        }
+        if ( !$found ) {
+            throw new \DomainException(
+                "XML Configuration file doesn't contain the required " .
+                "{$required_listener} listener."
+            );
+        }
+    }
+
+   /**
     * Runs PHPUnit with the supplied XML configuration file.
     *
-    * @param mixed $xml_config    The path to the PHPUnit XML configuration
-    *                             file.
+    * @param string $xml_config    The path to the PHPUnit XML configuration
+    *                              file.
     * @access public
     * @return string
     */
     public function run_with_xml($xml_config) {
+        $this->_check_xml_configuration($xml_config);
         $command = new \PHPUnit_TextUI_Command();
 
         // We need to temporarily turn off html_errors to ensure correct
