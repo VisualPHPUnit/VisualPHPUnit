@@ -1,5 +1,12 @@
 # Changelog
 
+## v2.2
+
+* Add CLI switches to allow config overrides (GH-93)
+* Add support for multiple XML files (GH-93)
+* Allow for multiple test directories to be specified (GH-93)
+* Throw exception if cache permissions are incorrect (GH-96)
+
 ## v2.1.1
 
 * Don't allow duplicate files if the parent folder is selected (GH-90)

@@ -180,7 +180,7 @@ bin/vpu --xml_configuration_file app/config/phpunit.xml --snapshot_directory app
 
 ## Version Information
 
-Current stable release is v2.1.1, last updated on February 11, 2013.
+Current stable release is v2.2, last updated on May 11, 2013.
 
 ## Contributing
 
