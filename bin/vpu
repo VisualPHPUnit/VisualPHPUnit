@@ -2,17 +2,35 @@
 <?php
     require dirname(__DIR__) . '/app/config/bootstrap.php';
 
-    $xml_config = \app\lib\Library::retrieve('xml_configuration_file');
+    $opts  = array(
+        'f:'  => 'xml_configuration_file:',
+        'd::' => 'snapshot_directory::',
+        'e::' => 'sandbox_errors::',
+        's::' => 'store_statistics::'
+    );
+    $options = getopt(implode(array_keys($opts)), array_values($opts));
+
+    if ( isset($options['f']) ) {
+        $xml_config = $options['f'];
+    } elseif ( isset($options['xml_configuration_file']) ) {
+        $xml_config = $options['xml_configuration_file'];
+    } else {
+        $xml_config = false;
+    }
     if ( !$xml_config || !$xml_config = realpath($xml_config) ) {
         die(
-            "\nA valid xml_configuration_file must be specified in "
-            . "app/config/bootstrap.php for VPU to work."
+            "A valid xml_configuration_file must be specified "
+            . "[-f|--xml_configuration_file] for VPU to work.\n"
         );
     }
 
     $vpu = new \app\lib\VPU();
 
-    $sandbox_errors = \app\lib\Library::retrieve('sandbox_errors');
+    if ( isset($options['e']) || isset($options['sandbox_errors']) ) {
+        $sandbox_errors = true;
+    } else {
+        $sandbox_errors = \app\lib\Library::retrieve('sandbox_errors');
+    }
     if ( $sandbox_errors ) {
         error_reporting(\app\lib\Library::retrieve('error_reporting'));
         set_error_handler(array($vpu, 'handle_errors'));
@@ -30,16 +48,23 @@
     $errors = $vpu->get_errors();
     $to_view = compact('suites', 'stats', 'errors');
 
-    $filename = realpath(
-        \app\lib\Library::retrieve('snapshot_directory')
-    ) . '/' . date('Y-m-d_H-i') . '.html';
+    if ( isset($options['d']) ) {
+        $filename = $options['d'];
+        $snapshot_error = '[-d]';
+    } elseif ( isset($options['snapshot_directory']) ) {
+        $filename = $options['snapshot_directory'];
+        $snapshot_error = '[--snapshot_directory]';
+    } else {
+        $filename = \app\lib\Library::retrieve('snapshot_directory');
+        $snapshot_error = 'the snapshot_directory in app/config/bootstrap.php';
+    }
+    $filename = realpath($filename) . '/' . date('Y-m-d_H-i') . '.html';
 
     $handle = @fopen($filename, 'a');
     if ( !$handle ) {
         die(
-            "\nThere was an error creating the snapshot.  Please ensure that "
-            . "the snapshot_directory in app/config/bootstrap.php exists and "
-            . "has the proper permissions."
+            "There was an error creating the snapshot.  Please ensure that "
+            . "{$snapshot_error} exists and has the proper permissions.\n"
         );
     }
 
@@ -49,9 +74,13 @@
     fwrite($handle, $contents);
     fclose($handle);
 
-    echo "\nSnapshot successfully created at {$filename}.";
+    echo "Snapshot successfully created at {$filename}.\n";
 
-    $store_statistics = \app\lib\Library::retrieve('store_statistics');
+    if ( isset($options['s']) || isset($options['store_statistics']) ) {
+        $store_statistics = true;
+    } else {
+        $store_statistics = \app\lib\Library::retrieve('store_statistics');
+    }
     if ( !$store_statistics ) {
         exit;
     }
@@ -60,8 +89,8 @@
     $db = new $db_options['plugin']();
     if ( !$db->connect($db_options) ) {
         die(
-            "\nThere was an error connecting to the database:\n"
-            . implode(' ', $db->get_errors())
+            "There was an error connecting to the database:\n"
+            . implode(' ', $db->get_errors()) . "\n"
         );
     }
 
@@ -77,12 +106,12 @@
         $table = ucfirst(rtrim($key, 's')) . 'Result';
         if ( !$db->insert($table, $data) ) {
             die(
-                "\nThere was an error inserting a record into the database:\n"
-                . implode(' ', $db->get_errors())
+                "There was an error inserting a record into the database:\n"
+                . implode(' ', $db->get_errors()) . "\n"
             );
         }
     }
 
-    echo "\nThe statistics generated during this test run were successfully "
-        . "stored.";
+    echo "The statistics generated during this test run were successfully "
+        . "stored.\n";
 ?>

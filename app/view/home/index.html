@@ -98,16 +98,20 @@
                 </select>
               </li>
               <li>
-                <label for='use_xml' class='options-description'>
+                <label for='xml_configuration_file'>
                   <i class='icon-wrench'></i>
-                  Use XML Config
+                  XML Configuration File
                 </label>
-                <select id='use_xml' name='use_xml' class='test-options'>
-                  <option value='0'>No</option>
-                  <option value='1' <?php if ( $use_xml ) echo "selected='selected'"; ?>>Yes</option>
+              </li>
+              <li>
+                <select id='xml_configuration_file' name='xml_configuration_file'>
+                  <option value='0' selected='selected'>None</option>
+                <?php foreach ( $xml_configuration_files as $index => $xml_configuration_file ): ?>
+                    <option value='<?=($index + 1);?>'><?=$xml_configuration_file;?></option>
+                <?php endforeach; ?>
                 </select>
                 <p class='help-block'>
-                  Note that setting this to "Yes" will cause VPU to ignore the tests selected above and use the tests specified in the XML file instead.
+                  Note that choosing an XML configuration file will cause VPU to ignore the tests selected above and use the tests specified in the XML file instead.
                 </p>
               </li>
 

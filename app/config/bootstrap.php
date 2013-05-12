@@ -58,13 +58,15 @@ $config = array(
     // (i.e., folders with a '.' prefix)
     'ignore_hidden_folders' => true,
 
-    // The PHPUnit XML configuration file to use
-    // (set to false to disable)
+    // The PHPUnit XML configuration files to use
+    // (leave empty to disable)
     //
-    // In order for VPU to function correctly, the configuration file must
+    // In order for VPU to function correctly, the configuration files must
     // contain a JSON listener (see the README for more information)
-    'xml_configuration_file' => false,
-    //'xml_configuration_file' => "{$root}/app/config/phpunit.xml",
+    'xml_configuration_files' => array(),
+    //'xml_configuration_files' => array(
+    //    "{$root}/app/config/phpunit.xml"
+    //),
 
     // Paths to any necessary bootstraps
     'bootstraps' => array(

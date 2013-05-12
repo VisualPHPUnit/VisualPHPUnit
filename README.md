@@ -135,9 +135,8 @@ By default, the file selector does not display hidden folders (i.e., folders wit
 
 If you'd like to use a [PHPUnit XML configuration file](http://www.phpunit.de/manual/current/en/appendixes.configuration.html) to define which tests to run, you will have to do the following:
 
-1. Within the `$config` array, change `xml_configuration_file` to the path where the configuration file can be found.
-    - Note that if you leave this set to `false`, but select 'Yes' for the 'Use XML Config' option on the UI, VPU will complain and run with the tests chosen in the file selector instead.
-2. Modify your PHPUnit XML configuration file to include this block:
+1. Within the `$config` array, change `xml_configuration_files` to reflect the location(s) where the configuration file(s) can be found.
+2. Modify your PHPUnit XML configuration file(s) to include this block:
 
 ```xml
        <!-- This is required for VPU to work correctly -->
@@ -162,24 +161,22 @@ If you'd like to load any bootstraps, you will have to do the following:
 
 VPU can be run at the command line, making it possible to automate the generation of test results via cron.
 
-### Configuration
-
-The CLI script requires that the `xml_configuration_file` setting within the `$config` array of `app/config/bootstrap.php` be properly set.  VPU will run the tests specified in the XML configuration file.  Please be sure that the [configuration file](#xml-configuration) contains the required JSON listener.
-
-In order to [save](#snapshots) the test results, the CLI script also requires that the `snapshot_directory` setting within the `$config` array of `app/config/bootstrap.php` be properly set.  Note that the value of `create_snapshots` within the `$config` array has no effect on the CLI script.
-
-Errors will be [sandboxed](#sandboxing) if `sandbox_errors` is set to `true` within the `$config` array of `app/config/bootstrap.php`.
-
-Test statistics will be stored if `store_statistics` is set to `true` within the `$config` array of `app/config/bootstrap.php`.  Make sure that the [database](#graph-generation) is configured correctly.
-
-### Executing
-
-VPU can be executed from the command line using the following command:
+### Usage
 
 ```bash
 # from the project root
-bin/vpu
+bin/vpu --xml_configuration_file app/config/phpunit.xml --snapshot_directory app/history -e -s
 ```
+
+### Options
+
+-f, --xml_configuration_file: The path to the [XML configuration file](#xml-configuration). Required. Please be sure that the [configuration file](#xml-configuration) contains the required JSON listener.
+
+-d, --snapshot_directory: The path where the [snapshot](#snapshots) should be stored. Optional. Defaults to the value of `snapshot_directory` within the `$config` array of `app/config/bootstrap`.
+
+-e, --sandbox_errors: Whether or not to [sandbox](#sandboxing) PHP errors. Optional. Defaults to the value of `sandbox_errors` within the `$config` array of `app/config/bootstrap`.
+
+-s, --store_statistics: Whether or not to store the statistics in a database. Optional. Defaults to the value of `store_statistics` within the `$config` array of `app/config/bootstrap`. Make sure that the [database](#graph-generation) is configured correctly.
 
 ## Version Information
 

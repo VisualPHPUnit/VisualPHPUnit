@@ -52,7 +52,9 @@ class Home extends \app\core\Controller {
             $store_statistics = \app\lib\Library::retrieve('store_statistics');
             $create_snapshots = \app\lib\Library::retrieve('create_snapshots');
             $sandbox_errors = \app\lib\Library::retrieve('sandbox_errors');
-            $use_xml = \app\lib\Library::retrieve('xml_configuration_file');
+            $xml_configuration_files = \app\lib\Library::retrieve(
+                'xml_configuration_files'
+            );
             return compact(
                 'create_snapshots',
                 'sandbox_errors',
@@ -60,7 +62,7 @@ class Home extends \app\core\Controller {
                 'store_statistics',
                 'suites',
                 'test_directories',
-                'use_xml'
+                'xml_configuration_files'
             );
         }
 
@@ -75,8 +77,9 @@ class Home extends \app\core\Controller {
         $xml_config = false;
 
         $notifications = array();
-        if ( $request->data['use_xml'] ) {
-            $xml_config = \app\lib\Library::retrieve('xml_configuration_file');
+        if ( $xml_file_index = $request->data['xml_configuration_file'] ) {
+            $files = \app\lib\Library::retrieve('xml_configuration_files');
+            $xml_config = $files[$xml_file_index - 1];
             if ( !$xml_config || !$xml_config = realpath($xml_config) ) {
                 $notifications[] = array(
                     'type'    => 'failed',
