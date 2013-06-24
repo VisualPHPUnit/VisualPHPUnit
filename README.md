@@ -182,10 +182,6 @@ bin/vpu --xml_configuration_file app/config/phpunit.xml --snapshot_directory app
 
 Current stable release is v2.2, last updated on May 11, 2013.
 
-## Contributing
-
-Please use the project's [issue tracker](https://github.com/NSinopoli/VisualPHPUnit/issues) to report any issues you may have.
-
 ## Credits
 
 Special thanks to Matt Mueller (http://mattmueller.me/blog/), who came up with the initial concept, wrote the original code (https://github.com/MatthewMueller/PHPUnit-Test-Report), and was kind enough to share it.
