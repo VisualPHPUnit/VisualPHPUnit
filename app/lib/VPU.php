@@ -278,7 +278,7 @@ class VPU {
             print_r(array_slice($stack, 0, -2));
         }
         $trace = trim(ob_get_contents());
-        ob_end_clean();
+        if (ob_get_length()) ob_end_clean();
 
         return $trace;
     }
@@ -428,7 +428,7 @@ class VPU {
         }
 
         $result = new \PHPUnit_Framework_TestResult();
-        $result->addListener(new \PHPUnit_Util_Log_JSON());
+        $result->addListener(new \PHPUnit_Util_Log_JSON("/tmp/res.json"));
 
         // We need to temporarily turn off html_errors to ensure correct
         // parsing of test debug output
@@ -437,8 +437,9 @@ class VPU {
 
         ob_start();
         $suite->run($result);
-        $results = ob_get_contents();
-        ob_end_clean();
+        //$results = ob_get_contents();
+        $results = file_get_contents("/tmp/res.json");
+        if (ob_get_length()) ob_end_clean();
 
         ini_set('html_errors', $html_errors);
         return $results;
@@ -493,7 +494,7 @@ class VPU {
         ob_start();
         $command->run(array('--configuration', $xml_config, '--stderr'), false);
         $results = ob_get_contents();
-        ob_end_clean();
+        if (ob_get_length()) ob_end_clean();
 
         ini_set('html_errors', $html_errors);
 

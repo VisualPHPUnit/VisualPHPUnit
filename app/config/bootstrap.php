@@ -5,12 +5,12 @@ $root = dirname(dirname(__DIR__));
 $config = array(
     /* Required */
 
-    // The directory where PEAR is located
-    'pear_path'      => '/usr/share/pear',
+    // The directory where Composer vendor is located (the one that phpunit was required into)
+    'composer_vendor_path' => $root . '/../vendor',
 
     // The directories where the tests reside
     'test_directories' => array(
-        "{$root}/app/test"
+        "{$root}/app/test",
     ),
 
 
@@ -63,7 +63,10 @@ $config = array(
     //
     // In order for VPU to function correctly, the configuration files must
     // contain a JSON listener (see the README for more information)
-    'xml_configuration_files' => array(),
+    'xml_configuration_files' => array(
+	    
+	    
+    ),
     //'xml_configuration_files' => array(
     //    "{$root}/app/config/phpunit.xml"
     //),
@@ -71,17 +74,19 @@ $config = array(
     // Paths to any necessary bootstraps
     'bootstraps' => array(
         // '/path/to/bootstrap.php'
+        
     )
 );
 
 set_include_path(
     get_include_path()
     . PATH_SEPARATOR . $root
-    . PATH_SEPARATOR . $config['pear_path']
+    . PATH_SEPARATOR . $config['composer_vendor_path']
+	. PATH_SEPARATOR . $config['composer_vendor_path'] . '/phpunit/phpunit/src'
 );
 
-require_once 'PHPUnit/Autoload.php';
-require_once 'PHPUnit/Util/Log/JSON.php';
+require_once 'autoload.php';
+require_once 'Util/Log/JSON.php';
 
 spl_autoload_register(function($class) use ($root) {
     $class = str_replace('\\', '/', $class);
