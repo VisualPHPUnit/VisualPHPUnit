@@ -41,9 +41,12 @@ While no longer actively supported, v1.x can be found on its [own branch](https:
 ## Installation
 
 1. Download and extract (or git clone) the project to a web-accessible directory.
-2. Change the permissions of `app/resource/cache` to `777`.
+2. Change the permissions of `app/resource/cache` to `777` or give the Apache user write access another way.
+3. If you have not already installed PHPUnit via Composer, do so using the following command:
+	1. cd /path/to/VisualPHPUnit/../
+	2. composer require phpunit/phpunit
 3. Open `app/config/bootstrap.php` with your favorite editor.
-    1. Within the `$config` array, change `pear_path` so that it points to the directory where PEAR is located.
+    1. Within the `$config` array, change `composer_vendor_path` so that it points to the Composer vendor directory where PHPUnit is located (if installed with the above step, this shouldn't need to be edited)
     2. Within the `$config` array, change the contents of `test_directories` to reflect the location(s) of your unit tests. Note that each directory acts as a root directory.
 4. Configure your web server (see below).
 
@@ -97,6 +100,14 @@ When that's done, restart your web server, and then point your browser at the se
 ## Project Configuration (optional)
 
 VPU comes with many of its features disabled by default.  In order to take advantage of them, you'll have to modify a few more lines in `app/config/bootstrap.php`.
+
+## Using VisualPHPUnit with Laravel
+
+It's simple to use VisualPHPUnit with Laravel. Assuming you have successfully installed with the above instructions, and the sample tests run, you need only do the following:
+
+1. In `app/config/bootstrap.php` add the path to your Laravel project's tests directory to the `test_directories` array (eg: '/var/www/laravel/tests')
+2. In `app/config/bootstrap.php` add your Laravel project's autoload.php to the `bootstraps` array (eg: '/var/www/laravel/bootstrap/autoload.php')
+3. Now reload VisualPHPUnit and run the tests from your Laravel project.
 
 ### <a name='graph-generation'></a>Graph Generation
 
