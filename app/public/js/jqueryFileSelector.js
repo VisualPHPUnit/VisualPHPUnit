@@ -12,29 +12,40 @@
 
       return this.each(function() {
 
-        function buildTree($fileSelector, dir, isActive) {
+        function buildTree($fileSelector, dir, isActive, isSubdir) {
           $.get(options.serverEndpoint, {dir: dir}, function(response) {
-            var classAttr = ( $.inArray(dir, options.roots) ) ? " nav" : '',
-                html = "<ul class='nav-list" + classAttr + "' " +
-                  "style='display: none;'>";
-
             response = $.parseJSON(response);
-
-            $.each(response, function(index, file) {
-              var icon = ( file.type == 'directory' )
-                ? 'icon-folder-close'
-                : 'icon-file';
-              var classAttr = ( isActive ) ? ' active' : '';
-
-              html += "<li class='" + file.type + classAttr + "'>" +
-                        "<a href='#' data-path='" + file.path + "'>" +
-                          "<i class='" + icon + "'></i>" +
-                          file.name +
-                        '</a>' +
-                      '</li>';
-            });
+            var classAttr = ( $.inArray(dir, options.roots) ) ? " nav" : '',
+                html = "<ul class='nav-list"  + classAttr + "' " +
+                  "style='display: none;'>";
+                 
+            if(!isSubdir){
+				html += "<li class='directory'>" +
+                    "<a href='#' data-path='" + decodeURIComponent(dir) + "'>" +
+                      "<i class='icon-folder-close'></i>" +
+                      response.name +
+                    '</a>' +
+                  '</li>';
+            }else{           
+	            $.each(response.results, function(index, file) {
+	              var icon = ( file.type == 'directory' )
+	                ? 'icon-folder-close'
+	                : 'icon-file';
+	              var classAttr = ( isActive ) ? ' active' : '';
+	
+	              html += "<li class='" + file.type + classAttr + "'>" +
+	                        "<a href='#' data-path='" + file.path + "'>" +
+	                          "<i class='" + icon + "'></i>" +
+	                          file.name +
+	                        '</a>' +
+	                      '</li>';
+	            });
+            }
 
             html += '</ul>';
+            
+
+            
             var $ul = $(html);
             $fileSelector.append($ul);
 
@@ -49,7 +60,7 @@
         }
 
         function bindTree($fileSelector) {
-          $fileSelector.find('li a').bind('click', function(event) {
+          $fileSelector.find(' li a').bind('click', function(event) {
             var $this = $(this),
                 $parent = $this.parent(),
                 $children = $this.children(),
@@ -69,7 +80,8 @@
                   buildTree(
                     $parent,
                     encodeURIComponent($this.attr('data-path')),
-                    $parent.hasClass('active')
+                    $parent.hasClass('active'),
+                    true
                   );
                   $children.removeClass().addClass('icon-folder-open');
                 } else {
@@ -100,6 +112,7 @@
         }
 
         var length = options.roots.length;
+        console.log(options.roots);
         var $self = $(this);
         for ( var i = 0; i < length; i++ ) {
           buildTree($self, encodeURIComponent(options.roots[i]));

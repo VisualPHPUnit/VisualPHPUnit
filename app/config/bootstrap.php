@@ -10,7 +10,8 @@ $config = array(
 
     // The directories where the tests reside
     'test_directories' => array(
-        "{$root}/app/test",
+        'Sample Tests' => "{$root}/app/test",
+        //'My Project' => '/var/www/sites/my.awesome.site.com/laravel/tests',
     ),
 
 
@@ -73,8 +74,8 @@ $config = array(
 
     // Paths to any necessary bootstraps
     'bootstraps' => array(
-        // '/path/to/bootstrap.php'
-        
+        // '/path/to/bootstrap.php',
+        //'/var/www/sites/my.awesome.site.com/laravel/bootstrap/autoload.php',
     )
 );
 
