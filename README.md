@@ -10,6 +10,10 @@ VisualPHPUnit is a visual front-end for PHPUnit.  It offers the following featur
 * Sandboxing of PHP errors
 * The ability to generate test results from both a browser and the command line
 
+## This Project Is No Longer Maintained
+
+If you are interested in assuming control over this project, please leave a comment [here](https://github.com/NSinopoli/VisualPHPUnit/issues/94).
+
 ## Screenshots
 
 ![Screenshot of VisualPHPUnit, displaying a breakdown of test results.](http://nsinopoli.github.com/VisualPHPUnit/vpu2_main.png "VisualPHPUnit Test Results")
