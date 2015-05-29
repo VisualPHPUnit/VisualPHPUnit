@@ -43,7 +43,7 @@ class Home extends \app\core\Controller {
                 return str_replace('\\', '/', realpath($path));
             };
             $test_directories = json_encode(array_map(
-                $normalize_path, \app\lib\Library::retrieve('test_directories')
+                $normalize_path, array_values(\app\lib\Library::retrieve('test_directories'))
             ));
 
             $suites = array();

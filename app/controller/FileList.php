@@ -17,12 +17,16 @@ class FileList extends \app\core\Controller {
 
         $test_directories = \app\lib\Library::retrieve('test_directories');
         $valid_dir = false;
-        foreach ( $test_directories as $test_directory ) {
+        $group_name = '';
+        foreach ( $test_directories as $key => $test_directory ) {
             if ( strpos($dir, realpath($test_directory)) === 0 ) {
+	            $group_name = $key;
                 $valid_dir = true;
                 break;
             }
         }
+        
+        //echo 'here';
 
         if ( !$valid_dir ) {
             return array();
@@ -63,7 +67,7 @@ class FileList extends \app\core\Controller {
             }
         }
 
-        return array_merge($final_dirs, $final_files);
+        return array('name' => $group_name, 'results' => array_merge($final_dirs, $final_files));
     }
 
 }
