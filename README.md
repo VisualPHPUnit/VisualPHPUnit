@@ -1,3 +1,5 @@
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/VisualPHPUnit/VisualPHPUnit/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/VisualPHPUnit/VisualPHPUnit/?branch=master)
+
 # VisualPHPUnit
 
 VisualPHPUnit is a visual front-end for PHPUnit.  It offers the following features:
