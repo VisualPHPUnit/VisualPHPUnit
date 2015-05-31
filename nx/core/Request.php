@@ -8,7 +8,7 @@ namespace nx\core;
  * @author Nick Sinopoli <NSinopoli@gmail.com>
  * @copyright 2011-2012 Nick Sinopoli
  * @license http://opensource.org/licenses/BSD-3-Clause The BSD License
- *         
+ *
  * @property string $http_x_requested_with
  * @property string $request_method
  * @property string $http_user_agent
