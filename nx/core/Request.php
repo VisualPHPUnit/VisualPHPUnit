@@ -12,6 +12,7 @@ namespace nx\core;
  * @property string $http_x_requested_with
  * @property string $request_method
  * @property string $http_user_agent
+ * @property string $https
  */
 class Request
 {
