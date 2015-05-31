@@ -56,7 +56,6 @@
 		"vendor-dir" : "vendor/"
 	},
 	"require-dev" : {
-		"squizlabs/php_codesniffer" : "2.3.2@stable",
-		"phpdocumentor/phpdocumentor" : "2.8.2@stable"
+		"squizlabs/php_codesniffer" : "2.3.2@stable"
 	}
 }
