@@ -13,6 +13,11 @@
  */
 namespace app\config;
 
+use \app\controller\Home;
+use \app\controller\Archives;
+use \app\controller\Graph;
+use \app\controller\FileList;
+
 /**
  * Routes
  *
@@ -38,7 +43,7 @@ class Routes
                 ),
                 '/',
                 function ($request) {
-                    $controller = new \app\controller\Home();
+                    $controller = new Home();
                     return $controller->call('index', $request);
                 }
             ),
@@ -47,7 +52,7 @@ class Routes
                 'get',
                 '/archives',
                 function ($request) {
-                    $controller = new \app\controller\Archives();
+                    $controller = new Archives();
                     return $controller->call('index', $request);
                 }
             ),
@@ -59,7 +64,7 @@ class Routes
                 ),
                 '/graphs',
                 function ($request) {
-                    $controller = new \app\controller\Graph();
+                    $controller = new Graph();
                     return $controller->call('index', $request);
                 }
             ),
@@ -68,7 +73,7 @@ class Routes
                 'get',
                 '/file-list',
                 function ($request) {
-                    $controller = new \app\controller\FileList();
+                    $controller = new FileList();
                     return $controller->call('index', $request);
                 }
             ),
@@ -77,7 +82,7 @@ class Routes
                 'get',
                 '/help',
                 function ($request) {
-                    $controller = new \app\controller\Home();
+                    $controller = new Home();
                     return $controller->call('help', $request);
                 }
             ),

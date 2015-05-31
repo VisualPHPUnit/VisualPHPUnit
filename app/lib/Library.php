@@ -14,7 +14,7 @@ namespace app\lib;
 /**
  * Library
  *
- * Class for managing library
+ * Class for managing configuration options
  *
  * @author Nick Sinopoli <NSinopoli@gmail.com>
  */

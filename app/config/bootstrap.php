@@ -11,6 +11,9 @@
  * @license   http://opensource.org/licenses/BSD-3-Clause The BSD License
  * @link      https://github.com/VisualPHPUnit/VisualPHPUnit VisualPHPUnit
  */
+
+use \app\lib\Library;
+
 $root = dirname(dirname(__DIR__));
 
 $config = array(
@@ -111,4 +114,4 @@ foreach ($config['bootstraps'] as $bootstrap) {
     require $bootstrap;
 }
 
-\app\lib\Library::store($config);
+Library::store($config);

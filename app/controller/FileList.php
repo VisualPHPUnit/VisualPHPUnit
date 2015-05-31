@@ -13,6 +13,9 @@
  */
 namespace app\controller;
 
+use \app\core\Controller;
+use \app\lib\Library;
+
 /**
  * FileList
  *
@@ -20,7 +23,7 @@ namespace app\controller;
  *
  * @author Nick Sinopoli <NSinopoli@gmail.com>
  */
-class FileList extends \app\core\Controller
+class FileList extends Controller
 {
     
     /**
@@ -41,7 +44,7 @@ class FileList extends \app\core\Controller
             return array();
         }
         
-        $test_directories = \app\lib\Library::retrieve('test_directories');
+        $test_directories = Library::retrieve('test_directories');
         $valid_dir = false;
         $group_name = '';
         foreach ($test_directories as $key => $test_directory) {
@@ -65,7 +68,7 @@ class FileList extends \app\core\Controller
             return array();
         }
         
-        $ignore_hidden = \app\lib\Library::retrieve('ignore_hidden_folders');
+        $ignore_hidden = Library::retrieve('ignore_hidden_folders');
         
         $final_dirs = array();
         $final_files = array();
