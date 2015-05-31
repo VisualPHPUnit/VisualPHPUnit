@@ -9,21 +9,22 @@ namespace nx\core;
  * @copyright 2011-2012 Nick Sinopoli
  * @license   http://opensource.org/licenses/BSD-3-Clause The BSD License
  */
-class Response {
+class Response
+{
 
    /**
     * The configuration settings.
     *
     * @var array
     */
-    protected $_config = array();
+    protected $config = array();
 
    /**
     *  The HTTP status codes.
     *
     *  @var array
     */
-    protected $_statuses = array(
+    protected $statuses = array(
         100 => 'Continue',
         101 => 'Switching Protocols',
         200 => 'OK',
@@ -75,11 +76,12 @@ class Response {
     * @param array $config    The configuration options.
     * @return void
     */
-    public function __construct(array $config = array()) {
+    public function __construct(array $config = array())
+    {
         $defaults = array(
             'buffer_size'  => 8192
         );
-        $this->_config = $config + $defaults;
+        $this->config = $config + $defaults;
     }
 
    /**
@@ -88,9 +90,10 @@ class Response {
     * @param int $code    The integer associated with the HTTP status.
     * @return string
     */
-    protected function _convert_status($code) {
-        if ( isset($this->_statuses[$code]) ) {
-            return "HTTP/1.1 {$code} {$this->_statuses[$code]}";
+    protected function convertStatus($code)
+    {
+        if (isset($this->statuses[$code])) {
+            return "HTTP/1.1 {$code} {$this->statuses[$code]}";
         }
         return "HTTP/1.1 200 OK";
     }
@@ -107,15 +110,16 @@ class Response {
     *                           associated with the HTTP status code).
     * @return array
     */
-    protected function _parse($response) {
+    protected function parse($response)
+    {
         $defaults = array(
             'body'    => '',
             'headers' => array('Content-Type: text/html; charset=utf-8'),
             'status'  => 200
         );
-        if ( is_array($response) ) {
+        if (is_array($response)) {
             $response += $defaults;
-        } elseif ( is_string($response) ) {
+        } elseif (is_string($response)) {
             $defaults['body'] = $response;
             $response = $defaults;
         } else {
@@ -139,21 +143,19 @@ class Response {
     *                           buffer_size set in the constructor.
     * @return void
     */
-    public function render($response) {
-        $response = $this->_parse($response);
-        $status = $this->_convert_status($response['status']);
+    public function render($response)
+    {
+        $response = $this->parse($response);
+        $status = $this->convertStatus($response['status']);
         header($status);
-        foreach ( $response['headers'] as $header ) {
+        foreach ($response['headers'] as $header) {
             header($header, false);
         }
 
-        $buffer_size = $this->_config['buffer_size'];
+        $buffer_size = $this->config['buffer_size'];
         $length = strlen($response['body']);
-        for ( $i = 0; $i < $length; $i += $buffer_size ) {
+        for ($i = 0; $i < $length; $i += $buffer_size) {
             echo substr($response['body'], $i, $buffer_size);
         }
     }
-
 }
-
-?>

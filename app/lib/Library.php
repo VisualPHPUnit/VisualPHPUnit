@@ -2,7 +2,8 @@
 
 namespace app\lib;
 
-class Library {
+class Library
+{
 
    /**
     *  The configuration settings.
@@ -10,7 +11,7 @@ class Library {
     *  @var array
     *  @access protected
     */
-    protected static $_config = array();
+    protected static $config = array();
 
    /**
     * Retrieves the configuration options, or a specific option if a key is
@@ -20,11 +21,12 @@ class Library {
     * @access public
     * @return void
     */
-    public static function retrieve($key = null) {
-        if ( $key ) {
-            return self::$_config[$key];
+    public static function retrieve($key = null)
+    {
+        if ($key) {
+            return self::$config[$key];
         }
-        return self::$_config;
+        return self::$config;
     }
 
 
@@ -35,10 +37,8 @@ class Library {
     * @access public
     * @return void
     */
-    public static function store($config = array()) {
-        self::$_config = $config;
+    public static function store($config = array())
+    {
+        self::$config = $config;
     }
-
 }
-
-?>

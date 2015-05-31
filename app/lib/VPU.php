@@ -2,7 +2,8 @@
 
 namespace app\lib;
 
-class VPU {
+class VPU
+{
 
    /**
     * The error messages collected by the custom error handler.
@@ -10,7 +11,7 @@ class VPU {
     * @var array
     * @access protected
     */
-    protected $_errors = array();
+    protected $errors = array();
 
    /**
     * Adds percentage statistics to the provided statistics.
@@ -19,16 +20,17 @@ class VPU {
     * @access protected
     * @return array
     */
-    protected function _add_percentages($statistics) {
+    protected function addPercentages($statistics)
+    {
         $results = array();
-        foreach ( $statistics as $name => $stats ) {
+        foreach ($statistics as $name => $stats) {
             $results[$name] = $stats;
-            foreach ( $stats as $key => $value ) {
-                if ( $key == 'total' ) {
+            foreach ($stats as $key => $value) {
+                if ($key == 'total') {
                     continue;
                 }
                 // Avoid divide by zero error
-                if ( $stats['total'] ) {
+                if ($stats['total']) {
                     $results[$name]['percent' . ucfirst($key)] =
                         round($stats[$key] / $stats['total'] * 100, 1);
                 } else {
@@ -47,7 +49,8 @@ class VPU {
     * @access protected
     * @return string
     */
-    protected function _classname_only($class) {
+    protected function classnameOnly($class)
+    {
         $name = explode('\\', $class);
         return end($name);
     }
@@ -61,8 +64,9 @@ class VPU {
     * @access public
     * @return array
     */
-    public function compile_suites($pu_output, $source) {
-        $results = $this->_parse_output($pu_output);
+    public function compileSuites($pu_output, $source)
+    {
+        $results = $this->parseOutput($pu_output);
 
         $collection = array();
         $statistics = array(
@@ -75,14 +79,14 @@ class VPU {
             )
         );
         $statistics['tests'] = $statistics['suites'];
-        foreach ( $results as $result ) {
-            if ( !isset($result['event']) || $result['event'] != 'test' ) {
+        foreach ($results as $result) {
+            if (!isset($result['event']) || $result['event'] != 'test') {
                 continue;
             }
 
-            $suite_name = $this->_classname_only($result['suite']);
+            $suite_name = $this->classnameOnly($result['suite']);
 
-            if ( !isset($collection[$suite_name]) ) {
+            if (!isset($collection[$suite_name])) {
                 $collection[$suite_name] = array(
                     'tests'  => array(),
                     'name'   => $suite_name,
@@ -90,24 +94,25 @@ class VPU {
                     'time'   => 0
                 );
             }
-            $result = $this->_format_test_results($result, $source);
+            $result = $this->formatTestResults($result, $source);
             $collection[$suite_name]['tests'][] = $result;
-            $collection[$suite_name]['status'] = $this->_get_suite_status(
-                $result['status'], $collection[$suite_name]['status']
+            $collection[$suite_name]['status'] = $this->getSuiteStatus(
+                $result['status'],
+                $collection[$suite_name]['status']
             );
             $collection[$suite_name]['time'] += $result['time'];
             $statistics['tests'][$result['status']] += 1;
             $statistics['tests']['total'] += 1;
         }
 
-        foreach ( $collection as $suite ) {
+        foreach ($collection as $suite) {
             $statistics['suites'][$suite['status']] += 1;
             $statistics['suites']['total'] += 1;
         }
 
         $final = array(
             'suites' => $collection,
-            'stats'  => $this->_add_percentages($statistics)
+            'stats'  => $this->addPercentages($statistics)
         );
 
         return $final;
@@ -121,7 +126,8 @@ class VPU {
     * @access protected
     * @return array
     */
-    protected function _convert_json($str) {
+    protected function convertJson($str)
+    {
         $str = str_replace('&quot;', '"', $str);
 
         $tags = array();
@@ -130,12 +136,12 @@ class VPU {
         $in_quotes = false;
 
         $length = strlen($str);
-        for ( $i = 0; $i < $length; $i++ ) {
+        for ($i = 0; $i < $length; $i++) {
             $char = $str{$i};
 
-            if ( $char == '"' ) {
+            if ($char == '"') {
                 // Escaped quote in debug output
-                if ( !$in_quotes || $str{$i - 1} == "\\" ) {
+                if (!$in_quotes || $str{$i - 1} == "\\") {
                     $i = strpos($str, '"', $i + 1) - 1;
                     $in_quotes = true;
                 } else {
@@ -144,15 +150,17 @@ class VPU {
                 continue;
             }
 
-            if ( $char == '{' ) {
+            if ($char == '{') {
                 $nest++;
-                if ( $nest == 1 ) {
+                if ($nest == 1) {
                     $start_mark = $i;
                 }
-            } elseif ( $char == '}' && $nest > 0 ) {
-                if ( $nest == 1 ) {
+            } elseif ($char == '}' && $nest > 0) {
+                if ($nest == 1) {
                     $tags[] = substr(
-                        $str, $start_mark + 1, $i - $start_mark - 1
+                        $str,
+                        $start_mark + 1,
+                        $i - $start_mark - 1
                     );
                     $start_mark = $i;
                 }
@@ -171,19 +179,22 @@ class VPU {
     * @access protected
     * @return string
     */
-    protected function _format_test_results($test_results, $source) {
-        $status = $this->_get_test_status(
-            $test_results['status'], $test_results['message']
+    protected function formatTestResults($test_results, $source)
+    {
+        $status = $this->getTestStatus(
+            $test_results['status'],
+            $test_results['message']
         );
         $name = substr(
-            $test_results['test'], strpos($test_results['test'], '::') + 2
+            $test_results['test'],
+            strpos($test_results['test'], '::') + 2
         );
         $time = $test_results['time'];
         $message = $test_results['message'];
         $output = ( isset($test_results['output']) )
             ? trim($test_results['output'])
             : '';
-        $trace = $this->_get_trace($test_results['trace'], $source);
+        $trace = $this->getTrace($test_results['trace'], $source);
 
         return compact(
             'status',
@@ -201,8 +212,9 @@ class VPU {
     * @access public
     * @return array
     */
-    public function get_errors() {
-        return $this->_errors;
+    public function getErrors()
+    {
+        return $this->errors;
     }
 
    /**
@@ -214,17 +226,17 @@ class VPU {
     * @access protected
     * @return string
     */
-    protected function _get_suite_status($test_status, $suite_status) {
-        if (
-            $test_status === 'incomplete' && $suite_status !== 'failed'
+    protected function getSuiteStatus($test_status, $suite_status)
+    {
+        if ($test_status === 'incomplete' && $suite_status !== 'failed'
             && $suite_status !== 'skipped'
         ) {
             return 'incomplete';
         }
-        if ( $test_status === 'skipped' && $suite_status !== 'failed' ) {
+        if ($test_status === 'skipped' && $suite_status !== 'failed') {
             return 'skipped';
         }
-        if ( $test_status === 'failed' ) {
+        if ($test_status === 'failed') {
             return 'failed';
         }
         return $suite_status;
@@ -238,15 +250,16 @@ class VPU {
     * @access protected
     * @return string
     */
-    protected function _get_test_status($status, $message) {
-        switch ( $status ) {
+    protected function getTestStatus($status, $message)
+    {
+        switch ($status) {
             case 'pass':
                 return 'succeeded';
             case 'error':
-                if ( stripos($message, 'skipped') !== false ) {
+                if (stripos($message, 'skipped') !== false) {
                     return 'skipped';
                 }
-                if ( stripos($message, 'incomplete') !== false ) {
+                if (stripos($message, 'incomplete') !== false) {
                     return 'incomplete';
                 }
                 return 'failed';
@@ -266,19 +279,22 @@ class VPU {
     * @access protected
     * @return string
     */
-    protected function _get_trace($stack, $source) {
-        if ( !$stack ) {
+    protected function getTrace($stack, $source)
+    {
+        if (!$stack) {
             return '';
         }
 
         ob_start();
-        if ( $source == 'web' ) {
+        if ($source == 'web') {
             print_r(array_slice($stack, 0, -6));
         } else {
             print_r(array_slice($stack, 0, -2));
         }
         $trace = trim(ob_get_contents());
-        if (ob_get_length()) ob_end_clean();
+        if (ob_get_length()) {
+            ob_end_clean();
+        }
 
         return $trace;
     }
@@ -293,12 +309,13 @@ class VPU {
     * @access public
     * @return bool
     */
-    public function handle_errors($number, $message, $file, $line) {
-        if ( $number > error_reporting() ) {
+    public function handleErrors($number, $message, $file, $line)
+    {
+        if ($number > error_reporting()) {
             return true;
         }
 
-        switch ( $number ) {
+        switch ($number) {
             case E_WARNING:
                 $type = 'E_WARNING';
                 break;
@@ -330,7 +347,7 @@ class VPU {
                 $type = 'Unknown';
                 break;
         }
-        $this->_errors[] = compact('type', 'message', 'file', 'line');
+        $this->errors[] = compact('type', 'message', 'file', 'line');
         return true;
     }
 
@@ -341,9 +358,10 @@ class VPU {
     * @access protected
     * @return array
     */
-    protected function _parse_output($pu_output) {
+    protected function parseOutput($pu_output)
+    {
         $results = '';
-        foreach ( $this->_convert_json($pu_output) as $elem ) {
+        foreach ($this->convertJson($pu_output) as $elem) {
             $elem = '{' . $elem . '}';
             $pos = strpos($pu_output, $elem);
             $pu_output = substr_replace($pu_output, '|||', $pos, strlen($elem));
@@ -356,8 +374,8 @@ class VPU {
 
         // For PHPUnit 3.5.x, which doesn't include test output in the JSON
         $pu_output = explode('|||', $pu_output);
-        foreach ( $pu_output as $key => $data ) {
-            if ( $data ) {
+        foreach ($pu_output as $key => $data) {
+            if ($data) {
                 $results[$key]['output'] = $data;
             }
         }
@@ -374,18 +392,19 @@ class VPU {
     * @access protected
     * @return array
     */
-    protected function _parse_tests($tests) {
+    protected function parseTests($tests)
+    {
         $collection = array();
 
-        foreach ( $tests as $test )  {
-            if ( is_dir($test) ) {
+        foreach ($tests as $test) {
+            if (is_dir($test)) {
                 $it = new \RecursiveIteratorIterator(
                     new \RecursiveDirectoryIterator(realpath($test)),
                     \RecursiveIteratorIterator::LEAVES_ONLY
                 );
-                while ( $it->valid() ) {
+                while ($it->valid()) {
                     $ext = strtolower(pathinfo($it->key(), PATHINFO_EXTENSION));
-                    if ( !$it->isDot() && $ext == 'php' ) {
+                    if (!$it->isDot() && $ext == 'php') {
                         $collection[] = $it->key();
                     }
 
@@ -395,7 +414,7 @@ class VPU {
             }
 
             $ext = strtolower(pathinfo($test, PATHINFO_EXTENSION));
-            if ( file_exists($test) && $ext == 'php' )  {
+            if (file_exists($test) && $ext == 'php') {
                 $collection[] = realpath($test);
             }
         }
@@ -411,18 +430,19 @@ class VPU {
     * @access public
     * @return string
     */
-    public function run_tests($tests) {
+    public function runTests($tests)
+    {
         $suite = new \PHPUnit_Framework_TestSuite();
 
-        $tests = $this->_parse_tests($tests);
+        $tests = $this->parseTests($tests);
         $original_classes = get_declared_classes();
-        foreach ( $tests as $test ) {
+        foreach ($tests as $test) {
             require $test;
         }
         $new_classes = get_declared_classes();
         $tests = array_diff($new_classes, $original_classes);
-        foreach ( $tests as $test ) {
-            if ( is_subclass_of($test, 'PHPUnit_Framework_TestCase') ) {
+        foreach ($tests as $test) {
+            if (is_subclass_of($test, 'PHPUnit_Framework_TestCase')) {
                 $suite->addTestSuite($test);
             }
         }
@@ -439,7 +459,9 @@ class VPU {
         $suite->run($result);
         //$results = ob_get_contents();
         $results = file_get_contents("/tmp/res.json");
-        if (ob_get_length()) ob_end_clean();
+        if (ob_get_length()) {
+            ob_end_clean();
+        }
 
         ini_set('html_errors', $html_errors);
         return $results;
@@ -454,19 +476,20 @@ class VPU {
     * @access protected
     * @return void
     */
-    protected function _check_xml_configuration($xml_config) {
+    protected function checkXmlConfiguration($xml_config)
+    {
         $configuration = \PHPUnit_Util_Configuration::getInstance($xml_config);
         $listeners = $configuration->getListenerConfiguration();
 
         $required_listener = 'PHPUnit_Util_Log_JSON';
         $found = false;
-        foreach ( $listeners as $listener ) {
-            if ( $listener['class'] === $required_listener ) {
+        foreach ($listeners as $listener) {
+            if ($listener['class'] === $required_listener) {
                 $found = true;
                 break;
             }
         }
-        if ( !$found ) {
+        if (!$found) {
             throw new \DomainException(
                 "XML Configuration file doesn't contain the required " .
                 "{$required_listener} listener."
@@ -482,8 +505,9 @@ class VPU {
     * @access public
     * @return string
     */
-    public function run_with_xml($xml_config) {
-        $this->_check_xml_configuration($xml_config);
+    public function runWithXml($xml_config)
+    {
+        $this->checkXmlConfiguration($xml_config);
         $command = new \PHPUnit_TextUI_Command();
 
         // We need to temporarily turn off html_errors to ensure correct
@@ -494,7 +518,9 @@ class VPU {
         ob_start();
         $command->run(array('--configuration', $xml_config, '--stderr'), false);
         $results = ob_get_contents();
-        if (ob_get_length()) ob_end_clean();
+        if (ob_get_length()) {
+            ob_end_clean();
+        }
 
         ini_set('html_errors', $html_errors);
 
@@ -502,7 +528,4 @@ class VPU {
         $end = strrpos($results, '}');
         return substr($results, $start, $end - $start + 1);
     }
-
 }
-
-?>

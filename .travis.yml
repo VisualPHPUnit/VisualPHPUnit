@@ -13,4 +13,4 @@ matrix:
   - php: 5.6
   
 script:
-- echo "Hello travis!"
+- bin/phpcs

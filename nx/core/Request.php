@@ -10,7 +10,8 @@ namespace nx\core;
  * @copyright 2011-2012 Nick Sinopoli
  * @license   http://opensource.org/licenses/BSD-3-Clause The BSD License
  */
-class Request {
+class Request
+{
 
    /**
     * The POST/PUT/DELETE data.
@@ -24,7 +25,7 @@ class Request {
     *
     * @var array
     */
-    protected $_env = array();
+    protected $env = array();
 
    /**
     * The GET data.
@@ -56,7 +57,8 @@ class Request {
     *                         'query' - the GET data
     * @return void
     */
-    public function __construct(array $config = array()) {
+    public function __construct(array $config = array())
+    {
         $defaults = array(
             'data'  => array(),
             'query' => array()
@@ -64,57 +66,59 @@ class Request {
 
         $config += $defaults;
 
-        $this->_env = $_SERVER + $_ENV + array(
+        $this->env = $_SERVER + $_ENV + array(
             'CONTENT_TYPE'   => 'text/html',
             'REQUEST_METHOD' => 'GET'
         );
 
-        if ( isset($this->_env['SCRIPT_URI']) ) {
-            $this->_env['HTTPS'] =
-                ( strpos($this->_env['SCRIPT_URI'], 'https://') === 0 );
-        } elseif ( isset($this->_env['HTTPS']) ) {
-            $this->_env['HTTPS'] = (
-                !empty($this->_env['HTTPS']) && $this->_env['HTTPS'] !== 'off'
+        if (isset($this->env['SCRIPT_URI'])) {
+            $this->env['HTTPS'] =
+                ( strpos($this->env['SCRIPT_URI'], 'https://') === 0 );
+        } elseif (isset($this->env['HTTPS'])) {
+            $this->env['HTTPS'] = (
+                !empty($this->env['HTTPS']) && $this->env['HTTPS'] !== 'off'
             );
         } else {
-            $this->_env['HTTPS'] = false;
+            $this->env['HTTPS'] = false;
         }
 
-        $parsed = parse_url($this->_env['REQUEST_URI']);
+        $parsed = parse_url($this->env['REQUEST_URI']);
 
         $base = '/' . ltrim(
-            str_replace('\\', '/', dirname($this->_env['PHP_SELF'])),
-        '/');
+            str_replace('\\', '/', dirname($this->env['PHP_SELF'])),
+            '/'
+        );
         $base = rtrim(str_replace('/app/public', '', $base), '/');
         $pattern = '/^' . preg_quote($base, '/') . '/';
         $this->url = '/' . trim(
             preg_replace($pattern, '', $parsed['path']),
-        '/');
+            '/'
+        );
 
         $query = array();
-        if ( isset($parsed['query']) ) {
+        if (isset($parsed['query'])) {
             $query_string = str_replace('%20', '+', $parsed['query']);
             parse_str(rawurldecode($query_string), $query);
         }
         $this->query = $config['query'] + $query;
 
         $this->data = $config['data'];
-        if ( isset($_POST) ) {
+        if (isset($_POST)) {
             $this->data += $_POST;
         }
 
         $override ='HTTP_X_HTTP_METHOD_OVERRIDE';
-        if ( isset($this->data['_method']) ) {
-            $this->_env[$override] = strtoupper($this->data['_method']);
+        if (isset($this->data['_method'])) {
+            $this->env[$override] = strtoupper($this->data['_method']);
             unset($this->data['_method']);
         }
-        if ( !empty($this->_env[$override]) ) {
-            $this->_env['REQUEST_METHOD'] = $this->_env[$override];
+        if (!empty($this->env[$override])) {
+            $this->env['REQUEST_METHOD'] = $this->env[$override];
         }
 
-        $method = strtoupper($this->_env['REQUEST_METHOD']);
+        $method = strtoupper($this->env['REQUEST_METHOD']);
 
-        if ( $method == 'PUT' || $method == 'DELETE' ) {
+        if ($method == 'PUT' || $method == 'DELETE') {
             $stream = fopen('php://input', 'r');
             parse_str(stream_get_contents($stream), $this->data);
             fclose($stream);
@@ -128,9 +132,10 @@ class Request {
     * @param string $key    The environment variable.
     * @return mixed
     */
-    public function __get($key) {
+    public function __get($key)
+    {
         $key = strtoupper($key);
-        return ( isset($this->_env[$key]) ) ? $this->_env[$key] : null;
+        return ( isset($this->env[$key]) ) ? $this->env[$key] : null;
     }
 
    /**
@@ -175,8 +180,9 @@ class Request {
     * @param string $characteristic    The characteristic.
     * @return bool
     */
-    public function is($characteristic) {
-        switch ( strtolower($characteristic) ) {
+    public function is($characteristic)
+    {
+        switch (strtolower($characteristic)) {
             case 'ajax':
                 return (
                     $this->http_x_requested_with == 'XMLHttpRequest'
@@ -201,7 +207,8 @@ class Request {
                 );
                 $pattern = '/' . implode('|', $mobile_user_agents) . '/i';
                 return (boolean) preg_match(
-                    $pattern, $this->http_user_agent
+                    $pattern,
+                    $this->http_user_agent
                 );
             case 'options':
                 return ( $this->request_method == 'OPTIONS' );
@@ -215,7 +222,4 @@ class Request {
                 return false;
         }
     }
-
 }
-
-?>

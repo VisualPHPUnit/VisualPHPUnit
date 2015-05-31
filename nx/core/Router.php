@@ -9,7 +9,8 @@ namespace nx\core;
  * @copyright 2011-2012 Nick Sinopoli
  * @license   http://opensource.org/licenses/BSD-3-Clause The BSD License
  */
-class Router {
+class Router
+{
 
    /**
     * Compiles the regex necessary to capture all match types within a route.
@@ -17,10 +18,11 @@ class Router {
     * @param string $route    The route.
     * @return string
     */
-    protected function _compile_regex($route) {
+    protected function compileRegex($route)
+    {
         $pattern = '`(/|\.|)\[([^:\]]*+)(?::([^:\]]*+))?\](\?|)`';
 
-        if ( preg_match_all($pattern, $route, $matches, PREG_SET_ORDER) ) {
+        if (preg_match_all($pattern, $route, $matches, PREG_SET_ORDER)) {
             $match_types = array(
                 'i'  => '[0-9]++',
                 'a'  => '[0-9A-Za-z]++',
@@ -28,16 +30,16 @@ class Router {
                 '*'  => '.+?',
                 ''   => '[^/]++'
             );
-            foreach ( $matches as $match ) {
+            foreach ($matches as $match) {
                 list($block, $pre, $type, $param, $optional) = $match;
 
-                if ( isset($match_types[$type]) ) {
+                if (isset($match_types[$type])) {
                     $type = $match_types[$type];
                 }
-                if ( $param ) {
+                if ($param) {
                     $param = "?<{$param}>";
                 }
-                if ( $optional ) {
+                if ($optional) {
                     $optional = '?';
                 }
 
@@ -45,7 +47,7 @@ class Router {
                 $route = str_replace($block, $replaced, $route);
             }
         }
-        if ( substr($route, strlen($route) - 1) != '/' ) {
+        if (substr($route, strlen($route) - 1) != '/') {
             $route .= '/?';
         }
         return "`^{$route}$`";
@@ -116,26 +118,27 @@ class Router {
     * @param array $routes             The routes.
     * @return array
     */
-    public function parse($request_uri, $request_method, $routes) {
-        foreach ( $routes as $route ) {
+    public function parse($request_uri, $request_method, $routes)
+    {
+        foreach ($routes as $route) {
             list($method, $uri, $callback) = $route;
 
-            if ( is_array($method) ) {
+            if (is_array($method)) {
                 $found = false;
-                foreach ( $method as $value ) {
-                    if ( strcasecmp($request_method, $value) == 0 ) {
+                foreach ($method as $value) {
+                    if (strcasecmp($request_method, $value) == 0) {
                         $found = true;
                         break;
                     }
                 }
-                if ( !$found ) {
+                if (!$found) {
                     continue;
                 }
-            } elseif ( strcasecmp($request_method, $method) != 0 ) {
+            } elseif (strcasecmp($request_method, $method) != 0) {
                 continue;
             }
 
-            if ( is_null($uri) || $uri == '*' ) {
+            if (is_null($uri) || $uri == '*') {
                 $params = array();
                 return compact('params', 'callback');
             }
@@ -143,27 +146,26 @@ class Router {
             $route_to_match = '';
             $len = strlen($uri);
 
-            for ( $i = 0; $i < $len; $i++ ) {
+            for ($i = 0; $i < $len; $i++) {
                 $char = $uri[$i];
                 $is_regex = (
                     $char == '[' || $char == '(' || $char == '.'
                     || $char == '?' || $char == '+' || $char == '{'
                 );
-                if ( $is_regex ) {
+                if ($is_regex) {
                     $route_to_match = $uri;
                     break;
-                } elseif (
-                    !isset($request_uri[$i]) || $char != $request_uri[$i]
+                } elseif (!isset($request_uri[$i]) || $char != $request_uri[$i]
                 ) {
                     continue 2;
                 }
                 $route_to_match .= $char;
             }
 
-            $regex = $this->_compile_regex($route_to_match);
-            if ( preg_match($regex, $request_uri, $params) ) {
-                foreach ( $params as $key => $arg ) {
-                    if ( is_numeric($key) ) {
+            $regex = $this->compileRegex($route_to_match);
+            if (preg_match($regex, $request_uri, $params)) {
+                foreach ($params as $key => $arg) {
+                    if (is_numeric($key)) {
                         unset($params[$key]);
                     }
                 }
@@ -175,7 +177,4 @@ class Router {
             'callback' => null
         );
     }
-
 }
-
-?>
