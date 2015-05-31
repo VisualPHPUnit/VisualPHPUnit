@@ -14,7 +14,7 @@ namespace app\lib;
 /**
  * Compiler
  *
- * Class for compiling templates
+ * Class for compiling an caching templates
  *
  * @author Nick Sinopoli <NSinopoli@gmail.com>
  */
@@ -44,8 +44,7 @@ class Compiler
         $dir = dirname($file);
         $location = basename(dirname($dir)) . '_' . basename($dir) . '_' . basename($file, '.html');
         $template = 'template_' . $location . '_' . $stats['mtime'] . '_' . $stats['ino'] . '_' . $stats['size'];
-        $template +=  '.html';
-        $template = $options['path'] . $template;
+        $template = $options['path'] . $template. '.html';
         
         if (file_exists($template)) {
             return $template;
@@ -81,7 +80,9 @@ class Compiler
     {
         $replace = array(
             '/\<\?=\s*\$this->(.+?)\s*;?\s*\?>/msx' => '<?php echo $this->$1; ?>',
+            
             '/\$e\((.+?)\)\s*;/msx' => 'echo $this->escape($1);',
+            
             '/\<\?=\s*(.+?)\s*;?\s*\?>/msx' => '<?php echo $this->escape($1); ?>'
         );
         
