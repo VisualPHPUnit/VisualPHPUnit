@@ -9,14 +9,15 @@ namespace nx\core;
  * @copyright 2011-2012 Nick Sinopoli
  * @license   http://opensource.org/licenses/BSD-3-Clause The BSD License
  */
-class Dispatcher {
+class Dispatcher
+{
 
    /**
     * The configuration settings.
     *
     * @var array
     */
-    protected $_config = array();
+    protected $config = array();
 
    /**
     * Sets the configuration options for the dispatcher.
@@ -24,12 +25,13 @@ class Dispatcher {
     * @param array $config    The configuration options.
     * @return void
     */
-    public function __construct(array $config = array()) {
+    public function __construct(array $config = array())
+    {
         $defaults = array(
             'response' => new \nx\core\Response(),
             'router'   => new \nx\core\Router()
         );
-        $this->_config = $config + $defaults;
+        $this->config = $config + $defaults;
     }
 
    /**
@@ -40,23 +42,21 @@ class Dispatcher {
     * @param array $routes      The routes.
     * @return void
     */
-    public function handle($request, $routes) {
+    public function handle($request, $routes)
+    {
         $method = $request->request_method;
 
-        $router = $this->_config['router'];
+        $router = $this->config['router'];
         $parsed = $router->parse($request->url, $method, $routes);
 
-        if ( $parsed['callback'] ) {
+        if ($parsed['callback']) {
             $request->params = $parsed['params'];
             $result = call_user_func($parsed['callback'], $request);
         } else {
             $result = false;
         }
 
-        $response = $this->_config['response'];
+        $response = $this->config['response'];
         $response->render($result);
     }
-
 }
-
-?>

@@ -1,1 +1,10 @@
-cache/
+.settings
+app/resource/cache
+bin/phpcbf
+bin/phpcs
+bin/phpunit
+vendor
+.buildpath
+.project
+composer.lock
+composer.phar

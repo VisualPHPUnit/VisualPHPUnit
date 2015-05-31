@@ -2,7 +2,8 @@
 
 namespace app\lib;
 
-class Compiler {
+class Compiler
+{
 
    /**
     *  Retrieves the compiled filename, and caches the file
@@ -16,7 +17,8 @@ class Compiler {
     *  @access public
     *  @return string
     */
-    public static function compile($file, $options = array()) {
+    public static function compile($file, $options = array())
+    {
         $options += array(
             'path' => 'compiled/'
         );
@@ -29,26 +31,25 @@ class Compiler {
             . '_' . $stats['ino'] . '_' . $stats['size'] . '.html';
         $template = $options['path'] . $template;
 
-        if ( file_exists($template) ) {
+        if (file_exists($template)) {
             return $template;
         }
 
-        $compiled = self::_replace(file_get_contents($file));
+        $compiled = self::replace(file_get_contents($file));
         $template_dir = dirname($template);
-        if ( !is_dir($template_dir) && !mkdir($template_dir, 0755, true) ) {
-           return false;
+        if (!is_dir($template_dir) && !mkdir($template_dir, 0755, true)) {
+            return false;
         }
 
-        if (
-            !is_writable($template_dir)
+        if (!is_writable($template_dir)
             || file_put_contents($template, $compiled) === false
         ) {
             return false;
         }
 
         $pattern = $template_dir . '/template_' . $location . '_*.html';
-        foreach ( glob($pattern) as $old ) {
-            if ( $old !== $template ) {
+        foreach (glob($pattern) as $old) {
+            if ($old !== $template) {
                 unlink($old);
             }
         }
@@ -62,7 +63,8 @@ class Compiler {
     *  @access public
     *  @return string
     */
-    protected static function _replace($template) {
+    protected static function replace($template)
+    {
         $replace = array(
             '/\<\?=\s*\$this->(.+?)\s*;?\s*\?>/msx' =>
             '<?php echo $this->$1; ?>',
@@ -75,8 +77,9 @@ class Compiler {
         );
 
         return preg_replace(
-          array_keys($replace), array_values($replace), $template
+            array_keys($replace),
+            array_values($replace),
+            $template
         );
     }
-
 }

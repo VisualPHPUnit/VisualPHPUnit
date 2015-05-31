@@ -2,20 +2,22 @@
 
 namespace app\controller;
 
-class Archives extends \app\core\Controller {
+class Archives extends \app\core\Controller
+{
 
     // GET
-    public function index($request) {
+    public function index($request)
+    {
         $snapshot_directory = \app\lib\Library::retrieve('snapshot_directory');
-        if ( !$request->is('ajax') ) {
+        if (!$request->is('ajax')) {
             $snapshots = array();
             $handler = @opendir($snapshot_directory);
-            if ( !$handler ) {
+            if (!$handler) {
                 return compact('snapshots');
             }
-            while ( ($file = readdir($handler)) !== false ) {
+            while (($file = readdir($handler)) !== false) {
                 $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
-                if ( strpos($file, '.') === 0 || $ext != 'html' ) {
+                if (strpos($file, '.') === 0 || $ext != 'html') {
                     continue;
                 }
                 $snapshots[] = $file;
@@ -26,7 +28,7 @@ class Archives extends \app\core\Controller {
             return compact('snapshots');
         }
 
-        if ( !isset($request->query['snapshot']) ) {
+        if (!isset($request->query['snapshot'])) {
             return '';
         }
 
@@ -34,7 +36,4 @@ class Archives extends \app\core\Controller {
             . "/{$request->query['snapshot']}";
         return ( file_exists($file) ) ? file_get_contents($file) : '';
     }
-
 }
-
-?>

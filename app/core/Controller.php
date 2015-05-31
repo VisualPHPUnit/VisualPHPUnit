@@ -2,7 +2,8 @@
 
 namespace app\core;
 
-class Controller {
+class Controller
+{
 
    /**
     *  The class configuration settings.
@@ -10,7 +11,7 @@ class Controller {
     *  @var array
     *  @access protected
     */
-    protected $_config;
+    protected $config;
 
    /**
     *  Contains the optional response status and headers.
@@ -18,7 +19,7 @@ class Controller {
     *  @var array
     *  @access protected
     */
-    protected $_response = array();
+    protected $response = array();
 
    /**
     *  Loads the configuration settings for the controller.
@@ -27,13 +28,14 @@ class Controller {
     *  @access public
     *  @return void
     */
-    public function __construct(array $config = array()) {
+    public function __construct(array $config = array())
+    {
         $defaults = array(
             'dependencies' => array(
                 'view'    => 'app\core\View'
             )
         );
-        $this->_config = $config + $defaults;
+        $this->config = $config + $defaults;
     }
 
    /**
@@ -46,28 +48,29 @@ class Controller {
     *  @access public
     *  @return array
     */
-    public function call($action, $request) {
+    public function call($action, $request)
+    {
         $results = $this->$action($request);
 
-        if ( is_null($results) || $results === false ) {
+        if (is_null($results) || $results === false) {
             return false;
         }
 
-        if ( !is_array($results) ) {
-            $this->_response['body'] = $results;
-            return $this->_response;
+        if (!is_array($results)) {
+            $this->response['body'] = $results;
+            return $this->response;
         }
 
-        if ( $request->is('ajax') ) {
-            $this->_response['body'] = $this->render_json($results);
+        if ($request->is('ajax')) {
+            $this->response['body'] = $this->renderJson($results);
         } else {
             $class = explode('\\', get_called_class());
             $classname = end($class);
             $file = lcfirst($classname) . "/{$action}";
-            $this->_response['body'] = $this->render_html($file, $results);
+            $this->response['body'] = $this->renderHtml($file, $results);
         }
 
-        return $this->_response;
+        return $this->response;
     }
 
    /**
@@ -77,9 +80,10 @@ class Controller {
     *  @access public
     *  @return bool
     */
-    public function redirect($page) {
-        $this->set_response_status(303);
-        $this->set_response_headers(array('Location: ' . $page));
+    public function redirect($page)
+    {
+        $this->setResponseStatus(303);
+        $this->setResponseHeaders(array('Location: ' . $page));
         return '';
     }
 
@@ -90,7 +94,8 @@ class Controller {
     *  @access public
     *  @return string
     */
-    public function render_json($value) {
+    public function renderJson($value)
+    {
         $options = JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP;
         return json_encode($value, $options);
     }
@@ -103,8 +108,9 @@ class Controller {
     *  @access public
     *  @return string
     */
-    public function render_html($file, $vars = array()) {
-        $view = $this->_config['dependencies']['view'];
+    public function renderHtml($file, $vars = array())
+    {
+        $view = $this->config['dependencies']['view'];
         $view = new $view();
         return $view->render($file, $vars);
     }
@@ -119,8 +125,9 @@ class Controller {
     *  @access public
     *  @return void
     */
-    public function set_response_headers($headers) {
-        $this->_response['headers'] = $headers;
+    public function setResponseHeaders($headers)
+    {
+        $this->response['headers'] = $headers;
     }
 
    /**
@@ -131,10 +138,8 @@ class Controller {
     *  @access public
     *  @return void
     */
-    public function set_response_status($status) {
-        $this->_response['status'] = $status;
+    public function setResponseStatus($status)
+    {
+        $this->response['status'] = $status;
     }
-
 }
-
-?>
