@@ -79,7 +79,7 @@ class Request
             $this->env['HTTPS'] = (strpos($this->env['SCRIPT_URI'], 'https://') === 0);
 
         } elseif (isset($this->env['HTTPS'])) {
-            $this->env['HTTPS'] = (! empty($this->env['HTTPS']) && $this->env['HTTPS'] !== 'off');
+            $this->env['HTTPS'] = (!empty($this->env['HTTPS']) && $this->env['HTTPS'] !== 'off');
         } else {
             $this->env['HTTPS'] = false;
         }
@@ -108,7 +108,7 @@ class Request
             $this->env[$override] = strtoupper($this->data['_method']);
             unset($this->data['_method']);
         }
-        if (! empty($this->env[$override])) {
+        if (!empty($this->env[$override])) {
             $this->env['REQUEST_METHOD'] = $this->env[$override];
         }
         
@@ -175,7 +175,7 @@ class Request
      *
      * @param string $characteristic
      *            The characteristic.
-     * @return bool
+     * @return boolean|string
      */
     public function is($characteristic)
     {
