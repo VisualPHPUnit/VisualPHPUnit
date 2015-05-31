@@ -73,7 +73,7 @@ class Request
 
         if (isset($this->env['SCRIPT_URI'])) {
             $this->env['HTTPS'] =
-                ( strpos($this->env['SCRIPT_URI'], 'https://') === 0 );
+                (strpos($this->env['SCRIPT_URI'], 'https://') === 0);
         } elseif (isset($this->env['HTTPS'])) {
             $this->env['HTTPS'] = (
                 !empty($this->env['HTTPS']) && $this->env['HTTPS'] !== 'off'
@@ -107,7 +107,7 @@ class Request
             $this->data += $_POST;
         }
 
-        $override ='HTTP_X_HTTP_METHOD_OVERRIDE';
+        $override = 'HTTP_X_HTTP_METHOD_OVERRIDE';
         if (isset($this->data['_method'])) {
             $this->env[$override] = strtoupper($this->data['_method']);
             unset($this->data['_method']);
@@ -135,7 +135,7 @@ class Request
     public function __get($key)
     {
         $key = strtoupper($key);
-        return ( isset($this->env[$key]) ) ? $this->env[$key] : null;
+        return (isset($this->env[$key])) ? $this->env[$key] : null;
     }
 
    /**
@@ -188,15 +188,15 @@ class Request
                     $this->http_x_requested_with == 'XMLHttpRequest'
                 );
             case 'delete':
-                return ( $this->request_method == 'DELETE' );
+                return ($this->request_method == 'DELETE');
             case 'flash':
                 return (
                     $this->http_user_agent == 'Shockwave Flash'
                 );
             case 'get':
-                return ( $this->request_method == 'GET' );
+                return ($this->request_method == 'GET');
             case 'head':
-                return ( $this->request_method == 'HEAD' );
+                return ($this->request_method == 'HEAD');
             case 'mobile':
                 $mobile_user_agents = array(
                     'Android', 'AvantGo', 'Blackberry', 'DoCoMo', 'iPod',
@@ -211,11 +211,11 @@ class Request
                     $this->http_user_agent
                 );
             case 'options':
-                return ( $this->request_method == 'OPTIONS' );
+                return ($this->request_method == 'OPTIONS');
             case 'post':
-                return ( $this->request_method == 'POST' );
+                return ($this->request_method == 'POST');
             case 'put':
-                return ( $this->request_method == 'PUT' );
+                return ($this->request_method == 'PUT');
             case 'ssl':
                 return $this->https;
             default:
