@@ -1,5 +1,5 @@
 {
-	"name" : "visual-php-unit/visual-php-unit",
+	"name" : "visualphpunit/visualphpunit",
 	"description" : "A PHPUnit GUI",
 	"type" : "application",
 	"authors" : [{
@@ -54,8 +54,5 @@
 	"config" : {
 		"bin-dir" : "bin/",
 		"vendor-dir" : "vendor/"
-	},
-	"require-dev" : {
-		"squizlabs/php_codesniffer" : "2.3.2@stable"
 	}
 }

@@ -1,12 +1,18 @@
 <?php
+/**
+ * VisualPHPUnit
+ *
+ * PHP Version 5.3<
+ *
+ * @author    Nick Sinopoli <NSinopoli@gmail.com>
+ * @copyright 2011-2015 VisualPHPUnit
+ * @license   http://opensource.org/licenses/BSD-3-Clause The BSD License
+ * @link      https://github.com/VisualPHPUnit/VisualPHPUnit VisualPHPUnit
+ */
 namespace nx\core;
 
 /**
  * The Dispatcher handles incoming HTTP requests and sends back responses.
- *
- * @author Nick Sinopoli <NSinopoli@gmail.com>
- * @copyright 2011-2012 Nick Sinopoli
- * @license http://opensource.org/licenses/BSD-3-Clause The BSD License
  */
 class Dispatcher
 {
