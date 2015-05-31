@@ -18,3 +18,4 @@ matrix:
   
 script:
 - bin/phpcs
+- bin/phpdoc -f phpdoc.dist.xml

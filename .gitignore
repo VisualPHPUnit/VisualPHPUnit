@@ -3,6 +3,7 @@ app/resource/cache
 bin/phpcbf
 bin/phpcs
 bin/phpunit
+build
 vendor
 .buildpath
 .project

@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * VisualPHPUnit
+ *
+ * VisualPHPUnit is a visual front-end for PHPUnit.
+ *
+ * PHP Version 5.3<
+ *
+ * @author    Nick Sinopoli <NSinopoli@gmail.com>
+ * @copyright 2011-2015 VisualPHPUnit
+ * @license   http://opensource.org/licenses/BSD-3-Clause The BSD License
+ * @link      https://github.com/VisualPHPUnit/VisualPHPUnit VisualPHPUnit
+ */
 $root = dirname(dirname(__DIR__));
 
 $config = array(
