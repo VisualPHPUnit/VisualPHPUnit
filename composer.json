@@ -54,8 +54,5 @@
 	"config" : {
 		"bin-dir" : "bin/",
 		"vendor-dir" : "vendor/"
-	},
-	"require-dev" : {
-		"squizlabs/php_codesniffer" : "2.3.2@stable"
 	}
 }
