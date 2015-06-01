@@ -161,7 +161,9 @@ class Router
             
             for ($i = 0; $i < $len; $i ++) {
                 $char = $uri[$i];
-                $is_regex = ($char == '[' || $char == '(' || $char == '.' || $char == '?' || $char == '+' || $char == '{');
+                $is_regex = (
+                    $char == '[' || $char == '(' || $char == '.' || $char == '?' || $char == '+' || $char == '{'
+                );
                 if ($is_regex) {
                     $route_to_match = $uri;
                     break;

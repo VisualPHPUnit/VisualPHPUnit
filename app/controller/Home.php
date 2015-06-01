@@ -14,6 +14,8 @@
 namespace app\controller;
 
 use \app\lib\Library;
+use \app\lib\VPU;
+use \app\core\Controller;
 
 /**
  * Home
@@ -22,7 +24,7 @@ use \app\lib\Library;
  *
  * @author Nick Sinopoli <NSinopoli@gmail.com>
  */
-class Home extends \app\core\Controller
+class Home extends Controller
 {
 
     /**
@@ -34,7 +36,7 @@ class Home extends \app\core\Controller
      */
     protected function createSnapshot($view_data)
     {
-        $directory = \app\lib\Library::retrieve('snapshot_directory');
+        $directory = Library::retrieve('snapshot_directory');
         $filename = realpath($directory) . '/' . date('Y-m-d_H-i') . '.html';
         
         $contents = $this->renderHtml('partial/test_results', $view_data);
@@ -84,9 +86,8 @@ class Home extends \app\core\Controller
             $normalize_path = function ($path) {
                 return str_replace('\\', '/', realpath($path));
             };
-            $test_directories = json_encode(
-                array_map($normalize_path, array_values(Library::retrieve('test_directories')))
-            );
+            $test_directories = Library::retrieve('test_directories');
+            $test_directories = json_encode(array_map($normalize_path, array_values($test_directories)));
             
             $suites = array();
             $stats = array();
@@ -106,10 +107,10 @@ class Home extends \app\core\Controller
         }
         
         $tests = explode('|', $request->data['test_files']);
-        $vpu = new \app\lib\VPU();
+        $vpu = new VPU();
         
         if ($request->data['sandbox_errors']) {
-            error_reporting(\app\lib\Library::retrieve('error_reporting'));
+            error_reporting(Library::retrieve('error_reporting'));
             set_error_handler(array(
                 $vpu,
                 'handleErrors'
@@ -120,7 +121,7 @@ class Home extends \app\core\Controller
         
         $notifications = array();
         if ($xml_file_index = $request->data['xml_configuration_file']) {
-            $files = \app\lib\Library::retrieve('xml_configuration_files');
+            $files = Library::retrieve('xml_configuration_files');
             $xml_config = $files[$xml_file_index - 1];
             if (! $xml_config || ! $xml_config = realpath($xml_config)) {
                 $message = 'Please ensure that the <code>xml_configuration_file</code> in ';
@@ -165,7 +166,7 @@ class Home extends \app\core\Controller
      */
     protected function storeStatistics($stats)
     {
-        $db_options = \app\lib\Library::retrieve('db');
+        $db_options = Library::retrieve('db');
         $db = new $db_options['plugin']();
         if (! $db->connect($db_options)) {
             return array(

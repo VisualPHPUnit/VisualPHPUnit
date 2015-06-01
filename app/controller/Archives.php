@@ -13,6 +13,8 @@
  */
 namespace app\controller;
 
+use \app\lib\Library;
+
 /**
  * Archives
  *
@@ -32,7 +34,7 @@ class Archives extends \app\core\Controller
      */
     public function index($request)
     {
-        $snapshot_directory = \app\lib\Library::retrieve('snapshot_directory');
+        $snapshot_directory = Library::retrieve('snapshot_directory');
         if (! $request->is('ajax')) {
             $snapshots = array();
             $handler = @opendir($snapshot_directory);

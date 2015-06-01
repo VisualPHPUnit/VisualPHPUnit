@@ -13,6 +13,9 @@
  */
 namespace app\controller;
 
+use \app\core\Controller;
+use \app\lib\Library;
+
 /**
  * Graph
  *
@@ -20,7 +23,7 @@ namespace app\controller;
  *
  * @author Nick Sinopoli <NSinopoli@gmail.com>
  */
-class Graph extends \app\core\Controller
+class Graph extends Controller
 {
 
     /**
@@ -51,7 +54,7 @@ class Graph extends \app\core\Controller
             );
         }
         
-        $db_options = \app\lib\Library::retrieve('db');
+        $db_options = Library::retrieve('db');
         $db = new $db_options['plugin']();
         if (! $db->connect($db_options)) {
             return array(
@@ -79,7 +82,7 @@ class Graph extends \app\core\Controller
                 $output = 'm/d';
                 break;
         }
-        $current = $start = strtotime($request->data['start_date']);
+        $current = strtotime($request->data['start_date']);
         $end = strtotime($request->data['end_date']) + $interval;
         
         $categories = array();

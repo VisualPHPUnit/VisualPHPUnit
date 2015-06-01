@@ -11,6 +11,9 @@
  */
 namespace nx\core;
 
+use \nx\core\Response;
+use \nx\core\Router;
+
 /**
  * The Dispatcher handles incoming HTTP requests and sends back responses.
  */
@@ -33,8 +36,8 @@ class Dispatcher
     public function __construct(array $config = array())
     {
         $defaults = array(
-            'response' => new \nx\core\Response(),
-            'router' => new \nx\core\Router()
+            'response' => new Response(),
+            'router' => new Router()
         );
         $this->config = $config + $defaults;
     }

@@ -9,3 +9,6 @@ vendor
 .project
 composer.lock
 composer.phar
+phpcs.phar
+phpcbf.phar
+phpDocumentor.phar
