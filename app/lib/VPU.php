@@ -19,6 +19,7 @@ use \PHPUnit_Framework_TestResult;
 use \PHPUnit_Util_Log_JSON;
 use \PHPUnit_Framework_TestSuite;
 use \PHPUnit_Util_Configuration;
+use app\lib\LogJSONWithStringComparison;
 
 /**
  * VPU
@@ -459,7 +460,7 @@ class VPU
         }
         
         $result = new PHPUnit_Framework_TestResult();
-        $result->addListener(new PHPUnit_Util_Log_JSON("/tmp/res.json"));
+        $result->addListener(new LogJSONWithStringComparison("/tmp/res.json"));
         
         // We need to temporarily turn off html_errors to ensure correct
         // parsing of test debug output
