@@ -15,8 +15,8 @@ VisualPHPUnit is a visual front-end for PHPUnit.  It offers the following featur
 
 ## Screenshots
 
-![Screenshot of VisualPHPUnit, displaying a breakdown of test results.](http://nsinopoli.github.com/VisualPHPUnit/vpu2_main.png "VisualPHPUnit Test Results")
-![Screenshot of VisualPHPUnit, displaying a graph of test results.](http://nsinopoli.github.com/VisualPHPUnit/vpu2_graphs.png "VisualPHPUnit Statistics Graph")
+![Screenshot of VisualPHPUnit, displaying a breakdown of test results.](http://visualphpunit.github.io/VisualPHPUnit/vpu2_main.png "VisualPHPUnit Test Results")
+![Screenshot of VisualPHPUnit, displaying a graph of test results.](http://visualphpunit.github.io/VisualPHPUnit/vpu2_graphs.png "VisualPHPUnit Statistics Graph")
 
 ## Requirements
 
