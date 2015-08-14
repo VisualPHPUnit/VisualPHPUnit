@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+<title>VisualPHPUnit</title>
+	<parser>
+		<target>build/phpdoc</target>
+	</parser>
+	<transformer>
+		<target>build/phpdoc</target>
+	</transformer>
+	<files>
+		<directory>app</directory>
+		<directory>nx</directory>
+	</files>
+</phpdoc>
