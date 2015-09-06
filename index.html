@@ -1,9 +1,314 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <meta charset='utf-8'>
-    <title>VisualPHPUnit</title>
-    <link rel='stylesheet' href='index.css' media='screen' />
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="VisualPHPUnit is a visual front-end for PHPUnit">
+<meta name="author" content="https://github.com/VisualPHPUnit/VisualPHPUnit/graphs/contributors">
+
+<title>VisualPHPUnit</title>
+
+<!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="vpu.css" rel="stylesheet">
+
+<!-- Custom Fonts -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+<link href="http://fonts.googleapis.com/css?family=Montserrat:400,700"
+	rel="stylesheet" type="text/css">
+<link
+	href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic"
+	rel="stylesheet" type="text/css">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body id="page-top" class="index">
+
+	<!-- Navigation -->
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header page-scroll">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#page-top">VisualPHPUnit</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav navbar-right">
+					<li class="hidden"><a href="#page-top"></a></li>
+					<li class="page-scroll"><a href="#portfolio">Screenshots</a></li>
+					<li class="page-scroll"><a href="#about">About</a></li>
+					<li><a href="api/index.html" target="_blank">API</a></li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid -->
+	</nav>
+
+	<!-- Header -->
+	<header>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="intro-text">
+						<span class="name">VisualPHPUnit</span>
+						<hr class="star-light">
+						<span class="skills">A visual front-end for PHPUnit</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<!-- Portfolio Grid Section -->
+	<section id="portfolio">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<h2>Screenshots</h2>
+					<hr class="star-primary">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-4 portfolio-item">
+					<a href="#portfolioModal1" class="portfolio-link"
+						data-toggle="modal">
+						<div class="caption">
+							<div class="caption-content">
+								<i class="fa fa-search-plus fa-3x"></i>
+							</div>
+						</div> <img src="ss6.png" class="img-responsive" alt="">
+					</a>
+				</div>
+				<div class="col-sm-4 portfolio-item">
+					<a href="#portfolioModal2" class="portfolio-link"
+						data-toggle="modal">
+						<div class="caption">
+							<div class="caption-content">
+								<i class="fa fa-search-plus fa-3x"></i>
+							</div>
+						</div> <img src="vpu2_main.png" class="img-responsive" alt="">
+					</a>
+				</div>
+				<div class="col-sm-4 portfolio-item">
+					<a href="#portfolioModal3" class="portfolio-link"
+						data-toggle="modal">
+						<div class="caption">
+							<div class="caption-content">
+								<i class="fa fa-search-plus fa-3x"></i>
+							</div>
+						</div> <img src="vpu2_graphs.png" class="img-responsive" alt="">
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- About Section -->
+	<section class="success" id="about">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<h2>About</h2>
+					<hr class="star-light">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-4 col-lg-offset-2">
+					<p>The command line is a beautiful thing. Unfortunately, it has
+						its shortcomings - some of which become painfully obvious when one
+						tries to run Sebastian Bergmann's PHPUnit against a suite of PHP
+						unit tests.</p>
+
+					<p>Admittedly, all the information you need is right there. But
+						what if you want...</p>
+					<ul>
+						<li>a visual representation of your test results?</li>
+						<li>the ability to archive these visual representations?</li>
+						<li>the ability to track your test progress over time?</li>
+					</ul>
+				</div>
+				<div class="col-lg-4">
+					<p>Enter VisualPHPUnit. Aimed at being the definitive unit test
+						management system for PHPUnit, it provides an elegant solution to
+						the above demands. VPU also features:</p>
+
+					<ul>
+						<li>a file selector</li>
+						<li>convenient display of debugging messages written within
+							the unit tests</li>
+						<li>sandboxing of PHP errors</li>
+						<li>sorting and filtering of test results</li>
+						<li>a command line script to automate the generation of test
+							results via cron</li>
+						<li>remarkably easy configuration</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+	<!-- Footer -->
+	<footer class="text-center">
+		<div class="footer-above">
+			<div class="container">
+				<div class="row">
+					<div class="footer-col col-md-4">
+						<h3>GitHub</h3>
+						<ul class="list-inline">
+						<li><a href="https://github.com/VisualPHPUnit/VisualPHPUnit/wiki">Wiki</a></li>
+							<li><a
+								href="https://github.com/VisualPHPUnit/VisualPHPUnit/issues">Issues</a></li>
+							<li><a href="https://github.com/VisualPHPUnit/VisualPHPUnit">Code</a></li>
+						</ul>
+					</div>
+					<div class="footer-col col-md-8">
+						<h3>Download</h3>
+						<ul class="list-inline">
+							<li><a
+								href="https://github.com/VisualPHPUnit/VisualPHPUnit/archive/v1.5.2.zip">Version
+									1.5.2 (Not maintained)</a></li>
+							<li><a
+								href="https://github.com/VisualPHPUnit/VisualPHPUnit/archive/v2.3.zip">Version
+									2.3 (Stable)</a></li>
+							<li><a
+								href="https://github.com/VisualPHPUnit/VisualPHPUnit/archive/devel.zip">Latest
+									(Development)</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer-below">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">Copyright &copy; VisualPHPUnit 2015</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+	<div class="scroll-top page-scroll visible-xs visible-sm">
+		<a class="btn btn-primary" href="#page-top"> <i
+			class="fa fa-chevron-up"></i>
+		</a>
+	</div>
+
+	<!-- Portfolio Modals -->
+	<div class="portfolio-modal modal fade" id="portfolioModal1"
+		tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-content">
+			<div class="close-modal" data-dismiss="modal">
+				<div class="lr">
+					<div class="rl"></div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8 col-lg-offset-2">
+						<div class="modal-body">
+							<h2>Typical console</h2>
+							<hr class="star-primary">
+							<img src="ss6.png" class="img-responsive img-centered" alt="">
+							<p>Typical console for phpunit</p>
+
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">
+								<i class="fa fa-times"></i> Close
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="portfolio-modal modal fade" id="portfolioModal2"
+		tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-content">
+			<div class="close-modal" data-dismiss="modal">
+				<div class="lr">
+					<div class="rl"></div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8 col-lg-offset-2">
+						<div class="modal-body">
+							<h2>Browser administration</h2>
+							<hr class="star-primary">
+							<img src="vpu2_main.png" class="img-responsive img-centered"
+								alt="">
+							<p>With VisualPhpUnit you can select and run your tests via
+								your browser.</p>
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">
+								<i class="fa fa-times"></i> Close
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="portfolio-modal modal fade" id="portfolioModal3"
+		tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-content">
+			<div class="close-modal" data-dismiss="modal">
+				<div class="lr">
+					<div class="rl"></div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8 col-lg-offset-2">
+						<div class="modal-body">
+							<h2>Test History</h2>
+							<hr class="star-primary">
+							<img src="vpu2_graphs.png" class="img-responsive img-centered"
+								alt="">
+							<p>Enable database support to track you test history.</p>
+
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">
+								<i class="fa fa-times"></i> Close
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- jQuery -->
+	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<!-- Tracking -->
     <script type="text/javascript">
 
     var _gaq = _gaq || [];
@@ -17,65 +322,6 @@
     })();
 
     </script>
-</head>
-
-<body>
-
-    <div id="container">
-
-        <hgroup>
-            <h1>
-                <a href='http://github.com/NSinopoli/VisualPHPUnit'>VisualPHPUnit</a>
-            </h1>
-            <h2>
-                A PHPUnit GUI
-            </h2>
-        </hgroup>
-
-        <p>
-            The command line is a beautiful thing.  Unfortunately, it has its shortcomings - some of which become painfully obvious when one tries to run Sebastian Bergmann's PHPUnit against a suite of PHP unit tests.
-        </p>
-
-        <img id='ss_cli' src='ss6.png' alt='Command line showing the output of PHPUnit after running some tests.' />
-
-        <p>
-            Admittedly, all the information you need is right there.  But what if you want...
-        </p>
-
-        <ul>
-            <li>a visual representation of your test results?</li>
-            <li>the ability to archive these visual representations?</li>
-            <li>the ability to track your test progress over time?</li>
-        </ul>
-
-        <p>
-            Enter VisualPHPUnit.  Aimed at being the definitive unit test management system for PHPUnit, it provides an elegant solution to the above demands.  VPU also features:
-        </p>
-
-        <ul>
-            <li>a file selector</li>
-            <li>convenient display of debugging messages written within the unit tests</li>
-            <li>sandboxing of PHP errors</li>
-            <li>sorting and filtering of test results</li>
-            <li>a command line script to automate the generation of test results via cron</li>
-            <li>remarkably easy configuration</li>
-        </ul>
-
-        <p>Still not convinced?</p>
-
-        <a href='http://github.com/NSinopoli/VisualPHPUnit' alt='Screenshot of VisualPHPUnit, displaying a breakdown of test results.'>
-            <img id='ss_main' src='vpu2_main.png' />
-        </a>
-
-        <div id='footer'>
-            <p>
-                VisualPHPUnit is licensed under the BSD license.
-                <br />
-                Copyright &copy; 2011-2012, Nick Sinopoli.  All rights reserved.
-            </p>
-        </div>
-
-    </div>
-
 </body>
+
 </html>
