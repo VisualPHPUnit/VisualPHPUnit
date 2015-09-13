@@ -1,46 +1,13 @@
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/VisualPHPUnit/VisualPHPUnit/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/VisualPHPUnit/VisualPHPUnit/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/VisualPHPUnit/VisualPHPUnit/badges/quality-score.png?b=devel)](https://scrutinizer-ci.com/g/VisualPHPUnit/VisualPHPUnit/?branch=devel)
 [![Build Status](https://travis-ci.org/VisualPHPUnit/VisualPHPUnit.svg)](https://travis-ci.org/VisualPHPUnit/VisualPHPUnit)
+[![Dependency Status](https://www.versioneye.com/user/projects/55f547b3a4155f00090005b5/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55f547b3a4155f00090005b5)
 [![Project Stats](https://www.openhub.net/p/VisualPHPUnit/widgets/project_thin_badge.gif)](https://www.openhub.net/p/VisualPHPUnit)
+
 
 # VisualPHPUnit
 
-VisualPHPUnit is a visual front-end for PHPUnit.  It offers the following features:
-
-* A stunning front-end which organizes test and suite results
-* The ability to view unit testing progress via graphs
-* An option to maintain a history of unit test results through the use of snapshots
-* Enumeration of PHPUnit statistics and messages
-* Convenient display of any debug messages written within unit tests
-* Sandboxing of PHP errors
-* The ability to generate test results from both a browser and the command line
-
-## Screenshots
-
-![Screenshot of VisualPHPUnit, displaying a breakdown of test results.](http://visualphpunit.github.io/VisualPHPUnit/vpu2_main.png "VisualPHPUnit Test Results")
-![Screenshot of VisualPHPUnit, displaying a graph of test results.](http://visualphpunit.github.io/VisualPHPUnit/vpu2_graphs.png "VisualPHPUnit Statistics Graph")
-
-## Requirements
-
-VisualPHPUnit requires PHP 5.3+ and PHPUnit v3.5+.
-
-## Upgrading From v1.x
-
-VPU underwent a complete rewrite in v2.0.  Users who are looking to upgrade from v1.x are encouraged to follow the installation instructions outlined below.
-
-### What About My Data?
-
-Because the UI has been changed, snapshots from v1.x will not render correctly in v2.x.
-
-Test statistics generated in v1.x, however, can still be used.  When installing, ignore the [migration](#graph-generation) and run the following commands against your old VPU database instead:
-
-```sql
-alter table SuiteResult change success succeeded int(11) not null;
-alter table TestResult change success succeeded int(11) not null;
-```
-
-### I Miss v1.x!
-
-While no longer actively supported, v1.x can be found on its [own branch](https://github.com/NSinopoli/VisualPHPUnit/tree/1.x).
+VisualPHPUnit is a visual front-end for PHPUnit.
+You may read more about it here [here](http://visualphpunit.github.io/VisualPHPUnit/) or in the [wiki](https://github.com/VisualPHPUnit/VisualPHPUnit/wiki).
 
 ## Installation
 
@@ -54,64 +21,9 @@ While no longer actively supported, v1.x can be found on its [own branch](https:
     2. Within the `$config` array, change the contents of `test_directories` to reflect the location(s) of your unit tests. Note that each directory acts as a root directory.
 4. Configure your web server (see below).
 
-## Web Server Configuration
-
-### Apache
-
-VPU comes with .htaccess files, so you won't have to worry about configuring anything.  Simply point your browser at the location where you installed the code!
-
-#### Troubleshooting
-
-1. Make sure `mod_rewrite` is enabled.
-2. Make sure `AllowOverride` in your `httpd.conf` is set to `all`.
-3. If you're using WAMP, you'll need to adjust the two `.htaccess` files to reflect the location where you extracted VPU.  (In this example, VPU has been extracted to `C:\wamp\www\vpu`, where `C:/wamp/www/` has been set as the `DocumentRoot` in `httpd.conf`.)
-  - In the `.htaccess` file located at the root of the repository, add the following line after line 2:
-    `RewriteBase /vpu`
-  - In `app/public/.htaccess`, add the following line after line 2:
-    `RewriteBase /vpu/app/public`
-
-### nginx
-
-Place this code block within the `http {}` block in your `nginx.conf` file:
-
-```nginx
-
-    server {
-	    server_name     vpu;
-	    root            /srv/http/vpu/app/public;
-	    index           index.php;
-
-	    access_log      /var/log/nginx/vpu_access.log;
-	    error_log       /var/log/nginx/vpu_error.log;
-
-	    location / {
-            try_files $uri /index.php;
-	    }
-
-	    location ~ \.php$ {
-            fastcgi_pass    unix:/var/run/php-fpm/php-fpm.sock;
-            fastcgi_index   index.php;
-            fastcgi_param   SCRIPT_FILENAME $document_root$fastcgi_script_name;
-            include         fastcgi_params;
-	    }
-    }
-```
-
-Note that you will have to change the `server_name` to the name you use in your hosts file. You will also have to adjust the directories according to where you installed the code. In this configuration, /srv/http/vpu/ is the project root. The public-facing part of VisualPHPUnit, however, is located in app/public within the project root (so in this example, it's /srv/http/vpu/app/public).
-
-When that's done, restart your web server, and then point your browser at the server name you chose above!
-
 ## Project Configuration (optional)
 
 VPU comes with many of its features disabled by default.  In order to take advantage of them, you'll have to modify a few more lines in `app/config/bootstrap.php`.
-
-## Using VisualPHPUnit with Laravel
-
-It's simple to use VisualPHPUnit with Laravel. Assuming you have successfully installed with the above instructions, and the sample tests run, you need only do the following:
-
-1. In `app/config/bootstrap.php` add the path to your Laravel project's tests directory to the `test_directories` array (eg: '/var/www/laravel/tests')
-2. In `app/config/bootstrap.php` add your Laravel project's autoload.php to the `bootstraps` array (eg: '/var/www/laravel/bootstrap/autoload.php')
-3. Now reload VisualPHPUnit and run the tests from your Laravel project.
 
 ### <a name='graph-generation'></a>Graph Generation
 
@@ -185,12 +97,3 @@ You may append --help for options
 bin/vpu
 ```
 
-## Version Information
-
-Current stable release is v2.3, last updated on Jul 21, 2015.
-
-## Credits
-
-Special thanks to Matt Mueller (http://mattmueller.me/blog/), who came up with the initial concept, wrote the original code (https://github.com/MatthewMueller/PHPUnit-Test-Report), and was kind enough to share it.
-
-Thanks to Mike Zhou, Hang Dao, Thomas Ingham, and Fredrik Wollsén for their suggestions!
