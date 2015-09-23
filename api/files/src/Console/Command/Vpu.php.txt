@@ -38,8 +38,9 @@ class Vpu extends Command
     protected function configure()
     {
         Config::getConfig();
+        $xmlConfigurationFiles = \app\lib\Library::retrieve('xml_configuration_files');
         $this->setName('vpu')
-            ->addArgument('config-file', InputArgument::OPTIONAL, 'Path to phpunit xml configuration file', \app\lib\Library::retrieve('xml_configuration_files')[0])
+            ->addArgument('config-file', InputArgument::OPTIONAL, 'Path to phpunit xml configuration file', $xmlConfigurationFiles[0])
             ->addOption('snapshot', 'a', InputOption::VALUE_NONE, 'Store snapshots')
             ->addOption('snapshot_directory', 'd', InputOption::VALUE_OPTIONAL, 'Path to store snapshots', \app\lib\Library::retrieve('snapshot_directory'))
             ->addOption('sandbox_errors', 'e', InputOption::VALUE_NONE, 'Sandbox PHP errors')
