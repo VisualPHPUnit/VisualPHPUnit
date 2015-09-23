@@ -11,7 +11,7 @@
  * @license   http://opensource.org/licenses/BSD-3-Clause The BSD License
  * @link      https://github.com/VisualPHPUnit/VisualPHPUnit VisualPHPUnit
  */
-namespace Visualphpunit\console\Application;
+namespace Visualphpunit\Console\Application;
 
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\InputInterface;

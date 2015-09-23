@@ -19,8 +19,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Formatter\OutputFormatter;
-use Symfony\Component\Console\Output\ConsoleOutput;
 use \app\config\Config;
+use Symfony\Component\Console\Output\StreamOutput;
 
 /**
  * Visualphpunit consol command
@@ -88,7 +88,7 @@ class Vpu extends Command
     /**
      * Execute legacy vpu command
      *
-     * @param ConsoleOutput $output            
+     * @param StreamOutput $output            
      * @param string $config            
      * @param boolean $enableSnapshot            
      * @param string $snapshotPath            
@@ -97,7 +97,7 @@ class Vpu extends Command
      *
      * @return void
      */
-    private function runLegacyVpu(ConsoleOutput $output, $config, $enableSnapshot, $snapshotPath, $enableSandbox, $enableStats)
+    private function runLegacyVpu(StreamOutput $output, $config, $enableSnapshot, $snapshotPath, $enableSandbox, $enableStats)
     {
         $vpu = new \app\lib\VPU();
         
@@ -119,14 +119,14 @@ class Vpu extends Command
     /**
      * Create snapshot
      *
-     * @param ConsoleOutput $output            
+     * @param StreamOutput $output            
      * @param array $results            
      * @param \app\lib\VPU $vpu            
      * @param string $snapshotPath            
      *
      * @return void
      */
-    private function snapshot(ConsoleOutput $output, array $results, \app\lib\VPU $vpu, $snapshotPath)
+    private function snapshot(StreamOutput $output, array $results, \app\lib\VPU $vpu, $snapshotPath)
     {
         $suites = $results['suites'];
         $stats = $results['stats'];
@@ -149,12 +149,12 @@ class Vpu extends Command
     /**
      * Store stats
      *
-     * @param ConsoleOutput $output            
+     * @param StreamOutput $output            
      * @param array $results            
      *
      * @return void
      */
-    private function stats(ConsoleOutput $output, array $results)
+    private function stats(StreamOutput $output, array $results)
     {
         Config::getConfig();
         $db_options = \app\lib\Library::retrieve('db');
