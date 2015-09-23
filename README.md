@@ -3,7 +3,7 @@
 [![Dependency Status](https://www.versioneye.com/user/projects/55f547b3a4155f00090005b5/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55f547b3a4155f00090005b5)
 [![Project Stats](https://www.openhub.net/p/VisualPHPUnit/widgets/project_thin_badge.gif)](https://www.openhub.net/p/VisualPHPUnit)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%205.3-8892BF.svg?style=flat-square)](https://php.net/)
-[![codecov.io](http://codecov.io/github/VisualPHPUnit/VisualPHPUnit/coverage.svg?branch=dev)](http://codecov.io/github/VisualPHPUnit/VisualPHPUnit?branch=dev)
+[![codecov.io](http://codecov.io/github/VisualPHPUnit/VisualPHPUnit/coverage.svg?branch=devel)](http://codecov.io/github/VisualPHPUnit/VisualPHPUnit?branch=devel)
 
 
 # VisualPHPUnit
