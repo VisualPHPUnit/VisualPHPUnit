@@ -10,5 +10,6 @@
 	<files>
 		<directory>app</directory>
 		<directory>nx</directory>
+		<directory>src</directory>
 	</files>
 </phpdoc>

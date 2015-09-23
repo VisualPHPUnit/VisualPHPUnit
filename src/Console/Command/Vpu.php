@@ -19,8 +19,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Formatter\OutputFormatter;
-use Symfony\Component\Console\Output\ConsoleOutput;
 use \app\config\Config;
+use Symfony\Component\Console\Output\StreamOutput;
 
 /**
  * Visualphpunit consol command
@@ -38,8 +38,9 @@ class Vpu extends Command
     protected function configure()
     {
         Config::getConfig();
+        $xmlConfigurationFiles = \app\lib\Library::retrieve('xml_configuration_files');
         $this->setName('vpu')
-            ->addArgument('config-file', InputArgument::OPTIONAL, 'Path to phpunit xml configuration file', \app\lib\Library::retrieve('xml_configuration_files')[0])
+            ->addArgument('config-file', InputArgument::OPTIONAL, 'Path to phpunit xml configuration file', $xmlConfigurationFiles[0])
             ->addOption('snapshot', 'a', InputOption::VALUE_NONE, 'Store snapshots')
             ->addOption('snapshot_directory', 'd', InputOption::VALUE_OPTIONAL, 'Path to store snapshots', \app\lib\Library::retrieve('snapshot_directory'))
             ->addOption('sandbox_errors', 'e', InputOption::VALUE_NONE, 'Sandbox PHP errors')
@@ -88,7 +89,7 @@ class Vpu extends Command
     /**
      * Execute legacy vpu command
      *
-     * @param ConsoleOutput $output            
+     * @param StreamOutput $output            
      * @param string $config            
      * @param boolean $enableSnapshot            
      * @param string $snapshotPath            
@@ -97,7 +98,7 @@ class Vpu extends Command
      *
      * @return void
      */
-    private function runLegacyVpu(ConsoleOutput $output, $config, $enableSnapshot, $snapshotPath, $enableSandbox, $enableStats)
+    private function runLegacyVpu(StreamOutput $output, $config, $enableSnapshot, $snapshotPath, $enableSandbox, $enableStats)
     {
         $vpu = new \app\lib\VPU();
         
@@ -119,14 +120,14 @@ class Vpu extends Command
     /**
      * Create snapshot
      *
-     * @param ConsoleOutput $output            
+     * @param StreamOutput $output            
      * @param array $results            
      * @param \app\lib\VPU $vpu            
      * @param string $snapshotPath            
      *
      * @return void
      */
-    private function snapshot(ConsoleOutput $output, array $results, \app\lib\VPU $vpu, $snapshotPath)
+    private function snapshot(StreamOutput $output, array $results, \app\lib\VPU $vpu, $snapshotPath)
     {
         $suites = $results['suites'];
         $stats = $results['stats'];
@@ -149,12 +150,12 @@ class Vpu extends Command
     /**
      * Store stats
      *
-     * @param ConsoleOutput $output            
+     * @param StreamOutput $output            
      * @param array $results            
      *
      * @return void
      */
-    private function stats(ConsoleOutput $output, array $results)
+    private function stats(StreamOutput $output, array $results)
     {
         Config::getConfig();
         $db_options = \app\lib\Library::retrieve('db');
