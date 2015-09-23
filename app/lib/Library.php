@@ -34,7 +34,7 @@ class Library
      *
      * @param string $key
      *            The key.
-     * @return void
+     * @return array
      */
     public static function retrieve($key = null)
     {

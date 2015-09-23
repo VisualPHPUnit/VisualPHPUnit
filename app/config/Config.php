@@ -82,7 +82,7 @@ class Config
         // (leave empty to disable)
         //
         // In order for VPU to function correctly, the configuration files must
-        // contain a JSON listener (see the README for more information)
+        // contain a JSON listener (see the README.md for more information)
         $config['xml_configuration_files'] = array(
             realpath(__DIR__ . "/phpunit.xml")
         );
