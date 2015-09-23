@@ -9,6 +9,9 @@ php:
 - 5.5
 - 5.6
 
+before_install:
+- pip install --user codecov
+
 before_script:
 - composer install
 - wget -nc -O ./phpDocumentor.phar http://www.phpdoc.org/phpDocumentor.phar
@@ -28,7 +31,9 @@ script:
 - php ./phpDocumentor.phar -f phpdoc.dist.xml
 - php ./phpunit.phar --testdox -c ./phpunit.xml.dist 
 
-after_success: ./gh-pages.sh
+after_success:
+- ./gh-pages.sh
+- codecov
 
 env:
   global:
