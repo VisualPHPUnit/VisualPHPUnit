@@ -14,7 +14,6 @@ namespace app\lib;
 use \RecursiveDirectoryIterator;
 use \RecursiveIteratorIterator;
 use \DomainException;
-use \PHPUnit_TextUI_Command;
 use \PHPUnit_Framework_TestResult;
 use \PHPUnit_Util_Log_JSON;
 use \PHPUnit_Framework_TestSuite;
@@ -527,7 +526,7 @@ class VPU
 
         $vendor_path = Library::retrieve('composer_vendor_path');
         $command = "$vendor_path/bin/phpunit --configuration $xml_config --stderr";
-        $results = shell_exec( $command." 2>&1" );
+        $results = shell_exec($command." 2>&1");
 
         ini_set('html_errors', $html_errors);
         
