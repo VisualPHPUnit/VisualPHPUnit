@@ -519,24 +519,16 @@ class VPU
     public function runWithXml($xml_config)
     {
         $this->checkXmlConfiguration($xml_config);
-        $command = new PHPUnit_TextUI_Command();
         
         // We need to temporarily turn off html_errors to ensure correct
         // parsing of test debug output
         $html_errors = ini_get('html_errors');
         ini_set('html_errors', 0);
-        
-        ob_start();
-        $command->run(array(
-            '--configuration',
-            $xml_config,
-            '--stderr'
-        ), false);
-        $results = ob_get_contents();
-        if (ob_get_length()) {
-            ob_end_clean();
-        }
-        
+
+        $vendor_path = Library::retrieve('composer_vendor_path');
+        $command = "$vendor_path/bin/phpunit --configuration $xml_config --stderr";
+        $results = shell_exec( $command." 2>&1" );
+
         ini_set('html_errors', $html_errors);
         
         $start = strpos($results, '{');
