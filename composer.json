@@ -45,7 +45,9 @@
 	"require" : {
 		"php" : ">=5.3.3",
 		"symfony/console" : ">=2.7.3@stable",
-		"phpunit/phpunit" : "4.1.6@stable"
+		"phpunit/phpunit" : "4.1.6@stable",
+		"silex/silex" : ">=1.3.4",
+		"jdesrosiers/silex-cors-provider" : ">=0.1.5@stable"
 	},
 	"minimum-stability" : "stable",
 	"support" : {
