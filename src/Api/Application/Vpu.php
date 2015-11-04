@@ -16,6 +16,7 @@ namespace Visualphpunit\Api\Application;
 use Silex\Application;
 use Visualphpunit\Api\Controller\Vpu as VpuController;
 use JDesrosiers\Silex\Provider\CorsServiceProvider;
+use Igorw\Silex\ConfigServiceProvider;
 
 /**
  * Visualphpunit Rest Api application
@@ -35,7 +36,7 @@ class Vpu extends Application
         parent::__construct();
         $app = $this;
         $app['debug'] = true;
-        
+        $app->register(new ConfigServiceProvider("../vpu.json"));
         $app->register(new CorsServiceProvider(), array(
             "cors.allowOrigin" => "*"
         ));
