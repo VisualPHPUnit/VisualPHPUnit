@@ -47,7 +47,9 @@
 		"symfony/console" : ">=2.7.3@stable",
 		"phpunit/phpunit" : "4.1.6@stable",
 		"silex/silex" : ">=1.3.4",
-		"jdesrosiers/silex-cors-provider" : ">=0.1.5@stable"
+		"jdesrosiers/silex-cors-provider" : "0.1.4@stable",
+		"symfony/finder" : ">=2.7.6@stable",
+		"igorw/config-service-provider" : "1.2.2@stable"
 	},
 	"minimum-stability" : "stable",
 	"support" : {

@@ -8,3 +8,8 @@ vendor
 composer.lock
 *.phar
 macports.sh
+/node_modules
+/dist
+/.tmp
+/.sass-cache
+/bower_components

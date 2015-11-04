@@ -1,0 +1,10 @@
+{
+    "config":{
+        "test-directories":
+             [{
+			"name" : "Sample tests",
+			"path" : "/Users/jsf/Web/VisualPHPUnit/app/test",
+			"ignoreHidden" : true
+		}]
+    }
+}
