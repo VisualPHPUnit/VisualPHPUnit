@@ -17,8 +17,9 @@ use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class Graph
+class Graph extends Action
 {
+
     /**
      *
      * @param Request $request            
@@ -28,19 +29,9 @@ class Graph
     public function index(Request $request, Application $app)
     {
         $data = array(
-            'title' => 'Index'
+            'title' => 'Graphs'
         );
-        $data  = json_encode($data);
-        if ($request->getMethod() == 'GET') {
-            return new Response($data, 200, array(
-                'Content-Type' => 'application/json'
-            ));
-        }
-        if ($request->getMethod() == 'POST') {
-            return new Response($data, 200, array(
-                'Content-Type' => 'application/json'
-            ));
-        }
+        return $this->ok($data);
     }
 }
 

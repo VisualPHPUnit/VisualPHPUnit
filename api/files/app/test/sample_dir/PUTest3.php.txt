@@ -37,7 +37,7 @@ class PUTest3 extends PHPUnit_Framework_TestCase
         $key = 'test';
         $value = 'test';
         print_r('some stuff');
-        $this->assertEquals($key, $value, 'test_this() failed!');
+        $this->assertEquals($key, $value, 'oneThing message');
     }
 
     /**
