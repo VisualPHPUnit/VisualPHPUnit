@@ -16,8 +16,9 @@ namespace Visualphpunit\Api\Action;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Visualphpunit\Core\Vpu;
 
-class Help
+class Run extends Action
 {
 
     /**
@@ -28,14 +29,8 @@ class Help
      */
     public function index(Request $request, Application $app)
     {
-        $data = array(
-            'title' => 'Help'
-        );
-        $data = json_encode($data);
-        if ($request->getMethod() == 'GET') {
-            return new Response($data, 200, array(
-                'Content-Type' => 'application/json'
-            ));
-        }
+        $vpu = new Vpu();
+        $result = $vpu->run([]);
+        return $this->ok([$result]);
     }
 }

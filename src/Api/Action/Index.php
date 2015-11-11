@@ -17,8 +17,9 @@ use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class Index
+class Index extends Action
 {
+
     /**
      *
      * @param Request $request            
@@ -30,16 +31,6 @@ class Index
         $data = array(
             'title' => 'Index'
         );
-        $data  = json_encode($data);
-        if ($request->getMethod() == 'GET') {
-            return new Response($data, 200, array(
-                'Content-Type' => 'application/json'
-            ));
-        }
-        if ($request->getMethod() == 'POST') {
-            return new Response($data, 200, array(
-                'Content-Type' => 'application/json'
-            ));
-        }
+        return $this->ok($data);
     }
 }

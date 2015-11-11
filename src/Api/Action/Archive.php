@@ -17,7 +17,7 @@ use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class Archive
+class Archive extends Action
 {
 
     /**
@@ -31,11 +31,6 @@ class Archive
         $data = array(
             'title' => 'Archive'
         );
-        $data = json_encode($data);
-        if ($request->getMethod() == 'GET') {
-            return new Response($data, 200, array(
-                'Content-Type' => 'application/json'
-            ));
-        }
+        return $this->ok($data);
     }
 }
