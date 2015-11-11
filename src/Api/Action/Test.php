@@ -17,7 +17,7 @@ use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Finder\Finder;
 
-class File extends Action
+class Test extends Action
 {
 
     /**
