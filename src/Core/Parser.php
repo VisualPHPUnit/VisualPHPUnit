@@ -26,12 +26,13 @@ use \Exception;
  */
 class Parser
 {
+
     /**
      * Run the list of test files
      *
      * @param array $tests
      *
-     * @return mixed[]
+     * @return array<string,double|integer|array>
      */
     public function run($tests)
     {
@@ -64,7 +65,7 @@ class Parser
      * Parse the test suite result
      *
      * @param \PHPUnit_Framework_TestResult $result
-     * @return mixed[]
+     * @return array<string,double|integer|array>
      */
     private function parseTestSuite($result)
     {
@@ -123,7 +124,7 @@ class Parser
     private function filterTrace($trace)
     {
         $newTrace = [];
-        if ($trace) {
+        if (! empty($trace)) {
             foreach ($trace as $entity) {
                 if (isset($entity['file'])) {
                     if (! preg_match('/.*vendor/', $entity['file'])) {

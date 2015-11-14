@@ -31,8 +31,8 @@ class Test extends Action
      *
      * Retrive tests from test folder
      *
-     * @param Request $request
-     * @param Application $app
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Silex\Application $app
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function index(Request $request, Application $app)
@@ -50,12 +50,12 @@ class Test extends Action
     }
 
     /**
-     * Parse the path for files
+     * Parse the dir for files
      *
-     * @param string $paths
+     * @param string $dir
      * @param boolean $ignoreHidden
      *
-     * @return array
+     * @return mixed[]
      */
     private function parse($dir, $ignoreHidden)
     {
@@ -142,7 +142,7 @@ class Test extends Action
      * @todo likely there are better ways of doing this
      * @param string $path
      *
-     * @return interger
+     * @return interger[]
      */
     private function getNumberOfMethods($path)
     {
@@ -150,7 +150,7 @@ class Test extends Action
         $result2 = preg_grep('/^class/', file($path));
         
         preg_match('/^class\s([A-Za-z0-9]+).+$/', array_pop($result2), $matches2);
-        if ($result1) {
+        if (count($result1) > 0) {
             preg_match('/^namespace\s(.+);$/', array_pop($result1), $matches1);
             $namespace = $matches1[1];
             $result2 = preg_grep('/^class/', file($path));
@@ -171,7 +171,7 @@ class Test extends Action
             ];
         }
         $result2 = preg_grep('/^class/', file($path));
-        if ($result2) {
+        if (count($result2) > 0) {
             $class = $matches2[1];
             
             require_once $path;
