@@ -21,6 +21,8 @@ $config = array(
 
     // The directory where Composer vendor is located (the one that phpunit was required into)
     'composer_vendor_path' => $root . '/vendor',
+    // The directory where Composer bin is located (where phpunit command is located)
+    'composer_bin_path' => $root . '/bin',
 
     // The directories where the tests reside
     'test_directories' => array(

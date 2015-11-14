@@ -4,7 +4,7 @@
 
   <testsuites>
     <testsuite>
-      <directory>/srv/http/vpu/app/test</directory>
+      <directory suffix=".php">../test</directory>
     </testsuite>
   </testsuites>
 

@@ -524,14 +524,12 @@ class VPU
         $html_errors = ini_get('html_errors');
         ini_set('html_errors', 0);
 
-        $vendor_path = Library::retrieve('composer_vendor_path');
-        $command = "$vendor_path/bin/phpunit --configuration $xml_config --stderr";
-        $results = shell_exec($command." 2>&1");
+        $bin_path = Library::retrieve('composer_bin_path');
+        $command = "$bin_path/phpunit --configuration $xml_config --stderr";
+        $results = shell_exec($command);
 
         ini_set('html_errors', $html_errors);
-        
-        $start = strpos($results, '{');
-        $end = strrpos($results, '}');
-        return substr($results, $start, $end - $start + 1);
+
+        return $results;
     }
 }
