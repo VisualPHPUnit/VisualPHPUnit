@@ -32,8 +32,8 @@ class Run extends Action
      *
      * Run the selected test with phpunit
      *
-     * @param Request $request
-     * @param Application $app
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Silex\Application $app
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function index(Request $request, Application $app)

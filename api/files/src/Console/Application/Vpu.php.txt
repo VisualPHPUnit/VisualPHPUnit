@@ -41,7 +41,7 @@ class Vpu extends Application
     /**
      * Gets the default commands that should always be available.
      *
-     * @return array An array of default Command instances
+     * @return \Symfony\Component\Console\Command\Command [] An array of default Command instances
      */
     protected function getDefaultCommands()
     {
