@@ -4,7 +4,7 @@
  *
  * VisualPHPUnit is a visual front-end for PHPUnit.
  *
- * PHP Version 5.3<
+ * PHP Version 5.6<
  *
  * @author    Johannes Skov Frandsen <localgod@heaven.dk>
  * @copyright 2011-2015 VisualPHPUnit
@@ -20,34 +20,51 @@ use \PHPUnit_Framework_SelfDescribing;
 use \Exception;
 
 /**
- * Visualphpunit core
+ * Visualphpunit parser
  *
  * @author Johannes Skov Frandsen <localgod@heaven.dk>
  */
-class Vpu
+class Parser
 {
+    /**
+     * Run the list of test files
+     *
+     * @param array $tests            
+     *
+     * @return mixed[]
+     */
     public function run($tests)
     {
         $suite = new PHPUnit_Framework_TestSuite();
-        $suite->addTestFiles([
-            '/Users/jsf/Web/VisualPHPUnit/app/test/DateTest.php',
-            '/Users/jsf/Web/VisualPHPUnit/app/test/PUTest.php',
-            '/Users/jsf/Web/VisualPHPUnit/app/test/PUTest2.php',
-            '/Users/jsf/Web/VisualPHPUnit/app/test/SkippedTest.php',
-            '/Users/jsf/Web/VisualPHPUnit/app/test/IncompleteTest.php',
-            '/Users/jsf/Web/VisualPHPUnit/app/test/StringCompareTest.php',
-            '/Users/jsf/Web/VisualPHPUnit/app/test/sample_dir/IncompleteTest2.php',
-            '/Users/jsf/Web/VisualPHPUnit/app/test/sample_dir/PUTest3.php',
-            '/Users/jsf/Web/VisualPHPUnit/app/test/sample_dir/PUTest4.php'
-        ]);
+        $this->addBootstrap($tests);
+        $suite->addTestFiles($tests);
         return $this->parseTestSuite($suite->run(new PHPUnit_Framework_TestResult()));
     }
 
     /**
-     * Parse the test result
+     * Require bootstrap if present
+     *
+     * @param array $tests            
+     *
+     * @return void
+     */
+    private function addBootstrap($tests)
+    {
+        foreach ($tests as $filename) {
+            if (file_exists($filename)) {
+                $info = pathinfo($filename);
+                if (file_exists($info['dirname'] . DIRECTORY_SEPARATOR . 'bootstrap.php')) {
+                    require_once $info['dirname'] . DIRECTORY_SEPARATOR . 'bootstrap.php';
+                }
+            }
+        }
+    }
+
+    /**
+     * Parse the test suite result
      *
      * @param \PHPUnit_Framework_TestResult $result            
-     * @return array
+     * @return mixed[]
      */
     private function parseTestSuite($result)
     {
@@ -96,6 +113,40 @@ class Vpu
         return $data;
     }
 
+    /**
+     * Filter the trace to exclude vendor and VPU classes
+     *
+     * @param array $trace            
+     * @todo This needs more work
+     * @return mixed[]
+     */
+    private function filterTrace($trace)
+    {
+        $newTrace = [];
+        if ($trace) {
+            foreach ($trace as $entity) {
+                if (isset($entity['file'])) {
+                    if (! preg_match('/.*vendor/', $entity['file'])) {
+                        if (! preg_match('/.*src\/Core|Api/', $entity['file'])) {
+                            if (! preg_match('/.*backend\/index.php/', $entity['file'])) {
+                                $newTrace[] = $entity;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return $newTrace;
+    }
+
+    /**
+     * Parse individual test
+     *
+     * @param string $status            
+     * @param string|object $test            
+     *
+     * @return mixed[]
+     */
     private function parseTest($status, $test)
     {
         if (is_object($test)) {
@@ -106,7 +157,9 @@ class Vpu
                 'status' => $status,
                 'message' => $test->thrownException()->getMessage(),
                 'expected' => $this->getComparison($test->thrownException())['expected'],
-                'actual' => $this->getComparison($test->thrownException())['actual']
+                'actual' => $this->getComparison($test->thrownException())['actual'],
+                'trace' => $this->filterTrace($test->thrownException()
+                    ->getTrace())
             ];
         } else {
             return [
@@ -121,7 +174,13 @@ class Vpu
         }
     }
 
-
+    /**
+     * Convert camelCase to friendly name
+     *
+     * @param sreing $camelCaseString            
+     *
+     * @return string
+     */
     private function friendlyName($camelCaseString)
     {
         $re = '/(?<=[a-z])(?=[A-Z])/x';
@@ -130,6 +189,12 @@ class Vpu
         return join($a, " ");
     }
 
+    /**
+     * Explode a testname into class and method components
+     *
+     * @param string $testName            
+     * @return mixed[]
+     */
     private function explodeTestName($testName)
     {
         preg_match('/([a-zA-Z0-9]+)::([a-zA-Z0-9]+)$/', $testName, $matches);
@@ -139,6 +204,13 @@ class Vpu
         ];
     }
 
+    /**
+     * Get expected and actual if available
+     *
+     * @param Exception $e            
+     *
+     * @return mixed[]
+     */
     private function getComparison(Exception $e)
     {
         if ($e instanceof PHPUnit_Framework_SelfDescribing) {

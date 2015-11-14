@@ -1,9 +1,9 @@
 <?php
 namespace Visualphpunit\Test\Console\Command;
 
-use Visualphpunit\Console\Command\Vpu as VpuCommand;
+use Visualphpunit\Console\Command\Run;
 
-class ListCommandTest extends \PHPUnit_Framework_TestCase
+class RunTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -16,8 +16,8 @@ class ListCommandTest extends \PHPUnit_Framework_TestCase
      */
     public function correctInstantiation()
     {
-        $command = new VpuCommand();
+        $command = new Run();
         
-        $this->assertInstanceOf('Visualphpunit\Console\Command\Vpu', $command);
+        $this->assertInstanceOf('Visualphpunit\Console\Command\Run', $command);
     }
 }

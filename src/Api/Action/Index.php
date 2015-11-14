@@ -4,7 +4,7 @@
  *
  * VisualPHPUnit is a visual front-end for PHPUnit.
  *
- * PHP Version 5.3<
+ * PHP Version 5.6<
  *
  * @author Johannes Skov Frandsen <localgod@heaven.dk>
  * @copyright 2011-2015 VisualPHPUnit
@@ -16,7 +16,11 @@ namespace Visualphpunit\Api\Action;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
+/**
+ * Visualphpunit stub for loading javascript
+ *
+ * @author Johannes Skov Frandsen <localgod@heaven.dk>
+ */
 class Index extends Action
 {
 

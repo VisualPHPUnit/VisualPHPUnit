@@ -4,7 +4,7 @@
  *
  * VisualPHPUnit is a visual front-end for PHPUnit.
  *
- * PHP Version 5.3<
+ * PHP Version 5.6<
  *
  * @author    Johannes Skov Frandsen <localgod@heaven.dk>
  * @copyright 2011-2015 VisualPHPUnit
@@ -15,7 +15,7 @@ namespace Visualphpunit\Console\Application;
 
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\InputInterface;
-use Visualphpunit\Console\Command\Vpu as VpuCommand;
+use Visualphpunit\Console\Command\Run;
 
 /**
  * Visualphpunit consol application
@@ -46,7 +46,7 @@ class Vpu extends Application
     protected function getDefaultCommands()
     {
         $defaultCommands = parent::getDefaultCommands();
-        $defaultCommands[] = new VpuCommand();
+        $defaultCommands[] = new Run();
         return $defaultCommands;
     }
 
