@@ -4,7 +4,7 @@
  *
  * VisualPHPUnit is a visual front-end for PHPUnit.
  *
- * PHP Version 5.3<
+ * PHP Version 5.6<
  *
  * @author Johannes Skov Frandsen <localgod@heaven.dk>
  * @copyright 2011-2015 VisualPHPUnit
@@ -17,6 +17,11 @@ use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Visualphpunit graph action
+ *
+ * @author Johannes Skov Frandsen <localgod@heaven.dk>
+ */
 class Graph extends Action
 {
 

@@ -4,7 +4,7 @@
  *
  * VisualPHPUnit is a visual front-end for PHPUnit.
  *
- * PHP Version 5.3<
+ * PHP Version 5.6<
  *
  * @author    Johannes Skov Frandsen <localgod@heaven.dk>
  * @copyright 2011-2015 VisualPHPUnit
@@ -16,6 +16,11 @@ namespace Visualphpunit\Api\Controller;
 use Silex\ControllerProviderInterface;
 use Silex\Application;
 
+/**
+ * Visualphpunit main controller
+ *
+ * @author Johannes Skov Frandsen <localgod@heaven.dk>
+ */
 class Vpu implements ControllerProviderInterface
 {
 
@@ -34,6 +39,7 @@ class Vpu implements ControllerProviderInterface
         $controllers->get('/graphs', 'Visualphpunit\Api\Action\Graph::index');
         $controllers->get('/tests', 'Visualphpunit\Api\Action\Test::index');
         $controllers->post('/run', 'Visualphpunit\Api\Action\run::index');
+        $controllers->get('/run', 'Visualphpunit\Api\Action\run::index');
         return $controllers;
     }
 }

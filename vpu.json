@@ -1,10 +1,15 @@
 {
     "config":{
-        "test-directories":
-             [{
-			"name" : "Sample tests",
-			"path" : "/Users/jsf/Web/VisualPHPUnit/app/test",
-			"ignoreHidden" : true
-		}]
+        "test-directories":[
+            {
+                "name":"VisualPHPUnit tests",
+                "path":"../tests",
+                "ignoreHidden":true
+            }
+        ],
+        "database":{
+            "driver":"pdo_sqlite",
+            "path":"../vpu.db"
+        }
     }
 }

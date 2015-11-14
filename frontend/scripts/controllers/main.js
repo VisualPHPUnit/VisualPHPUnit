@@ -23,7 +23,6 @@ angular.module('VisualPHPUnit').controller('MainCtrl', function($scope, $http) {
 			emptyIcon : 'glyphicon glyphicon-file'
 		});
 		$('#run').on('click', function(event, data) {
-			//console.log($('#tree').treeview(true).getSelected());
 			var selected = $('#tree').treeview(true).getSelected();
 			var files = [];
 			jQuery.each(selected, function(k, v) {
@@ -33,52 +32,38 @@ angular.module('VisualPHPUnit').controller('MainCtrl', function($scope, $http) {
 			var config = {
 				method : 'POST',
 				url : 'http://localhost:8001/run',
-				params : {
-				          files : files
-			}
+				data : files
 			};
 			var responsePromise = $http(config);
 			responsePromise.success(function(data, status, headers, config) {
 				var data = data[0];
 				console.log(data);
-				$("#result").empty();
-				
-				
-				$("#result").append('<div class="progress">'+
-				  '<div class="progress-bar progress-bar-success" title="Passed ('+getPercentage(data['passed'], data['total'])+'%)" style="width: '+getPercentage(data['passed'], data['total'])+'%">'+
-				    '<span class="sr-only">'+getPercentage(data['passed'], data['total'])+'%</span>'+
-				  '</div>'+
-				  '<div class="progress-bar progress-bar-danger" title="Failed ('+getPercentage(data['failed'], data['total'])+'%)" style="width: '+getPercentage(data['failed'], data['total'])+'%">'+
-				  '<span class="sr-only">'+getPercentage(data['failed'], data['total'])+'%</span>'+
-				  '</div>'+
-				  '<div class="progress-bar progress-bar-info progress-bar" title="Skipped ('+getPercentage(data['skipped'], data['total'])+'%)" style="width: '+getPercentage(data['skipped'], data['total'])+'%">'+
-				    '<span class="sr-only">'+getPercentage(data['skipped'], data['total'])+'%</span>'+
-				  '</div>'+
-				  '<div class="progress-bar progress-bar-primary progress-bar" title="Not implemented ('+getPercentage(data['notImplemented'], data['total'])+'%)" style="width: '+getPercentage(data['notImplemented'], data['total'])+'%">'+
-				    '<span class="sr-only">'+getPercentage(data['notImplemented'], data['total'])+'%</span>'+
-				  '</div>'+
-				  '<div class="progress-bar progress-bar-warning" title="Error ('+getPercentage(data['error'], data['total'])+'%)" style="width: '+getPercentage(data['error'], data['total'])+'%">'+
-				  '<span class="sr-only">'+getPercentage(data['error'], data['total'])+'%</span>'+
-				  '</div>'+
-				'</div>');
-				jQuery.each(data['tests'], function(k, v) {
-					if (v.status == 'passed') {
-						$("#result").append('<div class="alert alert-success" role="alert">'+ formatTitle(v)+'</div>');
-					}
-					if (v.status == 'failed') {
-						$("#result").append('<div class="alert alert-danger" role="alert">'+ formatTitle(v)+expected(v)+formatInfo(v)+'</div>');
-					}
-					if (v.status == 'skipped') {
-						$("#result").append('<div class="alert alert-info" role="alert">'+ formatTitle(v)+formatInfo(v)+'</div>');
-					}
-					if (v.status == 'notImplemented') {
-						$("#result").append('<div class="alert alert-warning" role="alert">'+ formatTitle(v)+formatInfo(v)+'</div>');
-					}
-					if (v.status == 'error') {
-						$("#result").append('<div class="alert alert-warning" role="alert">'+ formatTitle(v)+formatInfo(v)+'</div>');
-					}
-				});
-			    $('[data-toggle="popover"]').popover()
+				if (data != 'nofiles') {
+					$("#result").empty();
+					$("#result").append('<p class="text-muted">Completed in '+ data['time'] +' seconds!</p>');
+					$("#result").append('<div class="progress">'+
+					  '<div class="progress-bar progress-bar-success" title="Passed ('+getPercentage(data['passed'], data['total'])+'%)" style="width: '+getPercentage(data['passed'], data['total'])+'%">'+
+					    '<span class="sr-only">'+getPercentage(data['passed'], data['total'])+'%</span>'+
+					  '</div>'+
+					  '<div class="progress-bar progress-bar-danger" title="Failed ('+getPercentage(data['failed'], data['total'])+'%)" style="width: '+getPercentage(data['failed'], data['total'])+'%">'+
+					  '<span class="sr-only">'+getPercentage(data['failed'], data['total'])+'%</span>'+
+					  '</div>'+
+					  '<div class="progress-bar progress-bar-info progress-bar" title="Skipped ('+getPercentage(data['skipped'], data['total'])+'%)" style="width: '+getPercentage(data['skipped'], data['total'])+'%">'+
+					    '<span class="sr-only">'+getPercentage(data['skipped'], data['total'])+'%</span>'+
+					  '</div>'+
+					  '<div class="progress-bar progress-bar-warning progress-bar" title="Not implemented ('+getPercentage(data['notImplemented'], data['total'])+'%)" style="width: '+getPercentage(data['notImplemented'], data['total'])+'%">'+
+					    '<span class="sr-only">'+getPercentage(data['notImplemented'], data['total'])+'%</span>'+
+					  '</div>'+
+					  '<div class="progress-bar progress-bar-error" title="Error ('+getPercentage(data['error'], data['total'])+'%)" style="width: '+getPercentage(data['error'], data['total'])+'%">'+
+					  '<span class="sr-only">'+getPercentage(data['error'], data['total'])+'%</span>'+
+					  '</div>'+
+					'</div>');
+					
+					jQuery.each(data['tests'], function(k, v) {
+						$("#result").append(renderTest(v));
+					});
+				    $('[data-toggle="popover"]').popover()
+				}
 			});
 		});
 	});
@@ -90,24 +75,50 @@ angular.module('VisualPHPUnit').controller('MainCtrl', function($scope, $http) {
 
 });
 
-function formatTitle(test) {
-	return test['friendly-name'] + ' <span class="text-muted small">(' + test['class'] +'::'+ test['name'] +')</span>';
-}
-
-function formatInfo(test) {
-	return '<button type="button" class="btn pull-right" data-placement="left" data-toggle="popover" title="Info" data-content="'+ test['message'] +'">More info</button>';
-}
-
-function expected(test) {
-	if (test['expected'] != '' && test['actual'] != '') {
-		return '<span class="text-muted small">[' + test['expected'] +'::'+ test['actual'] +']</span>';
+function renderTest(test) {
+	var label = 'default';
+	var text = 'default';
+	var message = test['message'];
+	var body = '';
+	if (test.status == 'passed') {
+		label = 'success';
+		text = 'Passed';
 	}
+	if (test.status == 'failed') {
+		label = 'danger';
+		text = 'Failed';
+	}
+	if (test.status == 'skipped') {
+		label = 'default';
+		text = 'Skipped';
+	}
+	if (test.status == 'notImplemented') {
+		label = 'default';
+		text = 'Not implemented';
+	}
+	if (test.status == 'error') {
+		label = 'danger';
+		text = 'Error';
+	}
+	
+	if (test['message'] == 'Failed asserting that two strings are equal.') {
+		if (test['expected'] != '' && test['actual'] != '') {
+			 message = 'Failed asserting that two strings are equal. \'<var>' + test['expected'] +'</var>\' was expected, but the actual value was \'<var>' + test['actual'] +'</var>\'.';
+		}
+	}
+	
+	if (test.status != 'passed') {
+		body = '<div class="panel-body"><samp>' + message + '</samp></div></div>';
+	}
+	return '<div class="panel panel-default">'
+	+'<div class="vpu-' + test.status + ' panel-heading">'+ 
+	test['friendly-name'] +
+	' <span class="text-muted small">( ' + test['class'] +'::'+ test['name'] +' )</span>' +
+	'<span class="pull-right label label-default">'+ text +'</span></div>'+ body;
 }
-
-
 
 function getPercentage(val1, val2) {
-	return parseInt((val1 / val2) * 100);
+	return Math.floor(((val1 / val2) * 100));
 }
 
 
