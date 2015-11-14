@@ -29,8 +29,6 @@ class Vpu extends Application
 
     /**
      * Bootstrap the application
-     *
-     * @return void
      */
     public function __construct()
     {

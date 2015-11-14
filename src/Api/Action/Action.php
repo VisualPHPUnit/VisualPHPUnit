@@ -46,10 +46,10 @@ abstract class Action
      * @param mixed $data
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function notFound($message)
+    protected function notFound($data)
     {
         return new Response(json_encode(array(
-            'message' => $message
+            'message' => $data
         )), 404, array(
             'Content-Type' => 'application/json'
         ));
