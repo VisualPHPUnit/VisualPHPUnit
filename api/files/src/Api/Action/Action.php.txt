@@ -4,7 +4,7 @@
  *
  * VisualPHPUnit is a visual front-end for PHPUnit.
  *
- * PHP Version 5.3<
+ * PHP Version 5.6<
  *
  * @author Johannes Skov Frandsen <localgod@heaven.dk>
  * @copyright 2011-2015 VisualPHPUnit
@@ -15,13 +15,20 @@ namespace Visualphpunit\Api\Action;
 
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Visualphpunit base action
+ *
+ * @author Johannes Skov Frandsen <localgod@heaven.dk>
+ */
 abstract class Action
 {
 
     /**
      * Return a found http response
      *
-     * @param unknown $data            
+     * Return a found http response with response code 200
+     *
+     * @param mixed $data
      * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function ok($data)
@@ -34,7 +41,9 @@ abstract class Action
     /**
      * Return a not found http response
      *
-     * @param unknown $data            
+     * Return a not found http response with response code 404
+     *
+     * @param mixed $data
      * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function notFound($message)
@@ -46,3 +55,4 @@ abstract class Action
         ));
     }
 }
+

@@ -4,7 +4,7 @@
  *
  * VisualPHPUnit is a visual front-end for PHPUnit.
  *
- * PHP Version 5.3<
+ * PHP Version 5.6<
  *
  * @author Johannes Skov Frandsen <localgod@heaven.dk>
  * @copyright 2011-2015 VisualPHPUnit
@@ -17,6 +17,7 @@ use Silex\Application;
 use Visualphpunit\Api\Controller\Vpu as VpuController;
 use JDesrosiers\Silex\Provider\CorsServiceProvider;
 use Igorw\Silex\ConfigServiceProvider;
+use Silex\Provider\DoctrineServiceProvider;
 
 /**
  * Visualphpunit Rest Api application
@@ -37,10 +38,20 @@ class Vpu extends Application
         $app = $this;
         $app['debug'] = true;
         $app->register(new ConfigServiceProvider("../vpu.json"));
+        
+        $app->register(new DoctrineServiceProvider(), array(
+            'db.options' => array(
+                'driver' => $app['config']['database']['driver'],
+                'path' => $app['config']['database']['path']
+            )
+        ));
+        
         $app->register(new CorsServiceProvider(), array(
             "cors.allowOrigin" => "*"
         ));
+        
         $app->after($app["cors"]);
         $app->mount('/', new VpuController());
     }
 }
+

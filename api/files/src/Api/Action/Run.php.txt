@@ -4,7 +4,7 @@
  *
  * VisualPHPUnit is a visual front-end for PHPUnit.
  *
- * PHP Version 5.3<
+ * PHP Version 5.6<
  *
  * @author Johannes Skov Frandsen <localgod@heaven.dk>
  * @copyright 2011-2015 VisualPHPUnit
@@ -16,22 +16,43 @@ namespace Visualphpunit\Api\Action;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Visualphpunit\Core\Vpu;
+use Visualphpunit\Core\Parser;
+use Visualphpunit\Core\Suite;
 
+/**
+ * Visualphpunit run tests action
+ *
+ * @author Johannes Skov Frandsen <localgod@heaven.dk>
+ */
 class Run extends Action
 {
 
     /**
+     * Run the selected test files
      *
-     * @param Request $request            
-     * @param Application $app            
+     * Run the selected test with phpunit
+     *
+     * @param Request $request
+     * @param Application $app
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function index(Request $request, Application $app)
     {
-        $vpu = new Vpu();
-        $result = $vpu->run([]);
-        return $this->ok([$result]);
+        //Suite::dropTable($app['db']);
+        Suite::createTable($app['db']);
+        
+        $data = json_decode($request->getContent(), true);
+        if (count($data)) {
+            $parser = new Parser($app['db']);
+            $result = $parser->run($data);
+            Suite::store($app['db'], $result);
+            return $this->ok([
+                $result
+            ]);
+        }
+        return $this->ok([
+            'nofiles'
+        ]);
     }
 }
 

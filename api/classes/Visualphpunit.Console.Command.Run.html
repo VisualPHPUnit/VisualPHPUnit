@@ -21,7 +21,55 @@
     <script src="../js/jquery.smooth-scroll.js"></script>
     <script src="../js/prism.min.js"></script>
     <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
-    
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
     <link rel="shortcut icon" href="../images/favicon.ico"/>
     <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
     <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
@@ -96,37 +144,37 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-24131833"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1675633853"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-24131833" class="accordion-body collapse in">
+            <div id="namespace-1675633853" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-411247517"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1007145011"></a>
                                 <a href="../namespaces/Visualphpunit.html" style="margin-left: 30px; padding-left: 0">Visualphpunit</a>
             </div>
-            <div id="namespace-411247517" class="accordion-body collapse ">
+            <div id="namespace-1007145011" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-82480896"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1984375242"></a>
                                 <a href="../namespaces/Visualphpunit.Api.html" style="margin-left: 30px; padding-left: 0">Api</a>
             </div>
-            <div id="namespace-82480896" class="accordion-body collapse ">
+            <div id="namespace-1984375242" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1797155952"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1547331836"></a>
                                 <a href="../namespaces/Visualphpunit.Api.Action.html" style="margin-left: 30px; padding-left: 0">Action</a>
             </div>
-            <div id="namespace-1797155952" class="accordion-body collapse ">
+            <div id="namespace-1547331836" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -146,10 +194,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1299800148"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2074597665"></a>
                                 <a href="../namespaces/Visualphpunit.Api.Application.html" style="margin-left: 30px; padding-left: 0">Application</a>
             </div>
-            <div id="namespace-1299800148" class="accordion-body collapse ">
+            <div id="namespace-2074597665" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -164,10 +212,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2147231081"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-699096880"></a>
                                 <a href="../namespaces/Visualphpunit.Api.Controller.html" style="margin-left: 30px; padding-left: 0">Controller</a>
             </div>
-            <div id="namespace-2147231081" class="accordion-body collapse ">
+            <div id="namespace-699096880" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -190,19 +238,19 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-782050851"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-208561050"></a>
                                 <a href="../namespaces/Visualphpunit.Console.html" style="margin-left: 30px; padding-left: 0">Console</a>
             </div>
-            <div id="namespace-782050851" class="accordion-body collapse ">
+            <div id="namespace-208561050" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-313260050"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1482324877"></a>
                                 <a href="../namespaces/Visualphpunit.Console.Application.html" style="margin-left: 30px; padding-left: 0">Application</a>
             </div>
-            <div id="namespace-313260050" class="accordion-body collapse ">
+            <div id="namespace-1482324877" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -217,10 +265,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2100267994"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-483580499"></a>
                                 <a href="../namespaces/Visualphpunit.Console.Command.html" style="margin-left: 30px; padding-left: 0">Command</a>
             </div>
-            <div id="namespace-2100267994" class="accordion-body collapse ">
+            <div id="namespace-483580499" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -243,10 +291,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1314914926"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-800839703"></a>
                                 <a href="../namespaces/Visualphpunit.Core.html" style="margin-left: 30px; padding-left: 0">Core</a>
             </div>
-            <div id="namespace-1314914926" class="accordion-body collapse ">
+            <div id="namespace-800839703" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -280,44 +328,189 @@
     <section class="row-fluid">
         <div class="span10 offset2">
             <div class="row-fluid">
-                <div class="span8 content namespace">
+                <div class="span8 content class">
                     <nav>
-                                                <a href="../namespaces/Visualphpunit.Api.html">\Visualphpunit\Api</a>
+                                                <a href="../namespaces/Visualphpunit.Console.Command.html">\Visualphpunit\Console\Command</a> <i class="icon-level-up"></i>
                                             </nav>
-                    <h1><small>\Visualphpunit\Api</small>Controller</h1>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
 
+                    <h1><small>\Visualphpunit\Console\Command</small>Run</h1>
+                    <p><em>Visualphpunit consol command</em></p>
                     
                     
+                                        
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <em>No public methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No public properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No constants found</em>
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <a href="../classes/Visualphpunit.Console.Command.Run.html#method_configure" class="">configure()</a><br />
+                                                                    <a href="../classes/Visualphpunit.Console.Command.Run.html#method_execute" class="">execute()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No protected properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <em>No private methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No private properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
                     
-                                        <h2>Classes</h2>
-                    <table class="table table-hover">
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/src.Console.Command.Run.html"><div class="path-wrapper">src/Console/Command/Run.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">Default</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                                                                                                                                                
+                                        <div class="namespace-wrapper">\Symfony\Component\Console\Command\Command</div>
+                                                                                                    <div class="namespace-wrapper">\Visualphpunit\Console\Command\Run</div>
+                            </dd>
+
+                        
+                        
+                        
+                        
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
                                             <tr>
-                            <td><a href="../classes/Visualphpunit.Api.Controller.Vpu.html">Vpu</a></td>
-                            <td><em>Visualphpunit main controller</em></td>
+                            <th>
+                                author
+                            </th>
+                            <td>
+                                                                    <p>Johannes Skov Frandsen <a href="mailto:localgod@heaven.dk">localgod@heaven.dk</a></p>
+                                                            </td>
                         </tr>
                                         </table>
-                                    </div>
-
-                <aside class="span4 detailsbar">
-                    <dl>
-                        <dt>Namespace hierarchy</dt>
-                        <dd class="hierarchy">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-                                    <div class="namespace-wrapper"><a href="../namespaces/default.html">\</a></div>
-                                                            
-                                    <div class="namespace-wrapper"><a href="../namespaces/Visualphpunit.html">\Visualphpunit</a></div>
-                                                            
-                                    <div class="namespace-wrapper"><a href="../namespaces/Visualphpunit.Api.html">\Visualphpunit\Api</a></div>
-                                                                                        <div class="namespace-wrapper">\Visualphpunit\Api\Controller</div>
-                        </dd>
-                    </dl>
                 </aside>
             </div>
 
-            
-            
+                        
+                        
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_configure" name="method_configure" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">configure()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">configure() </pre>
+                <p><em>{@inheritDoc}</em></p>
+                
+
+                
+                
+                				
+                            </article>
         </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href=""><span class="namespace-wrapper"></span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_execute" name="method_execute" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">execute()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">execute(\Symfony\Component\Console\Input\InputInterface  <span class="argument">$input</span>, \Symfony\Component\Console\Output\OutputInterface  <span class="argument">$output</span>) </pre>
+                <p><em>{@inheritDoc}</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\Symfony\Component\Console\Input\InputInterface</td>
+                                <td>$input </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>\Symfony\Component\Console\Output\OutputInterface</td>
+                                <td>$output </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href=""><span class="namespace-wrapper"></span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    </div>
     </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">Run.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/src/Console/Command/Run.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
 
     <footer class="row-fluid">
         <section class="span10 offset2">
