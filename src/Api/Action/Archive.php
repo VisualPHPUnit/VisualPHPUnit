@@ -28,9 +28,12 @@ class Archive extends Action
 {
 
     /**
+     * Get archived test suites
      *
-     * @param Request $request            
-     * @param Application $app            
+     * Get all archived test suites
+     *
+     * @param Request $request
+     * @param Application $app
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function index(Request $request, Application $app)

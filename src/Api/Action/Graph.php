@@ -26,9 +26,12 @@ class Graph extends Action
 {
 
     /**
+     * Get graph data
      *
-     * @param Request $request            
-     * @param Application $app            
+     * Get graph data from test resuts
+     *
+     * @param Request $request
+     * @param Application $app
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function index(Request $request, Application $app)

@@ -29,7 +29,7 @@ class Parser
     /**
      * Run the list of test files
      *
-     * @param array $tests            
+     * @param array $tests
      *
      * @return mixed[]
      */
@@ -44,7 +44,7 @@ class Parser
     /**
      * Require bootstrap if present
      *
-     * @param array $tests            
+     * @param array $tests
      *
      * @return void
      */
@@ -63,7 +63,7 @@ class Parser
     /**
      * Parse the test suite result
      *
-     * @param \PHPUnit_Framework_TestResult $result            
+     * @param \PHPUnit_Framework_TestResult $result
      * @return mixed[]
      */
     private function parseTestSuite($result)
@@ -116,7 +116,7 @@ class Parser
     /**
      * Filter the trace to exclude vendor and VPU classes
      *
-     * @param array $trace            
+     * @param array $trace
      * @todo This needs more work
      * @return mixed[]
      */
@@ -142,8 +142,8 @@ class Parser
     /**
      * Parse individual test
      *
-     * @param string $status            
-     * @param string|object $test            
+     * @param string $status
+     * @param string|object $test
      *
      * @return mixed[]
      */
@@ -177,7 +177,7 @@ class Parser
     /**
      * Convert camelCase to friendly name
      *
-     * @param sreing $camelCaseString            
+     * @param sreing $camelCaseString
      *
      * @return string
      */
@@ -192,7 +192,7 @@ class Parser
     /**
      * Explode a testname into class and method components
      *
-     * @param string $testName            
+     * @param string $testName
      * @return mixed[]
      */
     private function explodeTestName($testName)
@@ -207,7 +207,7 @@ class Parser
     /**
      * Get expected and actual if available
      *
-     * @param Exception $e            
+     * @param Exception $e
      *
      * @return mixed[]
      */

@@ -27,9 +27,10 @@ class Run extends Command
 {
 
     /**
-     * Configurate the command
      *
-     * @return void
+     * {@inheritDoc}
+     *
+     * @see \Symfony\Component\Console\Command\Command::configure()
      */
     protected function configure()
     {
@@ -37,9 +38,10 @@ class Run extends Command
     }
 
     /**
-     * Execute the command
      *
-     * @return void
+     * {@inheritDoc}
+     *
+     * @see \Symfony\Component\Console\Command\Command::execute()
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

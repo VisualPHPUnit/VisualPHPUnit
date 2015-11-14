@@ -16,6 +16,7 @@ namespace Visualphpunit\Api\Action;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+
 /**
  * Visualphpunit stub for loading javascript
  *
@@ -25,9 +26,12 @@ class Index extends Action
 {
 
     /**
+     * Stub for loading javascript
      *
-     * @param Request $request            
-     * @param Application $app            
+     * Load the frontend
+     *
+     * @param Request $request
+     * @param Application $app
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function index(Request $request, Application $app)
