@@ -30,7 +30,7 @@ class Vpu extends Application
      *
      * @param InputInterface $input
      *            The input interface
-     *            
+     *
      * @return string The command name
      */
     protected function getCommandName(InputInterface $input)
@@ -53,7 +53,7 @@ class Vpu extends Application
     /**
      * Overridden so that the application doesn't expect the command
      * name to be the first argument.
-     * 
+     *
      * @return InputDefinition
      */
     public function getDefinition()

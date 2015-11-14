@@ -11,6 +11,7 @@ before_install:
 - pip install --user codecov
 
 before_script:
+- composer self-update
 - composer install
 - wget -nc -O ./phpDocumentor.phar http://www.phpdoc.org/phpDocumentor.phar
 - chmod 755 ./phpDocumentor.phar

@@ -26,7 +26,9 @@ abstract class Action
     /**
      * Return a found http response
      *
-     * @param unknown $data            
+     * Return a found http response with response code 200
+     *
+     * @param mixed $data
      * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function ok($data)
@@ -39,7 +41,9 @@ abstract class Action
     /**
      * Return a not found http response
      *
-     * @param unknown $data            
+     * Return a not found http response with response code 404
+     *
+     * @param mixed $data
      * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function notFound($message)

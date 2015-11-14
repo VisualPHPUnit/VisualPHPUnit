@@ -25,10 +25,14 @@ use Symfony\Component\Finder\Finder;
  */
 class Test extends Action
 {
+
     /**
+     * Retrive tests
      *
-     * @param Request $request            
-     * @param Application $app            
+     * Retrive tests from test folder
+     *
+     * @param Request $request
+     * @param Application $app
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function index(Request $request, Application $app)
@@ -48,8 +52,8 @@ class Test extends Action
     /**
      * Parse the path for files
      *
-     * @param string $paths            
-     * @param boolean $ignoreHidden            
+     * @param string $paths
+     * @param boolean $ignoreHidden
      *
      * @return array
      */
@@ -98,7 +102,7 @@ class Test extends Action
     /**
      * Exclude empty Directories
      *
-     * @param mixed[] $list            
+     * @param mixed[] $list
      * @return mixed[]
      */
     private function excludeEmptyDirectories($list)
@@ -118,9 +122,9 @@ class Test extends Action
 
     /**
      * Is this a phpunit testcase
-     * 
+     *
      * @param string $path
-     * 
+     *
      * @return boolean
      */
     private function isPhpUnitTestCase($path)
@@ -136,7 +140,7 @@ class Test extends Action
      * Get number of methods in test class
      *
      * @todo likely there are better ways of doing this
-     * @param string $path            
+     * @param string $path
      *
      * @return interger
      */

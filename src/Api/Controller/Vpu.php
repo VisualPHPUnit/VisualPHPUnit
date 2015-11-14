@@ -27,7 +27,7 @@ class Vpu implements ControllerProviderInterface
     /**
      * (non-PHPdoc)
      *
-     * @param Application $app            
+     * @param Application $app
      *
      * @see \Silex\ControllerProviderInterface::connect()
      */

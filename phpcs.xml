@@ -2,13 +2,11 @@
 <ruleset name="PHP_CodeSniffer">
 	<description>visual-phpunit</description>
 
-	<file>app</file>
-	<file>nx</file>
+	<file>src</file>
+	<file>backend</file>
 
 	<exclude-pattern>*/vendor/*</exclude-pattern>
 	<exclude-pattern>*/bin/*</exclude-pattern>
-	<exclude-pattern>*/public/css/*</exclude-pattern>
-	<exclude-pattern>*/public/js/*</exclude-pattern>
 
 	<arg name="report" value="full" />
 	<arg value="sp" />

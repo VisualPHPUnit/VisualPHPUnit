@@ -27,7 +27,7 @@ class Suite
     /**
      * Create the table if it dos not exists
      *
-     * @param \Doctrine\DBAL\Connection $connection            
+     * @param \Doctrine\DBAL\Connection $connection
      *
      * @return boolean
      */
@@ -41,7 +41,7 @@ class Suite
     /**
      * Drop the table if it exists
      *
-     * @param \Doctrine\DBAL\Connection $connection            
+     * @param \Doctrine\DBAL\Connection $connection
      *
      * @return boolean
      */
@@ -55,7 +55,7 @@ class Suite
     /**
      * Truncate the table
      *
-     * @param \Doctrine\DBAL\Connection $connection            
+     * @param \Doctrine\DBAL\Connection $connection
      *
      * @return boolean
      */
@@ -69,8 +69,8 @@ class Suite
     /**
      * Store a test suite result
      *
-     * @param \Doctrine\DBAL\Connection $connection            
-     * @param mixed[] $result            
+     * @param \Doctrine\DBAL\Connection $connection
+     * @param mixed[] $result
      *
      * @return boolean
      */
