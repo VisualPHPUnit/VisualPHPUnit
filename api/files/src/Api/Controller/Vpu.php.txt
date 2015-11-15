@@ -36,6 +36,7 @@ class Vpu implements ControllerProviderInterface
         $controllers = $app['controllers_factory'];
         $controllers->get('/', 'Visualphpunit\Api\Action\Index::index');
         $controllers->get('/archives', 'Visualphpunit\Api\Action\Archive::index');
+        $controllers->get('/suite/{id}', 'Visualphpunit\Api\Action\Archive::suite');
         $controllers->get('/graphs', 'Visualphpunit\Api\Action\Graph::index');
         $controllers->get('/tests', 'Visualphpunit\Api\Action\Test::index');
         $controllers->post('/run', 'Visualphpunit\Api\Action\run::index');

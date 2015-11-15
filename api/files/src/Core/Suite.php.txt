@@ -91,12 +91,29 @@ class Suite
      *
      * @return mixed[]
      */
-    public static function getAll(Connection $connection)
+    public static function getSnapshots(Connection $connection)
     {
-        $sql = 'SELECT id, suite, executed FROM suites;';
+        $sql = 'SELECT id, executed FROM suites ORDER BY datetime(executed) DESC;';
         $stmt = $connection->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll();
+    }
+
+    /**
+     * Get test suite results
+     *
+     * @param \Doctrine\DBAL\Connection $connection
+     * @param integer $id
+     *
+     * @return mixed[]
+     */
+    public static function getSuite(Connection $connection, $id)
+    {
+        $sql = 'SELECT suite FROM suites WHERE id=?;';
+        $stmt = $connection->prepare($sql);
+        $stmt->bindValue(1, $id);
+        $stmt->execute();
+        return json_decode($stmt->fetch()['suite']);
     }
 }
 

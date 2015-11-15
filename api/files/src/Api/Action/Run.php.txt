@@ -34,18 +34,22 @@ class Run extends Action
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Silex\Application $app
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function index(Request $request, Application $app)
     {
-        //Suite::dropTable($app['db']);
+        // Suite::dropTable($app['db']);
         Suite::createTable($app['db']);
         
         $data = json_decode($request->getContent(), true);
-        if (count($data)) {
-            $parser = new Parser($app['db']);
-            $result = $parser->run($data);
-            Suite::store($app['db'], $result);
+        
+        if (count($data['files'])) {
+            $parser = new Parser();
+            $result = $parser->run($data['files'], $data['config']);
+            if ($data['config']['snapshot']) {
+                Suite::store($app['db'], $result);
+            }
             return $this->ok([
                 $result
             ]);
