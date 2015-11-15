@@ -30,7 +30,7 @@ class Parser
     /**
      * Run the list of test files
      *
-     * @param array $tests
+     * @param string[] $tests
      *
      * @return array<string,double|integer|array>
      */
