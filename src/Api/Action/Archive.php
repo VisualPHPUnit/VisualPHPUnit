@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Visualphpunit\Core\Suite;
 use \DateTime;
+use function Silex\value;
 
 /**
  * Visualphpunit archive action
@@ -34,19 +35,55 @@ class Archive extends Action
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Silex\Application $app
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function index(Request $request, Application $app)
     {
-        $suites = Suite::getAll($app['db']);
-        $data = [];
+        $suites = Suite::getSnapshots($app['db']);
+        
+        return $this->ok($this->parse($suites));
+    }
+
+    /**
+     * Get archived test suite
+     *
+     * Get archived test suite data
+     *
+     * @param integer $id
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Silex\Application $app
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function suite($id, Request $request, Application $app)
+    {
+        $suite = Suite::getSuite($app['db'], $id);
+        return $this->ok($suite);
+    }
+
+    /**
+     * Parse list of suites
+     *
+     * Parse list of suites to a tree structure
+     *
+     * @param mixed[] $suites
+     *
+     * @return string[][]|boolean[][]|NULL[][]
+     */
+    private function parse($suites)
+    {
+        $list = [];
+        
         foreach ($suites as $suite) {
             $date = DateTime::createFromFormat('Y-m-d H:i:s', $suite['executed']);
-            $data['snapshots'][] = [
-                'date' => $date->format('Y-m-d H:i:s')
-            ];
+            $list[] = array(
+                'text' => $date->format('Y-m-d H:i:s'),
+                'type' => 'suite',
+                'id' => $suite['id'],
+                'selectable' => true
+            );
         }
-        
-        return $this->ok($data);
+        return $list;
     }
 }
