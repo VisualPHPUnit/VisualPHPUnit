@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Visualphpunit\Core\Suite;
 use \DateTime;
-use function Silex\value;
 
 /**
  * Visualphpunit archive action

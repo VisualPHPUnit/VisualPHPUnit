@@ -8,8 +8,7 @@
             }
         ],
         "database":{
-            "driver":"pdo_sqlite",
-            "path":"../vpu.db"
+            "driver":"pdo_sqlite"
         }
     }
 }

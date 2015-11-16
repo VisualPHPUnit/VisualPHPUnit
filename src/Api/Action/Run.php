@@ -39,7 +39,6 @@ class Run extends Action
      */
     public function index(Request $request, Application $app)
     {
-        // Suite::dropTable($app['db']);
         Suite::createTable($app['db']);
         
         $data = json_decode($request->getContent(), true);
