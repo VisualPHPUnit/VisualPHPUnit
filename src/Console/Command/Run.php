@@ -18,6 +18,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Formatter\OutputFormatter;
 use Visualphpunit\Core\Parser;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Configuration;
@@ -40,8 +41,8 @@ class Run extends Command
     protected function configure()
     {
         $this->setName('vpu')
-            ->addArgument('files', InputArgument::IS_ARRAY, 'List of files to test')
-            ->addOption('archive', 'a', InputOption::VALUE_NONE, 'Archive test result');
+            ->addArgument('files', InputArgument::IS_ARRAY, 'List of test files')
+            ->addOption('archive', 'a', InputOption::VALUE_NONE, 'Archive test suite result');
     }
 
     /**
@@ -52,10 +53,19 @@ class Run extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $parser = new Parser();
-        $result = $parser->run($input->getArgument('files'));
-        if ($input->getOption('archive')) {
-            Suite::store($this->getDbConnection(), $result);
+        $output->setFormatter(new OutputFormatter(true));
+        if (! empty($input->getArgument('files'))) {
+            $parser = new Parser();
+            $result = $parser->run($input->getArgument('files'));
+            if ($input->getOption('archive')) {
+                Suite::createTable($this->getDbConnection());
+                Suite::store($this->getDbConnection(), $result);
+                if ($output->isVerbose()) {
+                    $output->writeln('<comment>Test suite archived</comment>');
+                }
+            }
+        } else {
+            $output->writeln('<error>No files where supplied. Use -h for help.</error>');
         }
     }
 
@@ -68,9 +78,10 @@ class Run extends Command
      */
     private function getDbConnection()
     {
-        $config = json_decode(file_get_contents('../vpu.json'), true);
+        $appRoot = realpath(__DIR__ . '/../../..');
+        $config = json_decode(file_get_contents($appRoot . '/vpu.json'), true);
         $connectionParams = array(
-            'path' => $config['config']['database']['path'],
+            'path' => $appRoot . '/vpu.db',
             'driver' => $config['config']['database']['driver']
         );
         return DriverManager::getConnection($connectionParams, new Configuration());
