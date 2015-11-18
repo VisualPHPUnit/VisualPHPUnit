@@ -16,7 +16,6 @@ namespace Visualphpunit\Core;
 use \PHPUnit_Framework_TestSuite;
 use \PHPUnit_Framework_TestResult;
 use \PHPUnit_Framework_ExpectationFailedException;
-use \PHPUnit_Framework_SelfDescribing;
 use \Exception;
 
 /**
@@ -30,7 +29,7 @@ class Parser
     /**
      * Run the list of test files
      *
-     * @param string[] $tests
+     * @param string[] $tests            
      *
      * @return array<string,double|integer|array>
      */
@@ -45,7 +44,7 @@ class Parser
     /**
      * Require bootstrap if present
      *
-     * @param array $tests
+     * @param array $tests            
      *
      * @return void
      */
@@ -64,7 +63,7 @@ class Parser
     /**
      * Parse the test suite result
      *
-     * @param \PHPUnit_Framework_TestResult $result
+     * @param \PHPUnit_Framework_TestResult $result            
      * @return array<string,double|integer|array>
      */
     private function parseTestSuite($result)
@@ -117,23 +116,20 @@ class Parser
     /**
      * Filter the trace to exclude vendor and VPU classes
      *
-     * @param array $trace
-     * @todo This needs more work
+     * @param array $trace            
      * @return mixed[]
      */
     private function filterTrace($trace)
     {
+        $vpuPath = realpath(__DIR__ . '/../');
+        $vendorPath = realpath(__DIR__ . '/../../vendor');
+        $backendPath = realpath(__DIR__ . '/../../backend');
+        
         $newTrace = [];
         if (! empty($trace)) {
             foreach ($trace as $entity) {
-                if (isset($entity['file'])) {
-                    if (! preg_match('/.*vendor/', $entity['file'])) {
-                        if (! preg_match('/.*src\/Core|Api/', $entity['file'])) {
-                            if (! preg_match('/.*backend\/index.php/', $entity['file'])) {
-                                $newTrace[] = $entity;
-                            }
-                        }
-                    }
+                if (isset($entity['file']) && ! strstr($entity['file'], $vendorPath) && ! strstr($entity['file'], $vpuPath) && ! strstr($entity['file'], $backendPath)) {
+                    $newTrace[] = $entity;
                 }
             }
         }
@@ -143,8 +139,8 @@ class Parser
     /**
      * Parse individual test
      *
-     * @param string $status
-     * @param string|object $test
+     * @param string $status            
+     * @param string|object $test            
      *
      * @return mixed[]
      */
@@ -170,7 +166,8 @@ class Parser
                 'status' => $status,
                 'message' => '',
                 'expected' => '',
-                'actual' => ''
+                'actual' => '',
+                'trace' => ''
             ];
         }
     }
@@ -178,7 +175,7 @@ class Parser
     /**
      * Convert camelCase to friendly name
      *
-     * @param sreing $camelCaseString
+     * @param sreing $camelCaseString            
      *
      * @return string
      */
@@ -193,11 +190,12 @@ class Parser
     /**
      * Explode a testname into class and method components
      *
-     * @param string $testName
+     * @param string $testName            
      * @return mixed[]
      */
     private function explodeTestName($testName)
     {
+        $matches = [];
         preg_match('/([a-zA-Z0-9]+)::([a-zA-Z0-9]+)$/', $testName, $matches);
         return [
             'class' => $matches[1],
@@ -208,19 +206,17 @@ class Parser
     /**
      * Get expected and actual if available
      *
-     * @param Exception $e
+     * @param Exception $e            
      *
      * @return mixed[]
      */
     private function getComparison(Exception $e)
     {
-        if ($e instanceof PHPUnit_Framework_SelfDescribing) {
-            if ($e instanceof PHPUnit_Framework_ExpectationFailedException && $e->getComparisonFailure()) {
-                return [
-                    'expected' => $e->getComparisonFailure()->getExpected(),
-                    'actual' => $e->getComparisonFailure()->getActual()
-                ];
-            }
+        if ($e instanceof PHPUnit_Framework_ExpectationFailedException && $e->getComparisonFailure()) {
+            return [
+                'expected' => $e->getComparisonFailure()->getExpected(),
+                'actual' => $e->getComparisonFailure()->getActual()
+            ];
         }
         return [
             'expected' => '',
