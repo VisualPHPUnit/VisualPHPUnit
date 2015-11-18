@@ -3,10 +3,8 @@
 /**
  * @ngdoc function
  * @name VisualPHPUnit.controller:GraphsCtrl
- * @description
- * # GraphsCtrl
- * Controller of the VisualPHPUnit
+ * @description # GraphsCtrl Controller of the VisualPHPUnit
  */
-angular.module('VisualPHPUnit').controller('GraphsCtrl', function () {
-    
+angular.module('VisualPHPUnit').controller('GraphsCtrl', function() {
+
 });
