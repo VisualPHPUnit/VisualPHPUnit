@@ -16,7 +16,6 @@ namespace Visualphpunit\Core;
 use \PHPUnit_Framework_TestSuite;
 use \PHPUnit_Framework_TestResult;
 use \PHPUnit_Framework_ExpectationFailedException;
-use \PHPUnit_Framework_SelfDescribing;
 use \Exception;
 
 /**
@@ -118,22 +117,22 @@ class Parser
      * Filter the trace to exclude vendor and VPU classes
      *
      * @param array $trace
-     * @todo This needs more work
      * @return mixed[]
      */
     private function filterTrace($trace)
     {
+        $vpuPath = realpath(__DIR__ . '/../');
+        $vendorPath = realpath(__DIR__ . '/../../vendor');
+        $backendPath = realpath(__DIR__ . '/../../backend');
+        
         $newTrace = [];
         if (! empty($trace)) {
             foreach ($trace as $entity) {
-                if (isset($entity['file'])) {
-                    if (! preg_match('/.*vendor/', $entity['file'])) {
-                        if (! preg_match('/.*src\/Core|Api/', $entity['file'])) {
-                            if (! preg_match('/.*backend\/index.php/', $entity['file'])) {
-                                $newTrace[] = $entity;
-                            }
-                        }
-                    }
+                if (isset($entity['file'])
+                    && ! strstr($entity['file'], $vendorPath)
+                    && ! strstr($entity['file'], $vpuPath)
+                    && ! strstr($entity['file'], $backendPath)) {
+                    $newTrace[] = $entity;
                 }
             }
         }
@@ -170,7 +169,8 @@ class Parser
                 'status' => $status,
                 'message' => '',
                 'expected' => '',
-                'actual' => ''
+                'actual' => '',
+                'trace' => ''
             ];
         }
     }
@@ -198,6 +198,7 @@ class Parser
      */
     private function explodeTestName($testName)
     {
+        $matches = [];
         preg_match('/([a-zA-Z0-9]+)::([a-zA-Z0-9]+)$/', $testName, $matches);
         return [
             'class' => $matches[1],
@@ -214,13 +215,11 @@ class Parser
      */
     private function getComparison(Exception $e)
     {
-        if ($e instanceof PHPUnit_Framework_SelfDescribing) {
-            if ($e instanceof PHPUnit_Framework_ExpectationFailedException && $e->getComparisonFailure()) {
-                return [
-                    'expected' => $e->getComparisonFailure()->getExpected(),
-                    'actual' => $e->getComparisonFailure()->getActual()
-                ];
-            }
+        if ($e instanceof PHPUnit_Framework_ExpectationFailedException && $e->getComparisonFailure()) {
+            return [
+                'expected' => $e->getComparisonFailure()->getExpected(),
+                'actual' => $e->getComparisonFailure()->getActual()
+            ];
         }
         return [
             'expected' => '',
