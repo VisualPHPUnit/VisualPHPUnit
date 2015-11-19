@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Visualphpunit\Core\Parser;
 use Visualphpunit\Core\Suite;
+use Visualphpunit\Core\Test;
 
 /**
  * Visualphpunit run tests action
@@ -40,6 +41,7 @@ class Run extends Action
     public function index(Request $request, Application $app)
     {
         Suite::createTable($app['db']);
+        Test::createTable($app['db']);
         
         $data = json_decode($request->getContent(), true);
         
@@ -49,6 +51,7 @@ class Run extends Action
             if ($data['config']['snapshot']) {
                 Suite::store($app['db'], $result);
             }
+            Test::store($app['db'], $result);
             return $this->ok([
                 $result
             ]);

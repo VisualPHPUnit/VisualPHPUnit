@@ -23,6 +23,7 @@ use Visualphpunit\Core\Parser;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Configuration;
 use Visualphpunit\Core\Suite;
+use Visualphpunit\Core\Test;
 
 /**
  * Visualphpunit console command
@@ -57,6 +58,8 @@ class Run extends Command
         if (! empty($input->getArgument('files'))) {
             $parser = new Parser();
             $result = $parser->run($input->getArgument('files'));
+            Test::createTable($this->getDbConnection());
+            Test::store($this->getDbConnection(), $result);
             if ($input->getOption('archive')) {
                 Suite::createTable($this->getDbConnection());
                 Suite::store($this->getDbConnection(), $result);
