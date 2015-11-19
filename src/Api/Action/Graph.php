@@ -16,6 +16,8 @@ namespace Visualphpunit\Api\Action;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Visualphpunit\Core\Test;
+use \DateTime;
 
 /**
  * Visualphpunit graph action
@@ -36,9 +38,72 @@ class Graph extends Action
      */
     public function index(Request $request, Application $app)
     {
-        $data = array(
-            'title' => 'Graphs'
-        );
+        $start = new DateTime();
+        $start->setDate($start->format('Y'), $start->format('m'), 1);
+        $end = new DateTime();
+        $end->setDate($end->format('Y'), $end->format('m'), $start->format('t'));
+        
+        $interval = $start->diff($end);
+        $range = (int) $interval->format('%a') + 1;
+        
+        $data = Test::getByDay($app['db'], $start, $end);
+        $data = static::explodeTests($data);
+        $data = static::toPeriode($data, $range);
+
         return $this->ok($data);
+    }
+
+    private static function toPeriode($data, $range)
+    {
+        foreach ($data as $status => $test) {
+            for ($i = 1; $i <= $range; $i ++) {
+                if (! isset($test[$i])) {
+                    $data[$status][$i] = 0;
+                } else {
+                    $data[$status][$i] = (int) $data[$status][$i][0];
+                }
+            }
+            ksort($data[$status], SORT_NATURAL);
+        }
+        
+        return $data;
+    }
+
+    private static function explodeTests($data)
+    {
+        $periode = [];
+        foreach ($data as $day) {
+            switch ($day['status']) {
+                case 'passed':
+                    $periode['passed'][$day['day']] = [
+                        $day['number']
+                    ];
+                    break;
+                case 'failed':
+                    $periode['failed'][$day['day']] = [
+                        $day['number']
+                    ];
+                    break;
+                case 'notImplemented':
+                    $periode['notImplemented'][$day['day']] = [
+                        $day['number']
+                    ];
+                    break;
+                case 'skipped':
+                    $periode['skipped'][$day['day']] = [
+                        $day['number']
+                    ];
+                    break;
+                case 'error':
+                    $periode['error'][$day['day']] = [
+                        $day['number']
+                    ];
+                    break;
+                default:
+                    break;
+            }
+        }
+        
+        return $periode;
     }
 }
