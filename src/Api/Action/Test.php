@@ -31,8 +31,8 @@ class Test extends Action
      *
      * Retrive tests from test folder
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request            
-     * @param \Silex\Application $app            
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Silex\Application $app
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function index(Request $request, Application $app)
@@ -52,8 +52,8 @@ class Test extends Action
     /**
      * Parse the dir for files
      *
-     * @param string $dir            
-     * @param boolean $ignoreHidden            
+     * @param string $dir
+     * @param boolean $ignoreHidden
      *
      * @return mixed[]
      */
@@ -102,7 +102,7 @@ class Test extends Action
     /**
      * Exclude empty Directories
      *
-     * @param mixed[] $list            
+     * @param mixed[] $list
      * @return mixed[]
      */
     private function excludeEmptyDirectories($list)
@@ -123,7 +123,7 @@ class Test extends Action
     /**
      * Is this a phpunit testcase
      *
-     * @param string $path            
+     * @param string $path
      *
      * @return boolean
      */
@@ -140,7 +140,7 @@ class Test extends Action
      * Get number of methods in test class
      *
      * @todo likely there are better ways of doing this
-     * @param string $path            
+     * @param string $path
      *
      * @return integer[]
      */

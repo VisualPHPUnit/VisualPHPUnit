@@ -53,7 +53,6 @@ The backend is a REST application based on Silex.
 #!Bash	
 git clone git@github.com:VisualPHPUnit/VisualPHPUnit.git
 git checkout 3.x
-cd backend
 php -r "readfile('https://getcomposer.org/installer');" | php
 php composer.phar install
 npm install
@@ -66,7 +65,7 @@ You need two consoles for this setup, one for the frontend and one for the backe
 #!Bash
 #backend
 cd backend
-php -S localhost:8000
+php -S localhost:8001
 #frontend
 cd ../frontend
 grunt serve
