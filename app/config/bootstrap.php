@@ -1,4 +1,18 @@
 <?php
+/**
+ * VisualPHPUnit
+ *
+ * VisualPHPUnit is a visual front-end for PHPUnit.
+ *
+ * PHP Version 5.3<
+ *
+ * @author    Nick Sinopoli <NSinopoli@gmail.com>
+ * @copyright 2011-2015 VisualPHPUnit
+ * @license   http://opensource.org/licenses/BSD-3-Clause The BSD License
+ * @link      https://github.com/VisualPHPUnit/VisualPHPUnit VisualPHPUnit
+ */
+
+use \app\lib\Library;
 
 $root = dirname(dirname(__DIR__));
 
@@ -6,7 +20,9 @@ $config = array(
     /* Required */
 
     // The directory where Composer vendor is located (the one that phpunit was required into)
-    'composer_vendor_path' => $root . '/../vendor',
+    'composer_vendor_path' => $root . '/vendor',
+    // The directory where Composer bin is located (where phpunit command is located)
+    'composer_bin_path' => $root . '/bin',
 
     // The directories where the tests reside
     'test_directories' => array(
@@ -25,7 +41,7 @@ $config = array(
     'db' => array(
         // MySQL is currently the only database supported
         // (do not change this)
-        'plugin'   => '\app\lib\PDO_MySQL',
+        'plugin'   => '\app\lib\PDOMySQL',
 
         'database' => 'vpu',
         'host'     => 'localhost',
@@ -65,8 +81,8 @@ $config = array(
     // In order for VPU to function correctly, the configuration files must
     // contain a JSON listener (see the README for more information)
     'xml_configuration_files' => array(
-	    
-	    
+        
+        
     ),
     //'xml_configuration_files' => array(
     //    "{$root}/app/config/phpunit.xml"
@@ -83,24 +99,21 @@ set_include_path(
     get_include_path()
     . PATH_SEPARATOR . $root
     . PATH_SEPARATOR . $config['composer_vendor_path']
-	. PATH_SEPARATOR . $config['composer_vendor_path'] . '/phpunit/phpunit/src'
+    . PATH_SEPARATOR . $config['composer_vendor_path'] . '/phpunit/phpunit/src'
 );
-
 require_once 'autoload.php';
 require_once 'Util/Log/JSON.php';
 
-spl_autoload_register(function($class) use ($root) {
+spl_autoload_register(function ($class) use ($root) {
     $class = str_replace('\\', '/', $class);
     $file = "{$root}/{$class}.php";
-    if ( file_exists($file) ) {
+    if (file_exists($file)) {
         require $file;
     }
 });
 
-foreach ( $config['bootstraps'] as $bootstrap ) {
+foreach ($config['bootstraps'] as $bootstrap) {
     require $bootstrap;
 }
 
-\app\lib\Library::store($config);
-
-?>
+Library::store($config);

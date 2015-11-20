@@ -1,0 +1,27 @@
+---
+language: php
+os:
+- linux
+php:
+- 5.3
+- 5.4
+- 5.5
+- 5.6
+
+before_script:
+- composer install
+- wget -nc -O ./phpDocumentor.phar http://www.phpdoc.org/phpDocumentor.phar
+- chmod 755 ./phpDocumentor.phar
+- wget -nc -O ./phpcs.phar --no-check-certificate https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
+- chmod 755 ./phpcs.phar
+- wget -nc -O ./phpcbf.phar --no-check-certificate https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar
+- chmod 755 ./phpcbf.phar
+- phpenv rehash
+
+matrix:
+  allow_failures:
+  - php: 5.6
+  
+script:
+- php ./phpcs.phar
+- php ./phpDocumentor.phar -f phpdoc.dist.xml

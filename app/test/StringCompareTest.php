@@ -6,7 +6,7 @@
  *
  * PHP Version 5.3<
  *
- * @author    Nick Sinopoli <NSinopoli@gmail.com>
+ * @author    Johannes Skov Frandsen <localgod@heaven.dk>
  * @copyright 2011-2015 VisualPHPUnit
  * @license   http://opensource.org/licenses/BSD-3-Clause The BSD License
  * @link      https://github.com/VisualPHPUnit/VisualPHPUnit VisualPHPUnit
@@ -16,13 +16,13 @@ namespace visualphpunit;
 use \PHPUnit_Framework_TestCase;
 
 /**
- * PU Tests
+ * String compare test
  *
  * Testing class
  *
- * @author Nick Sinopoli <NSinopoli@gmail.com>
+ * @author Johannes Skov Frandsen <localgod@heaven.dk>
  */
-class PUTest extends PHPUnit_Framework_TestCase
+class StringCompareTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -34,9 +34,8 @@ class PUTest extends PHPUnit_Framework_TestCase
      */
     public function oneThing()
     {
-        $key = 'test';
-        $value = 'value';
-        print_r('some stuff');
+        $key = 'string';
+        $value = 'different string';
         $this->assertEquals($key, $value, 'test_this() failed!');
     }
 
@@ -49,9 +48,10 @@ class PUTest extends PHPUnit_Framework_TestCase
      */
     public function anotherThing()
     {
-        somestr;
         $key = 'test';
-        $value = 'value';
+        $value = 'test';
+        print_r('foo { breaks: this } bar');
+        print_r('foo breaks: this { bar');
         $this->assertEquals($key, $value, 'test_this_too() failed!');
     }
 }

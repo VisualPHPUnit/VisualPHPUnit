@@ -1,0 +1,58 @@
+{
+	"name" : "visualphpunit/visualphpunit",
+	"description" : "A PHPUnit GUI",
+	"type" : "application",
+	"authors" : [{
+			"name" : "Johannes Skov Frandsen",
+			"email" : "localgod@heaven.dk",
+			"homepage" : "https://github.com/localgod",
+			"role" : "Lead"
+		}, {
+			"name" : "Nick Sinopoli",
+			"homepage" : "https://github.com/NSinopoli",
+			"role" : "Contributor"
+		}, {
+			"name" : "Nick West",
+			"homepage" : "https://github.com/nickwest",
+			"role" : "Contributor"
+		}, {
+			"name" : "Johan Sigfred Abildskov",
+			"homepage" : "https://github.com/RandomSort",
+			"role" : "Contributor"
+		}, {
+			"name" : "Matthew Mueller",
+			"homepage" : "https://github.com/matthewmueller",
+			"role" : "Contributor"
+		}, {
+			"name" : "tohann",
+			"homepage" : "https://github.com/tohann",
+			"role" : "Contributor"
+		}, {
+			"name" : "MaSi",
+			"homepage" : "https://github.com/ma-si",
+			"role" : "Contributor"
+		}, {
+			"name" : "whackashoe",
+			"homepage" : "https://github.com/whackashoe",
+			"role" : "Contributor"
+		}
+	],
+	"keywords" : [
+		"phpunit"
+	],
+	"homepage" : "https://github.com/VisualPHPUnit/VisualPHPUnit",
+	"license" : "BSD-3-Clause-Clear",
+	"require" : {
+		"php" : ">=5.3.3",
+		"phpunit/phpunit" : "4.1.6@stable"
+	},
+	"minimum-stability" : "stable",
+	"support" : {
+		"source" : "https://github.com/VisualPHPUnit/VisualPHPUnit",
+		"issues" : "https://github.com/VisualPHPUnit/VisualPHPUnit/issues"
+	},
+	"config" : {
+		"bin-dir" : "bin/",
+		"vendor-dir" : "vendor/"
+	}
+}
