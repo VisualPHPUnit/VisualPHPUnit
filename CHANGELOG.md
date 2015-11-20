@@ -1,5 +1,33 @@
 # Changelog
 
+## v2.3.1
+
+* Downgraded phpunit to known working version 	
+* #143 Replace the call to PHPUnit_TextUI_Command->run by shell_exec because it's buggy on some versions
+* #146 runWithXml() 
+
+## v2.3
+
+* #122 Updated phpdoc
+* #113 Add PSR2 compliance
+* #112 Composer support
+* #111 Add travis support
+* #110 Enable scrutinizer
+* #109 Switch to new maintainer
+* #100 Snapshot always return success message
+* #98 Add message to failed test for string comparisons that shows expected and actual Strings
+* Override default phpunit execution
+* Larger view on wide screen
+* Added primary directory grouping to test file list
+* The test_directories array in bootstrap.php gained a key for each directory. This key is used to group files and sub-directories with the given primary test directory. This keeps projects together and makes it easier to select an entire project.
+* The Javascript for FileSelector, as well as the FileList ajax handler were also updated. The Home controller needed a minor tweak since it expected numeric keys in the test_directories array
+* Composer instead of PEAR + VPU.php error fixes
+* Changed pear_path over to composer_vendor_path and adjusted include paths + require file name
+* Also adjusted VPU.php to prevent the throwing of headers already sent errors
+* Use protocol relative urls when loading external resources
+* Change views to use protocol relative urls for loading of external resources
+* Updated to latest stable version of phpunit
+
 ## v2.2
 
 * Add CLI switches to allow config overrides (GH-93)
