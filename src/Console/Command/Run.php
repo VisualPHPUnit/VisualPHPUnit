@@ -34,6 +34,20 @@ class Run extends Command
 {
 
     /**
+     * Configuration options for starting vpu as a service
+     *
+     * @var string[]
+     */
+    private $serverConfig;
+
+    /**
+     * Application root
+     *
+     * @var string
+     */
+    private $appRoot;
+
+    /**
      *
      * {@inheritDoc}
      *
@@ -43,7 +57,22 @@ class Run extends Command
     {
         $this->setName('vpu')
             ->addArgument('files', InputArgument::IS_ARRAY, 'List of test files')
-            ->addOption('archive', 'a', InputOption::VALUE_NONE, 'Archive test suite result');
+            ->addOption('archive', 'a', InputOption::VALUE_NONE, 'Archive test suite result')
+            ->addOption('start', 's', InputOption::VALUE_NONE, 'Start VPU')
+            ->addOption('stop', 't', InputOption::VALUE_NONE, 'Stop VPU');
+        $this->serverConfig = [
+            'frontend' => [
+                'host' => 'localhost',
+                'port' => 8000,
+                'docroot' => '../dist'
+            ],
+            'backend' => [
+                'host' => 'localhost',
+                'port' => 8001,
+                'docroot' => '../backend'
+            ]
+        ];
+        $this->appRoot = realpath(__DIR__ . '/../../..');
     }
 
     /**
@@ -55,20 +84,60 @@ class Run extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->setFormatter(new OutputFormatter(true));
-        if (! empty($input->getArgument('files'))) {
-            $parser = new Parser();
-            $result = $parser->run($input->getArgument('files'));
-            Test::createTable($this->getDbConnection());
-            Test::store($this->getDbConnection(), $result);
-            if ($input->getOption('archive')) {
-                Suite::createTable($this->getDbConnection());
-                Suite::store($this->getDbConnection(), $result);
-                if ($output->isVerbose()) {
-                    $output->writeln('<comment>Test suite archived</comment>');
-                }
-            }
+        if ($input->getOption('start')) {
+            $this->start();
+            $output->writeln('<comment>VPU started</comment>');
+        } elseif ($input->getOption('stop')) {
+            $this->stop($output);
+            $output->writeln('<comment>VPU stopped</comment>');
         } else {
-            $output->writeln('<error>No files where supplied. Use -h for help.</error>');
+            if (! empty($input->getArgument('files'))) {
+                $parser = new Parser();
+                $result = $parser->run($input->getArgument('files'));
+                Test::createTable($this->getDbConnection());
+                Test::store($this->getDbConnection(), $result);
+                if ($input->getOption('archive')) {
+                    Suite::createTable($this->getDbConnection());
+                    Suite::store($this->getDbConnection(), $result);
+                    if ($output->isVerbose()) {
+                        $output->writeln('<comment>Test suite archived</comment>');
+                    }
+                }
+            } else {
+                $output->writeln('<error>No files where supplied. Use -h for help.</error>');
+            }
+        }
+    }
+
+    /**
+     * Start vpu service
+     *
+     * @return void
+     */
+    private function start()
+    {
+        foreach ($this->serverConfig as $server => $config) {
+            $cmd = sprintf('php -S %s:%d -t %s >/dev/null 2>&1 & echo $!', $config['host'], $config['port'], $config['docroot']);
+            $output = array();
+            exec($cmd, $output);
+            $pid = (int) $output[0];
+            file_put_contents($this->appRoot . '/' . $server . '.pid', $pid);
+        }
+    }
+
+    /**
+     * Stop vpu service
+     *
+     * @return void
+     */
+    private function stop()
+    {
+        foreach ($this->serverConfig as $server => $config) {
+            $path = $this->appRoot . '/' . $server . '.pid';
+            if (file_exists($path)) {
+                exec('kill ' . file_get_contents($path));
+                unlink($path);
+            }
         }
     }
 
@@ -81,10 +150,9 @@ class Run extends Command
      */
     private function getDbConnection()
     {
-        $appRoot = realpath(__DIR__ . '/../../..');
-        $config = json_decode(file_get_contents($appRoot . '/vpu.json'), true);
+        $config = json_decode(file_get_contents($this->appRoot . '/vpu.json'), true);
         $connectionParams = array(
-            'path' => $appRoot . '/vpu.db',
+            'path' => $this->appRoot . '/vpu.db',
             'driver' => $config['config']['database']['driver']
         );
         return DriverManager::getConnection($connectionParams, new Configuration());
