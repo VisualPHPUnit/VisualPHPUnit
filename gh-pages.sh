@@ -2,6 +2,7 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
     echo -e "Starting to update gh-pages\n"
     #copy data to home
     cp -R build/phpdoc $HOME/api
+    cp -R build/phpunit/coverage $HOME/coverage
     #ls -la $HOME/api
     #go to home and setup git
     cd $HOME
@@ -14,6 +15,8 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
     #api
     rm -rf api
     cp -Rf $HOME/api api
+    rm -rf coverage
+    cp -Rf $HOME/coverage coverage
     #add, commit and push files
     git add -f .
     git commit -m "Travis build $TRAVIS_BUILD_NUMBER pushed to gh-pages"
