@@ -31,8 +31,8 @@ class Test extends Action
      *
      * Retrive tests from test folder
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Silex\Application $app
+     * @param \Symfony\Component\HttpFoundation\Request $request            
+     * @param \Silex\Application $app            
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function index(Request $request, Application $app)
@@ -52,8 +52,8 @@ class Test extends Action
     /**
      * Parse the dir for files
      *
-     * @param string $dir
-     * @param boolean $ignoreHidden
+     * @param string $dir            
+     * @param boolean $ignoreHidden            
      *
      * @return mixed[]
      */
@@ -102,7 +102,7 @@ class Test extends Action
     /**
      * Exclude empty Directories
      *
-     * @param mixed[] $list
+     * @param mixed[] $list            
      * @return mixed[]
      */
     private function excludeEmptyDirectories($list)
@@ -123,14 +123,14 @@ class Test extends Action
     /**
      * Is this a phpunit testcase
      *
-     * @param string $path
+     * @param string $path            
      *
      * @return boolean
      */
     private function isPhpUnitTestCase($path)
     {
         $result1 = preg_grep('/PHPUnit_Framework_TestCase$/', file($path));
-        if ($result1) {
+        if (! empty($result1)) {
             return true;
         }
         return false;
@@ -140,14 +140,16 @@ class Test extends Action
      * Get number of methods in test class
      *
      * @todo likely there are better ways of doing this
-     * @param string $path
+     * @param string $path            
      *
-     * @return interger[]
+     * @return integer[]
      */
     private function getNumberOfMethods($path)
     {
         $result1 = preg_grep('/^namespace/', file($path));
         $result2 = preg_grep('/^class/', file($path));
+        $matches1 = [];
+        $matches2 = [];
         
         preg_match('/^class\s([A-Za-z0-9]+).+$/', array_pop($result2), $matches2);
         if (count($result1) > 0) {

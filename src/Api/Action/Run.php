@@ -47,7 +47,7 @@ class Run extends Action
         
         if (count($data['files'])) {
             $parser = new Parser();
-            $result = $parser->run($data['files'], $data['config']);
+            $result = $parser->run($data['files']);
             if ($data['config']['snapshot']) {
                 Suite::store($app['db'], $result);
             }
