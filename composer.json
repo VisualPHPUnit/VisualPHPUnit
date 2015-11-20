@@ -7,34 +7,6 @@
 			"email" : "localgod@heaven.dk",
 			"homepage" : "https://github.com/localgod",
 			"role" : "Lead"
-		}, {
-			"name" : "Nick Sinopoli",
-			"homepage" : "https://github.com/NSinopoli",
-			"role" : "Contributor"
-		}, {
-			"name" : "Nick West",
-			"homepage" : "https://github.com/nickwest",
-			"role" : "Contributor"
-		}, {
-			"name" : "Johan Sigfred Abildskov",
-			"homepage" : "https://github.com/RandomSort",
-			"role" : "Contributor"
-		}, {
-			"name" : "Matthew Mueller",
-			"homepage" : "https://github.com/matthewmueller",
-			"role" : "Contributor"
-		}, {
-			"name" : "tohann",
-			"homepage" : "https://github.com/tohann",
-			"role" : "Contributor"
-		}, {
-			"name" : "MaSi",
-			"homepage" : "https://github.com/ma-si",
-			"role" : "Contributor"
-		}, {
-			"name" : "whackashoe",
-			"homepage" : "https://github.com/whackashoe",
-			"role" : "Contributor"
 		}
 	],
 	"keywords" : [
@@ -51,13 +23,13 @@
 		"jdesrosiers/silex-cors-provider" : "0.1.5",
 		"symfony/finder" : "2.7.6",
 		"igorw/config-service-provider" : "1.2.2",
-		"doctrine/dbal" : "2.5.2",
-		"sebastian/global-state" : "1.1.1"
+		"doctrine/dbal" : "2.5.2"
 	},
 	"minimum-stability" : "stable",
 	"support" : {
 		"source" : "https://github.com/VisualPHPUnit/VisualPHPUnit",
-		"issues" : "https://github.com/VisualPHPUnit/VisualPHPUnit/issues"
+		"issues" : "https://github.com/VisualPHPUnit/VisualPHPUnit/issues",
+		"wiki" : "https://github.com/VisualPHPUnit/VisualPHPUnit/wiki"
 	},
 	"config" : {
 		"bin-dir" : "bin/",
@@ -65,9 +37,7 @@
 	},
 	"autoload" : {
 		"psr-4" : {
-			"Visualphpunit\\" : "src",
-			"app\\" : "app",
-			"nx\\" : "nx"
+			"Visualphpunit\\" : "src"
 		}
 	}
 }

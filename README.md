@@ -1,10 +1,10 @@
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/VisualPHPUnit/VisualPHPUnit/badges/quality-score.png?b=v3)]
-(https://scrutinizer-ci.com/g/VisualPHPUnit/VisualPHPUnit/?branch=v3)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/VisualPHPUnit/VisualPHPUnit/badges/quality-score.png?b=3.x)]
+(https://scrutinizer-ci.com/g/VisualPHPUnit/VisualPHPUnit/?branch=3.x)
 [![Build Status](https://travis-ci.org/VisualPHPUnit/VisualPHPUnit.svg)](https://travis-ci.org/VisualPHPUnit/VisualPHPUnit)
 [![Dependency Status](https://www.versioneye.com/user/projects/55f547b3a4155f00090005b5/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55f547b3a4155f00090005b5)
 [![Project Stats](https://www.openhub.net/p/VisualPHPUnit/widgets/project_thin_badge.gif)](https://www.openhub.net/p/VisualPHPUnit)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%205.6-8892BF.svg?style=flat-square)](https://php.net/)
-[![codecov.io](http://codecov.io/github/VisualPHPUnit/VisualPHPUnit/coverage.svg?branch=v3)](http://codecov.io/github/VisualPHPUnit/VisualPHPUnit?branch=v3)
+[![codecov.io](http://codecov.io/github/VisualPHPUnit/VisualPHPUnit/coverage.svg?branch=3.x)](http://codecov.io/github/VisualPHPUnit/VisualPHPUnit?branch=3.x)
 
 
 # VisualPHPUnit
@@ -13,9 +13,9 @@ VisualPHPUnit is a visual front-end for PHPUnit. Current stable release is [v2.3
 
 ## Versions
 
-* [v1.*](https://github.com/VisualPHPUnit/VisualPHPUnit/tree/1.x) Initial concept and code by Matt Mueller
-* [v2.*](https://github.com/VisualPHPUnit/VisualPHPUnit/tree/2.x) A complete rewrite by Nick Sinopoli
-* [v3.*](https://github.com/VisualPHPUnit/VisualPHPUnit/tree/3.x) A complete rewrite by Johannes Skov Frandsen
+* [1.x](https://github.com/VisualPHPUnit/VisualPHPUnit/tree/1.x) Initial concept and code by Matt Mueller
+* [2.x](https://github.com/VisualPHPUnit/VisualPHPUnit/tree/2.x) A complete rewrite by Nick Sinopoli
+* [3.x.*](https://github.com/VisualPHPUnit/VisualPHPUnit/tree/3.x) A complete rewrite by Johannes Skov Frandsen
 
 ## Development
 
@@ -44,6 +44,33 @@ The backend is a REST application based on Silex.
 
 * [php](http://php.net/) >=5.6
 * [Composer](https://getcomposer.org/)
+
+
+## Running VPU in dev mode
+
+### Setup dependencies
+```
+#!Bash	
+git clone git@github.com:VisualPHPUnit/VisualPHPUnit.git
+git checkout 3.x
+cd backend
+php -r "readfile('https://getcomposer.org/installer');" | php
+php composer.phar install
+npm install
+bower install
+```
+
+## Start VPU in dev mode
+You need two consoles for this setup, one for the frontend and one for the backend.
+```
+#!Bash
+#backend
+cd backend
+php -S localhost:8000
+#frontend
+cd ../frontend
+grunt serve
+```
 
 ## Running VPU at the Command Line
 

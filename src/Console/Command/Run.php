@@ -117,8 +117,13 @@ class Run extends Command
     private function start()
     {
         foreach ($this->serverConfig as $server => $config) {
-            $cmd = sprintf('php -S %s:%d -t %s >/dev/null 2>&1 & echo $!', $config['host'], $config['port'], $config['docroot']);
-            $output = array();
+            $cmd = sprintf(
+                'php -S %s:%d -t %s >/dev/null 2>&1 & echo $!',
+                $config['host'],
+                $config['port'],
+                $config['docroot']
+            );
+            $output = [];
             exec($cmd, $output);
             $pid = (int) $output[0];
             file_put_contents($this->appRoot . '/' . $server . '.pid', $pid);
