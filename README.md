@@ -15,7 +15,7 @@ VisualPHPUnit is a visual front-end for PHPUnit. Current stable release is [v2.3
 
 * [1.x](https://github.com/VisualPHPUnit/VisualPHPUnit/tree/1.x) Initial concept and code by Matt Mueller
 * [2.x](https://github.com/VisualPHPUnit/VisualPHPUnit/tree/2.x) A complete rewrite by Nick Sinopoli
-* [3.x.*](https://github.com/VisualPHPUnit/VisualPHPUnit/tree/3.x) A complete rewrite by Johannes Skov Frandsen
+* [3.x](https://github.com/VisualPHPUnit/VisualPHPUnit/tree/3.x) A complete rewrite by Johannes Skov Frandsen
 
 ## Development
 
