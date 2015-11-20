@@ -130,7 +130,7 @@ class Test extends Action
     private function isPhpUnitTestCase($path)
     {
         $result1 = preg_grep('/PHPUnit_Framework_TestCase$/', file($path));
-        if ($result1) {
+        if (! empty($result1)) {
             return true;
         }
         return false;
@@ -142,12 +142,14 @@ class Test extends Action
      * @todo likely there are better ways of doing this
      * @param string $path
      *
-     * @return interger[]
+     * @return integer[]
      */
     private function getNumberOfMethods($path)
     {
         $result1 = preg_grep('/^namespace/', file($path));
         $result2 = preg_grep('/^class/', file($path));
+        $matches1 = [];
+        $matches2 = [];
         
         preg_match('/^class\s([A-Za-z0-9]+).+$/', array_pop($result2), $matches2);
         if (count($result1) > 0) {
