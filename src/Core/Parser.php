@@ -210,7 +210,7 @@ class Parser
     private function explodeTestName($testName)
     {
         $matches = [];
-        preg_match('/([a-zA-Z0-9]+)::([a-zA-Z0-9]+)$/', $testName, $matches);
+        preg_match('/([a-zA-Z0-9]+)::([a-zA-Z0-9_]+)$/', $testName, $matches);
         return [
             'class' => $matches[1],
             'method' => $matches[2]
