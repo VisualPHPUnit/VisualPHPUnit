@@ -11,4 +11,8 @@
  * @license   http://opensource.org/licenses/BSD-3-Clause The BSD License
  * @link      https://github.com/VisualPHPUnit/VisualPHPUnit VisualPHPUnit
  */
-require_once __DIR__.'/../vendor/autoload.php';
+
+//You need to update the function name if you want to run vpu's own tests via vpu.phar
+if (! function_exists('composerRequire6f35294d06ff43eeb876443f450df6c4')) {
+    require_once realpath(__DIR__ . '/../vendor/autoload.php');
+}

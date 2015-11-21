@@ -46,6 +46,13 @@ class Run extends Command
      * @var string
      */
     private $appRoot;
+    
+    /**
+     * Application config
+     *
+     * @var mixed[]
+     */
+    private $config;
 
     /**
      *
@@ -57,6 +64,7 @@ class Run extends Command
     {
         $this->setName('vpu')
             ->addArgument('files', InputArgument::IS_ARRAY, 'List of test files')
+            ->addOption('config', 'c', InputOption::VALUE_REQUIRED, 'Config file')
             ->addOption('archive', 'a', InputOption::VALUE_NONE, 'Archive test suite result')
             ->addOption('start', 's', InputOption::VALUE_NONE, 'Start VPU')
             ->addOption('stop', 't', InputOption::VALUE_NONE, 'Stop VPU');
@@ -64,15 +72,14 @@ class Run extends Command
             'frontend' => [
                 'host' => 'localhost',
                 'port' => 8000,
-                'docroot' => '../dist'
+                'docroot' => 'dist'
             ],
             'backend' => [
                 'host' => 'localhost',
                 'port' => 8001,
-                'docroot' => '../backend'
+                'docroot' => 'backend'
             ]
         ];
-        $this->appRoot = realpath(__DIR__ . '/../../..');
     }
 
     /**
@@ -83,6 +90,9 @@ class Run extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $this->config = json_decode(file_get_contents($input->getOption('config')), true);
+        $this->appRoot = dirname(realpath($input->getOption('config')));
+        
         $output->setFormatter(new OutputFormatter(true));
         if ($input->getOption('start')) {
             $this->start();
@@ -121,7 +131,7 @@ class Run extends Command
                 'php -S %s:%d -t %s >/dev/null 2>&1 & echo $!',
                 $config['host'],
                 $config['port'],
-                $config['docroot']
+                $this->appRoot . '/'.$config['docroot']
             );
             $output = [];
             exec($cmd, $output);
@@ -155,7 +165,7 @@ class Run extends Command
      */
     private function getDbConnection()
     {
-        $config = json_decode(file_get_contents($this->appRoot . '/vpu.json'), true);
+        $config = $this->config;
         $connectionParams = array(
             'path' => $this->appRoot . '/vpu.db',
             'driver' => $config['config']['database']['driver']

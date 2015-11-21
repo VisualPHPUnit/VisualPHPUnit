@@ -1,0 +1,19 @@
+{
+    "main":"bin/vpu",
+    "chmod":"0755",
+    "directories":[
+        "src"
+    ],
+    "finder":[
+        {
+            "name":"*.php",
+            "exclude":[
+                "Tests",
+                "tests"
+            ],
+            "in":"vendor"
+        }
+    ],
+    "output":"vpu.phar",
+    "stub":true
+}
