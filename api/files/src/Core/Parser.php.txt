@@ -42,7 +42,7 @@ class Parser
     }
 
     /**
-     * Require bootstrap if present
+     * Require bootstrap if vpu can find it
      *
      * @param array $tests
      *
@@ -52,10 +52,20 @@ class Parser
     {
         foreach ($tests as $filename) {
             if (file_exists($filename)) {
-                $info = pathinfo($filename);
-                $file = $info['dirname'] . DIRECTORY_SEPARATOR . 'bootstrap.php';
-                if (file_exists($file)) {
-                    require_once $info['dirname'] . DIRECTORY_SEPARATOR . 'bootstrap.php';
+                $case1 = strpos($filename, 'tests');
+                $case2 = strpos($filename, 'Tests');
+                
+                if (is_numeric($case1)) {
+                    $path = substr($filename, 0, $case1 + 6) . 'bootstrap.php';
+                    if (file_exists($path)) {
+                        require_once $path;
+                    }
+                }
+                if (is_numeric($case2)) {
+                    $path = substr($filename, 0, $case2 + 6) . 'bootstrap.php';
+                    if (file_exists($path)) {
+                        require_once $path;
+                    }
                 }
             }
         }
