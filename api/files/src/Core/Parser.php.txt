@@ -53,7 +53,8 @@ class Parser
         foreach ($tests as $filename) {
             if (file_exists($filename)) {
                 $info = pathinfo($filename);
-                if (file_exists($info['dirname'] . DIRECTORY_SEPARATOR . 'bootstrap.php')) {
+                $file = $info['dirname'] . DIRECTORY_SEPARATOR . 'bootstrap.php';
+                if (file_exists($file)) {
                     require_once $info['dirname'] . DIRECTORY_SEPARATOR . 'bootstrap.php';
                 }
             }
