@@ -13,37 +13,17 @@ VisualPHPUnit is a visual front-end for PHPUnit. Current stable release is [v2.3
 
 ## Versions
 
-* [1.x](https://github.com/VisualPHPUnit/VisualPHPUnit/tree/1.x) Initial concept and code by Matt Mueller
-* [2.x](https://github.com/VisualPHPUnit/VisualPHPUnit/tree/2.x) A complete rewrite by Nick Sinopoli
-* [3.x](https://github.com/VisualPHPUnit/VisualPHPUnit/tree/3.x) A complete rewrite by Johannes Skov Frandsen
+* [1.x](https://github.com/VisualPHPUnit/VisualPHPUnit/tree/1.x) Initial concept and code by [Matt Mueller](https://github.com/matthewmueller)
+* [2.x](https://github.com/VisualPHPUnit/VisualPHPUnit/tree/2.x) A complete rewrite by [Nick Sinopoli](https://github.com/NSinopoli)
+* [3.x](https://github.com/VisualPHPUnit/VisualPHPUnit/tree/3.x) A complete rewrite by [Johannes Skov Frandsen](https://github.com/localgod)
 
 ## Development
 
 ### Frontend
-The frontend is a single-page javascript application (SPA) based on angularjs and bootstrap.
-
-#### Framework
-* [Angularjs](https://angularjs.org/)
-* [Bootstrap](http://getbootstrap.com/)
-
-#### Required tools
-* [Node.js](https://nodejs.org/)
-* [Npm](https://www.npmjs.com/)
-* [Grunt](http://gruntjs.com/)
-* [Bower](http://bower.io/) 
+The frontend is a single-page javascript application ([SPA](https://en.wikipedia.org/wiki/Single-page_application)) based on [Angularjs](https://angularjs.org/) and [Bootstrap](http://getbootstrap.com/). You will need [Node.js](https://nodejs.org/), [Npm](https://www.npmjs.com/), [Grunt](http://gruntjs.com/) and [Bower](http://bower.io/) to build the frontend.
 
 ### Backend
-The backend is a REST application based on Silex.
-
-#### Framework
-
-* [Silex](http://silex.sensiolabs.org/)
-
-
-#### Required tools
-
-* [php](http://php.net/) >=5.6
-* [Composer](https://getcomposer.org/)
+The backend is a REST application based on [Silex](http://silex.sensiolabs.org/). You will need [Composer](https://getcomposer.org/) to install relevant dependencies.You need [php](http://php.net/) >=5.6 to run VPU.
 
 
 ## Running VPU in dev mode

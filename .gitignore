@@ -1,6 +1,7 @@
 .settings
 app/resource/cache
 bin/phpunit
+bin/doctrine-dbal
 build
 vendor
 .buildpath
@@ -14,3 +15,4 @@ macports.sh
 /.sass-cache
 /bower_components
 vpu.db
+*.pid
