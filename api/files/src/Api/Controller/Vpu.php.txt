@@ -40,7 +40,6 @@ class Vpu implements ControllerProviderInterface
         $controllers->get('/graphs', 'Visualphpunit\Api\Action\Graph::index');
         $controllers->get('/tests', 'Visualphpunit\Api\Action\Test::index');
         $controllers->post('/run', 'Visualphpunit\Api\Action\run::index');
-        $controllers->get('/run', 'Visualphpunit\Api\Action\run::index');
         return $controllers;
     }
 }
