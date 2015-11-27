@@ -23,14 +23,13 @@ VisualPHPUnit is a visual front-end for PHPUnit. Current stable release is [v2.3
 The frontend is a single-page javascript application ([SPA](https://en.wikipedia.org/wiki/Single-page_application)) based on [Angularjs](https://angularjs.org/) and [Bootstrap](http://getbootstrap.com/). You will need [Node.js](https://nodejs.org/), [Npm](https://www.npmjs.com/), [Grunt](http://gruntjs.com/) and [Bower](http://bower.io/) to build the frontend.
 
 ### Backend
-The backend is a REST application based on [Silex](http://silex.sensiolabs.org/). You will need [Composer](https://getcomposer.org/) to install relevant dependencies.You need [php](http://php.net/) >=5.6 to run VPU.
+The backend is a REST application based on [Silex](http://silex.sensiolabs.org/). You will need [Composer](https://getcomposer.org/) to install relevant dependencies.You need [php](http://php.net/) >=5.6 to run VisualPHPUnit.
 
 
 ## Running VPU in dev mode
 
 ### Setup dependencies
-```
-#!Bash	
+```bash	
 git clone git@github.com:VisualPHPUnit/VisualPHPUnit.git
 git checkout 3.x
 php -r "readfile('https://getcomposer.org/installer');" | php
@@ -41,13 +40,10 @@ bower install
 
 ## Start VPU in dev mode
 You need two consoles for this setup, one for the frontend and one for the backend.
-```
-#!Bash
-#backend
+```bash
 cd backend
 php -S localhost:8001
-#frontend
-cd ../frontend
+cd ../app
 grunt serve
 ```
 
@@ -60,7 +56,6 @@ You may append --help for options
 ### Usage
 
 ```bash
-# from the project root
 bin/vpu
 ```
 
