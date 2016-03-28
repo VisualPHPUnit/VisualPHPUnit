@@ -16,7 +16,8 @@ angular
     'ngMessages',
     'ngResource',
     'ngRoute',
-    'ngSanitize'
+    'ngSanitize',
+    'ui.bootstrap'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -30,10 +31,10 @@ angular
         controller: 'ArchivesCtrl',
         controllerAs: 'archives'
       })
-      .when('/graphs', {
-    	  templateUrl: 'views/graphs.html',
-    	  controller: 'GraphsCtrl',
-    	  controllerAs: 'graphs'
+      .when('/graph', {
+    	  templateUrl: 'views/graph.html',
+    	  controller: 'GraphCtrl',
+    	  controllerAs: 'graph'
       })
       .when('/help', {
     	  templateUrl: 'views/help.html',
