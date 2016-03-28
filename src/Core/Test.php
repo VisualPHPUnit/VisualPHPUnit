@@ -7,7 +7,7 @@
  * PHP Version 5.6<
  *
  * @author    Johannes Skov Frandsen <localgod@heaven.dk>
- * @copyright 2011-2015 VisualPHPUnit
+ * @copyright 2011-2016 VisualPHPUnit
  * @license   http://opensource.org/licenses/BSD-3-Clause The BSD License
  * @link      https://github.com/VisualPHPUnit/VisualPHPUnit VisualPHPUnit
  */
@@ -25,9 +25,37 @@ class Test
 {
 
     /**
+     * When returning a list of test group them by hour
+     *
+     * @var string
+     */
+    const GROUP_BY_HOUR = '%Y-%m-%d %H';
+
+    /**
+     * When returning a list of test group them by day
+     *
+     * @var string
+     */
+    const GROUP_BY_DAY = '%Y-%m-%d';
+
+    /**
+     * When returning a list of test group them by month
+     *
+     * @var string
+     */
+    const GROUP_BY_MONTH = '%Y-%m';
+
+    /**
+     * When returning a list of test group them by year
+     *
+     * @var string
+     */
+    const GROUP_BY_YEAR = '%Y';
+
+    /**
      * Create the table if it dos not exists
      *
-     * @param \Doctrine\DBAL\Connection $connection
+     * @param \Doctrine\DBAL\Connection $connection            
      *
      * @return boolean
      */
@@ -46,7 +74,7 @@ class Test
     /**
      * Drop the table if it exists
      *
-     * @param \Doctrine\DBAL\Connection $connection
+     * @param \Doctrine\DBAL\Connection $connection            
      *
      * @return boolean
      */
@@ -60,7 +88,7 @@ class Test
     /**
      * Truncate the table
      *
-     * @param \Doctrine\DBAL\Connection $connection
+     * @param \Doctrine\DBAL\Connection $connection            
      *
      * @return boolean
      */
@@ -74,8 +102,8 @@ class Test
     /**
      * Store a test suite result
      *
-     * @param \Doctrine\DBAL\Connection $connection
-     * @param mixed[] $result
+     * @param \Doctrine\DBAL\Connection $connection            
+     * @param mixed[] $result            
      *
      * @return boolean
      */
@@ -97,78 +125,80 @@ class Test
     /**
      * Get test per day between dates
      *
-     * @param \Doctrine\DBAL\Connection $connection
-     * @param \DateTime $start
-     * @param \DateTime $end
+     * @param \Doctrine\DBAL\Connection $connection            
+     * @param \DateTime $start            
+     * @param \DateTime $end            
+     * @param String $unit            
      *
      * @return mixed[]
      */
-    public static function getByDay(Connection $connection, DateTime $start, DateTime $end)
+    public static function getTests(Connection $connection, DateTime $start, DateTime $end, $unit)
     {
         $sql = "
             SELECT
-            strftime('%Y-%m-%d  %H:%M:%S', executed) as datetime,
-            strftime('%d', executed) as day,
+            strftime('%Y-%m-%d %H:%M:%S', executed) as datetime,
+            ltrim(strftime('" . $unit . "', executed), '0') as unit,
             COUNT() as number,
             status
             FROM tests
-            WHERE strftime('%Y-%m-%d', executed) BETWEEN ? AND ?
+            WHERE executed BETWEEN datetime(?) AND datetime(?)
             AND status = 'passed'
-            GROUP BY strftime('%d', executed)
+            GROUP BY strftime('" . $unit . "', executed)
             UNION
             SELECT
-            strftime('%Y-%m-%d  %H:%M:%S', executed) as datetime,
-            strftime('%d', executed) as day,
+            strftime('%Y-%m-%d %H:%M:%S', executed) as datetime,
+            ltrim(strftime('" . $unit . "', executed), '0') as unit,
             COUNT() as number,
             status
             FROM tests
-            WHERE strftime('%Y-%m-%d', executed) BETWEEN ? AND ?
+            WHERE executed BETWEEN datetime(?) AND datetime(?)
             AND status = 'failed'
-            GROUP BY strftime('%d', executed)    
+            GROUP BY strftime('" . $unit . "', executed)
             UNION
             SELECT
-            strftime('%Y-%m-%d  %H:%M:%S', executed) as datetime,
-            strftime('%d', executed) as day,
+            strftime('%Y-%m-%d %H:%M:%S', executed) as datetime,
+            ltrim(strftime('" . $unit . "', executed), '0') as unit,
             COUNT() as number,
             status
             FROM tests
-            WHERE strftime('%Y-%m-%d', executed) BETWEEN ? AND ?
+            WHERE executed BETWEEN datetime(?) AND datetime(?)
             AND status = 'notImplemented'
-            GROUP BY strftime('%d', executed)
+            GROUP BY strftime('" . $unit . "', executed)
             UNION
             SELECT
-            strftime('%Y-%m-%d  %H:%M:%S', executed) as datetime,
-            strftime('%d', executed) as day,
+            strftime('%Y-%m-%d %H:%M:%S', executed) as datetime,
+            ltrim(strftime('" . $unit . "', executed), '0') as unit,
             COUNT() as number,
             status
             FROM tests
-            WHERE strftime('%Y-%m-%d', executed) BETWEEN ? AND ?
+            WHERE executed BETWEEN datetime(?) AND datetime(?)
             AND status = 'skipped'
-            GROUP BY strftime('%d', executed)  
+            GROUP BY strftime('" . $unit . "', executed)
             UNION
             SELECT
-            strftime('%Y-%m-%d  %H:%M:%S', executed) as datetime,
-            strftime('%d', executed) as day,
+            strftime('%Y-%m-%d %H:%M:%S', executed) as datetime,
+            ltrim(strftime('" . $unit . "', executed), '0') as unit,
             COUNT() as number,
             status
             FROM tests
-            WHERE strftime('%Y-%m-%d', executed) BETWEEN ? AND ?
+            WHERE executed BETWEEN datetime(?) AND datetime(?)
             AND status = 'error'
-            GROUP BY strftime('%d', executed)
+            GROUP BY strftime('" . $unit . "', executed)
             ORDER BY status";
         
         $stmt = $connection->prepare($sql);
-        $stmt->bindValue(1, $start->format('Y-m-d'));
-        $stmt->bindValue(2, $end->format('Y-m-d'));
-        $stmt->bindValue(3, $start->format('Y-m-d'));
-        $stmt->bindValue(4, $end->format('Y-m-d'));
-        $stmt->bindValue(5, $start->format('Y-m-d'));
-        $stmt->bindValue(6, $end->format('Y-m-d'));
-        $stmt->bindValue(7, $start->format('Y-m-d'));
-        $stmt->bindValue(8, $end->format('Y-m-d'));
-        $stmt->bindValue(9, $start->format('Y-m-d'));
-        $stmt->bindValue(10, $end->format('Y-m-d'));
+        $stmt->bindValue(1, $start->format('Y-m-d H:i:s'));
+        $stmt->bindValue(2, $end->format('Y-m-d H:i:s'));
+        $stmt->bindValue(3, $start->format('Y-m-d H:i:s'));
+        $stmt->bindValue(4, $end->format('Y-m-d H:i:s'));
+        $stmt->bindValue(5, $start->format('Y-m-d H:i:s'));
+        $stmt->bindValue(6, $end->format('Y-m-d H:i:s'));
+        $stmt->bindValue(7, $start->format('Y-m-d H:i:s'));
+        $stmt->bindValue(8, $end->format('Y-m-d H:i:s'));
+        $stmt->bindValue(9, $start->format('Y-m-d H:i:s'));
+        $stmt->bindValue(10, $end->format('Y-m-d H:i:s'));
         $stmt->execute();
+        
         return $stmt->fetchAll();
     }
 }
