@@ -24,6 +24,7 @@ before_script:
 
 matrix:
   allow_failures:
+    - 7.0
 
 script:
 - rm -rf ./build
