@@ -55,7 +55,7 @@ class Test
     /**
      * Create the table if it dos not exists
      *
-     * @param \Doctrine\DBAL\Connection $connection            
+     * @param \Doctrine\DBAL\Connection $connection
      *
      * @return boolean
      */
@@ -74,7 +74,7 @@ class Test
     /**
      * Drop the table if it exists
      *
-     * @param \Doctrine\DBAL\Connection $connection            
+     * @param \Doctrine\DBAL\Connection $connection
      *
      * @return boolean
      */
@@ -88,7 +88,7 @@ class Test
     /**
      * Truncate the table
      *
-     * @param \Doctrine\DBAL\Connection $connection            
+     * @param \Doctrine\DBAL\Connection $connection
      *
      * @return boolean
      */
@@ -102,8 +102,8 @@ class Test
     /**
      * Store a test suite result
      *
-     * @param \Doctrine\DBAL\Connection $connection            
-     * @param mixed[] $result            
+     * @param \Doctrine\DBAL\Connection $connection
+     * @param mixed[] $result
      *
      * @return boolean
      */
@@ -125,10 +125,10 @@ class Test
     /**
      * Get test per day between dates
      *
-     * @param \Doctrine\DBAL\Connection $connection            
-     * @param \DateTime $start            
-     * @param \DateTime $end            
-     * @param String $unit            
+     * @param \Doctrine\DBAL\Connection $connection
+     * @param \DateTime $start
+     * @param \DateTime $end
+     * @param String $unit
      *
      * @return mixed[]
      */
