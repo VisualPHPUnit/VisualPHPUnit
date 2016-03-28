@@ -7,7 +7,7 @@
  * PHP Version 5.6<
  *
  * @author    Johannes Skov Frandsen <localgod@heaven.dk>
- * @copyright 2011-2015 VisualPHPUnit
+ * @copyright 2011-2016 VisualPHPUnit
  * @license   http://opensource.org/licenses/BSD-3-Clause The BSD License
  * @link      https://github.com/VisualPHPUnit/VisualPHPUnit VisualPHPUnit
  */
@@ -37,7 +37,7 @@ class Vpu implements ControllerProviderInterface
         $controllers->get('/', 'Visualphpunit\Api\Action\Index::index');
         $controllers->get('/archives', 'Visualphpunit\Api\Action\Archive::index');
         $controllers->get('/suite/{id}', 'Visualphpunit\Api\Action\Archive::suite');
-        $controllers->get('/graphs', 'Visualphpunit\Api\Action\Graph::index');
+        $controllers->get('/graph/{unit}/{start}/{end}', 'Visualphpunit\Api\Action\Graph::index');
         $controllers->get('/tests', 'Visualphpunit\Api\Action\Test::index');
         $controllers->post('/run', 'Visualphpunit\Api\Action\run::index');
         return $controllers;
