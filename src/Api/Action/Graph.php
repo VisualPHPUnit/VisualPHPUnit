@@ -31,11 +31,11 @@ class Graph extends Action
      *
      * Get graph data from test resuts
      *
-     * @param string $unit            
-     * @param string $start            
-     * @param string $end            
-     * @param \Symfony\Component\HttpFoundation\Request $request            
-     * @param \Silex\Application $app            
+     * @param string $unit
+     * @param string $start
+     * @param string $end
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Silex\Application $app
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function index($unit, $start, $end, Request $request, Application $app)
