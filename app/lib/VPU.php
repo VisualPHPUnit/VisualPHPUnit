@@ -489,6 +489,17 @@ class VPU
      */
     protected function checkXmlConfiguration($xml_config)
     {
+        $file = simplexml_load_file($xml_config);
+        if ($file !== false) {
+            if (isset($file['bootstrap'])) {
+                $bootstrap = dirname($xml_config) . DIRECTORY_SEPARATOR . (string) $file['bootstrap'];
+                if (is_file($bootstrap)) {
+                    require_once $bootstrap;
+                } else {
+                    throw new DomainException("XML Configuration bootstrap file '" . ((string) $file['bootstrap']) . "' not found");
+                }
+            }
+        }
         $configuration = PHPUnit_Util_Configuration::getInstance($xml_config);
         $listeners = $configuration->getListenerConfiguration();
         
