@@ -16,3 +16,4 @@ macports.sh
 /bower_components
 vpu.db
 *.pid
+/cacert.pem

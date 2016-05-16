@@ -11,13 +11,28 @@
 
 # VisualPHPUnit
 
-VisualPHPUnit is a visual front-end for PHPUnit. Current stable release is [v2.3.1](https://github.com/VisualPHPUnit/VisualPHPUnit/releases/tag/v2.3.1)
+VisualPHPUnit is a visual front-end for PHPUnit.
 
 ## Versions
 
 * [1.x](https://github.com/VisualPHPUnit/VisualPHPUnit/tree/1.x) Initial concept and code by [Matt Mueller](https://github.com/matthewmueller)
 * [2.x](https://github.com/VisualPHPUnit/VisualPHPUnit/tree/2.x) A complete rewrite by [Nick Sinopoli](https://github.com/NSinopoli)
 * [3.x](https://github.com/VisualPHPUnit/VisualPHPUnit/tree/3.x) A complete rewrite by [Johannes Skov Frandsen](https://github.com/localgod)
+
+##Setup
+
+ * Checkout or download the VisualPHPUnit
+ * Run composer.php to install php dependecies.
+ * Run npm install
+ * Run bower install
+ * Run `./bin/vpu -c vpu.json -s` to start VisualPHPUnit with the build in php server.
+ * Run `./bin/vpu -c vpu.json -t` to stop VisualPHPUnit with the build in php server.
+
+You may now browse localhost:8000 to acess the test suites.
+
+You can update `./vpu.json` to add additional test suites.
+
+You may run tests from the console like this `./bin/vpu -c vpu.json testfile.php`. You may append `-a` to archive your test results. 
 
 ## Development
 
