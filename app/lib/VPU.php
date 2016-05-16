@@ -468,7 +468,6 @@ class VPU
         
         ob_start();
         $suite->run($result);
-        // $results = ob_get_contents();
         $results = file_get_contents("/tmp/res.json");
         if (ob_get_length()) {
             ob_end_clean();
@@ -496,7 +495,8 @@ class VPU
                 if (is_file($bootstrap)) {
                     require_once $bootstrap;
                 } else {
-                    throw new DomainException("XML Configuration bootstrap file '" . ((string) $file['bootstrap']) . "' not found");
+                    throw new DomainException("XML Configuration bootstrap file '" .
+                        ((string) $file['bootstrap']) . "' not found");
                 }
             }
         }
