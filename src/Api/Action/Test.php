@@ -130,10 +130,7 @@ class Test extends Action
     private function isPhpUnitTestCase($path)
     {
         $result1 = preg_grep('/PHPUnit_Framework_TestCase$/', file($path));
-        if (! empty($result1)) {
-            return true;
-        }
-        return false;
+        return !empty($result1);
     }
 
     /**
