@@ -6,7 +6,7 @@
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%205.6-8892BF.svg?style=flat-square)](https://php.net/)
 [![codecov.io](http://codecov.io/github/VisualPHPUnit/VisualPHPUnit/coverage.svg)](http://codecov.io/github/VisualPHPUnit/VisualPHPUnit)
 ![Version Eye](http://php-eye.com/badge/visualphpunit/visualphpunit/tested.svg)
-![PHPPackages Rank](http://phppackages.org/p/visualphpunit/visualphpunit/badge/rank.svg)
+[![PHPPackages Rank](http://phppackages.org/p/visualphpunit/visualphpunit/badge/rank.svg)](http://phppackages.org/p/visualphpunit/visualphpunit)
 
 # VisualPHPUnit
 
