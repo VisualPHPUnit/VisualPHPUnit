@@ -87,7 +87,6 @@ class Request
         
         if (isset($this->env['SCRIPT_URI'])) {
             $this->env['HTTPS'] = (strpos($this->env['SCRIPT_URI'], 'https://') === 0);
-
         } elseif (isset($this->env['HTTPS'])) {
             $this->env['HTTPS'] = (!empty($this->env['HTTPS']) && $this->env['HTTPS'] !== 'off');
         } else {

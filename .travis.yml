@@ -7,6 +7,7 @@ php:
 - 5.4
 - 5.5
 - 5.6
+- 7.0
 
 before_script:
 - composer install
@@ -21,6 +22,7 @@ before_script:
 matrix:
   allow_failures:
   - php: 5.6
+  - php: 7.0
   
 script:
 - php ./phpcs.phar
