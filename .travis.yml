@@ -1,29 +1,41 @@
----
 language: php
+
 os:
 - linux
+
 php:
-- 5.3
-- 5.4
-- 5.5
 - 5.6
 - 7.0
 
+before_install:
+- pip install --user codecov
+
 before_script:
+- composer self-update
 - composer install
 - wget -nc -O ./phpDocumentor.phar http://www.phpdoc.org/phpDocumentor.phar
 - chmod 755 ./phpDocumentor.phar
+- wget -nc -O ./phpunit.phar --no-check-certificate https://phar.phpunit.de/phpunit.phar
+- chmod 755 ./phpunit.phar
 - wget -nc -O ./phpcs.phar --no-check-certificate https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
 - chmod 755 ./phpcs.phar
-- wget -nc -O ./phpcbf.phar --no-check-certificate https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar
-- chmod 755 ./phpcbf.phar
 - phpenv rehash
 
 matrix:
   allow_failures:
   - php: 5.6
   - php: 7.0
-  
+
 script:
+- rm -rf ./build
 - php ./phpcs.phar
 - php ./phpDocumentor.phar -f phpdoc.dist.xml
+- php ./phpunit.phar --testdox -c ./phpunit.xml.dist 
+
+after_success:
+- ./gh-pages.sh
+- codecov
+
+env:
+  global:
+    secure: cbO39UUuNrYQrJP+YhtsJcPFAHvLbVek8hCHV+WedWaTNFll1TIfS7bhPQ3n9OA/hEH/c4hZ2fqucQcbWA9Mo6aku8AUokNw7NazapNl5JzraqhFzHp/hj5KQZHIDy9ZauhFXrbxS63IQd94oD65WGJBQSj6z0IOYmdp6hxvw0tmWwNxAi77GIw+Czgvye6FkdHDLqjLnPQMCRJi++IJuX8n1miw2fXmczCGM7CQUvnw7u0TCkb6Og6gJgzUolSQH+4K1s5aoCCx2I5UDoxnJNvsxIH/Lq8igTL5Zb8j4edxzPEC1dN5/8Gw+qwc1OrhICji2dWLIEtK/5RZPPiEXKL6ss297O3nOcBwVJFpI6mkpm76Ve3r9HmntA4pl7HwtHaMeBOQ/lM82MhDfYPqNKfjJn0YBgU9cA0yDtxpDZFjYPZ1INZRcFb8T1sNdPhzl68F9+2kwyi9b2Oe1OTw24lX61uwTm67SIDA2qg1mYyYHxzUenpnDP38ib+5ehUobdJT96NyJs/Yww40RGLIipdlg5hRPNMJEFAz5TQFmyVkQeoXJVl1GhYbGG9EXci+sFsTzgjiRwr/XyXYoQ0IVyK3bnniPI5FyLTtwgOA30aot1YnxSwqgREzcEgNPZZ5Np/YcXo8F0K+/ca78PEhzjOFBfeJWedDKJNlUltPbHQ=

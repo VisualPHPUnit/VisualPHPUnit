@@ -1,0 +1,44 @@
+<div class="row">
+	<div class="col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<h5>Files</h5>
+				<div id="tree"></div>
+				<hr />
+
+				<div class="row checkbox">
+					<div class="col-xs-12">
+						<label> <input name="snapshot" type="checkbox">Save
+							snapshot
+						</label>
+					</div>
+				</div>
+				<hr />
+				<button type="button" id="run"
+					class="btn btn-primary btn-lg btn-block">Run</button>
+				<hr />
+				<h5>Filter</h5>
+				<div class="btn-group" data-toggle="buttons">
+					<label class="btn btn-default" title="Passed"> <input
+						name="passed" type="checkbox" autocomplete="off"><span
+						class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+					</label> <label class="btn btn-default" title="Failures"> <input
+						name="failed" type="checkbox" autocomplete="off"><span
+						class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+					</label> <label class="btn btn-default" title="Skipped"> <input
+						name="skipped" type="checkbox" autocomplete="off"><span
+						class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+					</label> <label class="btn btn-default" title="Not implemented"> <input
+						name=notImplemented type="checkbox" autocomplete="off"><span
+						class="glyphicon glyphicon-asterisk" aria-hidden="true"></span>
+					</label> <label class="btn btn-default" title="Error"> <input
+						name="error" type="checkbox" autocomplete="off"><span
+						class="glyphicon glyphicon-alert" aria-hidden="true"></span>
+					</label>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-9">
+		<div id="result"></div>
+	</div>

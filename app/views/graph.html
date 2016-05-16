@@ -1,0 +1,51 @@
+<div class="row">
+	<div class="col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-12">
+						<h6>Time frame</h6>
+		                    <label class="checkbox-inline">Hour <input name="timeframe" type="radio" value="h" checked="checked"/></label>
+							<label class="checkbox-inline">Day <input name="timeframe" type="radio" value="d"/></label>
+							<label class="checkbox-inline">Month <input name="timeframe" type="radio" value="m"/></label>
+							<label class="checkbox-inline">Year <input name="timeframe" type="radio" value="y" /></label>
+					</div>
+					<div class="col-md-12">
+						<h6>Start date</h6>
+						<p class="input-group">
+							<input name="start" type="date" class="form-control"
+								uib-datepicker-popup ng-model="dt1" is-open="status1.opened"
+								close-text="Close" /> <span class="input-group-btn">
+								<button type="button" class="btn btn-default"
+									ng-click="open1($event)">
+									<i class="glyphicon glyphicon-calendar"></i>
+								</button>
+							</span>
+						</p>
+					</div>
+					<div class="col-md-12">
+						<h6>End date</h6>
+						<p class="input-group">
+							<input name="end" type="date" class="form-control"
+								uib-datepicker-popup ng-model="dt2" is-open="status2.opened"
+								close-text="Close" /> <span class="input-group-btn">
+								<button type="button" class="btn btn-default"
+									ng-click="open2($event)">
+									<i class="glyphicon glyphicon-calendar"></i>
+								</button>
+							</span>
+						</p>
+					</div>
+				</div>
+				<hr />
+				<button type="button" id="draw"
+					class="btn btn-primary btn-lg btn-block">Draw</button>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-9">
+		<div id="chartContainer">
+			<canvas id="chart"></canvas>
+		</div>
+	</div>
+</div>

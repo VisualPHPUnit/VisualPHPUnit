@@ -1,0 +1,37 @@
+body {
+	padding: 0;
+}
+
+.panel-default>.panel-heading {
+	background-color: none;
+}
+
+.progress-bar-error {
+	background-color: #337ab7;
+}
+
+.vpu-passed {
+	background-color: #d6e9c6 !important;
+}
+
+.vpu-skipped {
+	background-color: #d9edf7 !important;
+}
+
+.vpu-notImplemented {
+	background-color: #fcf8e3 !important;
+}
+
+.vpu-error {
+	background-color: #8db4d5 !important;
+}
+
+.vpu-failed {
+	background-color: #f2dede !important;
+}
+
+#chart {
+    height: 300px;
+}
+
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
