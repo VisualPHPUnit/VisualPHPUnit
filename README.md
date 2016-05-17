@@ -1,11 +1,12 @@
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/VisualPHPUnit/VisualPHPUnit/badges/quality-score.png)]
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/VisualPHPUnit/VisualPHPUnit/badges/quality-score.png?b=2.x)](https://scrutinizer-ci.com/g/VisualPHPUnit/VisualPHPUnit/?branch=2.x)
 (https://scrutinizer-ci.com/g/VisualPHPUnit/VisualPHPUnit/)
-[![Build Status](https://travis-ci.org/VisualPHPUnit/VisualPHPUnit.svg)](https://travis-ci.org/VisualPHPUnit/VisualPHPUnit)
-[![Dependency Status](https://www.versioneye.com/user/projects/55f547b3a4155f00090005b5/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55f547b3a4155f00090005b5)
+[![Build Status](https://travis-ci.org/VisualPHPUnit/VisualPHPUnit.svg)](https://travis-ci.org/VisualPHPUnit/VisualPHPUnithttps://travis-ci.org/VisualPHPUnit/VisualPHPUnit.svg?branch=2.x)
+[![Dependency Status](https://www.versioneye.com/php/visualphpunit:visualphpunit/2.3.2/badge?style=flat)](https://www.versioneye.com/php/visualphpunit:visualphpunit/2.3.2)
 [![Project Stats](https://www.openhub.net/p/VisualPHPUnit/widgets/project_thin_badge.gif)](https://www.openhub.net/p/VisualPHPUnit)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%205.6-8892BF.svg?style=flat-square)](https://php.net/)
 [![codecov.io](http://codecov.io/github/VisualPHPUnit/VisualPHPUnit/coverage.svg)](http://codecov.io/github/VisualPHPUnit/VisualPHPUnit)
-![Version Eye](http://php-eye.com/badge/visualphpunit/visualphpunit/tested.svg)
+![Version Eye](http://php-eye.com/badge/visualphpunit/visualphpunit/tested.svg?branch=2.3.2)
+![Version Eye](http://php-eye.com/badge/visualphpunit/visualphpunit/not-tested.svg?branch=2.3.2)
 ![PHPPackages Rank](http://phppackages.org/p/visualphpunit/visualphpunit/badge/rank.svg)
 
 # VisualPHPUnit
