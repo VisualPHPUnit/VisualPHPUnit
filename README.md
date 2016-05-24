@@ -29,7 +29,7 @@ Version [3.0.0](https://github.com/VisualPHPUnit/VisualPHPUnit/releases/tag/v3.0
  * Run `./bin/vpu -c vpu.json -s` to start VisualPHPUnit with the build-in php server.
  * Run `./bin/vpu -c vpu.json -t` to stop VisualPHPUnit with the build-in php server.
 
-You may browse localhost:8000 to acess the test suites.
+You may browse localhost:8000 to access the test suites.
 
 You can update `./vpu.json` to add additional test suites.
 
