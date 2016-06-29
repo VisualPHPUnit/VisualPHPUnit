@@ -19,6 +19,8 @@ before_script:
 - chmod 755 ./phpunit.phar
 - wget -nc -O ./phpcs.phar --no-check-certificate https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
 - chmod 755 ./phpcs.phar
+- wget -nc -O ./phpcbf.phar --no-check-certificate https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar
+- chmod 755 ./phpcbf.phar
 - phpenv rehash
 
 matrix:
