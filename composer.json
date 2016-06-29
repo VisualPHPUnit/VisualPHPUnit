@@ -42,5 +42,8 @@
 	},
 	"require-dev" : {
 		"ext-mbstring" : "*"
+	},
+	"suggest" : {
+		"phpunit/dbunit" : "The DbUnit extension considerably simplifies the setup of a database for testing"
 	}
 }
