@@ -7,7 +7,7 @@
  * PHP Version 5.6<
  *
  * @author Johannes Skov Frandsen <localgod@heaven.dk>
- * @copyright 2011-2015 VisualPHPUnit
+ * @copyright 2011-2016 VisualPHPUnit
  * @license http://opensource.org/licenses/BSD-3-Clause The BSD License
  * @link https://github.com/VisualPHPUnit/VisualPHPUnit VisualPHPUnit
  */
@@ -31,8 +31,8 @@ class Test extends Action
      *
      * Retrive tests from test folder
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Silex\Application $app
+     * @param \Symfony\Component\HttpFoundation\Request $request            
+     * @param \Silex\Application $app            
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function index(Request $request, Application $app)
@@ -52,13 +52,17 @@ class Test extends Action
     /**
      * Parse the dir for files
      *
-     * @param string $dir
-     * @param boolean $ignoreHidden
+     * @param string $dir            
+     * @param boolean $ignoreHidden            
      *
      * @return mixed[]
      */
     private function parse($dir, $ignoreHidden)
     {
+        $bootstrap = Finder::create()->ignoreDotFiles($ignoreHidden)
+            ->depth(0)
+            ->name('/bootstrap.php/')
+            ->in($dir);
         $files = Finder::create()->ignoreDotFiles($ignoreHidden)
             ->sortByType()
             ->depth(0)
@@ -71,6 +75,12 @@ class Test extends Action
             ->directories()
             ->append($files)
             ->in($dir);
+        
+        if (! empty($bootstrap)) {
+            foreach ($bootstrap as $file) {
+                require_once $file->getRealPath();
+            }
+        }
         
         $list = array();
         
@@ -93,6 +103,15 @@ class Test extends Action
                         'tags' => $this->getNumberOfMethods($file->getRealPath())
                     );
                 }
+                if ($this->isLaravelTestCase($file)) {
+                    $list[] = array(
+                        'text' => $file->getBasename('.php'),
+                        'type' => $file->getType(),
+                        'path' => $file->getRealPath(),
+                        'selectable' => true,
+                        'tags' => $this->getNumberOfMethods($file->getRealPath())
+                    );
+                }
             }
         }
         
@@ -102,7 +121,7 @@ class Test extends Action
     /**
      * Exclude empty Directories
      *
-     * @param mixed[] $list
+     * @param mixed[] $list            
      * @return mixed[]
      */
     private function excludeEmptyDirectories($list)
@@ -123,21 +142,32 @@ class Test extends Action
     /**
      * Is this a phpunit testcase
      *
-     * @param string $path
+     * @param string $path            
      *
      * @return boolean
      */
     private function isPhpUnitTestCase($path)
     {
-        $result1 = preg_grep('/PHPUnit_Framework_TestCase$/', file($path));
-        return !empty($result1);
+        return ! empty(preg_grep('/extends.+PHPUnit_Framework_TestCase$/', file($path)));
+    }
+
+    /**
+     * Is this a laravel testcase
+     *
+     * @param string $path            
+     *
+     * @return boolean
+     */
+    private function isLaravelTestCase($path)
+    {
+        return ! empty(preg_grep('/extends\s*TestCase$/', file($path)));
     }
 
     /**
      * Get number of methods in test class
      *
      * @todo likely there are better ways of doing this
-     * @param string $path
+     * @param string $path            
      *
      * @return integer[]
      */

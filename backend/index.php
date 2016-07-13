@@ -4,10 +4,10 @@
  *
  * VisualPHPUnit is a visual front-end for PHPUnit.
  *
- * PHP Version 5.3<
+ * PHP Version 5.6<
  *
  * @author Johannes Skov Frandsen <localgod@heaven.dk>
- * @copyright 2011-2015 VisualPHPUnit
+ * @copyright 2011-2016 VisualPHPUnit
  * @license http://opensource.org/licenses/BSD-3-Clause The BSD License
  * @link https://github.com/VisualPHPUnit/VisualPHPUnit VisualPHPUnit
  */
