@@ -14,5 +14,16 @@
 require __DIR__ . '/../vendor/autoload.php';
 use Visualphpunit\Api\Application\Vpu;
 
-$app = new Vpu();
-$app->run();
+/**
+ * Prevent app to be added to the $GLOBALS
+ *
+ * @return void
+ */
+function run()
+{
+    $app = new Vpu();
+    $app->run();
+}
+
+run();
+
