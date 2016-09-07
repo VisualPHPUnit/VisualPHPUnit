@@ -24,6 +24,4 @@ function run()
     $app = new Vpu();
     $app->run();
 }
-
 run();
-
