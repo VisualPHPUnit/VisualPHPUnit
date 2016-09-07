@@ -13,7 +13,7 @@ before_install:
 before_script:
 - composer self-update
 - composer install
-- wget -nc -O ./phpDocumentor.phar --no-check-certificate http://www.phpdoc.org/phpDocumentor.phar
+- wget -nc -O ./phpDocumentor.phar --no-check-certificate https://www.phpdoc.org/phpDocumentor.phar
 - chmod 755 ./phpDocumentor.phar
 - wget -nc -O ./phpunit.phar --no-check-certificate https://phar.phpunit.de/phpunit.phar
 - chmod 755 ./phpunit.phar
