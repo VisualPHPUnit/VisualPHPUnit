@@ -23,9 +23,11 @@ Version [3.0.0](https://github.com/VisualPHPUnit/VisualPHPUnit/releases/tag/v3.0
 ##Setup
 
  * Checkout or download VisualPHPUnit
- * Run composer.php to install php dependecies.
- * Run npm install
- * Run bower install
+ * Run `make tools setup` or `php -r "readfile('https://getcomposer.org/installer');" | php`.
+ * Run `./composer.phar install` to install php dependencies
+ * Run `npm install` to install node tools
+ * Run `bower install` to install javascript dependencies
+ * Run `grunt build` to build frontend
  * Run `./bin/vpu -c vpu.json -s` to start VisualPHPUnit with the build-in php server.
  * Run `./bin/vpu -c vpu.json -t` to stop VisualPHPUnit with the build-in php server.
 
@@ -47,14 +49,13 @@ The backend is a REST application based on [Silex](http://silex.sensiolabs.org/)
 ## Running VPU in dev mode
 
 ### Setup dependencies
-```bash	
-git clone git@github.com:VisualPHPUnit/VisualPHPUnit.git
-git checkout 3.x
-php -r "readfile('https://getcomposer.org/installer');" | php
-php composer.phar install
-npm install
-bower install
-```
+
+ * Checkout or download VisualPHPUnit
+ * Run `make tools setup` or `php -r "readfile('https://getcomposer.org/installer');" | php`.
+ * Run `./composer.phar install` to install php dependencies
+ * Run `npm install` to install node tools
+ * Run `bower install` to install javascript dependencies
+
 
 ## Start VPU in dev mode
 You need two consoles for this setup, one for the frontend and one for the backend.
