@@ -17,8 +17,10 @@ autofix:
 	php php-cs-fixer.phar fix ./bin
 
 setup:
-	php composer.phar self
+	php composer.phar self-update
 	php composer.phar update
+	npm install
+	bower install
 
 tools:
 	if [ ! -e composer.phar ];      then wget -O ./composer.phar --no-check-certificate https://getcomposer.org/download/1.2.0/composer.phar; fi
@@ -33,6 +35,7 @@ build:
 	rm -rf ./build
 	php ./phpcs.phar
 	php ./phpunit.phar --testdox -c ./phpunit.xml.dist
+	grunt build
 
 default: autofix
 
