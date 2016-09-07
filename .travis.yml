@@ -12,6 +12,7 @@ before_install:
 
 before_script:
 - make tools
+- make setup
 #- composer self-update
 #- composer install
 #- wget -nc -O ./phpDocumentor.phar --no-check-certificate https://www.phpdoc.org/phpDocumentor.phar
@@ -29,13 +30,14 @@ matrix:
   - php: 7.0
 
 script:
-- rm -rf ./build
-- php ./phpcs.phar
-- php ./phpDocumentor.phar -f phpdoc.dist.xml
-- php ./phpunit.phar --testdox -c ./phpunit.xml.dist 
+- make build
+#- rm -rf ./build
+#- php ./phpcs.phar
+#- php ./phpDocumentor.phar -f phpdoc.dist.xml
+#- php ./phpunit.phar --testdox -c ./phpunit.xml.dist 
 
 after_success:
-- ./gh-pages.sh
+#- ./gh-pages.sh
 - codecov
 
 env:
