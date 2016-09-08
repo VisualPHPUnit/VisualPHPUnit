@@ -33,7 +33,7 @@ On Windows
  * Run `php -r "readfile('https://getcomposer.org/installer');" | php`.
  * Run `./composer.phar install` to install php dependencies
  * Run `npm install` to install node tools
- * Run `mklink grunt .\node_modules\grunt-cli\bin\grunt
+ * Run `mklink grunt .\node_modules\grunt-cli\bin\grunt`
  * Run `mklink bower .\node_modules\bower\bin\bower`
  * Run `bower install` to install javascript dependencies
  * Run `grunt build` to build frontend
