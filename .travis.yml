@@ -8,6 +8,7 @@ php:
 - 7.0
 
 before_install:
+- npm -g install npm
 - pip install --user codecov
 
 before_script:
