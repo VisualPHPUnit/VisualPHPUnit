@@ -22,7 +22,7 @@ setup:
 	npm install
 	ln -sf ./node_modules/grunt-cli/bin/grunt grunt
 	ln -sf ./node_modules/bower/bin/bower
-	./bower install
+	./bower install --allow-root
 
 tools:
 	if [ ! -e composer.phar ];      then wget -O ./composer.phar --no-check-certificate https://getcomposer.org/download/1.2.0/composer.phar; fi
