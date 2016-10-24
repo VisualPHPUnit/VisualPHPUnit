@@ -39,10 +39,13 @@ class Test extends Action
     {
         $data = array();
         foreach ($app['config']['test-directories'] as $suite) {
+            if (! isset($suite['testCaseRegxpPattern']) || $suite['testCaseRegxpPattern'] == '') {
+                $suite['testCaseRegxpPattern'] = 'extends.+PHPUnit_Framework_TestCase$';
+            }
             $data[] = array(
                 'text' => $suite['name'],
                 'type' => 'suite',
-                'nodes' => $this->parse($suite['path'], $suite['ignoreHidden']),
+                'nodes' => $this->parse($suite['path'], $suite['ignoreHidden'], $suite['testCaseRegxpPattern']),
                 'selectable' => false
             );
         }
@@ -54,10 +57,11 @@ class Test extends Action
      *
      * @param string $dir
      * @param boolean $ignoreHidden
+     * @param string $pattern
      *
      * @return mixed[]
      */
-    private function parse($dir, $ignoreHidden)
+    private function parse($dir, $ignoreHidden, $pattern)
     {
         $bootstrap = Finder::create()->ignoreDotFiles($ignoreHidden)
             ->depth(0)
@@ -90,20 +94,11 @@ class Test extends Action
                     'text' => $file->getBasename('.php'),
                     'type' => $file->getType(),
                     'path' => $file->getRealPath(),
-                    'nodes' => $this->parse($file->getRealPath(), $ignoreHidden),
+                    'nodes' => $this->parse($file->getRealPath(), $ignoreHidden, $pattern),
                     'selectable' => false
                 );
             } else {
-                if ($this->isPhpUnitTestCase($file)) {
-                    $list[] = array(
-                        'text' => $file->getBasename('.php'),
-                        'type' => $file->getType(),
-                        'path' => $file->getRealPath(),
-                        'selectable' => true,
-                        'tags' => $this->getNumberOfMethods($file->getRealPath())
-                    );
-                }
-                if ($this->isLaravelTestCase($file)) {
+                if (! empty(preg_grep('/'.$pattern.'/', file($file)))) {
                     $list[] = array(
                         'text' => $file->getBasename('.php'),
                         'type' => $file->getType(),
@@ -137,30 +132,6 @@ class Test extends Action
         }
         
         return $list;
-    }
-
-    /**
-     * Is this a phpunit testcase
-     *
-     * @param string $path
-     *
-     * @return boolean
-     */
-    private function isPhpUnitTestCase($path)
-    {
-        return ! empty(preg_grep('/extends.+PHPUnit_Framework_TestCase$/', file($path)));
-    }
-
-    /**
-     * Is this a laravel testcase
-     *
-     * @param string $path
-     *
-     * @return boolean
-     */
-    private function isLaravelTestCase($path)
-    {
-        return ! empty(preg_grep('/extends\s*TestCase$/', file($path)));
     }
 
     /**
