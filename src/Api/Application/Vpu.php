@@ -15,8 +15,8 @@ namespace Visualphpunit\Api\Application;
 
 use Silex\Application;
 use Visualphpunit\Api\Controller\Vpu as VpuController;
+use Visualphpunit\Provider\ConfigServiceProvider;
 use JDesrosiers\Silex\Provider\CorsServiceProvider;
-use Igorw\Silex\ConfigServiceProvider;
 use Silex\Provider\DoctrineServiceProvider;
 
 /**

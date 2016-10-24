@@ -13,7 +13,7 @@
  */
 namespace Visualphpunit\Api\Controller;
 
-use Silex\ControllerProviderInterface;
+use Silex\Api\ControllerProviderInterface;
 use Silex\Application;
 
 /**
