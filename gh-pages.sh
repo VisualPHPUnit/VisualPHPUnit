@@ -1,7 +1,7 @@
 if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
     echo -e "Starting to update gh-pages\n"
     #copy data to home
-    cp -R build/phpdoc $HOME/api
+    cp -R docs/html $HOME/api
     cp -R build/phpunit/coverage $HOME/coverage
     #ls -la $HOME/api
     #go to home and setup git
