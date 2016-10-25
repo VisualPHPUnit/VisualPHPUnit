@@ -19,7 +19,7 @@ matrix:
   - php: 7.0
 
 script:
-- make build
+- make build doc
 
 after_success:
 #- ./gh-pages.sh

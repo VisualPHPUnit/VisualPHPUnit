@@ -16,6 +16,7 @@ macports.sh
 /bower_components
 /bower
 /grunt
+/docs
 vpu.db
 *.pid
 /cacert.pem

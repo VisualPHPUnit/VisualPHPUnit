@@ -1,7 +1,7 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/VisualPHPUnit/VisualPHPUnit/badges/quality-score.png)]
 (https://scrutinizer-ci.com/g/VisualPHPUnit/VisualPHPUnit/)
 [![Build Status](https://travis-ci.org/VisualPHPUnit/VisualPHPUnit.svg)](https://travis-ci.org/VisualPHPUnit/VisualPHPUnit)
-[![Dependency Status](https://www.versioneye.com/user/projects/55f547b3a4155f00090005b5/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55f547b3a4155f00090005b5)
+[![Dependency Status](https://www.versioneye.com/user/projects/580f9c405fe47d001229cb99/badge.svg?style=flat)](https://www.versioneye.com/user/projects/580f9c405fe47d001229cb99)
 [![Project Stats](https://www.openhub.net/p/VisualPHPUnit/widgets/project_thin_badge.gif)](https://www.openhub.net/p/VisualPHPUnit)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%205.6-8892BF.svg?style=flat-square)](https://php.net/)
 [![codecov.io](http://codecov.io/github/VisualPHPUnit/VisualPHPUnit/coverage.svg)](http://codecov.io/github/VisualPHPUnit/VisualPHPUnit)
