@@ -18,7 +18,7 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
     rm -rf coverage
     cp -Rf $HOME/coverage coverage
     #add, commit and push files
-    git add -f .
+    git add -f -A .
     git commit -m "Travis build $TRAVIS_BUILD_NUMBER pushed to gh-pages"
     git push -fq origin gh-pages > /dev/null
     echo -e "Updated coverage and api\n"
