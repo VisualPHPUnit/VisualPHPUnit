@@ -160,10 +160,8 @@ class Test extends Action
             $obj = new ReflectionClass($namespace . '\\' . $class);
             $methods = [];
             foreach ($obj->getMethods() as $method) {
-                if ($method->class == $namespace . '\\' . $class) {
-                    if ($method->isPublic()) {
-                        $methods[] = $method->name;
-                    }
+                if ($method->class == $namespace . '\\' . $class && $method->isPublic()) {
+                    $methods[] = $method->name;
                 }
             }
             return [
@@ -178,10 +176,8 @@ class Test extends Action
             $obj = new ReflectionClass($class);
             $methods = [];
             foreach ($obj->getMethods() as $method) {
-                if ($method->class == $class) {
-                    if ($method->isPublic()) {
-                        $methods[] = $method->name;
-                    }
+                if ($method->class == $class && $method->isPublic()) {
+                    $methods[] = $method->name;
                 }
             }
             return [
