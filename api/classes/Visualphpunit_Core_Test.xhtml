@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <title>phpDox - Visualphpunit\Core\Test</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css" media="screen"/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  </head>
+  <body>
+    <nav class="topnav">
+      <ul>
+        <li>
+          <div class="logo"><span>/**</span>phpDox</div>
+        </li>
+        <li class="separator">
+          <a href="../index.xhtml">Overview</a>
+        </li>
+        <li class="separator">
+          <a href="../namespaces.xhtml">Namespaces</a>
+        </li>
+        <li>
+          <a href="../classes.xhtml">Classes</a>
+        </li>
+        <li class="separator">
+          <a href="../source/index.xhtml">Source</a>
+        </li>
+      </ul>
+    </nav>
+    <div id="mainstage">
+      <div class="box">
+        <ul class="breadcrumb">
+          <li>
+            <a href="../index.xhtml">Overview</a>
+          </li>
+          <li class="separator">
+            <a href="../classes.xhtml">Classes</a>
+          </li>
+          <li class="separator">
+            <a href="../classes.xhtml#Visualphpunit_Core">Visualphpunit\Core</a>
+          </li>
+          <li class="separator">Test</li>
+        </ul>
+      </div>
+      <nav class="box">
+        <ul>
+          <li>
+            <a href="#introduction">Introduction</a>
+          </li>
+          <li>
+            <a href="#synopsis">Synopsis</a>
+          </li>
+          <li>
+            <a href="#constants">Constants</a>
+          </li>
+          <li>
+            <a href="#methods">Methods</a>
+          </li>
+          <li>
+            <a href="#history">History</a>
+          </li>
+          <li>
+            <a href="../source/Core/Test.php.xhtml#line24">Source</a>
+          </li>
+        </ul>
+      </nav>
+      <section>
+        <h1 id="introduction"><small>Visualphpunit\Core\</small>Test</h1>
+        <h4>Visualphpunit test result</h4>
+        <p/>
+        <ul>
+          <li>Author: Johannes Skov Frandsen &lt;localgod@heaven.dk&gt;</li>
+        </ul>
+        <h2 id="synopsis">Synopsis</h2>
+        <div class="synopsis">class Test
+            {<br/><ul class="none"><li>// constants</li><li>const GROUP_BY_HOUR = '%Y-%m-%d %H';</li><li>const GROUP_BY_DAY = '%Y-%m-%d';</li><li>const GROUP_BY_MONTH = '%Y-%m';</li><li>const GROUP_BY_YEAR = '%Y';</li></ul><ul class="none"><li>// methods</li><li>public static boolean <a title="Visualphpunit\Core\Test" href="../classes/Visualphpunit_Core_Test/createTable.xhtml">createTable</a>()
+                    </li><li>public static boolean <a title="Visualphpunit\Core\Test" href="../classes/Visualphpunit_Core_Test/dropTable.xhtml">dropTable</a>()
+                    </li><li>public static boolean <a title="Visualphpunit\Core\Test" href="../classes/Visualphpunit_Core_Test/truncateTable.xhtml">truncateTable</a>()
+                    </li><li>public static boolean <a title="Visualphpunit\Core\Test" href="../classes/Visualphpunit_Core_Test/store.xhtml">store</a>()
+                    </li><li>public static array <a title="Visualphpunit\Core\Test" href="../classes/Visualphpunit_Core_Test/getTests.xhtml">getTests</a>()
+                    </li></ul>
+
+            }<br/></div>
+        <h2 id="constants">Constants</h2>
+        <table class="styled">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td id="GROUP_BY_HOUR">GROUP_BY_HOUR</td>
+              <td>'%Y-%m-%d %H'</td>
+            </tr>
+            <tr>
+              <td id="GROUP_BY_DAY">GROUP_BY_DAY</td>
+              <td>'%Y-%m-%d'</td>
+            </tr>
+            <tr>
+              <td id="GROUP_BY_MONTH">GROUP_BY_MONTH</td>
+              <td>'%Y-%m'</td>
+            </tr>
+            <tr>
+              <td id="GROUP_BY_YEAR">GROUP_BY_YEAR</td>
+              <td>'%Y'</td>
+            </tr>
+          </tbody>
+        </table>
+        <h2 id="methods">Methods</h2>
+        <div class="styled">
+          <h4>public</h4>
+          <ul>
+            <li id="createTable"><a title="Visualphpunit\Core\Test" href="../classes/Visualphpunit_Core_Test/createTable.xhtml">createTable()</a>
+                — Create the table if it dos not exists</li>
+            <li id="dropTable"><a title="Visualphpunit\Core\Test" href="../classes/Visualphpunit_Core_Test/dropTable.xhtml">dropTable()</a>
+                — Drop the table if it exists</li>
+            <li id="getTests"><a title="Visualphpunit\Core\Test" href="../classes/Visualphpunit_Core_Test/getTests.xhtml">getTests()</a>
+                — Get test per day between dates</li>
+            <li id="store"><a title="Visualphpunit\Core\Test" href="../classes/Visualphpunit_Core_Test/store.xhtml">store()</a>
+                — Store a test suite result</li>
+            <li id="truncateTable"><a title="Visualphpunit\Core\Test" href="../classes/Visualphpunit_Core_Test/truncateTable.xhtml">truncateTable()</a>
+                — Truncate the table</li>
+          </ul>
+        </div>
+        <h2 id="history">History</h2>
+        <ul class="styled history">
+          <li>
+            <h3>2016-03-28T13:09:22+00:00 (commit #<span title="56539db7f9f8e15286e7562d7f27262ee0ac66aa">56539db</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Added php 7.0 build</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T13:09:22+00:00 (commit #<span title="af68f11ecbbba3cb3246b52804f727d200b15177">af68f11</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Graph timeframe support</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T13:09:22+00:00 (commit #<span title="03a25de2dc7ddb4c6d3561873a39f78c96ad3587">03a25de</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Now with basic statistics.</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T12:44:02+00:00 (commit #<span title="6c1224d83ae524f24241516acf9e6295055c8469">6c1224d</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Added php 7.0 build</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T12:36:51+00:00 (commit #<span title="471b87f09bef5bbdbc35c787c4db0b69c5970979">471b87f</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Graph timeframe support</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2015-11-19T08:53:32+00:00 (commit #<span title="47cbd64e2884529af6e7577d6598cefeb9f0485d">47cbd64</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Now with basic statistics.</pre>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </div>
+    <footer>
+      <span>Generated using phpDox 0.9.0 - Copyright (C) 2010 - 2016 by Arne Blankerts</span>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <title>phpDox - Visualphpunit\Console\Command\Run</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css" media="screen"/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  </head>
+  <body>
+    <nav class="topnav">
+      <ul>
+        <li>
+          <div class="logo"><span>/**</span>phpDox</div>
+        </li>
+        <li class="separator">
+          <a href="../index.xhtml">Overview</a>
+        </li>
+        <li class="separator">
+          <a href="../namespaces.xhtml">Namespaces</a>
+        </li>
+        <li>
+          <a href="../classes.xhtml">Classes</a>
+        </li>
+        <li class="separator">
+          <a href="../source/index.xhtml">Source</a>
+        </li>
+      </ul>
+    </nav>
+    <div id="mainstage">
+      <div class="box">
+        <ul class="breadcrumb">
+          <li>
+            <a href="../index.xhtml">Overview</a>
+          </li>
+          <li class="separator">
+            <a href="../classes.xhtml">Classes</a>
+          </li>
+          <li class="separator">
+            <a href="../classes.xhtml#Visualphpunit_Console_Command">Visualphpunit\Console\Command</a>
+          </li>
+          <li class="separator">Run</li>
+        </ul>
+      </div>
+      <nav class="box">
+        <ul>
+          <li>
+            <a href="#introduction">Introduction</a>
+          </li>
+          <li>
+            <a href="#synopsis">Synopsis</a>
+          </li>
+          <li>
+            <a href="#hierarchy">Hierarchy</a>
+          </li>
+          <li>
+            <a href="#violations">Violations</a>
+          </li>
+          <li>
+            <a href="#members">Members</a>
+          </li>
+          <li>
+            <a href="#methods">Methods</a>
+          </li>
+          <li>
+            <a href="#history">History</a>
+          </li>
+          <li>
+            <a href="../source/Console/Command/Run.php.xhtml#line33">Source</a>
+          </li>
+        </ul>
+      </nav>
+      <section>
+        <h1 id="introduction"><small>Visualphpunit\Console\Command\</small>Run</h1>
+        <h4>Visualphpunit console command</h4>
+        <p/>
+        <ul>
+          <li>Author: Johannes Skov Frandsen &lt;localgod@heaven.dk&gt;</li>
+        </ul>
+        <h2 id="synopsis">Synopsis</h2>
+        <div class="synopsis">class Run
+                extends Command
+            {<br/><ul class="none"><li>// members</li><li>private  <a href="#members">$serverConfig</a>;
+                    </li><li>private  <a href="#members">$appRoot</a>;
+                    </li><li>private  <a href="#members">$config</a>;
+                    </li></ul><ul class="none"><li>// methods</li><li>protected void <a title="Visualphpunit\Console\Command\Run" href="../classes/Visualphpunit_Console_Command_Run/configure.xhtml">configure</a>()
+                    </li><li>protected void <a title="Visualphpunit\Console\Command\Run" href="../classes/Visualphpunit_Console_Command_Run/execute.xhtml">execute</a>()
+                    </li><li>private void <a title="Visualphpunit\Console\Command\Run" href="../classes/Visualphpunit_Console_Command_Run/start.xhtml">start</a>()
+                    </li><li>private void <a title="Visualphpunit\Console\Command\Run" href="../classes/Visualphpunit_Console_Command_Run/stop.xhtml">stop</a>()
+                    </li><li>private Connection <a title="Visualphpunit\Console\Command\Run" href="../classes/Visualphpunit_Console_Command_Run/getDbConnection.xhtml">getDbConnection</a>()
+                    </li></ul>
+
+            }<br/></div>
+        <h2 id="hierarchy">Hierarchy</h2>
+        <div class="styled">
+          <h4>Extends</h4>
+          <ul>
+            <li>Symfony\Component\Console\Command\Command</li>
+          </ul>
+        </div>
+        <h2 id="violations">Violations</h2>
+        <div class="styled">
+          <h3>PHPMessDetector</h3>
+          <table class="styled">
+            <thead>
+              <tr>
+                <th>Line</th>
+                <th>Rule</th>
+                <th>Message</th>
+              </tr>
+            </thead>
+            <tr>
+              <td class="line">150</td>
+              <td>
+                <a href="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" target="_blank" title="Unused Code Rules">UnusedLocalVariable</a>
+              </td>
+              <td>Avoid unused local variables such as '$config'.</td>
+            </tr>
+          </table>
+        </div>
+        <h2 id="members">Members</h2>
+        <div class="styled members">
+          <h4>private</h4>
+          <ul class="members">
+            <li id="appRoot"><strong>$appRoot</strong>
+                —
+                string<br/><span class="indent">Application root</span></li>
+            <li id="config"><strong>$config</strong>
+                —
+                array<br/><span class="indent">Application config</span></li>
+            <li id="serverConfig"><strong>$serverConfig</strong>
+                —
+                array<br/><span class="indent">Configuration options for starting vpu as a service</span></li>
+          </ul>
+        </div>
+        <h2 id="methods">Methods</h2>
+        <div class="styled">
+          <h4>private</h4>
+          <ul>
+            <li id="getDbConnection"><a title="Visualphpunit\Console\Command\Run" href="../classes/Visualphpunit_Console_Command_Run/getDbConnection.xhtml">getDbConnection()</a>
+                — Get database connection</li>
+            <li id="start"><a title="Visualphpunit\Console\Command\Run" href="../classes/Visualphpunit_Console_Command_Run/start.xhtml">start()</a>
+                — Start vpu service</li>
+            <li id="stop"><a title="Visualphpunit\Console\Command\Run" href="../classes/Visualphpunit_Console_Command_Run/stop.xhtml">stop()</a>
+                — Stop vpu service</li>
+          </ul>
+          <h4>protected</h4>
+          <ul>
+            <li id="configure"><a title="Visualphpunit\Console\Command\Run" href="../classes/Visualphpunit_Console_Command_Run/configure.xhtml">configure()</a>
+                — {@inheritDoc}</li>
+            <li id="execute"><a title="Visualphpunit\Console\Command\Run" href="../classes/Visualphpunit_Console_Command_Run/execute.xhtml">execute()</a>
+                — {@inheritDoc}</li>
+          </ul>
+        </div>
+        <h2 id="history">History</h2>
+        <ul class="styled history">
+          <li>
+            <h3>2016-07-13T15:01:28+00:00 (commit #<span title="4116b2ee8fec6cae88ba53ceaf0f9077001f9707">4116b2e</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">#159 Laravel support</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T13:09:22+00:00 (commit #<span title="9fe50c07f1199f4b8908e8bc4a7b2a9feb8b5380">9fe50c0</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Basic phar generation working.</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T13:09:22+00:00 (commit #<span title="b434b24778a9b10150f1d39ed87bc7b3463c3781">b434b24</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Update to README</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T13:09:22+00:00 (commit #<span title="bf1df701440d1261a7ed88ca54b9a3eff1ac55f5">bf1df70</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Skov Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Added support for starting vpu via php buildin server.</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T13:09:22+00:00 (commit #<span title="03a25de2dc7ddb4c6d3561873a39f78c96ad3587">03a25de</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Now with basic statistics.</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T13:09:22+00:00 (commit #<span title="6ba116e87c3e8bb28db83fab6aa957fa52804175">6ba116e</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Code refatoring</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T13:09:22+00:00 (commit #<span title="5fa69130ba2304884c23693018eefeecccf775a6">5fa6913</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Basic archive now working</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T13:09:22+00:00 (commit #<span title="838cb991b1407a6272d4f49f658f063bf7bac0de">838cb99</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Fix build errors</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T13:09:22+00:00 (commit #<span title="96d5b90185c4f3f472e7719fd398554f42623a90">96d5b90</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">More base functionality ready. Removed legacy code.</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2015-11-21T06:18:19+00:00 (commit #<span title="07cabf5aed16b59fc46b899aba38ecc5ecef5b02">07cabf5</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Basic phar generation working.</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2015-11-20T13:50:01+00:00 (commit #<span title="e1a133b869e7164e34319d7a75493de50639dbe1">e1a133b</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Update to README</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2015-11-20T12:55:24+00:00 (commit #<span title="fe389b48976ab091eda3e375c7e97dc41d1ff968">fe389b4</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Skov Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Skov Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Added support for starting vpu via php buildin server.</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2015-11-19T08:53:32+00:00 (commit #<span title="47cbd64e2884529af6e7577d6598cefeb9f0485d">47cbd64</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Now with basic statistics.</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2015-11-16T11:55:43+00:00 (commit #<span title="3e51162ad76182bb5dd63d6ad8ae0c37efc43a83">3e51162</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Code refatoring</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2015-11-15T14:43:09+00:00 (commit #<span title="95f2c6149059f813cfbb7d2b5c044853ce5b1047">95f2c61</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Basic archive now working</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2015-11-14T09:54:40+00:00 (commit #<span title="42079691014fdbe7ddd5df184acb381b935e0702">4207969</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Fix build errors</pre>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </div>
+    <footer>
+      <span>Generated using phpDox 0.9.0 - Copyright (C) 2010 - 2016 by Arne Blankerts</span>
+    </footer>
+  </body>
+</html>

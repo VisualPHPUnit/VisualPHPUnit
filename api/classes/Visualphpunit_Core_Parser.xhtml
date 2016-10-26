@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <title>phpDox - Visualphpunit\Core\Parser</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css" media="screen"/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  </head>
+  <body>
+    <nav class="topnav">
+      <ul>
+        <li>
+          <div class="logo"><span>/**</span>phpDox</div>
+        </li>
+        <li class="separator">
+          <a href="../index.xhtml">Overview</a>
+        </li>
+        <li class="separator">
+          <a href="../namespaces.xhtml">Namespaces</a>
+        </li>
+        <li>
+          <a href="../classes.xhtml">Classes</a>
+        </li>
+        <li class="separator">
+          <a href="../source/index.xhtml">Source</a>
+        </li>
+      </ul>
+    </nav>
+    <div id="mainstage">
+      <div class="box">
+        <ul class="breadcrumb">
+          <li>
+            <a href="../index.xhtml">Overview</a>
+          </li>
+          <li class="separator">
+            <a href="../classes.xhtml">Classes</a>
+          </li>
+          <li class="separator">
+            <a href="../classes.xhtml#Visualphpunit_Core">Visualphpunit\Core</a>
+          </li>
+          <li class="separator">Parser</li>
+        </ul>
+      </div>
+      <nav class="box">
+        <ul>
+          <li>
+            <a href="#introduction">Introduction</a>
+          </li>
+          <li>
+            <a href="#synopsis">Synopsis</a>
+          </li>
+          <li>
+            <a href="#violations">Violations</a>
+          </li>
+          <li>
+            <a href="#methods">Methods</a>
+          </li>
+          <li>
+            <a href="#history">History</a>
+          </li>
+          <li>
+            <a href="../source/Core/Parser.php.xhtml#line26">Source</a>
+          </li>
+        </ul>
+      </nav>
+      <section>
+        <h1 id="introduction"><small>Visualphpunit\Core\</small>Parser</h1>
+        <h4>Visualphpunit parser</h4>
+        <p/>
+        <ul>
+          <li>Author: Johannes Skov Frandsen &lt;localgod@heaven.dk&gt;</li>
+        </ul>
+        <h2 id="synopsis">Synopsis</h2>
+        <div class="synopsis">class Parser
+            {<br/><ul class="none"><li>// methods</li><li>public array&lt;string <a title="Visualphpunit\Core\Parser" href="../classes/Visualphpunit_Core_Parser/run.xhtml">run</a>()
+                    </li><li>private void <a title="Visualphpunit\Core\Parser" href="../classes/Visualphpunit_Core_Parser/addBootstrap.xhtml">addBootstrap</a>()
+                    </li><li>private array&lt;string <a title="Visualphpunit\Core\Parser" href="../classes/Visualphpunit_Core_Parser/parseTestSuite.xhtml">parseTestSuite</a>()
+                    </li><li>private array <a title="Visualphpunit\Core\Parser" href="../classes/Visualphpunit_Core_Parser/filterTrace.xhtml">filterTrace</a>()
+                    </li><li>private array <a title="Visualphpunit\Core\Parser" href="../classes/Visualphpunit_Core_Parser/parseTest.xhtml">parseTest</a>()
+                    </li><li>private string <a title="Visualphpunit\Core\Parser" href="../classes/Visualphpunit_Core_Parser/friendlyName.xhtml">friendlyName</a>()
+                    </li><li>private array <a title="Visualphpunit\Core\Parser" href="../classes/Visualphpunit_Core_Parser/explodeTestName.xhtml">explodeTestName</a>()
+                    </li><li>private array <a title="Visualphpunit\Core\Parser" href="../classes/Visualphpunit_Core_Parser/getComparison.xhtml">getComparison</a>()
+                    </li></ul>
+
+            }<br/></div>
+        <h2 id="violations">Violations</h2>
+        <div class="styled">
+          <h3>PHPMessDetector</h3>
+          <table class="styled">
+            <thead>
+              <tr>
+                <th>Line</th>
+                <th>Rule</th>
+                <th>Message</th>
+              </tr>
+            </thead>
+            <tr>
+              <td class="line">89</td>
+              <td>
+                <a href="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" target="_blank" title="Unused Code Rules">UnusedLocalVariable</a>
+              </td>
+              <td>Avoid unused local variables such as '$value'.</td>
+            </tr>
+            <tr>
+              <td class="line">110</td>
+              <td>
+                <a href="http://phpmd.org/rules/naming.html#shortvariable" target="_blank" title="Naming Rules">ShortVariable</a>
+              </td>
+              <td>Avoid variables with short names like $a. Configured minimum length is 3.</td>
+            </tr>
+            <tr>
+              <td class="line">110</td>
+              <td>
+                <a href="http://phpmd.org/rules/naming.html#shortvariable" target="_blank" title="Naming Rules">ShortVariable</a>
+              </td>
+              <td>Avoid variables with short names like $b. Configured minimum length is 3.</td>
+            </tr>
+            <tr>
+              <td class="line">226</td>
+              <td>
+                <a href="http://phpmd.org/rules/naming.html#shortvariable" target="_blank" title="Naming Rules">ShortVariable</a>
+              </td>
+              <td>Avoid variables with short names like $e. Configured minimum length is 3.</td>
+            </tr>
+          </table>
+        </div>
+        <h2 id="methods">Methods</h2>
+        <div class="styled">
+          <h4>private</h4>
+          <ul>
+            <li id="addBootstrap"><a title="Visualphpunit\Core\Parser" href="../classes/Visualphpunit_Core_Parser/addBootstrap.xhtml">addBootstrap()</a>
+                — Require bootstrap if vpu can find it</li>
+            <li id="explodeTestName"><a title="Visualphpunit\Core\Parser" href="../classes/Visualphpunit_Core_Parser/explodeTestName.xhtml">explodeTestName()</a>
+                — Explode a testname into class and method components</li>
+            <li id="filterTrace"><a title="Visualphpunit\Core\Parser" href="../classes/Visualphpunit_Core_Parser/filterTrace.xhtml">filterTrace()</a>
+                — Filter the trace to exclude vendor and VPU classes</li>
+            <li id="friendlyName"><a title="Visualphpunit\Core\Parser" href="../classes/Visualphpunit_Core_Parser/friendlyName.xhtml">friendlyName()</a>
+                — Convert camelCase to friendly name</li>
+            <li id="getComparison"><a title="Visualphpunit\Core\Parser" href="../classes/Visualphpunit_Core_Parser/getComparison.xhtml">getComparison()</a>
+                — Get expected and actual if available</li>
+            <li id="parseTest"><a title="Visualphpunit\Core\Parser" href="../classes/Visualphpunit_Core_Parser/parseTest.xhtml">parseTest()</a>
+                — Parse individual test</li>
+            <li id="parseTestSuite"><a title="Visualphpunit\Core\Parser" href="../classes/Visualphpunit_Core_Parser/parseTestSuite.xhtml">parseTestSuite()</a>
+                — Parse the test suite result</li>
+          </ul>
+          <h4>public</h4>
+          <ul>
+            <li id="run"><a title="Visualphpunit\Core\Parser" href="../classes/Visualphpunit_Core_Parser/run.xhtml">run()</a>
+                — Run the list of test files</li>
+          </ul>
+        </div>
+        <h2 id="history">History</h2>
+        <ul class="styled history">
+          <li>
+            <h3>2016-10-25T18:06:11+00:00 (commit #<span title="3c86189b84d52656e86619a1a6492c392e381bc5">3c86189</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Enabled phpdox and fixed some code smells</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-07-13T15:01:28+00:00 (commit #<span title="4116b2ee8fec6cae88ba53ceaf0f9077001f9707">4116b2e</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">#159 Laravel support</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T13:09:22+00:00 (commit #<span title="78baed8024c589ede7886077e1dcaa3391fe38e9">78baed8</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Skov Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Fixed issue with identifying php magic methods</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T13:09:22+00:00 (commit #<span title="597e4282dc5086ad4708a1a62c87a0d2ff968576">597e428</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Better bootstrap loading for test suites.</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T13:09:22+00:00 (commit #<span title="9fe50c07f1199f4b8908e8bc4a7b2a9feb8b5380">9fe50c0</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Basic phar generation working.</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T13:09:22+00:00 (commit #<span title="03a25de2dc7ddb4c6d3561873a39f78c96ad3587">03a25de</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Now with basic statistics.</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T13:09:22+00:00 (commit #<span title="295928cfc615439c24e3ca0b686eba729207488c">295928c</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Skov Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Added simple trace to failing tests.</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T13:09:22+00:00 (commit #<span title="5fa69130ba2304884c23693018eefeecccf775a6">5fa6913</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Basic archive now working</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T13:09:22+00:00 (commit #<span title="cb306638d60f7fafc97f397d777343c1740ee367">cb30663</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Fixed some documentation</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T13:09:22+00:00 (commit #<span title="838cb991b1407a6272d4f49f658f063bf7bac0de">838cb99</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Fix build errors</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T13:09:22+00:00 (commit #<span title="96d5b90185c4f3f472e7719fd398554f42623a90">96d5b90</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">More base functionality ready. Removed legacy code.</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T13:09:22+00:00 (commit #<span title="9b79051f4e4a35a593162b78455173a1e0f74a76">9b79051</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Basic functionality in place</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2015-11-14T09:35:49+00:00 (commit #<span title="2d47d0d3b49ec5ee4a44352a2ac51ddf8ffaec9b">2d47d0d</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">More base functionality ready. Removed legacy code.</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2015-11-11T08:56:45+00:00 (commit #<span title="67c11457f45be981004951fb374650c403bb4019">67c1145</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Basic functionality in place</pre>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </div>
+    <footer>
+      <span>Generated using phpDox 0.9.0 - Copyright (C) 2010 - 2016 by Arne Blankerts</span>
+    </footer>
+  </body>
+</html>

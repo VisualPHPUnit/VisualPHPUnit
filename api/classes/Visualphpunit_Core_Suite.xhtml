@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <title>phpDox - Visualphpunit\Core\Suite</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css" media="screen"/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  </head>
+  <body>
+    <nav class="topnav">
+      <ul>
+        <li>
+          <div class="logo"><span>/**</span>phpDox</div>
+        </li>
+        <li class="separator">
+          <a href="../index.xhtml">Overview</a>
+        </li>
+        <li class="separator">
+          <a href="../namespaces.xhtml">Namespaces</a>
+        </li>
+        <li>
+          <a href="../classes.xhtml">Classes</a>
+        </li>
+        <li class="separator">
+          <a href="../source/index.xhtml">Source</a>
+        </li>
+      </ul>
+    </nav>
+    <div id="mainstage">
+      <div class="box">
+        <ul class="breadcrumb">
+          <li>
+            <a href="../index.xhtml">Overview</a>
+          </li>
+          <li class="separator">
+            <a href="../classes.xhtml">Classes</a>
+          </li>
+          <li class="separator">
+            <a href="../classes.xhtml#Visualphpunit_Core">Visualphpunit\Core</a>
+          </li>
+          <li class="separator">Suite</li>
+        </ul>
+      </div>
+      <nav class="box">
+        <ul>
+          <li>
+            <a href="#introduction">Introduction</a>
+          </li>
+          <li>
+            <a href="#synopsis">Synopsis</a>
+          </li>
+          <li>
+            <a href="#violations">Violations</a>
+          </li>
+          <li>
+            <a href="#methods">Methods</a>
+          </li>
+          <li>
+            <a href="#history">History</a>
+          </li>
+          <li>
+            <a href="../source/Core/Suite.php.xhtml#line24">Source</a>
+          </li>
+        </ul>
+      </nav>
+      <section>
+        <h1 id="introduction"><small>Visualphpunit\Core\</small>Suite</h1>
+        <h4>Visualphpunit test suite result</h4>
+        <p/>
+        <ul>
+          <li>Author: Johannes Skov Frandsen &lt;localgod@heaven.dk&gt;</li>
+        </ul>
+        <h2 id="synopsis">Synopsis</h2>
+        <div class="synopsis">class Suite
+            {<br/><ul class="none"><li>// methods</li><li>public static boolean <a title="Visualphpunit\Core\Suite" href="../classes/Visualphpunit_Core_Suite/createTable.xhtml">createTable</a>()
+                    </li><li>public static boolean <a title="Visualphpunit\Core\Suite" href="../classes/Visualphpunit_Core_Suite/dropTable.xhtml">dropTable</a>()
+                    </li><li>public static boolean <a title="Visualphpunit\Core\Suite" href="../classes/Visualphpunit_Core_Suite/truncateTable.xhtml">truncateTable</a>()
+                    </li><li>public static boolean <a title="Visualphpunit\Core\Suite" href="../classes/Visualphpunit_Core_Suite/store.xhtml">store</a>()
+                    </li><li>public static array <a title="Visualphpunit\Core\Suite" href="../classes/Visualphpunit_Core_Suite/getSnapshots.xhtml">getSnapshots</a>()
+                    </li><li>public static array <a title="Visualphpunit\Core\Suite" href="../classes/Visualphpunit_Core_Suite/getSuite.xhtml">getSuite</a>()
+                    </li></ul>
+
+            }<br/></div>
+        <h2 id="violations">Violations</h2>
+        <div class="styled">
+          <h3>PHPMessDetector</h3>
+          <table class="styled">
+            <thead>
+              <tr>
+                <th>Line</th>
+                <th>Rule</th>
+                <th>Message</th>
+              </tr>
+            </thead>
+            <tr>
+              <td class="line">110</td>
+              <td>
+                <a href="http://phpmd.org/rules/naming.html#shortvariable" target="_blank" title="Naming Rules">ShortVariable</a>
+              </td>
+              <td>Avoid variables with short names like $id. Configured minimum length is 3.</td>
+            </tr>
+          </table>
+        </div>
+        <h2 id="methods">Methods</h2>
+        <div class="styled">
+          <h4>public</h4>
+          <ul>
+            <li id="createTable"><a title="Visualphpunit\Core\Suite" href="../classes/Visualphpunit_Core_Suite/createTable.xhtml">createTable()</a>
+                — Create the table if it dos not exists</li>
+            <li id="dropTable"><a title="Visualphpunit\Core\Suite" href="../classes/Visualphpunit_Core_Suite/dropTable.xhtml">dropTable()</a>
+                — Drop the table if it exists</li>
+            <li id="getSnapshots"><a title="Visualphpunit\Core\Suite" href="../classes/Visualphpunit_Core_Suite/getSnapshots.xhtml">getSnapshots()</a>
+                — Get all test suite results</li>
+            <li id="getSuite"><a title="Visualphpunit\Core\Suite" href="../classes/Visualphpunit_Core_Suite/getSuite.xhtml">getSuite()</a>
+                — Get test suite results</li>
+            <li id="store"><a title="Visualphpunit\Core\Suite" href="../classes/Visualphpunit_Core_Suite/store.xhtml">store()</a>
+                — Store a test suite result</li>
+            <li id="truncateTable"><a title="Visualphpunit\Core\Suite" href="../classes/Visualphpunit_Core_Suite/truncateTable.xhtml">truncateTable()</a>
+                — Truncate the table</li>
+          </ul>
+        </div>
+        <h2 id="history">History</h2>
+        <ul class="styled history">
+          <li>
+            <h3>2016-07-13T15:01:28+00:00 (commit #<span title="4116b2ee8fec6cae88ba53ceaf0f9077001f9707">4116b2e</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">#159 Laravel support</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T13:09:22+00:00 (commit #<span title="5fa69130ba2304884c23693018eefeecccf775a6">5fa6913</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Basic archive now working</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T13:09:22+00:00 (commit #<span title="838cb991b1407a6272d4f49f658f063bf7bac0de">838cb99</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Fix build errors</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T13:09:22+00:00 (commit #<span title="96d5b90185c4f3f472e7719fd398554f42623a90">96d5b90</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">More base functionality ready. Removed legacy code.</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2015-11-15T14:43:09+00:00 (commit #<span title="95f2c6149059f813cfbb7d2b5c044853ce5b1047">95f2c61</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Basic archive now working</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2015-11-14T09:54:40+00:00 (commit #<span title="42079691014fdbe7ddd5df184acb381b935e0702">4207969</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Fix build errors</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2015-11-14T09:35:49+00:00 (commit #<span title="2d47d0d3b49ec5ee4a44352a2ac51ddf8ffaec9b">2d47d0d</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">More base functionality ready. Removed legacy code.</pre>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </div>
+    <footer>
+      <span>Generated using phpDox 0.9.0 - Copyright (C) 2010 - 2016 by Arne Blankerts</span>
+    </footer>
+  </body>
+</html>

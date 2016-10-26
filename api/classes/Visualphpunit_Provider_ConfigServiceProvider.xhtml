@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <title>phpDox - Visualphpunit\Provider\ConfigServiceProvider</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css" media="screen"/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  </head>
+  <body>
+    <nav class="topnav">
+      <ul>
+        <li>
+          <div class="logo"><span>/**</span>phpDox</div>
+        </li>
+        <li class="separator">
+          <a href="../index.xhtml">Overview</a>
+        </li>
+        <li class="separator">
+          <a href="../namespaces.xhtml">Namespaces</a>
+        </li>
+        <li>
+          <a href="../classes.xhtml">Classes</a>
+        </li>
+        <li class="separator">
+          <a href="../source/index.xhtml">Source</a>
+        </li>
+      </ul>
+    </nav>
+    <div id="mainstage">
+      <div class="box">
+        <ul class="breadcrumb">
+          <li>
+            <a href="../index.xhtml">Overview</a>
+          </li>
+          <li class="separator">
+            <a href="../classes.xhtml">Classes</a>
+          </li>
+          <li class="separator">
+            <a href="../classes.xhtml#Visualphpunit_Provider">Visualphpunit\Provider</a>
+          </li>
+          <li class="separator">ConfigServiceProvider</li>
+        </ul>
+      </div>
+      <nav class="box">
+        <ul>
+          <li>
+            <a href="#introduction">Introduction</a>
+          </li>
+          <li>
+            <a href="#synopsis">Synopsis</a>
+          </li>
+          <li>
+            <a href="#hierarchy">Hierarchy</a>
+          </li>
+          <li>
+            <a href="#violations">Violations</a>
+          </li>
+          <li>
+            <a href="#members">Members</a>
+          </li>
+          <li>
+            <a href="#methods">Methods</a>
+          </li>
+          <li>
+            <a href="#history">History</a>
+          </li>
+          <li>
+            <a href="../source/Provider/ConfigServiceProvider.php.xhtml#line26">Source</a>
+          </li>
+        </ul>
+      </nav>
+      <section>
+        <h1 id="introduction"><small>Visualphpunit\Provider\</small>ConfigServiceProvider</h1>
+        <h4>Visualphpunit Silex Config provider</h4>
+        <p/>
+        <ul>
+          <li>Author: Johannes Skov Frandsen &lt;localgod@heaven.dk&gt;</li>
+        </ul>
+        <h2 id="synopsis">Synopsis</h2>
+        <div class="synopsis">class ConfigServiceProvider
+                implements
+                ServiceProviderInterface,BootableProviderInterface
+            {<br/><ul class="none"><li>// members</li><li>private  <a href="#members">$path</a>;
+                    </li></ul><ul class="none"><li>// methods</li><li>public void <a title="Visualphpunit\Provider\ConfigServiceProvider" href="../classes/Visualphpunit_Provider_ConfigServiceProvider/__construct.xhtml">__construct</a>()
+                    </li><li>public Jira <a title="Visualphpunit\Provider\ConfigServiceProvider" href="../classes/Visualphpunit_Provider_ConfigServiceProvider/register.xhtml">register</a>()
+                    </li><li>public void <a title="Visualphpunit\Provider\ConfigServiceProvider" href="../classes/Visualphpunit_Provider_ConfigServiceProvider/boot.xhtml">boot</a>()
+                    </li></ul>
+
+            }<br/></div>
+        <h2 id="hierarchy">Hierarchy</h2>
+        <div class="styled">
+          <h4>Implements</h4>
+          <ul>
+            <li>Pimple\ServiceProviderInterface</li>
+            <li>Silex\Api\BootableProviderInterface</li>
+          </ul>
+        </div>
+        <h2 id="violations">Violations</h2>
+        <div class="styled">
+          <h3>PHPMessDetector</h3>
+          <table class="styled">
+            <thead>
+              <tr>
+                <th>Line</th>
+                <th>Rule</th>
+                <th>Message</th>
+              </tr>
+            </thead>
+            <tr>
+              <td class="line">62</td>
+              <td>
+                <a href="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" target="_blank" title="Unused Code Rules">UnusedFormalParameter</a>
+              </td>
+              <td>Avoid unused parameters such as '$app'.</td>
+            </tr>
+          </table>
+        </div>
+        <h2 id="members">Members</h2>
+        <div class="styled members">
+          <h4>private</h4>
+          <ul class="members">
+            <li id="path"><strong>$path</strong>
+                —
+                string<br/><span class="indent">Path to config file</span></li>
+          </ul>
+        </div>
+        <h2 id="methods">Methods</h2>
+        <div class="styled">
+          <h4>public</h4>
+          <ul>
+            <li id="__construct"><a title="Visualphpunit\Provider\ConfigServiceProvider" href="../classes/Visualphpunit_Provider_ConfigServiceProvider/__construct.xhtml">__construct()</a>
+                — Specify the path to the config file</li>
+            <li id="boot"><a title="Visualphpunit\Provider\ConfigServiceProvider" href="../classes/Visualphpunit_Provider_ConfigServiceProvider/boot.xhtml">boot()</a>
+                — Boot the provider</li>
+            <li id="register"><a title="Visualphpunit\Provider\ConfigServiceProvider" href="../classes/Visualphpunit_Provider_ConfigServiceProvider/register.xhtml">register()</a>
+                — Register the provider</li>
+          </ul>
+        </div>
+        <h2 id="history">History</h2>
+        <ul class="styled history">
+          <li>
+            <h3>2016-10-24T16:55:33+00:00 (commit #<span title="e5f8b7e83661b75c2f6d7aca15d8f4ddf2a01498">e5f8b7e</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">#173 Upgrade backend to support Silex 2.x</pre>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </div>
+    <footer>
+      <span>Generated using phpDox 0.9.0 - Copyright (C) 2010 - 2016 by Arne Blankerts</span>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <title>phpDox - Visualphpunit\Api\Action\Graph</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css" media="screen"/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  </head>
+  <body>
+    <nav class="topnav">
+      <ul>
+        <li>
+          <div class="logo"><span>/**</span>phpDox</div>
+        </li>
+        <li class="separator">
+          <a href="../index.xhtml">Overview</a>
+        </li>
+        <li class="separator">
+          <a href="../namespaces.xhtml">Namespaces</a>
+        </li>
+        <li>
+          <a href="../classes.xhtml">Classes</a>
+        </li>
+        <li class="separator">
+          <a href="../source/index.xhtml">Source</a>
+        </li>
+      </ul>
+    </nav>
+    <div id="mainstage">
+      <div class="box">
+        <ul class="breadcrumb">
+          <li>
+            <a href="../index.xhtml">Overview</a>
+          </li>
+          <li class="separator">
+            <a href="../classes.xhtml">Classes</a>
+          </li>
+          <li class="separator">
+            <a href="../classes.xhtml#Visualphpunit_Api_Action">Visualphpunit\Api\Action</a>
+          </li>
+          <li class="separator">Graph</li>
+        </ul>
+      </div>
+      <nav class="box">
+        <ul>
+          <li>
+            <a href="#introduction">Introduction</a>
+          </li>
+          <li>
+            <a href="#synopsis">Synopsis</a>
+          </li>
+          <li>
+            <a href="#hierarchy">Hierarchy</a>
+          </li>
+          <li>
+            <a href="#violations">Violations</a>
+          </li>
+          <li>
+            <a href="#methods">Methods</a>
+          </li>
+          <li>
+            <a href="#history">History</a>
+          </li>
+          <li>
+            <a href="../source/Api/Action/Graph.php.xhtml#line26">Source</a>
+          </li>
+        </ul>
+      </nav>
+      <section>
+        <h1 id="introduction"><small>Visualphpunit\Api\Action\</small>Graph</h1>
+        <h4>Visualphpunit graph action</h4>
+        <p/>
+        <ul>
+          <li>Author: Johannes Skov Frandsen &lt;localgod@heaven.dk&gt;</li>
+        </ul>
+        <h2 id="synopsis">Synopsis</h2>
+        <div class="synopsis">class Graph
+                extends <a title="Visualphpunit\Api\Action\Action" href="../classes/Visualphpunit_Api_Action_Action.xhtml">Action</a>
+            {<br/><ul class="none"><li>// methods</li><li>public Response <a title="Visualphpunit\Api\Action\Graph" href="../classes/Visualphpunit_Api_Action_Graph/index.xhtml">index</a>()
+                    </li><li>private static void <a title="Visualphpunit\Api\Action\Graph" href="../classes/Visualphpunit_Api_Action_Graph/explodeTests.xhtml">explodeTests</a>()
+                    </li></ul><ul class="none"><li>// Inherited methods from <span title="Visualphpunit\Api\Action\Action">Action</span></li><li>protected Response <a title="Visualphpunit\Api\Action\Action" href="../classes/Visualphpunit_Api_Action_Action/ok.xhtml">ok</a>()
+                        </li><li>protected Response <a title="Visualphpunit\Api\Action\Action" href="../classes/Visualphpunit_Api_Action_Action/notFound.xhtml">notFound</a>()
+                        </li></ul>
+
+            }<br/></div>
+        <h2 id="hierarchy">Hierarchy</h2>
+        <div class="styled">
+          <h4>Extends</h4>
+          <ul>
+            <li>
+              <a title="Visualphpunit\Api\Action\Action" href="../classes/Visualphpunit_Api_Action_Action.xhtml">Visualphpunit\Api\Action\Action</a>
+            </li>
+          </ul>
+        </div>
+        <h2 id="violations">Violations</h2>
+        <div class="styled">
+          <h3>PHPMessDetector</h3>
+          <table class="styled">
+            <thead>
+              <tr>
+                <th>Line</th>
+                <th>Rule</th>
+                <th>Message</th>
+              </tr>
+            </thead>
+            <tr>
+              <td class="line">41</td>
+              <td>
+                <a href="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" target="_blank" title="Unused Code Rules">UnusedFormalParameter</a>
+              </td>
+              <td>Avoid unused parameters such as '$request'.</td>
+            </tr>
+          </table>
+        </div>
+        <h2 id="methods">Methods</h2>
+        <div class="styled">
+          <h4>private</h4>
+          <ul>
+            <li id="explodeTests">
+              <a title="Visualphpunit\Api\Action\Graph" href="../classes/Visualphpunit_Api_Action_Graph/explodeTests.xhtml">explodeTests()</a>
+            </li>
+          </ul>
+          <h4>public</h4>
+          <ul>
+            <li id="index"><a title="Visualphpunit\Api\Action\Graph" href="../classes/Visualphpunit_Api_Action_Graph/index.xhtml">index()</a>
+                — Get graph data</li>
+          </ul>
+          <h3>Inherited from <a title="Visualphpunit\Api\Action\Action" href="../classes/Visualphpunit_Api_Action_Action.xhtml">Visualphpunit\Api\Action\Action</a></h3>
+          <h4>protected</h4>
+          <ul>
+            <li id="notFound"><a title="Visualphpunit\Api\Action\Action" href="../classes/Visualphpunit_Api_Action_Action/notFound.xhtml">notFound()</a>
+                — Return a not found http response</li>
+            <li id="ok"><a title="Visualphpunit\Api\Action\Action" href="../classes/Visualphpunit_Api_Action_Action/ok.xhtml">ok()</a>
+                — Return a found http response</li>
+          </ul>
+        </div>
+        <h2 id="history">History</h2>
+        <ul class="styled history">
+          <li>
+            <h3>2016-03-28T13:09:22+00:00 (commit #<span title="56539db7f9f8e15286e7562d7f27262ee0ac66aa">56539db</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Added php 7.0 build</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T13:09:22+00:00 (commit #<span title="af68f11ecbbba3cb3246b52804f727d200b15177">af68f11</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Graph timeframe support</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T13:09:22+00:00 (commit #<span title="03a25de2dc7ddb4c6d3561873a39f78c96ad3587">03a25de</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Now with basic statistics.</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T13:09:22+00:00 (commit #<span title="cb306638d60f7fafc97f397d777343c1740ee367">cb30663</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Fixed some documentation</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T13:09:22+00:00 (commit #<span title="838cb991b1407a6272d4f49f658f063bf7bac0de">838cb99</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Fix build errors</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T13:09:22+00:00 (commit #<span title="96d5b90185c4f3f472e7719fd398554f42623a90">96d5b90</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">More base functionality ready. Removed legacy code.</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T13:09:22+00:00 (commit #<span title="9b79051f4e4a35a593162b78455173a1e0f74a76">9b79051</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Basic functionality in place</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T13:09:22+00:00 (commit #<span title="21daa8abb5ee8fcc9ace93ef5ba8e743d1e22898">21daa8a</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Initial rewrite - basic skeleton ready</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T12:44:02+00:00 (commit #<span title="6c1224d83ae524f24241516acf9e6295055c8469">6c1224d</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Added php 7.0 build</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2016-03-28T12:36:51+00:00 (commit #<span title="471b87f09bef5bbdbc35c787c4db0b69c5970979">471b87f</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Graph timeframe support</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2015-11-19T08:53:32+00:00 (commit #<span title="47cbd64e2884529af6e7577d6598cefeb9f0485d">47cbd64</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Now with basic statistics.</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2015-11-14T10:23:53+00:00 (commit #<span title="7523e8554436a81a6af28cff61b651637234efe7">7523e85</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Fixed some documentation</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2015-11-14T09:54:40+00:00 (commit #<span title="42079691014fdbe7ddd5df184acb381b935e0702">4207969</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Fix build errors</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2015-11-14T09:35:49+00:00 (commit #<span title="2d47d0d3b49ec5ee4a44352a2ac51ddf8ffaec9b">2d47d0d</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">More base functionality ready. Removed legacy code.</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2015-11-11T08:56:45+00:00 (commit #<span title="67c11457f45be981004951fb374650c403bb4019">67c1145</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Basic functionality in place</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2015-11-04T05:28:59+00:00 (commit #<span title="a5fbb77937d21aa97645fbee7da956135b2bb18a">a5fbb77</span>)</h3>
+            <div>
+              <p>
+                        Author: Johannes Frandsen (localgod@heaven.dk) /
+                        Commiter: Johannes Frandsen (localgod@heaven.dk)
+                    </p>
+              <pre class="wrapped">Initial rewrite - basic skeleton ready</pre>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </div>
+    <footer>
+      <span>Generated using phpDox 0.9.0 - Copyright (C) 2010 - 2016 by Arne Blankerts</span>
+    </footer>
+  </body>
+</html>
