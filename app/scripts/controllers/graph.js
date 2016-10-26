@@ -67,7 +67,7 @@ angular.module('VisualPHPUnit').controller('GraphCtrl', function($scope, $http) 
 
                 var config = {
                     method : 'GET',
-                    url : 'http://localhost:8001/graph/' + timeframe + '/' + start + '/' + end
+                    url : Vpu.getBackend() +'/graph/' + timeframe + '/' + start + '/' + end
                 };
                 var responsePromise = $http(config);
                 responsePromise.success(function(data) {

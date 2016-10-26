@@ -1,4 +1,4 @@
-.PHONY: tools autofix build doc
+.PHONY: tools autofix build build-backend build-frontend doc
 
 autofix:
 	find . -name '*.php'  -path ./vendor -prune | xargs dos2unix
@@ -24,6 +24,11 @@ setup:
 	ln -sf ./node_modules/bower/bin/bower
 	./bower install --allow-root
 
+clean:
+	if [ -e ./build ]; then rm -rf ./build ; fi
+	if [ -e ./dist ]; then rm -rf ./dist ; fi
+	if [ -e ./docs ]; then rm -rf ./docs ; fi
+
 tools:
 	if [ ! -e phpmd.phar ];        then wget -O ./phpmd.phar --no-check-certificate http://static.phpmd.org/php/latest/phpmd.phar; fi
 	if [ ! -e phploc.phar ];       then wget -O ./phploc.phar --no-check-certificate https://phar.phpunit.de/phploc.phar; fi
@@ -38,15 +43,18 @@ tools:
 build: build-backend build-frontend
 
 build-frontend:
+	if [ -e ./dist ]; then rm -rf ./dist ; fi
 	./grunt build
 	
 build-backend:
+	if [ -e ./build ]; then rm -rf ./build ; fi
 	rm -rf ./build
 	./phpcs.phar
 	./phpunit.phar --testdox -c ./phpunit.xml.dist
 	-./phpmd.phar ./src text ./pmd.xml
 	
 doc: build-backend
+	if [ -e ./docs ]; then rm -rf ./docs ; fi
 	-./phpmd.phar ./src xml ./pmd.xml  > ./build/phpmd.xml
 	./phpcs.phar --report=xml --report-file=./build/phpcs.xml
 	./phploc.phar --log-xml=./build/phploc.xml .
