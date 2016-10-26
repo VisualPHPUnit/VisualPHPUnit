@@ -22,7 +22,7 @@ script:
 - make build doc
 
 after_success:
-#- ./gh-pages.sh
+- ./gh-pages.sh
 - codecov
 
 env:
