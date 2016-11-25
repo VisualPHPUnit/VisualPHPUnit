@@ -12,7 +12,7 @@
 
 VisualPHPUnit is a visual front-end for PHPUnit.
 
-Version [3.0.0](https://github.com/VisualPHPUnit/VisualPHPUnit/releases/tag/v3.0.0) is the latest and greatest but [2.3.2](https://github.com/VisualPHPUnit/VisualPHPUnit/releases/tag/v2.3.2) is also working just fine.
+Version [3.1.0](https://github.com/VisualPHPUnit/VisualPHPUnit/releases/tag/v3.1.0) is the latest and greatest but [2.3.2](https://github.com/VisualPHPUnit/VisualPHPUnit/releases/tag/v2.3.2) is also working just fine.
 
 ## Versions
 
@@ -26,7 +26,7 @@ On *nix
 
  * Checkout or download VisualPHPUnit
  * Run `make tools setup build`
- 
+
 On Windows
 
  * Checkout or download VisualPHPUnit
@@ -37,7 +37,7 @@ On Windows
  * Run `mklink bower .\node_modules\bower\bin\bower`
  * Run `bower install` to install javascript dependencies
  * Run `grunt build` to build frontend
- 
+
 To run
 
  * Run `./bin/vpu -c vpu.json -s` to start VisualPHPUnit with the build-in php server.
@@ -66,7 +66,7 @@ On *nix
 
  * Checkout or download VisualPHPUnit
  * Run `make tools setup`
- 
+
 On Windows
 
  * Checkout or download VisualPHPUnit
