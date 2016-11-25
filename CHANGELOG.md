@@ -1,158 +1,291 @@
-# Changelog
+# Change Log
+All notable changes to this project will be documented in this file.
 
-## v2.3.1
+This project adheres to [Semantic Versioning](http://semver.org/).
 
-* Downgraded phpunit to known working version 	
-* #143 Replace the call to PHPUnit_TextUI_Command->run by shell_exec because it's buggy on some versions
-* #146 runWithXml() 
+This project adheres to [Keep a CHANGELOG](http://keepachangelog.com/)
 
-## v2.3
+## [Unreleased]
 
-* #122 Updated phpdoc
-* #113 Add PSR2 compliance
-* #112 Composer support
-* #111 Add travis support
-* #110 Enable scrutinizer
-* #109 Switch to new maintainer
-* #100 Snapshot always return success message
-* #98 Add message to failed test for string comparisons that shows expected and actual Strings
-* Override default phpunit execution
-* Larger view on wide screen
-* Added primary directory grouping to test file list
-* The test_directories array in bootstrap.php gained a key for each directory. This key is used to group files and sub-directories with the given primary test directory. This keeps projects together and makes it easier to select an entire project.
-* The Javascript for FileSelector, as well as the FileList ajax handler were also updated. The Home controller needed a minor tweak since it expected numeric keys in the test_directories array
-* Composer instead of PEAR + VPU.php error fixes
-* Changed pear_path over to composer_vendor_path and adjusted include paths + require file name
-* Also adjusted VPU.php to prevent the throwing of headers already sent errors
-* Use protocol relative urls when loading external resources
-* Change views to use protocol relative urls for loading of external resources
-* Updated to latest stable version of phpunit
+### Added
 
-## v2.2
+- Let the user select the backend service in the UI #172
+- Include phpDox documentation on website #174
 
-* Add CLI switches to allow config overrides (GH-93)
-* Add support for multiple XML files (GH-93)
-* Allow for multiple test directories to be specified (GH-93)
-* Throw exception if cache permissions are incorrect (GH-96)
+### Changed
 
-## v2.1.1
+Move matching pattern for test cases to config file #171
+Upgrade backend to support Silex 2.x #173
 
-* Don't allow duplicate files if the parent folder is selected (GH-90)
-* Pad snapshot time with zero for better sorting (GH-87)
-* Only collect JSON when using XML configuration files (GH-84)
-* Show server error if AJAX request fails (GH-83)
-* Don't rewrite PHP_SELF (GH-80)
-* Use namespace when checking if tests are subclasses of PHPUnit_Framework_TestCase (GH-78)
-* Fix WAMP routing issues (GH-53)
-* Implement keyboard shortcuts (GH-67)
-* Fix output parsing to handle pretty-printed JSON (GH-65)
-* Fix display of statistics (GH-63)
-* Clarify directory selection key combination (GH-60)
-* Check if tests are subclasses of PHPUnit_Framework_TestCase (GH-59)
+## [3.0.0] - 2016-05-16
 
-## v2.1
+Complete rewrite with more or less the same functionality.
 
-* Add ability to ignore hidden files (GH-57)
-* Add error handler for non-JSON responses from the server (GH-48, GH-58)
-* Use strict checking with readdir() (GH-56)
-* Handle unbalanced braces properly (GH-54)
-* Fix error that occurs when no snapshot is selected on Archives page (GH-50)
-* Reduce complexity of Apache installations (GH-45)
-* Fix autoloader to only load files required by VPU (GH-46)
-* Only return child directories of test_directory (GH-44)
+###Changed
 
-## v2.0
+- Database support is now default enabled (sqlite)
+- Tests stats are now logged automatically for graphing.
+- Snapshots are now archived in the database and not in the filesystem.
+- VPU now utilize the PHPUnit API directly instead of parsing the JSON output from the command-line.
+- VPU now consist of tree separate apps: Frontend (WEB), Backend (REST) and Console.
 
-* Overhaul the entire code base
-* Give the UI a facelift
-* Add ability to run tests using a phpunit.xml configuration file (GH-31)
-* Add ability to generate test results from the command line (GH-32)
+###Removed
 
-## v1.5.6
+- Parsing of phpunit.xml is not supported in this initial release of 3.x but will be added in future releases.
+- You cannot migrate your existing log/database data.
 
-* Replace line breaks with <br>s instead of empty strings (GH-42)
-* Fix jqueryFileTree folder selection for Macs (GH-41)
-* Fix display of debugging output (GH-39)
-* Add ability to set MySQL port (GH-37)
+## [2.3.2] - 2016-05-16
 
-## v1.5.5
+### Fixed
+- Load xml bootstrap file #153
 
-* Change require -> require_once to avoid errors (GH-34)
-* Don't require files to share the same name as the test classes (GH-33)
-* Fix output buffering (GH-23)
+## [2.3.1] - 2015-11-14
 
-## v1.5.4
+### Fixed
+- Downgraded phpunit to known working version 	
+- Replace the call to PHPUnit_TextUI_Command->run by shell_exec because it's buggy on some versions #143
+- runWithXml() #146
 
-* Fix include_path issues (GH-26)
+## [2.3.0] - 2015-07-15
 
-## v1.5.3
+Final release of version 2. All new development will be for version 3.
 
-* Fix SANDBOX_IGNORE settings (GH-21)
-* Update history file (GH-20)
+### Added
 
-## v1.5.2
+- Composer support #112
+- Travis support #111
+- Scrutinizer support #110
+- Switch to new maintainer #109
+- Added primary directory grouping to test file list
 
-* Add tooltips to compensate for colorblind usage problem (GH-17)
-* Add ability to filter suite results (GH-14)
+### Changed
 
-## v1.5.1
+- Updated phpdoc #122
+- Add PSR2 compliance #113
+- Snapshot always return success message #100
+- Add message to failed test for string comparisons that shows expected and actual Strings #98
+- Override default phpunit execution
+- Larger view on wide screen
+- The test_directories array in bootstrap.php gained a key for each directory. This key is used to group files and sub-directories with the given primary test directory. This keeps projects together and makes it easier to select an entire project.
+- The Javascript for FileSelector, as well as the FileList ajax handler were also updated. The Home controller needed a minor tweak since it expected numeric keys in the test_directories array
+- Composer instead of PEAR + VPU.php error fixes
+- Changed pear_path over to composer_vendor_path and adjusted include paths + require file name
+- Also adjusted VPU.php to prevent the throwing of headers already sent errors
+- Use protocol relative urls when loading external resources
+- Change views to use protocol relative urls for loading of external resources
+- Updated to latest stable version of phpunit
 
-* Update color scheme
-* Update snapshot list each time a test is run (GH-10)
-* Fix snapshot filenames to be compatible with Windows systems (GH-11)
-* Allow debug display of JSON within tests (GH-9)
-* Fix POST locations to use relative URIs
+## [2.2.0] - 2013-05-13
 
-## v1.5
+### Added
 
-* Add ability to generate graphs of test results
+- Add CLI switches to allow config overrides (GH-93)
+- Add support for multiple XML files (GH-93)
+- Allow for multiple test directories to be specified (GH-93)
 
-## v1.4.1
+### Changed
 
-* Fix Windows path issues
-* Add a progress bar to indicate that tests are being processed
+- Throw exception if cache permissions are incorrect (GH-96)
 
-## v1.4
+## [2.1.1] - 2013-02-11
 
-* Overhaul the UI
-* Fix issues with namespaced tests
-* Implement a better check for archived files
+### Added
 
+- Implement keyboard shortcuts (GH-67)
 
-## v1.3.2
+### Changed
 
-* Add support for bootstraps
-* Clean up the user interface
-* Add the ability to view snapshots from the homepage
-* Change the snapshot filename format to Y-m-d
+- Pad snapshot time with zero for better sorting (GH-87)
+- Don't allow duplicate files if the parent folder is selected (GH-90)
+- Only collect JSON when using XML configuration files (GH-84)
+- Show server error if AJAX request fails (GH-83)
+- Don't rewrite PHP_SELF (GH-80)
+- Use namespace when checking if tests are subclasses of PHPUnit_Framework_TestCase (GH-78)
+- Clarify directory selection key combination (GH-60)
+- Check if tests are subclasses of PHPUnit_Framework_TestCase (GH-59)
 
-## v1.3.1
+### Fixed
 
-* Allow for relative paths in TEST_DIRECTORY
-* Use a better test loading mechanism
+- Fix WAMP routing issues (GH-53)
+- Fix output parsing to handle pretty-printed JSON (GH-65)
+- Fix display of statistics (GH-63)
 
-## v1.3
+## [2.1.0] - 2012-08-20
 
-* Add a start page to allow for specific choosing of tests and options
-* Add the ability to sort suite results by status and time
-* Clean up some configuration settings
-* Remove ability to save JSON snapshots
+### Added
 
-## v1.2
+- Add ability to ignore hidden files (GH-57)
+- Add error handler for non-JSON responses from the server (GH-48, GH-58)
+- Handle unbalanced braces properly (GH-54)
 
-* Add statistic bars to display the suite results visually
+### Changed
 
-## v1.1.1
+- Use strict checking with readdir() (GH-56)
+- Reduce complexity of Apache installations (GH-45)
+- Only return child directories of test_directory (GH-44)
 
-* Fix to allow for loading a single test directly
-* Adjust code to allow for proper execution with 'short_open_tag' off
-* Fix to match test files with the word 'Test' at the end of the filename
-* Fix to eliminate duplicate tests
+### Fixed
 
-## v1.1
+- Fix error that occurs when no snapshot is selected on Archives page (GH-50)
+- Fix autoloader to only load files required by VPU (GH-46)
 
-* Add suite statistics
+## [2.0.0] - 2012-02-17
 
-## v1.0
+### Added
 
-* Initial release
+- Add ability to run tests using a phpunit.xml configuration file (GH-31)
+- Add ability to generate test results from the command line (GH-32)
+
+### Changed
+- Overhaul the entire code base
+- Give the UI a facelift
+
+## [1.5.6] - 2012-02-17
+
+### Added
+
+- Add ability to set MySQL port (GH-37)
+
+### Changed
+
+- Replace line breaks with <br>s instead of empty strings (GH-42)
+
+### Fixed
+
+- Fix jqueryFileTree folder selection for Macs (GH-41)
+- Fix display of debugging output (GH-39)
+
+## [1.5.5] - 2012-02-17
+
+### Changed
+
+- Change require -> require_once to avoid errors (GH-34)
+- Don't require files to share the same name as the test classes (GH-33)
+
+### Fixed
+
+- Fix output buffering (GH-23)
+
+## [1.5.4] - 2011-11-15
+
+### Fixed
+
+- Fix include_path issues (GH-26)
+
+## [1.5.3] - 2011-11-09
+
+### Changed
+
+- Update history file (GH-20)
+### Fixed
+
+- Fix SANDBOX_IGNORE settings (GH-21)
+
+## [1.5.2] - 2011-08-22
+
+### Added
+
+- Add tooltips to compensate for colorblind usage problem (GH-17)
+- Add ability to filter suite results (GH-14)
+
+## [1.5.1] - 2011-07-15
+
+### Added
+
+- Allow debug display of JSON within tests (GH-9)
+
+### Changed
+
+- Update color scheme
+- Update snapshot list each time a test is run (GH-10)
+
+### Fixed
+
+- Fix snapshot filenames to be compatible with Windows systems (GH-11)
+- Fix POST locations to use relative URIs
+
+## [1.5.0] - 2011-05-31
+
+### Added
+
+- Add ability to generate graphs of test results
+
+## [1.4.1] - 2011-05-25
+
+### Added
+- Add a progress bar to indicate that tests are being processed
+
+### Fixed
+
+- Fix Windows path issues
+
+## [1.4.0] - 2011-05-23
+
+### Changed
+
+- Overhaul the UI
+- Implement a better check for archived files
+
+### Fixed
+
+- Fix issues with namespaced tests
+
+## [1.3.2] - 2011-05-01
+
+### Added
+
+- Add support for bootstraps
+- Add the ability to view snapshots from the homepage
+
+### Changed
+- Clean up the user interface
+- Change the snapshot filename format to Y-m-d
+
+## [1.3.1] - 2011-04-19
+
+### Changed
+
+- Allow for relative paths in TEST_DIRECTORY
+- Use a better test loading mechanism
+
+## [1.3.0] - 2011-04-18
+
+### Added
+
+- Add a start page to allow for specific choosing of tests and options
+- Add the ability to sort suite results by status and time
+
+### Changed
+
+- Clean up some configuration settings
+
+### Removed
+
+- Remove ability to save JSON snapshots
+
+## [1.2.0] - 2011-04-09
+
+### Added
+
+- Add statistic bars to display the suite results visually
+
+## [1.1.1] - 2011-04-07
+
+### Fixed
+
+- Fix to allow for loading a single test directly
+- Adjust code to allow for proper execution with 'short_open_tag' off
+- Fix to match test files with the word 'Test' at the end of the filename
+- Fix to eliminate duplicate tests
+
+## [1.1.0] - 2011-04-07
+
+### Added
+
+- Add suite statistics
+
+## [1.0.0] - 2011-04-07
+
+### Added
+
+- Initial release
