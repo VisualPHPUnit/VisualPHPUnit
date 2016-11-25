@@ -7,6 +7,8 @@ This project adheres to [Keep a CHANGELOG](http://keepachangelog.com/)
 
 ## [Unreleased]
 
+## [3.1.0] - 2016-11-14
+
 ### Added
 
 - Let the user select the backend service in the UI #172
@@ -14,8 +16,8 @@ This project adheres to [Keep a CHANGELOG](http://keepachangelog.com/)
 
 ### Changed
 
-Move matching pattern for test cases to config file #171
-Upgrade backend to support Silex 2.x #173
+- Move matching pattern for test cases to config file #171
+- Upgrade backend to support Silex 2.x #173
 
 ## [3.0.0] - 2016-05-16
 
