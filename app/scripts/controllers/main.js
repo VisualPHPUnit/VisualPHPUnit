@@ -6,10 +6,9 @@
  * @description # MainCtrl Controller of the VisualPHPUnit
  */
 angular.module('VisualPHPUnit').controller('MainCtrl', function($scope, $http) {
-
     var config = {
         method : 'GET',
-        url : 'http://localhost:8001/tests'
+        url : Vpu.getBackend() + '/tests'
     };
     var responsePromise = $http(config);
     responsePromise.success(function(data) {
@@ -38,7 +37,7 @@ angular.module('VisualPHPUnit').controller('MainCtrl', function($scope, $http) {
 
             var config = {
                 method : 'POST',
-                url : 'http://localhost:8001/run',
+                url : Vpu.getBackend() + '/run',
                 data : request
             };
             var responsePromise = $http(config);

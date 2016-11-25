@@ -1,6 +1,28 @@
 'use strict';
 
 var Vpu = {
+	backend : {
+		'protocol' : 'http',
+		'host' : 'localhost',
+		'port' : 8001
+	},
+	getBackend : function(asObject) {
+		if (Cookies.get('backend') != undefined) {
+			var backend = Cookies.getJSON('backend')
+			if (asObject) {
+				return backend;
+			}
+			return backend.protocol + '://' + backend.host + ':' + backend.port;	
+		}
+		if (asObject) {
+			return Vpu.backend;
+		}
+		return Vpu.backend.protocol + '://' + Vpu.backend.host + ':' + Vpu.backend.port;
+	},
+	setBackend : function(protocol, host, port) {
+		Cookies.set('backend', { protocol: protocol, host: host, port: port });
+		
+	},
     statusNameMapping : {
         'passed' : 'Passed',
         'failed' : 'Failed',
