@@ -43,7 +43,7 @@ angular.module('VisualPHPUnit').controller('MainCtrl', function($scope, $http) {
             var responsePromise = $http(config);
             responsePromise.success(function(data) {
                 var result = data[0];
-                if (data !== 'nofiles') {
+                if (data != 'nofiles') {
                     Vpu.renderSuite("#result", result);
                 }
             });
