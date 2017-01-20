@@ -70,9 +70,9 @@ angular.module('VisualPHPUnit').controller('GraphCtrl', function($scope, $http) 
                     url : Vpu.getBackend() +'/graph/' + timeframe + '/' + start + '/' + end
                 };
                 var responsePromise = $http(config);
-                responsePromise.success(function(data) {
+                responsePromise.then(function(response) {
 
-                    var forgraph = prepareData(data);
+                    var forgraph = prepareData(response.data);
 
                     var graphdata = {
                         labels : forgraph['label'],
