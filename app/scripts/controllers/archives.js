@@ -12,9 +12,9 @@ angular.module('VisualPHPUnit').controller('ArchivesCtrl',
                 url : Vpu.getBackend() + '/archives'
             };
             var responsePromise = $http(config);
-            responsePromise.success(function(data) {
+            responsePromise.then(function(response) {
                 $('#archives').treeview({
-                    data : data,
+                    data : response.data,
                     levels : 1,
                     showTags : false,
                     multiSelect : false,
@@ -31,9 +31,9 @@ angular.module('VisualPHPUnit').controller('ArchivesCtrl',
                             url : Vpu.getBackend() + '/suite/' + id
                         };
                         var responsePromise = $http(config);
-                        responsePromise.success(function(data) {
-                            if (data !== 'nosuite') {
-                                Vpu.renderSuite("#suite", data);
+                        responsePromise.then(function(response) {
+                            if (response.data !== 'nosuite') {
+                                Vpu.renderSuite("#suite", response.data);
                             }
                             Vpu.applyStatusFilter();
                         });
