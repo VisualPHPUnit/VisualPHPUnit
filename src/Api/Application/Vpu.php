@@ -35,21 +35,21 @@ class Vpu extends Application
         parent::__construct();
         $app = $this;
         $app['debug'] = true;
-        
+
         $appRoot = realpath(__DIR__ . '/../../..');
         $app->register(new ConfigServiceProvider("../vpu.json"));
-        
+
         $app->register(new DoctrineServiceProvider(), array(
             'db.options' => array(
                 'driver' => $app['config']['database']['driver'],
                 'path' => $appRoot . '/vpu.db',
             )
         ));
-        
+
         $app->register(new CorsServiceProvider(), array(
             "cors.allowOrigin" => "*"
         ));
-        
+
         $app->after($app["cors"]);
         $app->mount('/', new VpuController());
     }

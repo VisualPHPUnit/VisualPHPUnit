@@ -61,7 +61,7 @@ class Vpu extends Application
         $inputDefinition = parent::getDefinition();
         // clear out the normal first argument, which is the command name
         $inputDefinition->setArguments();
-        
+
         return $inputDefinition;
     }
 }

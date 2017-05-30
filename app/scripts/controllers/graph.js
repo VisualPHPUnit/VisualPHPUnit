@@ -131,23 +131,23 @@ function prepareData(data) {
     var failed = [];
     var passed = [];
 
-    for ( var key in data['error']) {
-        label.push(key);
+    for ( var key1 in data['error']) {
+        label.push(key1);
     }
-    for ( var key in data['error']) {
-        error.push(parseInt(data['error'][key]));
+    for ( var key2 in data['error']) {
+        error.push(parseInt(data['error'][key2]));
     }
-    for ( var key in data['skipped']) {
-        skipped.push(parseInt(data['skipped'][key]));
+    for ( var key3 in data['skipped']) {
+        skipped.push(parseInt(data['skipped'][key3]));
     }
-    for ( var key in data['notImplemented']) {
-        notImplemented.push(parseInt(data['notImplemented'][key]));
+    for ( var key4 in data['notImplemented']) {
+        notImplemented.push(parseInt(data['notImplemented'][key4]));
     }
-    for ( var key in data['failed']) {
-        failed.push(parseInt(data['failed'][key]));
+    for ( var key5 in data['failed']) {
+        failed.push(parseInt(data['failed'][key5]));
     }
-    for ( var key in data['passed']) {
-        passed.push(parseInt(data['passed'][key]));
+    for ( var key6 in data['passed']) {
+        passed.push(parseInt(data['passed'][key6]));
     }
     return {
         label : label,

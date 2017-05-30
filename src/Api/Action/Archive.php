@@ -40,7 +40,6 @@ class Archive extends Action
     public function index(Request $request, Application $app)
     {
         $suites = Suite::getSnapshots($app['db']);
-        
         return $this->ok($this->parse($suites));
     }
 
@@ -73,7 +72,7 @@ class Archive extends Action
     private function parse($suites)
     {
         $list = [];
-        
+
         foreach ($suites as $suite) {
             $date = DateTime::createFromFormat('Y-m-d H:i:s', $suite['executed']);
             $list[] = array(

@@ -48,9 +48,7 @@ abstract class Action
      */
     protected function notFound($data)
     {
-        return new Response(json_encode(array(
-            'message' => $data
-        )), 404, array(
+        return new Response(json_encode(array('message' => $data)), 404, array(
             'Content-Type' => 'application/json'
         ));
     }

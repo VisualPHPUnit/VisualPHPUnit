@@ -42,9 +42,9 @@ class Run extends Action
     {
         Suite::createTable($app['db']);
         Test::createTable($app['db']);
-        
+
         $data = json_decode($request->getContent(), true);
-        
+
         if (count($data['files'])) {
             $parser = new Parser();
             $result = $parser->run($data['files']);
