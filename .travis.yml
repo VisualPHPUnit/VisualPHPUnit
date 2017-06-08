@@ -10,6 +10,7 @@ php:
 
 before_install:
 - sudo apt-get update > /dev/null
+- node -v
 - npm -g install npm
 - pip install --user codecov
 
