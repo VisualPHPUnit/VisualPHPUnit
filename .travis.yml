@@ -13,7 +13,7 @@ php:
 - 7.1
 
 before_install:
-- sudo apt-get update > /dev/null
+- nvm install stable
 - node -v
 - npm -g install npm
 - pip install --user codecov
