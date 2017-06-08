@@ -50,7 +50,7 @@ build-backend:
 	if [ -e ./build ]; then rm -rf ./build ; fi
 	rm -rf ./build
 	./phpcs.phar
-	./bin/phpunit.phar --testdox -c ./phpunit.xml.dist
+	./bin/phpunit --testdox -c ./phpunit.xml.dist
 	-./phpmd.phar ./src text ./pmd.xml
 
 doc: build-backend
