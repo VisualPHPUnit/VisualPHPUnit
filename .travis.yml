@@ -6,8 +6,10 @@ os:
 php:
 - 5.6
 - 7.0
+- 7.1
 
 before_install:
+- sudo apt-get update > /dev/null
 - npm -g install npm
 - pip install --user codecov
 
