@@ -11,19 +11,19 @@ This project adheres to [Keep a CHANGELOG](http://keepachangelog.com/)
 
 ### Added
 
-- Let the user select the backend service in the UI #172
-- Include phpDox documentation on website #174
+- #172 Let the user select the backend service in the UI
+- #174 Include phpDox documentation on website
 
 ### Changed
 
-- Move matching pattern for test cases to config file #171
-- Upgrade backend to support Silex 2.x #173
+- #171 Move matching pattern for test cases to config file
+- #173 Upgrade backend to support Silex 2.x
 
 ## [3.0.0] - 2016-05-16
 
 Complete rewrite with more or less the same functionality.
 
-###Changed
+### Changed
 
 - Database support is now default enabled (sqlite)
 - Tests stats are now logged automatically for graphing.
@@ -31,7 +31,7 @@ Complete rewrite with more or less the same functionality.
 - VPU now utilize the PHPUnit API directly instead of parsing the JSON output from the command-line.
 - VPU now consist of tree separate apps: Frontend (WEB), Backend (REST) and Console.
 
-###Removed
+### Removed
 
 - Parsing of phpunit.xml is not supported in this initial release of 3.x but will be added in future releases.
 - You cannot migrate your existing log/database data.
@@ -39,14 +39,14 @@ Complete rewrite with more or less the same functionality.
 ## [2.3.2] - 2016-05-16
 
 ### Fixed
-- Load xml bootstrap file #153
+- #153 Load xml bootstrap file
 
 ## [2.3.1] - 2015-11-14
 
 ### Fixed
 - Downgraded phpunit to known working version 	
-- Replace the call to PHPUnit_TextUI_Command->run by shell_exec because it's buggy on some versions #143
-- runWithXml() #146
+- #143 Replace the call to PHPUnit_TextUI_Command->run by shell_exec because it's buggy on some versions
+- #146 runWithXml()
 
 ## [2.3.0] - 2015-07-15
 
@@ -54,18 +54,18 @@ Final release of version 2. All new development will be for version 3.
 
 ### Added
 
-- Composer support #112
-- Travis support #111
-- Scrutinizer support #110
-- Switch to new maintainer #109
+- #112 Composer support
+- #111 Travis support
+- #110 Scrutinizer support
+- #109 Switch to new maintainer
 - Added primary directory grouping to test file list
 
 ### Changed
 
-- Updated phpdoc #122
-- Add PSR2 compliance #113
-- Snapshot always return success message #100
-- Add message to failed test for string comparisons that shows expected and actual Strings #98
+- #122 Updated phpdoc
+- #113 Add PSR2 compliance
+- #100 Snapshot always return success message
+- #98 Add message to failed test for string comparisons that shows expected and actual Strings
 - Override default phpunit execution
 - Larger view on wide screen
 - The test_directories array in bootstrap.php gained a key for each directory. This key is used to group files and sub-directories with the given primary test directory. This keeps projects together and makes it easier to select an entire project.
@@ -81,62 +81,62 @@ Final release of version 2. All new development will be for version 3.
 
 ### Added
 
-- Add CLI switches to allow config overrides (GH-93)
-- Add support for multiple XML files (GH-93)
-- Allow for multiple test directories to be specified (GH-93)
+- #93 Add CLI switches to allow config overrides
+- #93 Add support for multiple XML files
+- #93 Allow for multiple test directories to be specified
 
 ### Changed
 
-- Throw exception if cache permissions are incorrect (GH-96)
+- #96 Throw exception if cache permissions are incorrect
 
 ## [2.1.1] - 2013-02-11
 
 ### Added
 
-- Implement keyboard shortcuts (GH-67)
+- #67 Implement keyboard shortcuts
 
 ### Changed
 
-- Pad snapshot time with zero for better sorting (GH-87)
-- Don't allow duplicate files if the parent folder is selected (GH-90)
-- Only collect JSON when using XML configuration files (GH-84)
-- Show server error if AJAX request fails (GH-83)
-- Don't rewrite PHP_SELF (GH-80)
-- Use namespace when checking if tests are subclasses of PHPUnit_Framework_TestCase (GH-78)
-- Clarify directory selection key combination (GH-60)
-- Check if tests are subclasses of PHPUnit_Framework_TestCase (GH-59)
+- #87 Pad snapshot time with zero for better sorting
+- #90 Don't allow duplicate files if the parent folder is selected
+- #84 Only collect JSON when using XML configuration files
+- #83 Show server error if AJAX request fails
+- #80 Don't rewrite PHP_SELF
+- #78 Use namespace when checking if tests are subclasses of PHPUnit_Framework_TestCase
+- #60 Clarify directory selection key combination
+- #59 Check if tests are subclasses of PHPUnit_Framework_TestCase
 
 ### Fixed
 
-- Fix WAMP routing issues (GH-53)
-- Fix output parsing to handle pretty-printed JSON (GH-65)
-- Fix display of statistics (GH-63)
+- #53 Fix WAMP routing issues
+- #65 Fix output parsing to handle pretty-printed JSON
+- #63 Fix display of statistics
 
 ## [2.1.0] - 2012-08-20
 
 ### Added
 
-- Add ability to ignore hidden files (GH-57)
-- Add error handler for non-JSON responses from the server (GH-48, GH-58)
-- Handle unbalanced braces properly (GH-54)
+- #57 Add ability to ignore hidden files
+- #48, #58 Add error handler for non-JSON responses from the server
+- #54 Handle unbalanced braces properly
 
 ### Changed
 
-- Use strict checking with readdir() (GH-56)
-- Reduce complexity of Apache installations (GH-45)
-- Only return child directories of test_directory (GH-44)
+- #56 Use strict checking with readdir()
+- #45 Reduce complexity of Apache installations
+- #44 Only return child directories of test_directory
 
 ### Fixed
 
-- Fix error that occurs when no snapshot is selected on Archives page (GH-50)
-- Fix autoloader to only load files required by VPU (GH-46)
+- #50 Fix error that occurs when no snapshot is selected on Archives page
+- #46 Fix autoloader to only load files required by VPU
 
 ## [2.0.0] - 2012-02-17
 
 ### Added
 
-- Add ability to run tests using a phpunit.xml configuration file (GH-31)
-- Add ability to generate test results from the command line (GH-32)
+- #31 Add ability to run tests using a phpunit.xml configuration file
+- #32 Add ability to generate test results from the command line
 
 ### Changed
 - Overhaul the entire code base
@@ -146,64 +146,64 @@ Final release of version 2. All new development will be for version 3.
 
 ### Added
 
-- Add ability to set MySQL port (GH-37)
+- #37 Add ability to set MySQL port
 
 ### Changed
 
-- Replace line breaks with <br>s instead of empty strings (GH-42)
+- #42 Replace line breaks with <br>s instead of empty strings
 
 ### Fixed
 
-- Fix jqueryFileTree folder selection for Macs (GH-41)
-- Fix display of debugging output (GH-39)
+- #41 Fix jqueryFileTree folder selection for Macs
+- #39 Fix display of debugging output
 
 ## [1.5.5] - 2012-02-17
 
 ### Changed
 
-- Change require -> require_once to avoid errors (GH-34)
-- Don't require files to share the same name as the test classes (GH-33)
+- #34 Change require -> require_once to avoid errors
+- #33 Don't require files to share the same name as the test classes
 
 ### Fixed
 
-- Fix output buffering (GH-23)
+- #23 Fix output buffering
 
 ## [1.5.4] - 2011-11-15
 
 ### Fixed
 
-- Fix include_path issues (GH-26)
+- #26 Fix include_path issues
 
 ## [1.5.3] - 2011-11-09
 
 ### Changed
 
-- Update history file (GH-20)
+- #20 Update history file
 ### Fixed
 
-- Fix SANDBOX_IGNORE settings (GH-21)
+- #21 Fix SANDBOX_IGNORE settings
 
 ## [1.5.2] - 2011-08-22
 
 ### Added
 
-- Add tooltips to compensate for colorblind usage problem (GH-17)
-- Add ability to filter suite results (GH-14)
+- #17 Add tooltips to compensate for colorblind usage problem
+- #14 Add ability to filter suite results
 
 ## [1.5.1] - 2011-07-15
 
 ### Added
 
-- Allow debug display of JSON within tests (GH-9)
+- #9 Allow debug display of JSON within tests
 
 ### Changed
 
 - Update color scheme
-- Update snapshot list each time a test is run (GH-10)
+- #10 Update snapshot list each time a test is run
 
 ### Fixed
 
-- Fix snapshot filenames to be compatible with Windows systems (GH-11)
+- #11 Fix snapshot filenames to be compatible with Windows systems
 - Fix POST locations to use relative URIs
 
 ## [1.5.0] - 2011-05-31
