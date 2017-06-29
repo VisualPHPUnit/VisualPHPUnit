@@ -1,23 +1,23 @@
 {
   "name": "public",
-  "version": "0.0.0",
+  "version": "3.1.0",
   "dependencies": {
-    "angular": "^1.4.0",
-    "bootstrap": "^3.2.0",
-    "angular-animate": "^1.4.0",
-    "angular-aria": "^1.4.0",
-    "angular-cookies": "^1.4.0",
-    "angular-messages": "^1.4.0",
-    "angular-resource": "^1.4.0",
-    "angular-route": "^1.4.0",
-    "angular-sanitize": "^1.4.0",
-    "angular-bootstrap": "^0.14.3",
+    "angular": "1.5.0",
+    "bootstrap": "3.3.7",
+    "angular-animate": "1.5.0",
+    "angular-aria": "1.5.0",
+    "angular-cookies": "1.5.0",
+    "angular-messages": "1.5.0",
+    "angular-resource": "1.5.0",
+    "angular-route": "1.5.0",
+    "angular-sanitize": "1.5.0",
+    "angular-bootstrap": "2.5.0",
     "bootstrap-treeview": "1.2.0",
-    "Chart.js": "~1.0.2",
-    "js-cookie": "~2.1"
+    "Chart.js": "2.6.0",
+    "js-cookie": "2.1.4"
   },
   "devDependencies": {
-    "angular-mocks": "^1.4.0"
+    "angular-mocks": "1.5.0"
   },
   "appPath": "app",
   "moduleName": "VisualPHPUnit",

@@ -96,10 +96,14 @@ class Run extends Command
         $output->setFormatter(new OutputFormatter(true));
         if ($input->getOption('start')) {
             $this->start();
-            $output->writeln('<comment>VPU started</comment>');
+            $output->writeln('<comment>VPU frontend running at: http://'.
+            $this->serverConfig['frontend']['host'].':'.$this->serverConfig['frontend']['port'].'</comment>');
+            $output->writeln('<comment>VPU backend running at: http://'.
+            $this->serverConfig['backend']['host'].':'.$this->serverConfig['backend']['port'].'</comment>');
         } elseif ($input->getOption('stop')) {
             $this->stop($output);
-            $output->writeln('<comment>VPU stopped</comment>');
+            $output->writeln('<comment>VPU frontend stopped</comment>');
+            $output->writeln('<comment>VPU backend stopped</comment>');
         } else {
             if (! empty($input->getArgument('files'))) {
                 $parser = new Parser();
