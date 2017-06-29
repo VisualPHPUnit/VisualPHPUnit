@@ -12,7 +12,7 @@
 
 VisualPHPUnit is a visual front-end for PHPUnit.
 
-Version [3.1.0](https://github.com/VisualPHPUnit/VisualPHPUnit/releases/tag/v3.1.0) is the latest and greatest.
+Version [3.1.1](https://github.com/VisualPHPUnit/VisualPHPUnit/releases/tag/v3.1.1) is the latest and greatest.
 Version [2.3.2](https://github.com/VisualPHPUnit/VisualPHPUnit/releases/tag/v2.3.2) is also working just fine.
 
 VisualPHPUnit is **not** php 7 compatible at this time due to the way phpunit is utilized. Php 7 will be supported in the next major release.

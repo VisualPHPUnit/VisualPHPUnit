@@ -1,4 +1,5 @@
-# Change Log
+# Changelog
+
 All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
@@ -6,6 +7,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This project adheres to [Keep a CHANGELOG](http://keepachangelog.com/)
 
 ## [Unreleased]
+
+## [3.1.1] - 2017-16-29
+
+### Changed
+
+- No php 7 support in this major version
+- Updated Bower dependencies.
+- Expanded console messages when starting and stopping VPU.
 
 ## [3.1.0] - 2016-11-14
 
