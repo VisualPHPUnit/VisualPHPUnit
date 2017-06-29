@@ -6,15 +6,14 @@
  * @description # MainCtrl Controller of the VisualPHPUnit
  */
 angular.module('VisualPHPUnit').controller('MainCtrl', function($scope, $http) {
-
     var config = {
         method : 'GET',
-        url : 'http://localhost:8001/tests'
+        url : Vpu.getBackend() + '/tests'
     };
     var responsePromise = $http(config);
-    responsePromise.success(function(data) {
+    responsePromise.then(function(response) {
         $('#tree').treeview({
-            data : data,
+            data : response.data,
             levels : 1,
             showTags : true,
             multiSelect : true,
@@ -38,24 +37,23 @@ angular.module('VisualPHPUnit').controller('MainCtrl', function($scope, $http) {
 
             var config = {
                 method : 'POST',
-                url : 'http://localhost:8001/run',
+                url : Vpu.getBackend() + '/run',
                 data : request
             };
             var responsePromise = $http(config);
-            responsePromise.success(function(data) {
-                var result = data[0];
-                if (data !== 'nofiles') {
+            responsePromise.then(function(response) {
+                var result = response.data[0];
+                if (response.data != 'nofiles') {
                     Vpu.renderSuite("#result", result);
                 }
             });
         });
 
+    },function(response) {
+        console.log('failur');
+        console.log(response.data);
     });
 
-    responsePromise.error(function(data) {
-        console.log('failur');
-        console.log(data);
-    });
 
     Vpu.addFilterEvents();
 });

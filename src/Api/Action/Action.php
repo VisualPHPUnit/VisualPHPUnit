@@ -7,7 +7,7 @@
  * PHP Version 5.6<
  *
  * @author Johannes Skov Frandsen <localgod@heaven.dk>
- * @copyright 2011-2015 VisualPHPUnit
+ * @copyright 2011-2016 VisualPHPUnit
  * @license http://opensource.org/licenses/BSD-3-Clause The BSD License
  * @link https://github.com/VisualPHPUnit/VisualPHPUnit VisualPHPUnit
  */
@@ -48,9 +48,7 @@ abstract class Action
      */
     protected function notFound($data)
     {
-        return new Response(json_encode(array(
-            'message' => $data
-        )), 404, array(
+        return new Response(json_encode(array('message' => $data)), 404, array(
             'Content-Type' => 'application/json'
         ));
     }

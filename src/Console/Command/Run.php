@@ -7,7 +7,7 @@
  * PHP Version 5.6<
  *
  * @author    Johannes Skov Frandsen <localgod@heaven.dk>
- * @copyright 2011-2015 VisualPHPUnit
+ * @copyright 2011-2016 VisualPHPUnit
  * @license   http://opensource.org/licenses/BSD-3-Clause The BSD License
  * @link      https://github.com/VisualPHPUnit/VisualPHPUnit VisualPHPUnit
  */
@@ -46,7 +46,7 @@ class Run extends Command
      * @var string
      */
     private $appRoot;
-    
+
     /**
      * Application config
      *
@@ -92,14 +92,18 @@ class Run extends Command
     {
         $this->config = json_decode(file_get_contents($input->getOption('config')), true);
         $this->appRoot = dirname(realpath($input->getOption('config')));
-        
+
         $output->setFormatter(new OutputFormatter(true));
         if ($input->getOption('start')) {
             $this->start();
-            $output->writeln('<comment>VPU started</comment>');
+            $output->writeln('<comment>VPU frontend running at: http://'.
+            $this->serverConfig['frontend']['host'].':'.$this->serverConfig['frontend']['port'].'</comment>');
+            $output->writeln('<comment>VPU backend running at: http://'.
+            $this->serverConfig['backend']['host'].':'.$this->serverConfig['backend']['port'].'</comment>');
         } elseif ($input->getOption('stop')) {
             $this->stop($output);
-            $output->writeln('<comment>VPU stopped</comment>');
+            $output->writeln('<comment>VPU frontend stopped</comment>');
+            $output->writeln('<comment>VPU backend stopped</comment>');
         } else {
             if (! empty($input->getArgument('files'))) {
                 $parser = new Parser();

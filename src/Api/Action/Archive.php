@@ -7,7 +7,7 @@
  * PHP Version 5.6<
  *
  * @author Johannes Skov Frandsen <localgod@heaven.dk>
- * @copyright 2011-2015 VisualPHPUnit
+ * @copyright 2011-2016 VisualPHPUnit
  * @license http://opensource.org/licenses/BSD-3-Clause The BSD License
  * @link https://github.com/VisualPHPUnit/VisualPHPUnit VisualPHPUnit
  */
@@ -40,7 +40,6 @@ class Archive extends Action
     public function index(Request $request, Application $app)
     {
         $suites = Suite::getSnapshots($app['db']);
-        
         return $this->ok($this->parse($suites));
     }
 
@@ -73,7 +72,7 @@ class Archive extends Action
     private function parse($suites)
     {
         $list = [];
-        
+
         foreach ($suites as $suite) {
             $date = DateTime::createFromFormat('Y-m-d H:i:s', $suite['executed']);
             $list[] = array(

@@ -36,10 +36,15 @@ angular
     	  controller: 'GraphCtrl',
     	  controllerAs: 'graph'
       })
-      .when('/help', {
-    	  templateUrl: 'views/help.html',
-    	  controller: 'HelpCtrl',
-    	  controllerAs: 'help'
+      .when('/about', {
+    	  templateUrl: 'views/about.html',
+    	  controller: 'AboutCtrl',
+    	  controllerAs: 'about'
+      })
+      .when('/config', {
+    	  templateUrl: 'views/config.html',
+    	  controller: 'ConfigCtrl',
+    	  controllerAs: 'config'
       })
       .otherwise({
         redirectTo: '/'

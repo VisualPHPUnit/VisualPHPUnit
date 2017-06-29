@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<phpdox xmlns="http://xml.phpdox.net/config" silent="false">
+	<project name="VisualPHPUnit" source="${basedir}/src"
+		workdir="${basedir}/build/phpdox/xml">
+		<collector publiconly="false" backend="parser" encoding="auto"/>
+		<generator output="${basedir}/docs">
+			<enrich base="${basedir}/build">
+				<source type="phploc">
+					<file name="phploc.xml" />
+				</source>
+
+				<source type="git">
+					<git binary="/usr/bin/git" />
+					<history enabled="true" limit="15"
+						cache="${phpDox.project.workdir}/gitlog.xml" />
+				</source>
+
+				<source type="phpcs">
+					<file name="phpcs.xml" />
+				</source>
+
+				<source type="pmd">
+					<file name="phpmd.xml" />
+				</source>
+			</enrich>
+			<build engine="html" enabled="true" output="html">
+				<template dir="${phpDox.home}/templates/html" />
+				<file extension="xhtml" />
+			</build>
+		</generator>
+	</project>
+</phpdox>

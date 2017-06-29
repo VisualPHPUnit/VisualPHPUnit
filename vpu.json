@@ -4,7 +4,8 @@
             {
                 "name":"VisualPHPUnit tests",
                 "path":"../tests",
-                "ignoreHidden":true
+                "ignoreHidden":true,
+                "testCaseRegxpPattern":"extends.+PHPUnit_Framework_TestCase$"
             }
         ],
         "database":{

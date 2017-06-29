@@ -111,7 +111,7 @@ class Test
     {
         $sql = "INSERT INTO tests (name, class, status, executed) VALUES (?, ?, ?, ?);";
         $date = new DateTime();
-        
+
         foreach ($result['tests'] as $test) {
             $stmt = $connection->prepare($sql);
             $stmt->bindValue(1, $test['name']);
@@ -185,7 +185,7 @@ class Test
             AND status = 'error'
             GROUP BY strftime('" . $unit . "', executed)
             ORDER BY status";
-        
+
         $stmt = $connection->prepare($sql);
         $stmt->bindValue(1, $start->format('Y-m-d H:i:s'));
         $stmt->bindValue(2, $end->format('Y-m-d H:i:s'));
@@ -198,7 +198,7 @@ class Test
         $stmt->bindValue(9, $start->format('Y-m-d H:i:s'));
         $stmt->bindValue(10, $end->format('Y-m-d H:i:s'));
         $stmt->execute();
-        
+
         return $stmt->fetchAll();
     }
 }

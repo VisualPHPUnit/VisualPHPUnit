@@ -14,6 +14,9 @@ macports.sh
 /.tmp
 /.sass-cache
 /bower_components
+/bower
+/grunt
+/docs
 vpu.db
 *.pid
 /cacert.pem

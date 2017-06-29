@@ -7,7 +7,7 @@
  * PHP Version 5.6<
  *
  * @author Johannes Skov Frandsen <localgod@heaven.dk>
- * @copyright 2011-2015 VisualPHPUnit
+ * @copyright 2011-2016 VisualPHPUnit
  * @license http://opensource.org/licenses/BSD-3-Clause The BSD License
  * @link https://github.com/VisualPHPUnit/VisualPHPUnit VisualPHPUnit
  */
@@ -39,10 +39,13 @@ class Test extends Action
     {
         $data = array();
         foreach ($app['config']['test-directories'] as $suite) {
+            if (! isset($suite['testCaseRegxpPattern']) || $suite['testCaseRegxpPattern'] == '') {
+                $suite['testCaseRegxpPattern'] = 'extends.+PHPUnit_Framework_TestCase$';
+            }
             $data[] = array(
                 'text' => $suite['name'],
                 'type' => 'suite',
-                'nodes' => $this->parse($suite['path'], $suite['ignoreHidden']),
+                'nodes' => $this->parse($suite['path'], $suite['ignoreHidden'], $suite['testCaseRegxpPattern']),
                 'selectable' => false
             );
         }
@@ -54,11 +57,16 @@ class Test extends Action
      *
      * @param string $dir
      * @param boolean $ignoreHidden
+     * @param string $pattern
      *
      * @return mixed[]
      */
-    private function parse($dir, $ignoreHidden)
+    private function parse($dir, $ignoreHidden, $pattern)
     {
+        $bootstrap = Finder::create()->ignoreDotFiles($ignoreHidden)
+            ->depth(0)
+            ->name('/bootstrap.php/')
+            ->in($dir);
         $files = Finder::create()->ignoreDotFiles($ignoreHidden)
             ->sortByType()
             ->depth(0)
@@ -71,20 +79,26 @@ class Test extends Action
             ->directories()
             ->append($files)
             ->in($dir);
-        
+
+        if (! empty($bootstrap)) {
+            foreach ($bootstrap as $file) {
+                require_once $file->getRealPath();
+            }
+        }
+
         $list = array();
-        
+
         foreach ($directories as $file) {
             if ($file->getType() == 'dir') {
                 $list[] = array(
                     'text' => $file->getBasename('.php'),
                     'type' => $file->getType(),
                     'path' => $file->getRealPath(),
-                    'nodes' => $this->parse($file->getRealPath(), $ignoreHidden),
+                    'nodes' => $this->parse($file->getRealPath(), $ignoreHidden, $pattern),
                     'selectable' => false
                 );
             } else {
-                if ($this->isPhpUnitTestCase($file)) {
+                if (! empty(preg_grep('/'.$pattern.'/', file($file)))) {
                     $list[] = array(
                         'text' => $file->getBasename('.php'),
                         'type' => $file->getType(),
@@ -95,7 +109,7 @@ class Test extends Action
                 }
             }
         }
-        
+
         return $this->excludeEmptyDirectories($list);
     }
 
@@ -116,24 +130,8 @@ class Test extends Action
                 }
             }
         }
-        
-        return $list;
-    }
 
-    /**
-     * Is this a phpunit testcase
-     *
-     * @param string $path
-     *
-     * @return boolean
-     */
-    private function isPhpUnitTestCase($path)
-    {
-        $result1 = preg_grep('/PHPUnit_Framework_TestCase$/', file($path));
-        if (! empty($result1)) {
-            return true;
-        }
-        return false;
+        return $list;
     }
 
     /**
@@ -150,7 +148,7 @@ class Test extends Action
         $result2 = preg_grep('/^class/', file($path));
         $matches1 = [];
         $matches2 = [];
-        
+
         preg_match('/^class\s([A-Za-z0-9]+).+$/', array_pop($result2), $matches2);
         if (count($result1) > 0) {
             preg_match('/^namespace\s(.+);$/', array_pop($result1), $matches1);
@@ -162,10 +160,8 @@ class Test extends Action
             $obj = new ReflectionClass($namespace . '\\' . $class);
             $methods = [];
             foreach ($obj->getMethods() as $method) {
-                if ($method->class == $namespace . '\\' . $class) {
-                    if ($method->isPublic()) {
-                        $methods[] = $method->name;
-                    }
+                if ($method->class == $namespace . '\\' . $class && $method->isPublic()) {
+                    $methods[] = $method->name;
                 }
             }
             return [
@@ -175,15 +171,13 @@ class Test extends Action
         $result2 = preg_grep('/^class/', file($path));
         if (count($result2) > 0) {
             $class = $matches2[1];
-            
+
             require_once $path;
             $obj = new ReflectionClass($class);
             $methods = [];
             foreach ($obj->getMethods() as $method) {
-                if ($method->class == $class) {
-                    if ($method->isPublic()) {
-                        $methods[] = $method->name;
-                    }
+                if ($method->class == $class && $method->isPublic()) {
+                    $methods[] = $method->name;
                 }
             }
             return [

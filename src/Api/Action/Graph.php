@@ -44,9 +44,9 @@ class Graph extends Action
         $start->setTime(0, 0, 0);
         $end = DateTime::createFromFormat('Y-m-d', $end);
         $end->setTime(23, 59, 59);
-        
+
         $data = null;
-        
+
         switch ($unit) {
             case 'h':
                 $data = Test::getTests($app['db'], $start, $end, Test::GROUP_BY_HOUR);
