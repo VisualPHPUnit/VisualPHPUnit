@@ -8,7 +8,7 @@ This project adheres to [Keep a CHANGELOG](http://keepachangelog.com/)
 
 ## [Unreleased]
 
-## [3.1.1] - 2017-16-29
+## [3.1.1] - 2017-06-29
 
 ### Changed
 
