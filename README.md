@@ -1,5 +1,4 @@
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/VisualPHPUnit/VisualPHPUnit/badges/quality-score.png)]
-(https://scrutinizer-ci.com/g/VisualPHPUnit/VisualPHPUnit/)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/VisualPHPUnit/VisualPHPUnit/badges/quality-score.png)](https://scrutinizer-ci.com/g/VisualPHPUnit/VisualPHPUnit/)
 [![Build Status](https://travis-ci.org/VisualPHPUnit/VisualPHPUnit.svg)](https://travis-ci.org/VisualPHPUnit/VisualPHPUnit)
 [![Dependency Status](https://www.versioneye.com/user/projects/580f9c405fe47d001229cb99/badge.svg?style=flat)](https://www.versioneye.com/user/projects/580f9c405fe47d001229cb99)
 [![Project Stats](https://www.openhub.net/p/VisualPHPUnit/widgets/project_thin_badge.gif)](https://www.openhub.net/p/VisualPHPUnit)
