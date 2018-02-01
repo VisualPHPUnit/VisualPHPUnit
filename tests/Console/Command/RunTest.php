@@ -2,8 +2,9 @@
 namespace Visualphpunit\Test\Console\Command;
 
 use Visualphpunit\Console\Command\Run;
+use PHPUnit\Framework\TestCase;
 
-class RunTest extends \PHPUnit_Framework_TestCase
+class RunTest extends TestCase
 {
 
     /**
@@ -17,7 +18,7 @@ class RunTest extends \PHPUnit_Framework_TestCase
     public function correctInstantiation()
     {
         $command = new Run();
-        
+
         $this->assertInstanceOf('Visualphpunit\Console\Command\Run', $command);
     }
 }
