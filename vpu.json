@@ -1,15 +1,15 @@
 {
-    "config":{
-        "test-directories":[
-            {
-                "name":"VisualPHPUnit tests",
-                "path":"../tests",
-                "ignoreHidden":true,
-                "testCaseRegxpPattern":"extends.+PHPUnit_Framework_TestCase$"
-            }
-        ],
-        "database":{
-            "driver":"pdo_sqlite"
-        }
+  "config": {
+    "test-directories": [
+      {
+        "name": "VisualPHPUnit tests",
+        "path": "../tests",
+        "ignoreHidden": true,
+        "testCaseRegxpPattern": "extends.+PHPUnit_Framework_TestCase$"
+      }
+    ],
+    "database": {
+      "driver": "pdo_sqlite"
     }
+  }
 }

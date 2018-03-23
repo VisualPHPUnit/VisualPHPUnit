@@ -6,6 +6,8 @@
 [![codecov.io](http://codecov.io/github/VisualPHPUnit/VisualPHPUnit/coverage.svg)](http://codecov.io/github/VisualPHPUnit/VisualPHPUnit)
 ![Version Eye](http://php-eye.com/badge/visualphpunit/visualphpunit/tested.svg)
 [![PHPPackages Rank](http://phppackages.org/p/visualphpunit/visualphpunit/badge/rank.svg)](http://phppackages.org/p/visualphpunit/visualphpunit)
+[![Sonar Cloud](https://sonarcloud.io/api/project_badges/measure?project=VisualPHPUnit%3AVisualPHPUnit&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=VisualPHPUnit%3AVisualPHPUnit)
+
 
 # VisualPHPUnit
 

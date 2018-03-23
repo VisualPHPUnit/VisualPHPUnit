@@ -3,8 +3,8 @@
   "name": "public",
   "private": true,
   "devDependencies": {
-    "grunt-cli" : "^1.2.0",
-    "bower" : "^1.7.9",
+    "grunt-cli": "^1.2.0",
+    "bower": "^1.7.9",
     "autoprefixer-core": "^5.2.1",
     "grunt": "^0.4.5",
     "grunt-angular-templates": "^0.5.7",

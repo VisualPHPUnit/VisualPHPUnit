@@ -1,4 +1,4 @@
-.PHONY: tools autofix build build-backend build-frontend doc
+.PHONY: tools autofix build build-backend build-frontend doc sonar
 
 autofix:
 	find . -name '*.php'  -path ./vendor -prune | xargs dos2unix
@@ -11,18 +11,20 @@ autofix:
 	find . -name '*.json' -path ./vendor -prune | xargs expand
 	find . -name '*.md'   -path ./vendor -prune | xargs expand
 	find . -name '*.xml'  -path ./vendor -prune | xargs expand
-	php phpcbf.phar
-	php phpcs.phar
-	php php-cs-fixer.phar fix ./src
-	php php-cs-fixer.phar fix ./bin
+	@docker run --rm -v ${PWD}:/data -w /data php:7.0-cli phpcbf.phar
+	@docker run --rm -v ${PWD}:/data -w /data php:7.0-cli phpcs.phar
+	@docker run --rm -v ${PWD}:/data -w /data php:7.0-cli php-cs-fixer.phar fix ./src
+	@docker run --rm -v ${PWD}:/data -w /data php:7.0-cli php-cs-fixer.phar fix ./bin
 
 setup:
-	php composer.phar self-update
-	php composer.phar update
-	npm install
-	ln -sf ./node_modules/grunt-cli/bin/grunt grunt
-	ln -sf ./node_modules/bower/bin/bower
-	./bower install --allow-root
+	@docker run --rm -v ${PWD}:/data -w /data --user $(shell id -u):$(shell id -g) composer:1.5.2 composer install
+	@docker run -dt --name javascript -v ${PWD}:/data -w /data node:8.7.0-alpine
+	@docker exec javascript npm install
+	@docker exec javascript apk update
+	@docker exec javascript apk add git
+	@docker exec javascript ./node_modules/bower/bin/bower install --allow-root
+	@docker stop javascript
+	@docker rm javascript
 
 clean:
 	if [ -e ./build ]; then rm -rf ./build ; fi
@@ -41,22 +43,25 @@ tools:
 
 build: build-backend build-frontend
 
+sonar:
+	@docker run --rm --user $(shell id -u):$(shell id -g) -w /data -v $(shell pwd):/data localgod/docker-sonarqube-scanner:3.1.0.1141 -Dsonar.login=${SONARCLOUD_TOKEN}
+
 build-frontend:
 	if [ -e ./dist ]; then rm -rf ./dist ; fi
-	./grunt build
+	@docker run -v ${PWD}:/data -w /data node:8.7.0-alpine ./node_modules/grunt-cli/bin/grunt build
 
 build-backend:
 	if [ -e ./build ]; then rm -rf ./build ; fi
 	rm -rf ./build
-	./phpcs.phar
-	./bin/phpunit --testdox -c ./phpunit.xml.dist
-	-./phpmd.phar ./src text ./pmd.xml
+	@docker run --rm -v ${PWD}:/data -w /data php:7.0-cli ./phpcs.phar
+	@docker run --rm -v ${PWD}:/data -w /data php:7.0-cli ./bin/phpunit --testdox -c ./phpunit.xml.dist
+	@docker run --rm -v ${PWD}:/data -w /data php:7.0-cli -./phpmd.phar ./src text ./pmd.xml
 
 doc: build-backend
 	if [ -e ./docs ]; then rm -rf ./docs ; fi
-	-./phpmd.phar ./src xml ./pmd.xml  > ./build/phpmd.xml
-	./phpcs.phar --report=xml --report-file=./build/phpcs.xml
-	./phploc.phar --log-xml=./build/phploc.xml .
-	./phpdox.phar
+	-@docker run --rm -v ${PWD}:/data -w /data php:7.0-cli ./phpmd.phar ./src xml ./pmd.xml  > ./build/phpmd.xml
+	@docker run --rm -v ${PWD}:/data -w /data php:7.0-cli ./phpcs.phar --report=xml --report-file=./build/phpcs.xml
+	@docker run --rm -v ${PWD}:/data -w /data php:7.0-cli ./phploc.phar --log-xml=./build/phploc.xml .
+	@docker run --rm -v ${PWD}:/data -w /data php:7.0-cli ./phpdox.phar
 
 default: autofix
