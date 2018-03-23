@@ -47,7 +47,12 @@ sonar:
 
 build-frontend:
 	if [ -e ./dist ]; then rm -rf ./dist ; fi
-	@docker run -v ${PWD}:/data -w /data node:9.9.0-alpine ./node_modules/grunt-cli/bin/grunt build
+	@docker run -dt --name javascript -v ${PWD}:/data -w /data node:9.9.0-alpine
+	@docker exec javascript apk update
+	@docker exec javascript apk add git
+	@docker exec javascript ./node_modules/grunt-cli/bin/grunt build
+	@docker stop javascript
+	@docker rm javascript
 
 build-backend:
 	if [ -e ./build ]; then rm -rf ./build ; fi
