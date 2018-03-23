@@ -20,3 +20,5 @@ macports.sh
 vpu.db
 *.pid
 /cacert.pem
+/.php_cs.cache
+/.DS_Store

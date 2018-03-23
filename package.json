@@ -2,6 +2,7 @@
   "version": "1.0.0",
   "name": "public",
   "private": true,
+  "dependencies": {},
   "devDependencies": {
     "grunt-cli": "^1.2.0",
     "bower": "^1.7.9",
