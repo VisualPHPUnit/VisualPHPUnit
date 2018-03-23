@@ -2,8 +2,9 @@
 namespace Visualphpunit\Test\Application\Command;
 
 use Visualphpunit\Console\Application\Vpu;
+use PHPUnit\Framework\TestCase;
 
-class VpuTest extends \PHPUnit_Framework_TestCase
+class VpuTest extends TestCase
 {
 
     /**

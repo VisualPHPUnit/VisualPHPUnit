@@ -1,7 +1,9 @@
 <?php
 namespace Visualphpunit\Test;
 
-class ExpectedFailureTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class ExpectedFailureTest extends TestCase
 {
 
     /**
@@ -13,7 +15,7 @@ class ExpectedFailureTest extends \PHPUnit_Framework_TestCase
     {
         $this->markTestIncomplete('This test has not been implemented yet.');
     }
-    
+
     /**
      * This is purposely failing to demonstrated the output in VPU
      *
@@ -23,7 +25,7 @@ class ExpectedFailureTest extends \PHPUnit_Framework_TestCase
     {
         throw new \Exception('This test results in an error on purpose.');
     }
-    
+
     /**
      * This is purposely skipped to demonstrated the output in VPU
      *
@@ -35,7 +37,7 @@ class ExpectedFailureTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped('The something_bogus extension is not available.');
         }
     }
-    
+
     /**
      * This is purposely failing to demonstrated the output in VPU
      *
@@ -47,7 +49,7 @@ class ExpectedFailureTest extends \PHPUnit_Framework_TestCase
         $actual   = 'actual';
         $this->assertEquals($expected, $actual);
     }
-    
+
     /**
      * This is purposely failing to demonstrated the output in VPU
      *
