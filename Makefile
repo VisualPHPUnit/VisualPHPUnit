@@ -32,12 +32,12 @@ clean:
 	if [ -e ./docs ]; then rm -rf ./docs ; fi
 
 tools:
-	if [ ! -e phpmd.phar ];        then wget -O ./phpmd.phar --no-check-certificate http://static.phpmd.org/php/latest/phpmd.phar; fi
-	if [ ! -e phploc.phar ];       then wget -O ./phploc.phar --no-check-certificate https://phar.phpunit.de/phploc.phar; fi
-	if [ ! -e phpdox.phar ];       then wget -O ./phpdox.phar --no-check-certificate http://phpdox.de/releases/phpdox.phar; fi
-	if [ ! -e phpcs.phar ];        then wget -O ./phpcs.phar --no-check-certificate https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar; fi
-	if [ ! -e phpcbf.phar ];       then wget -O ./phpcbf.phar --no-check-certificate https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar; fi
-	if [ ! -e php-cs-fixer.phar ]; then wget -O ./php-cs-fixer.phar --no-check-certificate https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases/download/v2.11.1/php-cs-fixer.phar; fi
+	if [ ! -e phpmd.phar ];        then wget -O ./phpmd.phar --no-check-certificate https://phpmd.org/static/latest/phpmd.phar; fi
+	if [ ! -e phploc.phar ];       then wget -O ./phploc.phar --no-check-certificate https://phar.phpunit.de/phploc.pharr; fi
+	if [ ! -e phpdox.phar ];       then wget -O ./phpdox.phar --no-check-certificate https://github.com/theseer/phpdox/releases/download/0.12.0/phpdox-0.12.0.phar; fi
+	if [ ! -e phpcs.phar ];        then wget -O ./phpcs.phar --no-check-certificate https://github.com/squizlabs/PHP_CodeSniffer/releases/download/3.7.2/phpcs.phar; fi
+	if [ ! -e phpcbf.phar ];       then wget -O ./phpcbf.phar --no-check-certificate https://github.com/squizlabs/PHP_CodeSniffer/releases/download/3.7.2/phpcbf.phar; fi
+	if [ ! -e php-cs-fixer.phar ]; then wget -O ./php-cs-fixer.phar --no-check-certificate https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/releases/download/v3.75.0/php-cs-fixer.phar; fi
 	chmod 755 ./*.phar
 
 build: build-backend build-frontend

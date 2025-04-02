@@ -1,0 +1,8 @@
+tasks:
+  - name: make
+    command: make install
+    openMode: tab-after
+  - name: npm
+    before: npm install -g grunt-cli
+    command: npm install
+    openMode: tab-after
