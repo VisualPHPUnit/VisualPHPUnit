@@ -1,14 +1,21 @@
 {
   "version": "1.0.0",
   "name": "public",
+  "scripts": {
+    "lint": "eslint ./app",
+    "lintfix": "eslint --fix ./app",
+    "mdlint": "markdownlint '**/*.md' --ignore node_modules --ignore vendor --ignore bower_components --disable MD013 MD024 MD033 MD041"
+  },
   "private": true,
-  "dependencies": {},
   "devDependencies": {
-    "grunt-cli": "^1.2.0",
-    "bower": "^1.7.9",
+    "@eslint/js": "^9.23.0",
     "autoprefixer-core": "^5.2.1",
+    "bower": "^1.7.9",
+    "eslint": "^9.23.0",
+    "globals": "^16.0.0",
     "grunt": "^0.4.5",
     "grunt-angular-templates": "^0.5.7",
+    "grunt-cli": "^1.2.0",
     "grunt-concurrent": "^1.0.0",
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-concat": "^0.5.0",
@@ -31,10 +38,16 @@
     "grunt-usemin": "^3.0.0",
     "grunt-wiredep": "^2.0.0",
     "jit-grunt": "^0.9.1",
+    "js-cookie": "2.1.4",
     "jshint-stylish": "^1.0.0",
     "time-grunt": "^1.0.0"
   },
   "engines": {
     "node": ">=0.10.0"
+  },
+  "dependencies": {
+    "jquery": "^3.7.1",
+    "angular": "1.5.0",
+    "chart.js": "2.6.0"
   }
 }
