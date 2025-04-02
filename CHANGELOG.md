@@ -48,12 +48,14 @@ Complete rewrite with more or less the same functionality.
 ## [2.3.2] - 2016-05-16
 
 ### Fixed
+
 - #153 Load xml bootstrap file
 
 ## [2.3.1] - 2015-11-14
 
 ### Fixed
-- Downgraded phpunit to known working version 	
+
+- Downgraded phpunit to known working version
 - #143 Replace the call to PHPUnit_TextUI_Command->run by shell_exec because it's buggy on some versions
 - #146 runWithXml()
 
@@ -148,6 +150,7 @@ Final release of version 2. All new development will be for version 3.
 - #32 Add ability to generate test results from the command line
 
 ### Changed
+
 - Overhaul the entire code base
 - Give the UI a facelift
 
@@ -188,6 +191,7 @@ Final release of version 2. All new development will be for version 3.
 ### Changed
 
 - #20 Update history file
+
 ### Fixed
 
 - #21 Fix SANDBOX_IGNORE settings
@@ -224,6 +228,7 @@ Final release of version 2. All new development will be for version 3.
 ## [1.4.1] - 2011-05-25
 
 ### Added
+
 - Add a progress bar to indicate that tests are being processed
 
 ### Fixed
@@ -249,6 +254,7 @@ Final release of version 2. All new development will be for version 3.
 - Add the ability to view snapshots from the homepage
 
 ### Changed
+
 - Clean up the user interface
 - Change the snapshot filename format to Y-m-d
 

@@ -3,6 +3,8 @@ tasks:
     command: make install
     openMode: tab-after
   - name: npm
+    command: npm install --location=global npm@latest typescript@latest markdownlint-cli@latest
+  - name: npm
     before: npm install -g grunt-cli
     command: npm install
     openMode: tab-after

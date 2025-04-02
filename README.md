@@ -1,3 +1,5 @@
+# VisualPHPUnit
+
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/VisualPHPUnit/VisualPHPUnit/badges/quality-score.png)](https://scrutinizer-ci.com/g/VisualPHPUnit/VisualPHPUnit/)
 [![Build Status](https://travis-ci.org/VisualPHPUnit/VisualPHPUnit.svg)](https://travis-ci.org/VisualPHPUnit/VisualPHPUnit)
 [![Dependency Status](https://www.versioneye.com/user/projects/580f9c405fe47d001229cb99/badge.svg?style=flat)](https://www.versioneye.com/user/projects/580f9c405fe47d001229cb99)
@@ -7,9 +9,6 @@
 ![Version Eye](http://php-eye.com/badge/visualphpunit/visualphpunit/tested.svg)
 [![PHPPackages Rank](http://phppackages.org/p/visualphpunit/visualphpunit/badge/rank.svg)](http://phppackages.org/p/visualphpunit/visualphpunit)
 [![Sonar Cloud](https://sonarcloud.io/api/project_badges/measure?project=VisualPHPUnit%3AVisualPHPUnit&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=VisualPHPUnit%3AVisualPHPUnit)
-
-
-# VisualPHPUnit
 
 VisualPHPUnit is a visual front-end for PHPUnit.
 
@@ -28,24 +27,24 @@ VisualPHPUnit is **not** php 7 compatible at this time due to the way phpunit is
 
 On *nix
 
- * Checkout or download VisualPHPUnit
- * Run `make tools setup build`
+* Checkout or download VisualPHPUnit
+* Run `make tools setup build`
 
 On Windows
 
- * Checkout or download VisualPHPUnit
- * Run `php -r "readfile('https://getcomposer.org/installer');" | php`.
- * Run `./composer.phar install` to install php dependencies
- * Run `npm install` to install node tools
- * Run `mklink grunt .\node_modules\grunt-cli\bin\grunt`
- * Run `mklink bower .\node_modules\bower\bin\bower`
- * Run `bower install` to install javascript dependencies
- * Run `grunt build` to build frontend
+* Checkout or download VisualPHPUnit
+* Run `php -r "readfile('https://getcomposer.org/installer');" | php`.
+* Run `./composer.phar install` to install php dependencies
+* Run `npm install` to install node tools
+* Run `mklink grunt .\node_modules\grunt-cli\bin\grunt`
+* Run `mklink bower .\node_modules\bower\bin\bower`
+* Run `bower install` to install javascript dependencies
+* Run `grunt build` to build frontend
 
 To run
 
- * Run `./bin/vpu -c vpu.json -s` to start VisualPHPUnit with the build-in php server.
- * Run `./bin/vpu -c vpu.json -t` to stop VisualPHPUnit with the build-in php server.
+* Run `./bin/vpu -c vpu.json -s` to start VisualPHPUnit with the build-in php server.
+* Run `./bin/vpu -c vpu.json -t` to stop VisualPHPUnit with the build-in php server.
 
 You may browse localhost:8000 to access the test suites.
 
@@ -56,11 +55,12 @@ You may run tests from the console like this `./bin/vpu -c vpu.json testfile.php
 ## Development
 
 ### Frontend
+
 The frontend is a single-page javascript application ([SPA](https://en.wikipedia.org/wiki/Single-page_application)) based on [Angularjs](https://angularjs.org/) and [Bootstrap](http://getbootstrap.com/). You will need [Node.js](https://nodejs.org/), [Npm](https://www.npmjs.com/), [Grunt](http://gruntjs.com/) and [Bower](http://bower.io/) to build the frontend.
 
 ### Backend
-The backend is a REST application based on [Silex](http://silex.sensiolabs.org/). You will need [Composer](https://getcomposer.org/) to install relevant dependencies.You need [php](http://php.net/) >=5.6 to run VisualPHPUnit.
 
+The backend is a REST application based on [Silex](http://silex.sensiolabs.org/). You will need [Composer](https://getcomposer.org/) to install relevant dependencies.You need [php](http://php.net/) >=5.6 to run VisualPHPUnit.
 
 ## Running VPU in dev mode
 
@@ -68,20 +68,21 @@ The backend is a REST application based on [Silex](http://silex.sensiolabs.org/)
 
 On *nix
 
- * Checkout or download VisualPHPUnit
- * Run `make tools setup`
+* Checkout or download VisualPHPUnit
+* Run `make tools setup`
 
 On Windows
 
- * Checkout or download VisualPHPUnit
- * Run `php -r "readfile('https://getcomposer.org/installer');" | php`.
- * Run `./composer.phar install` to install php dependencies
- * Run `npm install` to install node tools
- * Run `bower install` to install javascript dependencies
-
+* Checkout or download VisualPHPUnit
+* Run `php -r "readfile('https://getcomposer.org/installer');" | php`.
+* Run `./composer.phar install` to install php dependencies
+* Run `npm install` to install node tools
+* Run `bower install` to install javascript dependencies
 
 ## Start VPU in dev mode
+
 You need two consoles for this setup, one for the frontend and one for the backend.
+
 ```bash
 cd backend
 php -S localhost:8001
