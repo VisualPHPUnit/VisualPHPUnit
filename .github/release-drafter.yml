@@ -1,0 +1,8 @@
+template: |
+  ## What’s Changed
+
+  $CHANGES
+
+categories:
+  - title: '📦 Dependencies'
+    label: 'dependencies'

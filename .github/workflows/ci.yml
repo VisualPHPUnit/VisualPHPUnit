@@ -1,0 +1,55 @@
+name: 🔨CI
+
+on:
+  push:
+    branches:    
+      - '**'
+  pull_request:
+    branches:    
+      - '**'
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 'latest'
+          cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
+      - name: Install dependencies
+        run: |
+          npm install --location=global npm@latest typescript@latest markdownlint-cli@latest
+          npm ci
+      - name: Lint
+        run: |
+          npm run lint
+          npm run mdlint
+      - name: Build
+        run: |
+          make tools setup
+      - name: Documentation
+        if: github.ref == 'refs/heads/master'
+        run: |
+          pip install --user codecov
+          make build doc
+          ./gh-pages.sh
+          codecov
+
+#  test:
+#    runs-on: ubuntu-latest
+#    strategy:
+#      matrix:
+#        php-version: [ '5.6','7.4', '8.0', '8.1', '8.2' ]
+#    steps:
+#      - uses: actions/checkout@v4
+#      - name: Set up PHP
+#        uses: shivammathur/setup-php@v2
+#        with:
+#          php-version: ${{ matrix.php-version }}
+#     - name: Install dependencies
+#        run: composer install --prefer-dist --no-progress --no-suggest
+#      - name: Run tests
+#        run: vendor/bin/phpunit
