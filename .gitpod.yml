@@ -1,10 +1,21 @@
 tasks:
   - name: make
     command: make install
-    openMode: tab-after
+  - name: apt
+    before: sudo apt update
+    command: sudo apt install -y dos2unix
   - name: npm
-    command: npm install --location=global npm@latest typescript@latest markdownlint-cli@latest bower
+    command: npm install --location=global npm@latest typescript@latest markdownlint-cli@latest bower@latest
   - name: npm
     before: npm install -g grunt-cli
     command: npm install
+  - name: Bower install
+    command: ./node_modules/bower/bin/bower install --allow-root
+  - name: Run backend
+    before: cd backend
+    command: php -S localhost:8001
     openMode: tab-after
+  - name: Run frontend
+    command: grunt serve
+    openMode: tab-after
+
