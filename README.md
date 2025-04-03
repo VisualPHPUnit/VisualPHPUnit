@@ -1,14 +1,8 @@
 # VisualPHPUnit
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/VisualPHPUnit/VisualPHPUnit/badges/quality-score.png)](https://scrutinizer-ci.com/g/VisualPHPUnit/VisualPHPUnit/)
-[![Build Status](https://travis-ci.org/VisualPHPUnit/VisualPHPUnit.svg)](https://travis-ci.org/VisualPHPUnit/VisualPHPUnit)
-[![Dependency Status](https://www.versioneye.com/user/projects/580f9c405fe47d001229cb99/badge.svg?style=flat)](https://www.versioneye.com/user/projects/580f9c405fe47d001229cb99)
 [![Project Stats](https://www.openhub.net/p/VisualPHPUnit/widgets/project_thin_badge.gif)](https://www.openhub.net/p/VisualPHPUnit)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%205.6-8892BF.svg?style=flat-square)](https://php.net/)
-[![codecov.io](http://codecov.io/github/VisualPHPUnit/VisualPHPUnit/coverage.svg)](http://codecov.io/github/VisualPHPUnit/VisualPHPUnit)
-![Version Eye](http://php-eye.com/badge/visualphpunit/visualphpunit/tested.svg)
-[![PHPPackages Rank](http://phppackages.org/p/visualphpunit/visualphpunit/badge/rank.svg)](http://phppackages.org/p/visualphpunit/visualphpunit)
-[![Sonar Cloud](https://sonarcloud.io/api/project_badges/measure?project=VisualPHPUnit%3AVisualPHPUnit&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=VisualPHPUnit%3AVisualPHPUnit)
 
 VisualPHPUnit is a visual front-end for PHPUnit.
 
