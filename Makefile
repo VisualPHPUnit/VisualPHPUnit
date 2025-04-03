@@ -42,15 +42,12 @@ tools:
 
 build: build-backend build-frontend
 
-sonar:
-	@docker run --rm --user $(shell id -u):$(shell id -g) -w /data -v $(shell pwd):/data localgod/docker-sonarqube-scanner:3.1.0.1141 -Dsonar.login=${SONARCLOUD_TOKEN}
-
 build-frontend:
 	if [ -e ./dist ]; then rm -rf ./dist ; fi
 	@docker run -dt --name javascript -v ${PWD}:/data -w /data node:9.9.0-alpine
 	@docker exec javascript apk update
 	@docker exec javascript apk add git
-	@docker exec javascript ./node_modules/grunt-cli/bin/grunt build
+	@docker exec javascript ./node_modules/grunt-cli/bin/grunt build --force
 	@docker stop javascript
 	@docker rm javascript
 
